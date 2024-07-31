@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #090b0a;
+    gap:40px;
+    padding:30px 0;
+}
+.footerDivOne{
+    width:100px;
+}
+.footerDivOne img{
+    width: 100%;
+}
+
+
+.socialIcons{
+    display: flex;
+    gap:30px;
+}
+.socialIcons .iconWrap{
+    border:2px solid #fff;
+    border-radius: 50%;
+
+    width:65px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.socialIcons i{
+    color:#c10b21;
+    font-size:21px;
+   
+}
+
+
+
+.footerLastDiv{
+    display: flex;
+    gap:5px;
+}
+
+.footerLastDiv p{
+    color: #c0c0c0;
+    text-transform: uppercase;
+    font:bold italic 14px / 15px 'Trebuchet Ms', sans-serif;
+    font-size: 17px;
+}
+.footerLastDiv p span{
+    color:#c10b21;
+    margin-right: 5px;
+}
+.footerLastDiv .footerlink{
+    text-decoration: none;
+    color: #c0c0c0;
+    
+    text-transform: uppercase;
+    font:bold italic 14px / 15px 'Trebuchet Ms', sans-serif;
+}

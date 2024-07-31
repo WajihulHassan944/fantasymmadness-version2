@@ -1,0 +1,76 @@
+@font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  
+
+
+  @font-face {
+    font-family: 'UfcSansRegular';
+    src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+    font-weight: normal;
+    font-style: oblique;
+  }
+  
+  
+.howtoplay-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.01)), url("../../Assets/two.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+.howtoplay-wrapper h1 {
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-stretch: condensed; /* Condensed style */
+    margin-bottom: 0.72222rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 65px;
+    line-height: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, .55);
+}
+.howtoplay-wrapper p{
+    max-width: 700px;
+    margin-top:40px;
+    color: #fff;
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 700;
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, .55);
+    text-align: center;
+    font-family: 'UfcSansRegular', Arial, sans-serif;
+}

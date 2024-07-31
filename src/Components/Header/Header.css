@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+.header{
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 40px;
+    width: 100%;
+    position:fixed;
+}
+.logoimg{
+    width: 80px;
+}
+.logoimg img{
+    width: 100%;
+}
+
+.anchorlinks{
+    color: #fff;
+    font-family: 'Bungee', sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin:0 20px;
+}
+.sideLinks{
+    color: #d2d2d2;
+    font-family: 'Bungee', sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sideLinks i{
+    margin-right: 5px;
+    font-size: 28px;
+    font-weight: 100;
+    
+    }
+
+.activeLink {
+    color: #ffc000;
+  }
