@@ -2,6 +2,45 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 
+@font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  
+
+
+  @font-face {
+    font-family: 'UfcSansRegular';
+    src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+    font-weight: normal;
+    font-style: oblique;
+  }
+  
 
 .homeFirst{
     display: flex;
@@ -51,7 +90,7 @@
 
 .homeSecond{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     width: 100%;
@@ -62,15 +101,19 @@
 .homeSecond .second-main-heading{
     font-size: 40px;
     line-height: 60px;
-    color: #c0c0c0;
-    font-family: 'Fira Sans', Arial;
-    font-weight: bold;
+    color: #2d1e22;
     text-transform: uppercase;
-    -webkit-text-shadow: 6px 5px 6px #201e1f;
-    -moz-text-shadow: 6px 5px 6px #201e1f;
-    -o-text-shadow: 6px 5px 6px #201e1f;
-    text-shadow: 6px 5px 6px #201e1f;
     text-align: center;
+    
+    font-family: 'UFCSans', Arial, sans-serif;
+  font-weight: bold; /* Ensure bold weight is applied */
+  font-style: normal; /* Ensure normal style is applied */
+  font-stretch: condensed; /* Ensure condensed style is applied */
+  font-style: italic;
+    background-color: #ffc000;
+    padding: 20px;
+    margin-bottom: 10px;
+    
    }
 .homeSecond .fightswrap{
     display: flex;
@@ -102,12 +145,17 @@
     
 }
 .fightItemOne .transformed-div h1{
-    font-size: 18px;
-    font-family: 'Fira Sans', Arial;
-    font-weight: 900;
     text-transform: uppercase;
     color: #d30c23;
     margin-left: 33%;
+
+    font-family: 'UFCSans', Arial, sans-serif;
+    font-weight: bold; /* Ensure bold weight is applied */
+    font-style: normal; /* Ensure normal style is applied */
+    font-stretch: condensed; /* Ensure condensed style is applied */
+    
+
+    font-size: 24px;
     }
 .transformed-div-two {
     height: 50px;
@@ -117,9 +165,9 @@
     margin-left: -15px;
     display: flex;
     flex-direction: column;
-    padding-left: 25px;
-    padding-top: 2px;
-    gap:2px;
+    padding-left: 28px;
+    padding-top: 5px;
+    gap:1px;
 }
 .transformed-div-two-partOne{
     display: flex;
@@ -127,11 +175,15 @@
 }
 
 .transformed-div-two-partOne h1{
-    font-size: 17px;
-    font-family: 'Fira Sans', Arial;
-    font-weight: 900;
+    font-size: 21px;
     text-transform: uppercase;
     color: black;
+
+    font-family: 'UFCSans', Arial, sans-serif;
+    font-weight: bold; /* Ensure bold weight is applied */
+    font-style: normal; /* Ensure normal style is applied */
+    font-stretch: condensed; /* Ensure condensed style is applied */
+    
 }
 .transformed-div-two-partTwo{
     display: flex;
@@ -140,7 +192,8 @@
 
 .transformed-div-two-partTwo h1{
     font-size: 17px;
-    font-family: 'Fira Sans', Arial;
+    font-family: 'UfcSansRegular', Arial, sans-serif;
+
     font-weight: 700;
     text-transform: uppercase;
     color: #388218;
@@ -148,7 +201,8 @@
 
 .transformed-div-two-partTwo p{
     font-size: 17px;
-    font-family: 'Trebuchet MS', sans-serif;
+    font-family: 'UfcSansRegular', Arial, sans-serif;
+
     font-weight: 900;
     text-transform: uppercase;
     color: black;
@@ -188,14 +242,18 @@
     }
     .transformed-div-four h1{
     font-size: 19px;
-    font-family: 'Trebuchet MS', sans-serif;
-    font-weight: 900;
+    font-family: 'UFCSans', Arial, sans-serif;
+    font-weight: bold; /* Ensure bold weight is applied */
+    font-style: normal; /* Ensure normal style is applied */
+    font-stretch: condensed; /* Ensure condensed style is applied */
+    
     text-transform: uppercase;
     color: #d30c23;
     }
     .transformed-div-four p{
     font-size: 18px;
-    font-family: 'Trebuchet MS', sans-serif;
+    font-family: 'UfcSansRegular', Arial, sans-serif;
+
     font-weight: 900;
     
     }
@@ -307,6 +365,8 @@
   }
   .homeThird h2 span{
     color: #388218;
+    font-family: 'UfcSansRegular', Arial, sans-serif;
+
   }
   .leaderboardHeading{
     width:100%;
@@ -342,11 +402,13 @@
     margin: 20px 0;;
   }
   .homeThird .controls h5{
-    font-size: 20px;
+    font-size: 22px;
     line-height: 60px;
     color: #c0c0c0;
-    font-family: 'Trebuchet MS', sans-serif;
-    font-weight: bold;
+    font-family: 'UFCSans', Arial, sans-serif;
+  font-weight: bold; /* Ensure bold weight is applied */
+  font-style: normal; /* Ensure normal style is applied */
+  font-stretch: condensed; /* Ensure condensed style is applied */
     text-transform: uppercase;
     -webkit-text-shadow: 6px 5px 6px #201e1f;
     -moz-text-shadow: 6px 5px 6px #201e1f;
@@ -379,8 +441,8 @@
    padding-right: 15px;
   }
   .leaderboardItem .leaderboard-item-image{
-    width:72px;
-    height: 72px;
+    width:70px;
+    height: 70px;
     border-radius:50%;
     display: flex;
     justify-content: center;
@@ -388,7 +450,7 @@
     overflow: hidden;
     border:3px solid #fff;
     position: absolute;
-    top:-15px;
+    top:-13px;
     left: -10px;;
 
     
@@ -403,8 +465,9 @@
 .leaderboardItem h1{
     font-size: 18px;
     color: black;
-    font-family: 'Trebuchet MS', sans-serif;
-    font-weight: bold;
+   
+    font-family: 'UfcSansRegular', Arial, sans-serif;
+
     text-transform: uppercase;
     
   
