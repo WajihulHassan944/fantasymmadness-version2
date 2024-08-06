@@ -1,0 +1,14 @@
+.yourFightsWrapper .fightwalletWrap{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.totalPoints{
+    margin-left: 100px;
+}
+.totalPoints h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}

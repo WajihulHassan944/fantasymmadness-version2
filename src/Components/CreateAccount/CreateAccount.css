@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+
+
+@font-face {
+  font-family: 'UfcSansRegular';
+  src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+  font-weight: normal;
+  font-style: oblique;
+}
+
+
+
+
+.createAccount{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+background-color: black;  
+
+  
+}
+.registerCard{
+    flex-basis: 50%;
+    padding: 20px;
+    padding-left: 50px;
+    color:#ccc;
+    font-family: 'Trebuchet MS', sans-serif;
+
+    margin-top: 120px;
+margin-bottom: 100px;   
+}
+.input-group span{
+color:red;
+margin-left: 8px;
+
+}
+.input-group label{
+  margin-bottom: 10px;
+}
+.registerCard h1{
+font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+font-stretch: condensed; /* Condensed style */
+margin-bottom: 30px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+font-size: 45px;
+line-height: 2.5rem;
+color: #fff;
+text-shadow: 2px 4px 8px rgba(0, 0, 0, .55);
+}
+.input-wrap-one{
+    width:100%;
+    display: flex;
+    gap:20px;
+    margin-bottom: 15px;
+}
+.input-wrap-one .input-group{
+flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+
+}
+.input-wrap-one .input-group input{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+input{
+  padding: 10px;
+  border: 3px solid #ccc;
+  border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+.input-wrap-two{
+    width:100%;
+    
+    display: flex;
+    align-items: center;
+    gap:20px;
+    margin-bottom: 15px;;
+}
+.input-wrap-two .input-group{
+flex-basis: 90%;
+    display: flex;
+    flex-direction: column;
+
+}
+.input-wrap-two .input-group input{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+.checking {
+    display: flex;
+    align-items: center;
+    background-color: #eee;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 3px;
+    color:#333;
+    font-weight: 700;
+  }
+  
+  .custom-radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .custom-radio-label input {
+    display: none;
+  }
+  
+  .custom-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #777;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    transition: border-color 0.2s;
+    background-color: #fff;
+  }
+  
+  .custom-radio.checked {
+    border-color: green;
+  }
+  
+  .custom-radio.checked:after {
+    content: '\f00c'; /* Font Awesome check mark */
+    font-family: FontAwesome;
+    color: green;
+    font-size: 12px;
+  }
+  
+
+
+.backgrounfImg{
+    flex-basis: 50%;
+    margin-top:-280px;
+  
+  }
+.backgrounfImg img{
+    width: 80%;
+}
+  
+
+
+
+.fa-refresh{
+  margin-top:24px;
+  margin-left: 6px;
+  font-size: 29px;
+  font-weight: 100;
+  
+}
+
+
+.termsConditions{
+  margin-top:27px;
+  margin-bottom: 23px;
+  padding: 15px 10px;
+  background-color: #fff;
+  border: 3px solid #ccc;
+  border-radius: 3px;
+  color:rgb(69, 65, 65);
+}
+.termsConditions h2{
+  margin-bottom: 5px;
+}
+         
+         
+         
+.btn-grad {
+ background-color: #720e0c;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  color: white;            
+ font-size: 25px;
+  border-radius: 10px;
+  font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+  font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+  font-stretch: condensed; /* Condensed style */
+   
+}

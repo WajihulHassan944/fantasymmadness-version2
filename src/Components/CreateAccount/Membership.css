@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+
+
+@font-face {
+  font-family: 'UfcSansRegular';
+  src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+  font-weight: normal;
+  font-style: oblique;
+}
+
+
+.membership-wrapper{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../../Assets/RING1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    
+}
+.member-header{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    height: 40px;
+    margin-top:120px;
+    padding-left: 170px;
+    padding-right: 50px;
+}
+.member-header-image{
+    position: absolute;
+    top:-15px;
+    left:80px;
+    width: 70px;
+    height: 70px;
+    
+    border:2px solid #fff;
+    border-radius: 50%;
+    
+}
+.member-header img{
+    width:fit-content;
+    height:100%;
+    object-fit: cover;
+    border-radius: 50%;
+
+}
+.member-header h3{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size:22px;  
+}
+.mermbership-cards{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:70px;
+    gap:20px;
+}
+
+.cardone{
+    display: flex;
+    flex-direction: column;
+    width:300px;
+}
+ .cardone .cardHeading{
+    width:100%;
+    text-align: center;
+    
+    font-size:20px;
+    padding:10px 0;
+    color:#fff;
+    background-color: #5b5b5b;
+    border-radius:10px;
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size:22px;  
+}
+.cardone .cardprice{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    border-radius:10px;
+    margin:5px 0;
+    color:#fff;
+    overflow: hidden;
+    position: relative;
+    background-color: #720e0c;
+    border:2px solid gray;
+    padding: 10px 0;
+gap:10px;
+
+ 
+}
+.cardone .cardprice .ribbon{
+    position: absolute;
+    top:11px;
+    right: -20px;
+    width:100px;
+    height:15px;
+    text-align: center;
+    background-color: #fff;
+    color:#720e0c;
+    transform: rotate(38deg); 
+    font-size:14px;
+    
+}
+
+.cardone .cardprice h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size: 40px;
+}
+.cardone .cardprice h2{
+    font-size: 15px;
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+    margin-top:-7px;
+    
+}
+.cardone ,.cardprice p{
+    margin-top:5px;
+}
+.cardone .card-features{
+    background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)),url(../../Assets/boxing-victory.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width:100%;
+    padding:30px 0;
+    border-radius:20px;
+    border:2px solid gray;
+    min-height: 165px;
+}
+
+.card-features li{
+    color:#fff;
+    text-align: left;
+    margin-left: 80px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size:13px;
+    margin-bottom: 5px;  
+}
+.cardone .btn-grad{
+    width:100%;
+}

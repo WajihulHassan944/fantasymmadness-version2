@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+
+
+@font-face {
+  font-family: 'UfcSansRegular';
+  src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+  font-weight: normal;
+  font-style: oblique;
+}
+
+
+.login-wrapper{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../Assets/RING1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    
+}
+.loginCard{
+    width:500px;
+    background-size: cover;
+    padding:20px 50px;
+    background-image: url(../../Assets/BlackredBackground.png);
+    background-repeat: no-repeat;
+    border:3px solid #ccc;
+    border-radius:20px;
+    margin-top:150px;
+}
+.loginCard img{
+    width:180px;
+    margin-top:25px;
+}
+.login-wrapper .loginCard h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size: 27px;
+ color:#fff;
+ margin:15px 0;
+}
+.loginCard form{
+    width:100%;
+    margin-bottom: 50px;
+}
+.loginCard form input{
+    width:100%;
+    border-radius:15px;
+    margin-bottom: 15px;
+}
+.loginCard .btn-grad{
+    width: 50%;
+    
+}
+
+.loginCard h2{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size: 27px;
+ color:#fff;
+   
+}
+.loginCard .loginNavLink{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size: 27px;
+ color:#fff;
+ text-decoration: none;
+}

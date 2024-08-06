@@ -26,6 +26,11 @@
     text-decoration: none;
     margin:0 20px;
 }
+.sideLinkswrap{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
 .sideLinks{
     color: #d2d2d2;
     font-family: 'Bungee', sans-serif;
@@ -50,3 +55,24 @@
 .activeLink {
     color: #ffc000;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.togglercheckbox{
+    position: absolute;
+    top:40px;
+    left:300px;
+    z-index: 99999;
+    width:30px;
+    height: 30px;
+}
