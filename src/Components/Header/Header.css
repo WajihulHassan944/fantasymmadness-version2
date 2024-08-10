@@ -66,8 +66,6 @@
 
 
 
-
-
 .togglercheckbox{
     position: absolute;
     top:40px;
@@ -75,4 +73,68 @@
     z-index: 99999;
     width:30px;
     height: 30px;
+}
+
+
+.admin-header{
+    position: fixed;
+    top:0;
+    left:0;
+    bottom: 0;
+    width:230px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height:100%;
+    align-items: center;
+    padding:15px 0;
+    overflow: auto;
+}
+.anchorLinksWrapperAdmin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.anchorLinksWrapperAdmin h1{
+    color: #ffc000;
+    font-family: UFCSans, Arial Narrow, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+}
+.anchorLinksWrapperAdmin .anchorlinksAdmin{
+    color: #fff;
+    font-family: 'Bungee', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin:10px 0;
+}
+.sideLinksAdmin{
+    color: #fff;
+    font-family: 'Bungee', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin:10px 0;
+}
+.matchHeading{
+    margin-top:40px;
+}
+
+
+.topheadercheckbox{
+    width:20px;
+    height: 20px;
+    position: absolute;
+    left:300px;
+    z-index: 99999;
+    top:40px;
 }

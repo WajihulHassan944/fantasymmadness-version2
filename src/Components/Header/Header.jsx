@@ -13,9 +13,9 @@ const Header = () => {
 
   return (
     <>
-        <input type="checkbox" checked={isPublicHeader} onChange={handleToggle} className='togglercheckbox' />
-      
-      
+          <input type="checkbox" checked={isPublicHeader} onChange={handleToggle} className='topheadercheckbox' />
+
+
       {isPublicHeader ? (
         <div className='header public-header'>
           <div className='logoimg'>
@@ -57,7 +57,7 @@ const Header = () => {
               Dashboard
             </NavLink>
 
-            <NavLink to="/logout" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
+            <NavLink to="/" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
               <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
             </NavLink>
           </div>

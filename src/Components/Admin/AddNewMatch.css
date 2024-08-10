@@ -1,0 +1,27 @@
+.addNewMatch{
+    width: calc(100% - 230px);
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(../../Assets/banner.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin-left: 230px; /* Leaves 230px space from the left */
+}
+.addNewMatch h1{
+    text-align: center;
+}
+.addNewMatch select{
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 3px;
+  
+}
+.checkBox{
+    margin:5px 0;
+}
+.checkBox input{
+    width:20px;
+    height: 20px;
+}

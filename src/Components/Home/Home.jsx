@@ -18,7 +18,7 @@ const Home = () => {
 
 
 
-    <div className='homeSecond'>
+    <div className='homeSecond' id="upcomingFightsDiv">
 
         <h1 className='second-main-heading'>Upcoming fights / Active fights</h1>
 

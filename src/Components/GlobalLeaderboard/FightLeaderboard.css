@@ -1,0 +1,31 @@
+.fightLeaderboard .fightDetails{
+    background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url(../../Assets/banner.png);
+
+}
+.fightLeaderboard .fightwalletWrap{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.totalPoints{
+    margin-left: 100px;
+}
+.fightLeaderboard .totalPoints h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 25px;
+    
+}
+.fightLeaderboard .homeThird{
+    margin-top: 10px;
+}
+.fightLeaderboard .fightersImagesInFightDetails{
+    margin-top:10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:50px;
+}

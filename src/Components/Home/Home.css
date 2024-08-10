@@ -47,7 +47,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.01)), url("../../Assets/two.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../../Assets/two-updated.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
