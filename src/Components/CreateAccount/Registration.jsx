@@ -8,8 +8,6 @@ const Registration = () => {
   return (
     <div>
     <CreateAccount />
-    <Thankyou />
-    <UploadAvatar />
     <Membership />
     <MembershipCheckout />
     </div>
