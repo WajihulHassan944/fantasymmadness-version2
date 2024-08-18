@@ -10,9 +10,14 @@ const GlobalLeaderboard = () => {
   const matches = useSelector((state) => state.matches.data);
   const { leaderboard, playerCount } = useLeaderboardData(matches);
 
+  const userLoggedIn = useSelector((state) => state.user); // Access user details from Redux store
 
   
   const renderLeaderboardItems = () => {
+    if (leaderboard.length === 0) {
+      return <p className='noMatch'>No leaderboard items available at the moment.</p>;
+    }
+  
     return leaderboard.map((user, index) => (
       <div className='leaderboardItem' key={user._id}>
         <div className='leaderboard-item-image'>
@@ -33,9 +38,9 @@ const GlobalLeaderboard = () => {
     <div className='fightDetails global-leaderboard'>
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={Logoimage} alt="Logo" />
+          <img src={userLoggedIn.profileUrl} alt="Logo" />
         </div>
-        <h3>Member Name - upgrade</h3>
+        <h3>Member Name - {userLoggedIn.firstName} {userLoggedIn.lastName}</h3>
         <h3>Current plan: None</h3>
       </div>
 

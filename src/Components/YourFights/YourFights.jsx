@@ -180,7 +180,7 @@ const YourFights = () => {
       );
     })
   ) : (
-    <p style={{color:'#fff'}}>No completed matches</p>
+    <p className='noMatch'>No completed matches</p>
   )}
 </div>
 
@@ -263,10 +263,10 @@ const YourFights = () => {
             );
           })
       ) : (
-        <p>No pending matches</p>
+        <p className='noMatch'>No pending matches</p>
       )
   ) : (
-    <p>No pending matches</p>
+    <p className='noMatch'>No pending matches</p>
   )}
 </div>
 

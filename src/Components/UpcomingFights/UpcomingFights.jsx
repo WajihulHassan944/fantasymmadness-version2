@@ -62,7 +62,7 @@ const UpcomingFights = () => {
               </div>
             ))
           ) : (
-            <p>No upcoming matches</p>
+            <p className='noMatch'>No upcoming matches</p>
           )}
         </div>
       </div>

@@ -117,7 +117,7 @@ const Dashboard = () => {
 
       <div className='fightsWrap'>
         <div className='upcomingFights fightscontainer'>
-          <h1 className='fightsheadingone'>UPCOMING FIGHTS / ACTIVE FIGHTS</h1>
+          <h1 className='fightsheadingone'>UPCOMING / ACTIVE FIGHTS</h1>
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
               <div className="fightItem" key={match._id}>
@@ -157,7 +157,7 @@ const Dashboard = () => {
               </div>
             ))
           ) : (
-            <p>No upcoming matches</p>
+            <p className='noMatch'>No upcoming matches</p>
           )}
         </div>
 
@@ -222,7 +222,7 @@ const Dashboard = () => {
       );
     })
   ) : (
-    <p style={{color:'#fff'}}>No completed matches</p>
+    <p className='noMatch'>No completed matches</p>
   )}
 </div>
 
@@ -303,10 +303,10 @@ const Dashboard = () => {
             );
           })
       ) : (
-        <p>No pending matches</p>
+        <p className='noMatch'>No pending matches</p>
       )
   ) : (
-    <p>No pending matches</p>
+    <p className='noMatch'>No pending matches</p>
   )}
 </div>
 

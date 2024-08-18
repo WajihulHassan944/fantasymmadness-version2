@@ -26,8 +26,11 @@ const Home = () => {
   const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
 
 
-
   const renderLeaderboardItems = () => {
+    if (leaderboard.length === 0) {
+      return <p className='noMatch'>No leaderboard items available at the moment.</p>;
+    }
+  
     return leaderboard.map((user, index) => (
       <div className='leaderboardItem' key={user._id}>
         <div className='leaderboard-item-image'>
@@ -41,7 +44,6 @@ const Home = () => {
       </div>
     ));
   };
-
 
   return (
     <>
@@ -98,7 +100,7 @@ const Home = () => {
               </div>
             ))
           ) : (
-            <p>No upcoming matches</p>
+            <p className='noMatch'>No upcoming matches</p>
           )}
         </div>
       </div>

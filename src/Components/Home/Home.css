@@ -229,6 +229,18 @@
         text-shadow: none;
     
     }
+    .noMatch{
+      font:bold 14px / 15px 'Trebuchet Ms', sans-serif;
+      color:#fff;
+      font-size: 18px;
+    }
+    .member-header-image{
+      z-index: 99999;
+    }
+    
+    .member-header-image img{
+      z-index: 99999;
+    }
     .transformed-div-four {
         height: 46px;
         width: 200px;
