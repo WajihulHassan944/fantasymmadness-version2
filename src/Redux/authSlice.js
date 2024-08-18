@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { setUser } from '../Redux/userSlice'; // Import setUser action
 
 // Async thunk for logging in
-export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, password }, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, password }, { dispatch, rejectWithValue }) => {
   try {
     const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/login', {
       method: 'POST',
@@ -9,7 +10,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-      credentials: 'include', // For sending cookies with requests
+      credentials: 'include',
     });
 
     const data = await response.json();
@@ -17,12 +18,62 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
       throw new Error(data.message || 'Login failed');
     }
 
-    return data;
+    // Fetch user data with token
+    const token = data.token;
+    const userResponse = await fetch('https://fantasymmadness-game-server-three.vercel.app/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    const userData = await userResponse.json();
+    if (!userResponse.ok) {
+      throw new Error(userData.message || 'Failed to fetch user data');
+    }
+
+    // Dispatch setUser action with user data
+    dispatch(setUser(userData.user));
+
+    // Return the data
+    return {
+      token,
+      user: userData.user,
+    };
   } catch (error) {
     return rejectWithValue(error.message);
   }
 });
-
+// Async thunk for fetching user data based on token
+export const fetchUser = createAsyncThunk('auth/fetchUser', async (token, { dispatch, rejectWithValue }) => {
+    try {
+      console.log('Fetching user in thunksss with token:', token); // Log the token
+  
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+      console.log('Fetched user data in thunksss:', data); // Log the fetched data
+  
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch user data');
+      }
+  
+      // Dispatch setUser action with user data
+      dispatch(setUser(data.user));
+  
+      return data.user; // Returning user data
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  });
+  
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -35,6 +86,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      localStorage.removeItem('authToken');
     },
   },
   extraReducers: (builder) => {
@@ -46,11 +98,27 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.user = action.payload;
+        localStorage.setItem('authToken', action.payload.token); // Store token in local storage
+        state.user = action.payload.user; // Set user from action payload
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.isAuthenticated = false;
+        state.user = null;
       });
   },
 });

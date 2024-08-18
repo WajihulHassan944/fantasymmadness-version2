@@ -53,6 +53,17 @@
     flex-direction: column;
     
 }
+.fightItem{
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: 0.4s;
+    
+}
+
+.fightItem:hover{
+    transform: scale(1.02);
+    
+}
 .fightsWrap{
      width:100%;
     display: flex;
@@ -261,6 +272,7 @@ margin-bottom: 20px;
         align-items: center;
         overflow: hidden;
         border:3px solid blue;
+        background-color: #fff;
         
     }
     .upcomingFights  .fighterOne img{
@@ -282,6 +294,8 @@ margin-bottom: 20px;
         align-items: center;
         overflow: hidden;
         border:3px solid red;
+        
+        background-color: #fff;
     
         
     }
@@ -489,6 +503,8 @@ margin-bottom: 20px;
         overflow: hidden;
         border:3px solid blue;
         
+background-color: #fff;
+        
     }
     .completedFights  .fighterOne img{
         width:100%;
@@ -509,6 +525,8 @@ margin-bottom: 20px;
         align-items: center;
         overflow: hidden;
         border:3px solid red;
+        
+background-color: #fff;
     
         
     }
@@ -741,6 +759,8 @@ margin-bottom: 20px;
         overflow: hidden;
         border:3px solid blue;
         
+background-color: #fff;
+        
     }
     .pendingFights  .fighterOne img{
         width:100%;
@@ -761,6 +781,8 @@ margin-bottom: 20px;
         align-items: center;
         overflow: hidden;
         border:3px solid red;
+        
+background-color: #fff;
     
         
     }

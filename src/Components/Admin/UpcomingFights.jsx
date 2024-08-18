@@ -1,17 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
+import AdminPredictions from './AdminPredictions';
 
 const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
-
+  const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
+  
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
+
+  
+  const handleMatchClick = (matchId) => {
+    setSelectedMatchId(matchId); // Set the selected match ID
+  };
+
+  
+  // Render the FightCosting component if a match is selected
+  if (selectedMatchId) {
+    return <AdminPredictions matchId={selectedMatchId} />;
+  }
 
   // Filter matches to only include upcoming ones
   const today = new Date();
@@ -24,7 +37,7 @@ const UpcomingFights = () => {
         <div className="fightswrap">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id}>
+              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)}>
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />

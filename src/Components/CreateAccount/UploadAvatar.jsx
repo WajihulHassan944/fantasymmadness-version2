@@ -18,6 +18,8 @@ const UploadAvatar = ({ email }) => {
 
   const handleSaveImage = async () => {
     if (selectedImage) {
+      setButtonText('Saving!'); // Set button text to "Saving!" before uploading
+
       try {
         const formData = new FormData();
         formData.append('image', selectedImage); // Append the image file directly
@@ -37,6 +39,8 @@ const UploadAvatar = ({ email }) => {
       } catch (error) {
         console.error('Error uploading avatar:', error);
         alert('Failed to upload avatar');
+      } finally {
+        setButtonText('Browse'); // Revert button text back to "Browse" or "Save" as needed
       }
     }
   };

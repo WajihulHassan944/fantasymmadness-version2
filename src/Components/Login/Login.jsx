@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Navigate } from 'react-router-dom';
 import { loginUser } from '../../Redux/authSlice';
-import { setUser } from '../../Redux/userSlice';
 import "./Login.css";
 import logoimage from "../../Assets/logo.png";
 
@@ -18,10 +17,11 @@ const Login = () => {
     try {
       // Dispatch login action
       const resultAction = await dispatch(loginUser({ email, password }));
-      const user = resultAction.payload?.user;
-      if (user) {
-        // Update user details in the Redux store
-        dispatch(setUser(user));
+      const token = resultAction.payload?.token;
+      if (token) {
+        // Store token locally or fetch user details using the token later
+        localStorage.setItem('authToken', token);
+        // You can dispatch fetchUser here or in a different component if needed
       }
     } catch (error) {
       console.error('Login failed', error);

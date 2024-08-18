@@ -10,14 +10,13 @@ import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserB
 const DashboardMain = () => {
   return (
     <div>
-    <FinishedFightUserBoard />
-
-    <Dashboard />
-    <FightDetails />
-    <FightCosting />
-    <PurchaseTokensIntimation />
-    <MakePredictions />
-    <FightLeaderboard />
+   <Dashboard /> 
+   
+  {/* <FinishedFightUserBoard />   */}
+   {/* <FightDetails /> */}
+   {/* <PurchaseTokensIntimation />  */}
+  {/*  <MakePredictions />  */}
+  {/*  <FightLeaderboard />  */}
 
     </div>
   )

@@ -21,6 +21,7 @@ const CreateAccount = () => {
     const [isRegistered, setIsRegistered] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
     const [polling, setPolling] = useState(false);
+    const [buttonText, setButtonText] = useState('Register');  // State for button text
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -32,7 +33,10 @@ const CreateAccount = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        // Change button text to "Saving! Please wait"
+        setButtonText('Saving! Please wait');
+
         try {
             const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/register', {
                 method: 'POST',
@@ -41,7 +45,7 @@ const CreateAccount = () => {
                 },
                 body: JSON.stringify(formData),
             });
-    
+
             const data = await response.text();
             if (response.ok) {
                 setIsRegistered(true);
@@ -52,6 +56,9 @@ const CreateAccount = () => {
         } catch (error) {
             console.error('There was an error registering!', error);
             alert('Registration failed');
+        } finally {
+            // Revert button text after registration
+            setButtonText('Register');
         }
     };
 
@@ -73,7 +80,7 @@ const CreateAccount = () => {
             // Set a timeout to stop polling after 1 minute
             const timeout = setTimeout(() => {
                 setPolling(false);  // Stop polling after 1 minute
-            }, 60000);  // 1 minute = 60000 milliseconds
+            }, 120000);  // 1 minute = 60000 milliseconds
 
             // Clean up interval and timeout on component unmount or if polling is stopped
             return () => {
@@ -83,12 +90,9 @@ const CreateAccount = () => {
         }
     }, [polling, formData.email]);
 
- // Passing the email as a prop to UploadAvatar
-if (isVerified) {
-    return <UploadAvatar email={formData.email} />;  // Pass email as prop to UploadAvatar
-}
-
-// Continue with the rest of your code
+    if (isVerified) {
+        return <UploadAvatar email={formData.email} />;  // Pass email as prop to UploadAvatar
+    }
 
     if (isRegistered) {
         return <Thankyou />;  // Render Thankyou component if registered
@@ -201,7 +205,7 @@ if (isVerified) {
                         </label>
                     </div>
 
-                    <button type="submit" className='btn-grad'>REGISTER</button>
+                    <button type="submit" className='btn-grad' style={{ minWidth: '37%' }}>{buttonText}</button>
                 </form>
             </div>
 

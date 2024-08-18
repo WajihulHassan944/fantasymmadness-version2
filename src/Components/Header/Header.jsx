@@ -1,43 +1,23 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch to dispatch actions
+import { logout } from '../../Redux/authSlice'; // Import the logout action from authSlice
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
 
 const Header = () => {
-  // Initially set to false to show user-header by default
-  const [isPublicHeader, setIsPublicHeader] = useState(false);
+  const { isAuthenticated } = useSelector((state) => state.auth); // Get isAuthenticated from Redux store
+  const dispatch = useDispatch(); // Initialize useDispatch
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
 
-  const handleToggle = () => {
-    setIsPublicHeader(!isPublicHeader);
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+    navigate('/'); // Redirect to the login page after logout
   };
 
   return (
     <>
-          <input type="checkbox" checked={isPublicHeader} onChange={handleToggle} className='topheadercheckbox' />
-
-
-      {isPublicHeader ? (
-        <div className='header public-header'>
-          <div className='logoimg'>
-            <NavLink to="/">
-              <img src={Logo} alt="Logo" />
-            </NavLink>
-          </div>
-
-          <div className='anchorLinksWrapper'>
-            <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
-            <NavLink to="/HowToPlay" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How to play</NavLink>
-            <NavLink to="/upcomingfights" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Upcoming Fights</NavLink>
-            <NavLink to="/CreateAccount" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Create account</NavLink>
-          </div>
-
-          <div className='sideLinkswrap'>
-            <NavLink to="/login" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
-              <i className="fa fa-sign-in" aria-hidden="true"></i> Login
-            </NavLink>
-          </div>
-        </div>
-      ) : (
+      {isAuthenticated ? (
         <div className='header user-header'>
           <div className='logoimg'>
             <NavLink to="/">
@@ -57,8 +37,29 @@ const Header = () => {
               Dashboard
             </NavLink>
 
-            <NavLink to="/" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
+            <button onClick={handleLogout} className='sideLinks logoutButton' style={{background:'transparent' , border:'none' , outline:'none'}}>
               <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className='header public-header'>
+          <div className='logoimg'>
+            <NavLink to="/">
+              <img src={Logo} alt="Logo" />
+            </NavLink>
+          </div>
+
+          <div className='anchorLinksWrapper'>
+            <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
+            <NavLink to="/HowToPlay" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How to play</NavLink>
+            <NavLink to="/upcomingfights" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Upcoming Fights</NavLink>
+            <NavLink to="/CreateAccount" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Create account</NavLink>
+          </div>
+
+          <div className='sideLinkswrap'>
+            <NavLink to="/login" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
+              <i className="fa fa-sign-in" aria-hidden="true"></i> Login
             </NavLink>
           </div>
         </div>

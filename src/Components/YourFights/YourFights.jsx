@@ -1,30 +1,106 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import "./YourFights.css";
 import Logoimage from "../../Assets/myimg.jpg";
-import FighterOne from "../../Assets/fighterOne.png";
-import FighterTwo from "../../Assets/fighterTwo.png";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMatches } from '../../Redux/matchSlice';
+import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
+import FightCosting from '../Dashboard/FightCosting';
+import useLeaderboardData from '../../CustomFunctions/useLeaderboardData'; // Import your custom hook
 
 const YourFights = () => {
+  const dispatch = useDispatch();
+  const matches = useSelector((state) => state.matches.data);
+  const matchStatus = useSelector((state) => state.matches.status);
+  const [selectedMatchId, setSelectedMatchId] = useState(null);
+  const [completedMatchId, setCompletedMatchId] = useState(null);
+  const [time, setTime] = useState(new Date());
+
+  const user = useSelector((state) => state.user); // Access user details from Redux store
+
+  // Use your custom hook to get leaderboard data
+  const { leaderboard } = useLeaderboardData(matches);
+
+  useEffect(() => {
+    if (matchStatus === 'idle') {
+      dispatch(fetchMatches());
+    }
+  }, [matchStatus, dispatch]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 60000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  if (!user || !user.firstName) {
+    return <div>Loading...</div>;
+  }
+
+  const handleMatchClick = (matchId) => {
+    setSelectedMatchId(matchId);
+  };
+
+  const handleCompletedMatchClick = (matchId) => {
+    setCompletedMatchId(matchId);
+  };
+
+  if (selectedMatchId) {
+    return <FightCosting matchId={selectedMatchId} />;
+  }
+
+  if (completedMatchId) {
+    return <FightLeaderboard matchId={completedMatchId} />;
+  }
+
+  const today = new Date();
+  const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
+
+  const getRemainingTime = (matchDate, matchTime) => {
+    const [year, month, day] = matchDate.split('T')[0].split('-');
+    const [hours, minutes] = matchTime.split(':');
+    const matchDateTime = new Date(`${year}-${month}-${day}T${hours}:${minutes}`);
+    const now = new Date();
+    const diffMs = matchDateTime - now;
+    const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const hasStarted = diffMs <= 0;
+
+    return {
+      diffHrs: hasStarted ? 0 : diffHrs,
+      diffMins: hasStarted ? 0 : diffMins,
+      hasStarted,
+    };
+  };
+
+  const completedMatches = matches.filter((match) => {
+    const hasSubmittedPrediction = match.userPredictions && 
+      match.userPredictions.some(prediction => 
+        prediction.userId.toString() === user.id.toString() && prediction.predictionStatus === 'submitted'
+      );
+    return hasSubmittedPrediction;
+  });
+
+  // Find the current user's total points from the leaderboard
+  const currentUserData = leaderboard.find(player => player._id === user.id);
+  const totalPoints = currentUserData ? currentUserData.totalPoints : 0;
+
   return (
     <div className='userdashboard yourFightsWrapper'>
-
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={Logoimage} alt="Logo" />
+          <img src={user.profileUrl} alt="Logo" />
         </div>
-        <h3>Member Name - upgrade</h3>
+        <h3>Member Name: {user.firstName} {user.lastName}</h3>
         <h3>Current plan: None</h3>
       </div>
     
-    
       <div className='fightwalletWrap'>
-       
-      <div className='totalPoints'>
-                <h1>Your Total Points : <span style={{color:"#38b90c"}}>1000</span></h1>
-                
-            </div>
-       
+        <div className='totalPoints'>
+          <h1>Your Total Points : <span style={{color:"#38b90c"}}>{totalPoints}</span></h1>
+        </div>
+          
         <div className='fightWallet'>
         <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
         <h2>Tokens Remaining: <span>35</span></h2>
@@ -35,101 +111,176 @@ const YourFights = () => {
 
 
 
+
+
+
+
+
+
+
 <div className='fightsWrap'>
 
-    <div className='completedFights fightscontainer'>
-        <h1 className='fightsheadingtwo'>YOUR COMPLETED fights</h1>
 
-        <div class="fightItem">
-<div className='fightersImages'>
-<div className='fighterOne'><img src={FighterOne} /></div>
-<div className='fighterTwo'><img src={FighterTwo} /></div>
-</div>
+<div className='completedFights fightscontainer'>
+  <h1 className='fightsheadingtwo'>YOUR COMPLETED FIGHTS</h1>
 
-            <div className='fightItemOne'>
-            <div class="transformed-div"> <h1>Player A -VS Player B</h1></div>
-            <div class="transformed-div-two">
+  {completedMatches.length > 0 ? (
+    completedMatches.map((match) => {
+      const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+
+      return (
+        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}>
+          <div className='fightersImages'>
+            <div className='fighterOne'>
+              <img src={match.fighterAImage} alt="Fighter One" />
+            </div>
+            <div className='fighterTwo'>
+              <img src={match.fighterBImage} alt="Fighter Two" />
+            </div>
+          </div>
+          <div className='fightItemOne'>
+            <div className="transformed-div">
+              <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+            </div>
+            <div className="transformed-div-two">
               <div className='transformed-div-two-partOne'>
-                <h1>Your rank #2</h1>
+                <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
               </div>
               <div className='transformed-div-two-partTwo'>
-                <p>Points</p>
-                <h1>676</h1>
+                <p style={{marginLeft:'-15px'}}>
+                  {hasStarted
+                    ? "Fight has started"
+                    : `Begins in ${diffHrs} hours ${diffMins} mins`}
+                </p>
               </div>
-
-
             </div>
+          </div>
+          <div className='fightItemTwo'>
+            <div className="transformed-three">
+              <div className='transformedDivBox'>HP</div>
+              <div className='transformedDivBox'>BP</div>
+              <div className='transformedDivBox'>TP</div>
+              <div className='transformedDivBox'>RW</div>
+              <div className='transformedDivBox'>KO</div>
+              <div className='transformedDivBox'>{match.matchCategory} pending</div>
             </div>
-            <div className='fightItemTwo'>
-            <div class="transformed-three">
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
+            <div className="transformed-div-four">
+              <h1>Players</h1>
+              <p>400</p>
             </div>
-            <div class="transformed-div-four"><h1>Players</h1><p>400</p></div>
-            </div>
-
-
-            <div class="transformed-five">
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-            </div>
-</div>
-    </div>
-
-    <div className='pendingFights fightscontainer'>
-        <h1 className='fightsheadingthree'>Your pending fights</h1>
-
-        
-        <div class="fightItem">
-<div className='fightersImages'>
-<div className='fighterOne'><img src={FighterOne} /></div>
-<div className='fighterTwo'><img src={FighterTwo} /></div>
+          </div>
+          <div className="transformed-five">
+            <div className='transformedDivBox'>HP</div>
+            <div className='transformedDivBox'>BP</div>
+            <div className='transformedDivBox'>TP</div>
+            <div className='transformedDivBox'>RW</div>
+            <div className='transformedDivBox'>KO</div>
+          </div>
+        </div>
+      );
+    })
+  ) : (
+    <p style={{color:'#fff'}}>No completed matches</p>
+  )}
 </div>
 
-            <div className='fightItemOne'>
-            <div class="transformed-div"> <h1>Player A -VS Player B</h1></div>
-            <div class="transformed-div-two">
-              <div className='transformed-div-two-partOne'>
-                <h1>6:00pm est</h1>
-              </div>
-              <div className='transformed-div-two-partTwo'>
-                <p>Begins in 2 hours 42 min</p>
-                
+
+
+
+<div className='pendingFights fightscontainer'>
+  <h1 className='fightsheadingthree'>Your Pending Fights</h1>
+
+  {upcomingMatches.length > 0 ? (
+    // Filter matches where user predictions are not submitted
+    upcomingMatches
+      .filter((match) =>
+        match.userPredictions &&
+        !match.userPredictions.some(prediction =>
+          prediction.userId === user.id && prediction.predictionStatus === 'submitted'
+        )
+      )
+      .length > 0 ? (
+        // Map over filtered matches
+        upcomingMatches
+          .filter((match) =>
+            match.userPredictions &&
+            !match.userPredictions.some(prediction =>
+              prediction.userId === user.id && prediction.predictionStatus === 'submitted'
+            )
+          )
+          .map((match) => {
+            const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+
+            return (
+              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)}>
+                <div className='fightersImages'>
+                  <div className='fighterOne'>
+                    <img src={match.fighterAImage} alt="Fighter One" />
+                  </div>
+                  <div className='fighterTwo'>
+                    <img src={match.fighterBImage} alt="Fighter Two" />
+                  </div>
                 </div>
-
-
-            </div>
-            </div>
-            <div className='fightItemTwo'>
-            <div class="transformed-three">
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-            </div>
-            <div class="transformed-div-four"><h1>Players</h1><p>400</p></div>
-            </div>
-
-
-            <div class="transformed-five">
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-                <div className='transformedDivBox'></div>
-            </div>
+                <div className='fightItemOne'>
+                  <div className="transformed-div">
+                    <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                  </div>
+                  <div className="transformed-div-two">
+                    <div className='transformed-div-two-partOne'>
+                      <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
+                    </div>
+                    <div className='transformed-div-two-partTwo'>
+                      <p style={{ marginLeft: '-15px' }}>
+                        {hasStarted
+                          ? "Fight has started"
+                          : `Begins in ${diffHrs} hours ${diffMins} mins`}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className='fightItemTwo'>
+                  <div className="transformed-three">
+                    <div className='transformedDivBox'>HP</div>
+                    <div className='transformedDivBox'>BP</div>
+                    <div className='transformedDivBox'>TP</div>
+                    <div className='transformedDivBox'>RW</div>
+                    <div className='transformedDivBox'>KO</div>
+                    <div className='transformedDivBox'>{match.matchCategory} pending</div>
+                  </div>
+                  <div className="transformed-div-four">
+                    <h1>Players</h1>
+                    <p>400</p>
+                  </div>
+                </div>
+                <div className="transformed-five">
+                  <div className='transformedDivBox'>HP</div>
+                  <div className='transformedDivBox'>BP</div>
+                  <div className='transformedDivBox'>TP</div>
+                  <div className='transformedDivBox'>RW</div>
+                  <div className='transformedDivBox'>KO</div>
+                </div>
+              </div>
+            );
+          })
+      ) : (
+        <p>No pending matches</p>
+      )
+  ) : (
+    <p>No pending matches</p>
+  )}
 </div>
 
-    </div>
+
+
+
+
+
+
+
+
+
+
+
 </div>
     </div>
 
