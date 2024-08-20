@@ -17,6 +17,7 @@ const AddNewMatch = () => {
     fighterAImage: null,
     fighterBImage: null,
   });
+  const [buttonText, setButtonText] = useState('Add Match');  // State for button text
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -45,40 +46,26 @@ const AddNewMatch = () => {
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
 
+    setButtonText('Saving, please wait...');  // Update button text
+
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: data,
       });
 
-      
       if (response.ok) {
         alert('Match added successfully!');
-        
-        // Reset the form fields to their initial state
-        setFormData({
-          matchCategory: 'boxing',
-          matchName: '',
-          matchFighterA: '',
-          matchFighterB: '',
-          matchDescription: '',
-          matchVideoUrl: '',
-          matchDate: '',
-          matchTime: '',
-          matchTokens: '',
-          matchType: 'LIVE',
-          pot: '',
-          fighterAImage: null,
-          fighterBImage: null,
-        });
-      }
-      
-       else {
+        // Reload the page to reflect changes
+        window.location.reload();
+      } else {
         alert('Failed to add match.');
       }
     } catch (error) {
       console.error('Error adding match:', error);
       alert('An error occurred while adding the match.');
+    } finally {
+      setButtonText('Add Match');  // Revert button text if needed
     }
   };
 
@@ -168,7 +155,7 @@ const AddNewMatch = () => {
             </div>
           </div>
 
-          <button type="submit" className='btn-grad' style={{ width: '30%' }}>Add Match</button>
+          <button type="submit" className='btn-grad' style={{ width: '50%' }}>{buttonText}</button>
         </form>
       </div>
     </div>

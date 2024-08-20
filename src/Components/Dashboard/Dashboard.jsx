@@ -105,7 +105,7 @@ const Dashboard = () => {
           <img src={user.profileUrl} alt="Logo" />
         </div>
         <h3>Member Name: {user.firstName} {user.lastName}</h3>
-              <h3>Current plan: None</h3>
+              <h3>Current plan: {user.currentPlan}</h3>
       </div>
 
       <div className='fightwalletWrap'>

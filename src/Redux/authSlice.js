@@ -45,35 +45,33 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
     return rejectWithValue(error.message);
   }
 });
+
 // Async thunk for fetching user data based on token
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (token, { dispatch, rejectWithValue }) => {
-    try {
-      console.log('Fetching user in thunksss with token:', token); // Log the token
-  
-      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-  
-      const data = await response.json();
-      console.log('Fetched user data in thunksss:', data); // Log the fetched data
-  
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch user data');
-      }
-  
-      // Dispatch setUser action with user data
-      dispatch(setUser(data.user));
-  
-      return data.user; // Returning user data
-    } catch (error) {
-      return rejectWithValue(error.message);
+  try {
+    const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch user data');
     }
-  });
-  
+
+    // Dispatch setUser action with user data
+    dispatch(setUser(data.user));
+
+    return data.user; // Returning user data
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -97,7 +95,9 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.isAuthenticated = true;
+        if (action.payload.user.currentPlan !== 'None') {
+          state.isAuthenticated = true; // Only set to true if the plan is not 'None'
+        }
         localStorage.setItem('authToken', action.payload.token); // Store token in local storage
         state.user = action.payload.user; // Set user from action payload
       })
@@ -112,7 +112,9 @@ const authSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.isAuthenticated = true;
+        if (action.payload.currentPlan !== 'None') {
+          state.isAuthenticated = true; // Only set to true if the plan is not 'None'
+        }
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.loading = false;

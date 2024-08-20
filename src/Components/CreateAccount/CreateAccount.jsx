@@ -3,6 +3,7 @@ import "./CreateAccount.css";
 import backgroundImg from "../../Assets/new-bg.png";
 import Thankyou from './Thankyou';  // Import Thankyou component
 import UploadAvatar from './UploadAvatar';  // Import UploadAvatar component
+import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
 
 const CreateAccount = () => {
     const [formData, setFormData] = useState({
@@ -22,6 +23,9 @@ const CreateAccount = () => {
     const [isVerified, setIsVerified] = useState(false);
     const [polling, setPolling] = useState(false);
     const [buttonText, setButtonText] = useState('Register');  // State for button text
+    const [response, setResponse] = useState({});  // State for dynamic response
+    const [pollingTimedOut, setPollingTimedOut] = useState(false);  // State for polling timeout
+    const [recaptchaToken, setRecaptchaToken] = useState('');  // State for reCAPTCHA token
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -31,8 +35,17 @@ const CreateAccount = () => {
         }));
     };
 
+    const handleRecaptchaChange = (token) => {
+        setRecaptchaToken(token);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!recaptchaToken) {
+            alert("Please verify that you are not a robot.");
+            return;
+        }
 
         // Change button text to "Saving! Please wait"
         setButtonText('Saving! Please wait');
@@ -50,12 +63,22 @@ const CreateAccount = () => {
             if (response.ok) {
                 setIsRegistered(true);
                 setPolling(true);  // Start polling for verification
+                setResponse({
+                    title: 'Thank you for registering!',
+                    message: 'Please check your email to verify your account and complete the registration process.'
+                });  // Set dynamic response for success
             } else {
-                throw new Error(data);
+                setResponse({
+                    title: 'Registration Failed',
+                    message: data || 'There was an error registering. Please try again.'
+                });  // Set dynamic response for failure
             }
         } catch (error) {
             console.error('There was an error registering!', error);
-            alert('Registration failed');
+            setResponse({
+                title: 'Registration Failed',
+                message: 'There was an error registering. Please try again.'
+            });  // Set dynamic response for catch block
         } finally {
             // Revert button text after registration
             setButtonText('Register');
@@ -77,10 +100,11 @@ const CreateAccount = () => {
                 }
             }, 5000);  // Poll every 5 seconds
 
-            // Set a timeout to stop polling after 1 minute
+            // Set a timeout to stop polling after 2 minutes
             const timeout = setTimeout(() => {
-                setPolling(false);  // Stop polling after 1 minute
-            }, 120000);  // 1 minute = 60000 milliseconds
+                setPolling(false);  // Stop polling after 2 minutes
+                setPollingTimedOut(true);  // Set polling timeout flag
+            }, 120000);  // 2 minutes = 120000 milliseconds
 
             // Clean up interval and timeout on component unmount or if polling is stopped
             return () => {
@@ -90,12 +114,28 @@ const CreateAccount = () => {
         }
     }, [polling, formData.email]);
 
+    useEffect(() => {
+        if (pollingTimedOut) {
+            setResponse({
+                title: 'Verification Failed',
+                message: 'You did not verify your email within the allowed time. Please try registering again.'
+            });
+        }
+    }, [pollingTimedOut]);
+
+    const clearPlayerName = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            playerName: ''
+        }));
+    };
+
     if (isVerified) {
         return <UploadAvatar email={formData.email} />;  // Pass email as prop to UploadAvatar
     }
 
-    if (isRegistered) {
-        return <Thankyou />;  // Render Thankyou component if registered
+    if (isRegistered || pollingTimedOut) {
+        return <Thankyou response={response} />;  // Pass the dynamic response as prop to Thankyou
     }
 
     return (
@@ -120,7 +160,7 @@ const CreateAccount = () => {
                             <label>Desired Player Name? <span>*</span></label>
                             <input type='text' name="playerName" value={formData.playerName} onChange={handleChange} required />
                         </div>
-                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                        <i className="fa fa-refresh" aria-hidden="true" onClick={clearPlayerName}></i>
                     </div>
 
                     <div className='input-wrap-one'>
@@ -153,7 +193,7 @@ const CreateAccount = () => {
                         <p>I will add later.</p>
                     </div>
 
-                    <div className="checking" style={{backgroundColor:"#367cde", color:'#333'}}>
+                    <div className="checking" style={{ backgroundColor: "#367cde", color: '#333' }}>
                         <label className="custom-radio-label">
                             <input
                                 type="checkbox"
@@ -187,7 +227,11 @@ const CreateAccount = () => {
                                 checked={formData.isUSCitizen}
                                 onChange={handleChange}
                             />
-                            <span className={`custom-radio ${formData.isUSCitizen ? 'checked' : ''}`}></span>
+                            <span className={`custom-radio ${formData.isUSCitizen ? 'checked' : ''
+
+
+
+}`}></span>
                             I am a US citizen and reside in the United States
                         </label>
                     </div>
@@ -204,6 +248,11 @@ const CreateAccount = () => {
                             I have read and agree to the terms and conditions
                         </label>
                     </div>
+
+                    <ReCAPTCHA
+                        sitekey="6LeLErwpAAAAAD3s3QWddvNAWULeDdLGUu3_-5lK"
+                        onChange={handleRecaptchaChange}
+                    />
 
                     <button type="submit" className='btn-grad' style={{ minWidth: '37%' }}>{buttonText}</button>
                 </form>

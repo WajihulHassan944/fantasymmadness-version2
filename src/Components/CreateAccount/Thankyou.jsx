@@ -1,19 +1,20 @@
-import React from 'react'
-import "./Thankyou.css"
-import Background from "../../Assets/thankyou.png"
-const Thankyou = () => {
+import React from 'react';
+import "./Thankyou.css";
+import Background from "../../Assets/thankyou.png";
+
+const Thankyou = ({ response }) => {
   return (
     <div className='thankyou-wrapper'>
       <div className='content'>
-        <h1>Thank you for registering with us</h1>
-        <p>Please check your email to confirm your account and <br />finish your account setup!</p>
+        <h1>{response.title}</h1>
+        <p>{response.message}</p>
       </div>
      
-     <div className='imgwrap'>
-      <img src={Background} />
+      <div className='imgwrap'>
+        <img src={Background} alt="Thank you" />
+      </div>
+    </div>
+  );
+};
 
-</div>    </div>
-  )
-}
-
-export default Thankyou
+export default Thankyou;

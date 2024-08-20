@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Navigate } from 'react-router-dom';
-import { loginUser } from '../../Redux/authSlice';
+import { Navigate, NavLink } from 'react-router-dom';
+import { loginUser, fetchUser } from '../../Redux/authSlice';
+import Membership from '../CreateAccount/Membership'; // Import the Membership component
 import "./Login.css";
 import logoimage from "../../Assets/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, loading, error, user } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [planSelected, setPlanSelected] = useState(false); // New state for re-render
+  const [alertShown, setAlertShown] = useState(false); // State to control alert display
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token && !isAuthenticated) {
+      // Fetch the user data if token exists and user is not authenticated
+      dispatch(fetchUser(token));
+    }
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    if (user && user.currentPlan === 'None' && !planSelected && !alertShown) {
+      alert('Please select a plan to access the dashboard.');
+      setAlertShown(true); // Ensure alert is only shown once
+    }
+  }, [user, planSelected, alertShown]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,18 +36,25 @@ const Login = () => {
       // Dispatch login action
       const resultAction = await dispatch(loginUser({ email, password }));
       const token = resultAction.payload?.token;
+      
       if (token) {
-        // Store token locally or fetch user details using the token later
-        localStorage.setItem('authToken', token);
-        // You can dispatch fetchUser here or in a different component if needed
+        // If token is present, fetch the user details
+        dispatch(fetchUser(token));
       }
     } catch (error) {
       console.error('Login failed', error);
     }
   };
 
-  if (isAuthenticated) {
-    return <Navigate to="/UserDashboard" />;
+  // Check if user is authenticated and has a valid plan
+  if (user) {
+    if (user.currentPlan === 'None') {
+      if (!planSelected) {
+        return <Membership email={user.email} onPlanSelected={() => setPlanSelected(true)} />; // Pass setPlanSelected to Membership
+      }
+    } else if (isAuthenticated) {
+      return <Navigate to="/UserDashboard" />; // Redirect to UserDashboard
+    }
   }
 
   return (

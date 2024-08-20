@@ -21,9 +21,13 @@ import AdminPredictions from './Components/Admin/AdminPredictions';
 import AddNewMatch from './Components/Admin/AddNewMatch';
 import PlayForFree from './Components/PlayForFree/PlayForFree';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import PrivateRouteAdmin from './Components/PrivateRoute/PrivateRouteAdmin';
+
 import { setUser } from './Redux/userSlice'; 
 import { fetchUser } from './Redux/authSlice'; // Import fetchUser if you need to use it separately
 import FightLeaderboard from './Components/GlobalLeaderboard/FightLeaderboard';
+import PreviousMatches from './Components/Admin/PreviousMatches';
+import DeleteFights from './Components/Admin/DeleteFights';
 
 function AppContent() {
   const location = useLocation();
@@ -62,11 +66,16 @@ function AppContent() {
         <Route path="/PlayForFree" element={<PlayForFree />} />
         <Route path='/upcomingfights'  element={<UpcomingFightsUser />} />
         <Route path="/fightLeaderboard" element={ <FightLeaderboard /> } /> 
-        <Route path="/administration" element={<Admin />} />
+        
         <Route path="/administration/login" element={<AdminLogin />} />
-        <Route path="/administration/upcomingFights" element={<UpcomingFights />} />
-        <Route path="/administration/predictions" element={<AdminPredictions />} />
-        <Route path='/administration/AddNewMatch' element={<AddNewMatch />} />
+    
+        <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
+        <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
+        <Route path="/administration/AddNewMatch" element={<PrivateRouteAdmin element={<AddNewMatch />} />} />
+        <Route path="/administration/PreviousMatches" element={<PrivateRouteAdmin element={<PreviousMatches />} />} />
+        <Route path="/administration/DeleteMatches" element={<PrivateRouteAdmin element={<DeleteFights />} />} />
+        <Route path="/administration" element={<PrivateRouteAdmin element={<Admin />} />} />
+       
       </Routes>
 
       {showFooter && <Footer />}

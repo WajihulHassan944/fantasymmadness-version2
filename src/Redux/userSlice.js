@@ -6,25 +6,46 @@ const userSlice = createSlice({
     id: null,
     firstName: '',
     lastName: '',
+    playerName: '',
+    zipCode: '',
     email: '',
+    phone: '',
+    isNotificationsEnabled: false,
+    isSubscribed: false,
+    isUSCitizen: false,
+    isAgreed: false,
     profileUrl: '',
-    // Add other user details if needed
+    currentPlan: 'None',
+    freePlanExpiryDate: null,
+    hasAvailedFreePlan: false,
+    verified: false,
   },
   reducers: {
     setUser: (state, action) => {
-      const { _id, firstName, lastName, email, profileUrl } = action.payload;
-      state.id = _id;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.email = email;
-      state.profileUrl = profileUrl;
+      return {
+        ...state,
+        ...action.payload, // Spread the user data into the state
+      };
     },
     clearUser: (state) => {
-      state.id = null;
-      state.firstName = '';
-      state.lastName = '';
-      state.email = '';
-      state.profileUrl = '';
+      return {
+        id: null,
+        firstName: '',
+        lastName: '',
+        playerName: '',
+        zipCode: '',
+        email: '',
+        phone: '',
+        isNotificationsEnabled: false,
+        isSubscribed: false,
+        isUSCitizen: false,
+        isAgreed: false,
+        profileUrl: '',
+        currentPlan: 'None',
+        freePlanExpiryDate: null,
+        hasAvailedFreePlan: false,
+        verified: false,
+      };
     },
   },
 });
