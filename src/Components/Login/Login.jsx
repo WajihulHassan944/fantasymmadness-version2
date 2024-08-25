@@ -5,6 +5,7 @@ import { loginUser, fetchUser } from '../../Redux/authSlice';
 import Membership from '../CreateAccount/Membership'; // Import the Membership component
 import "./Login.css";
 import logoimage from "../../Assets/logo.png";
+import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [planSelected, setPlanSelected] = useState(false); // New state for re-render
   const [alertShown, setAlertShown] = useState(false); // State to control alert display
+  const [recaptchaToken, setRecaptchaToken] = useState('');  // State for reCAPTCHA token
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -30,8 +32,20 @@ const Login = () => {
     }
   }, [user, planSelected, alertShown]);
 
+
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!recaptchaToken) {
+      alert("Please verify that you are not a robot.");
+      return;
+  }
+
     try {
       // Dispatch login action
       const resultAction = await dispatch(loginUser({ email, password }));
@@ -80,9 +94,19 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button className='btn-grad' type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
+       <div className='toFlexDiv'>  
+  <div className='recaptcha-container'>
+    <ReCAPTCHA
+      sitekey="6LeLErwpAAAAAD3s3QWddvNAWULeDdLGUu3_-5lK"
+      onChange={handleRecaptchaChange}
+    />
+  </div>
+  
+  <button className='btn-grad' type="submit" disabled={loading} >
+    {loading ? 'Logging in...' : 'Login'}
+  </button>
+</div>
+
         </form>
 
         <h2>- OR -</h2>

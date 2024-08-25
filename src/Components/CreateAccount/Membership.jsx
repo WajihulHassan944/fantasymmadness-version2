@@ -61,7 +61,7 @@ const Membership = ({ email, onPlanSelected }) => {
   }
 
   if (selectedPlan === 'standard') {
-    return <MembershipCheckout email={email} />;
+    return <MembershipCheckout email={email} name={memberName} avatar={memberAvatar} />;
   }
 
   return (

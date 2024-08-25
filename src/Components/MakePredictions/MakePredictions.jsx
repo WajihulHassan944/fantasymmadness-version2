@@ -119,7 +119,7 @@ const MakePredictions = ({ matchId }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          playerId: user.id,
+          playerId: user._id,
           matchId: matchId,
           predictions: rounds
         }),
@@ -130,13 +130,13 @@ const MakePredictions = ({ matchId }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: user.id,
+          userId: user._id,
           predictionStatus: 'submitted'
         }),
       });
-  
-      // Redirect to the dashboard
-      navigate('/YourFights', { replace: true });
+      
+      window.location.reload();
+
     } catch (error) {
       console.error('Error saving predictions:', error);
       alert('Failed to save predictions.');
@@ -158,13 +158,13 @@ const MakePredictions = ({ matchId }) => {
           <img src={user.profileUrl} alt="Logo" />
         </div>
         <h3>Member Name: {user.firstName} {user.lastName}</h3>
-        <h3>Current plan: None</h3>
+        <h3>Current plan: {user.currentPlan}</h3>
       </div>
 
       <div className='fightwalletWrap'>
         <div className='fightWallet'>
           <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-          <h2>Tokens Remaining: <span>35</span></h2>
+          <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
         </div>
       </div>
 

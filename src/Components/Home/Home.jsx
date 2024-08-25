@@ -4,6 +4,7 @@ import { fetchMatches } from '../../Redux/matchSlice';
 import "./Home.css";
 import FighterOne from "../../Assets/fighterOne.png";
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData';
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
  
   const dispatch = useDispatch();
@@ -11,7 +12,11 @@ const Home = () => {
   const matchStatus = useSelector((state) => state.matches.status);
   const { leaderboard, playerCount } = useLeaderboardData(matches);
 
-  
+  const navigate = useNavigate();
+
+  const handleFightClick = () => {
+    navigate('/login');
+  };
 
 
   useEffect(() => {
@@ -32,7 +37,7 @@ const Home = () => {
     }
   
     return leaderboard.map((user, index) => (
-      <div className='leaderboardItem' key={user._id}>
+      <div className='leaderboardItem' key={user._id} onClick={handleFightClick}>
         <div className='leaderboard-item-image'>
           <img src={user.profileUrl || FighterOne} alt={user.firstName} />
         </div>
@@ -63,7 +68,7 @@ const Home = () => {
         <div className="fightswrap">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id}>
+              <div className="fightItem" key={match._id} onClick={handleFightClick}>
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />

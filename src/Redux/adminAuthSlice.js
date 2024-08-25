@@ -25,18 +25,23 @@ export const loginAdmin = createAsyncThunk('adminAuth/loginAdmin', async ({ emai
     return rejectWithValue(error.message);
   }
 });
+const initialState = {
+  isAdminAuthenticated: !!localStorage.getItem('adminAuthToken'), // Initialize based on localStorage
+  loading: false,
+  error: null,
+};
 
 const adminAuthSlice = createSlice({
   name: 'adminAuth',
-  initialState: {
-    isAdminAuthenticated: false,
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
     logoutAdmin: (state) => {
       state.isAdminAuthenticated = false;
       localStorage.removeItem('adminAuthToken');
+    },
+    setAdminAuthenticated: (state, action) => {
+      state.isAdminAuthenticated = true;
+      localStorage.setItem('adminAuthToken', action.payload.token);
     },
   },
   extraReducers: (builder) => {
@@ -48,7 +53,7 @@ const adminAuthSlice = createSlice({
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.isAdminAuthenticated = true;
-        localStorage.setItem('adminAuthToken', action.payload.token); // Store token in local storage
+        localStorage.setItem('adminAuthToken', action.payload.token);
       })
       .addCase(loginAdmin.rejected, (state, action) => {
         state.loading = false;
@@ -57,5 +62,5 @@ const adminAuthSlice = createSlice({
   },
 });
 
-export const { logoutAdmin } = adminAuthSlice.actions;
+export const { logoutAdmin, setAdminAuthenticated } = adminAuthSlice.actions;
 export default adminAuthSlice.reducer;

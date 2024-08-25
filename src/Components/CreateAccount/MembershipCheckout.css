@@ -122,17 +122,25 @@ color: #eee;
     outline: none;
     margin-left: 55%;
 }
-.submitcardbtn{
+.submitcardbtn {
+    position: relative; /* Ensures the button is positioned in relation to its container */
     padding: 10px 20px;
     background-color: black;
-    color:#fff;
-    width:100%;
-    border:none;
+    color: #fff;
+    width: 100%;
+    border: none;
     outline: none;
     border-radius: 5px;
-    
-    
+    cursor: pointer;
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 999999; /* High z-index to ensure it's above other elements */
 }
+
+
 .input-group h3{
     margin-bottom: 3px;
     color:#eee;

@@ -19,6 +19,7 @@ const userSlice = createSlice({
     freePlanExpiryDate: null,
     hasAvailedFreePlan: false,
     verified: false,
+    tokens: '0', // Add tokens to the initial state
   },
   reducers: {
     setUser: (state, action) => {
@@ -45,6 +46,7 @@ const userSlice = createSlice({
         freePlanExpiryDate: null,
         hasAvailedFreePlan: false,
         verified: false,
+        tokens: '0', // Reset tokens to 0 when clearing user
       };
     },
   },

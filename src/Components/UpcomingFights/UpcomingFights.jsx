@@ -2,11 +2,20 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import './UpcomingFightsUser.css';
+import { useNavigate } from 'react-router-dom';
 
 const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
+
+  const navigate = useNavigate();
+
+
+  const handleFightClick = () => {
+    navigate('/login');
+  };
+
 
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -25,7 +34,7 @@ const UpcomingFights = () => {
         <div className="fightswrap">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id}>
+              <div className="fightItem" key={match._id} onClick={handleFightClick}>
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />

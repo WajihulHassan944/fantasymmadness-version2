@@ -8,7 +8,8 @@ const UpcomingFights = () => {
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
-  
+  const [filter, setFilter] = useState('All');
+
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
@@ -26,18 +27,35 @@ const UpcomingFights = () => {
     return <AdminPredictions matchId={selectedMatchId} />;
   }
 
-  // Filter matches to only include upcoming ones
-  const today = new Date();
-  const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
+
+  const filteredMatches = matches.filter((match) => {
+    if (filter === 'All') return true;
+    return match.matchStatus === filter;
+  });
+  
 
   return (
-    <div className='adminWrapper'>
+   <div className='adminWrapper'>
       <div className='homeSecond' style={{ background: 'transparent' }}>
         <h1 className='second-main-heading'>Upcoming fights / Active fights</h1>
+
+        <div className='controls'>
+          <h5 className={filter === 'All' ? 'active' : ''} onClick={() => setFilter('All')}>All</h5>
+          <h5 className={filter === 'Finished' ? 'active' : ''} onClick={() => setFilter('Finished')}>Finished Fights</h5>
+          <h5 className={filter === 'Ongoing' ? 'active' : ''} onClick={() => setFilter('Ongoing')}>Active Fights</h5>
+        </div>
+
         <div className="fightswrap">
-          {upcomingMatches.length > 0 ? (
-            upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)}>
+          {filteredMatches.length > 0 ? (
+            filteredMatches.map((match) => (
+              <div
+                className="fightItem"
+                key={match._id}
+                onClick={match.matchStatus === 'Ongoing' 
+                  ? () => handleMatchClick(match._id) 
+                  : () => alert('Scores already submitted')
+                }
+              >
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -67,19 +85,19 @@ const UpcomingFights = () => {
                     <p>{match.matchDescription}</p>
                   </div>
                   <div className="transformed-div-four">
-                    <h1>Players</h1>
-                    <p>{match.matchTokens}</p>
+                    <h1>Status</h1>
+                    <p>{match.matchStatus}</p>
                   </div>
-                </div>    
+                </div>
               </div>
             ))
           ) : (
-            <p className='noMatch'>No upcoming matches</p>
+            <p className='noMatch'>No matches found</p>
           )}
         </div>
       </div>
     </div>
-  );
+     );
 }
 
 export default UpcomingFights;

@@ -14,3 +14,17 @@
 .adminWrapper .frontPageHeading{
     color:#fff;
 }
+.adminWrapper .controls{
+    display: flex;
+    color: #fff;
+    gap:40px;
+    font-size: 26px;
+    cursor: pointer;
+}
+.adminWrapper .controls h5:hover{
+    color:#ccc;
+}
+
+.adminWrapper .controls .active{
+    color:yellowgreen;
+}

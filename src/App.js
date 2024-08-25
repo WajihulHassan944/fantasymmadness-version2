@@ -25,26 +25,38 @@ import PrivateRouteAdmin from './Components/PrivateRoute/PrivateRouteAdmin';
 
 import { setUser } from './Redux/userSlice'; 
 import { fetchUser } from './Redux/authSlice'; // Import fetchUser if you need to use it separately
+import { setAdminAuthenticated } from './Redux/adminAuthSlice';
 import FightLeaderboard from './Components/GlobalLeaderboard/FightLeaderboard';
 import PreviousMatches from './Components/Admin/PreviousMatches';
 import DeleteFights from './Components/Admin/DeleteFights';
+import RegisteredUsers from './Components/Admin/RegisteredUsers';
+import FinishedFightUserBoard from './Components/FinishedFightUserBoard/FinishedFightUserBoard';
 
 function AppContent() {
   const location = useLocation();
   const dispatch = useDispatch(); // Initialize dispatch
-
+  
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    console.log('Token from localStorage:', token); // Log the token to see if it's retrieved correctly
-
-    if (token) {
-      console.log('Token is present, dispatching setUser and fetchUser');
-      dispatch(setUser({ token })); // Set the token in the auth state
-      dispatch(fetchUser(token)); // Fetch and set user details based on the token
+    // For user authentication
+    const userToken = localStorage.getItem('authToken');
+    if (userToken) {
+      console.log('User token found:', userToken);
+      dispatch(setUser({ token: userToken })); // Set the token in the auth state
+      dispatch(fetchUser(userToken)); // Fetch and set user details based on the token
+    }
+  
+    // For admin authentication
+    const adminToken = localStorage.getItem('adminAuthToken');
+    console.log('Admin token from localStorage:', adminToken);
+    if (adminToken) {
+      console.log('Dispatching setAdminAuthenticated action');
+      dispatch(setAdminAuthenticated({ token: adminToken })); // Set the admin authentication state
     } else {
-      console.log('No token found in localStorage');
+      console.log('No admin token found in localStorage');
     }
   }, [dispatch]);
+
+  
   const showPublicHeader = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showAdminHeader = location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showFooter = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
@@ -66,7 +78,7 @@ function AppContent() {
         <Route path="/PlayForFree" element={<PlayForFree />} />
         <Route path='/upcomingfights'  element={<UpcomingFightsUser />} />
         <Route path="/fightLeaderboard" element={ <FightLeaderboard /> } /> 
-        
+        <Route path="/FinishedFight" element={ <FinishedFightUserBoard /> } />
         <Route path="/administration/login" element={<AdminLogin />} />
     
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
@@ -75,6 +87,9 @@ function AppContent() {
         <Route path="/administration/PreviousMatches" element={<PrivateRouteAdmin element={<PreviousMatches />} />} />
         <Route path="/administration/DeleteMatches" element={<PrivateRouteAdmin element={<DeleteFights />} />} />
         <Route path="/administration" element={<PrivateRouteAdmin element={<Admin />} />} />
+        <Route path="/administration/RegisteredUsers" element={<PrivateRouteAdmin element={<RegisteredUsers />} />} />
+
+        
        
       </Routes>
 

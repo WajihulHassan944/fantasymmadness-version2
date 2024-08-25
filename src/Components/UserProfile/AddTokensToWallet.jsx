@@ -1,17 +1,20 @@
 import React from 'react'
 import "./AddTokensToWallet.css";
-import Logoimage from "../../Assets/myimg.jpg";
+import { useSelector } from 'react-redux'; // Import useSelector to access Redux store
+
 const AddTokensToWallet = () => {
+    const user = useSelector((state) => state.user);
+  
   return (
     <div className='membership-wrapper addTokensToWallet'>
       
 
       <div className='member-header'>
-           <div className='member-header-image'> <img src={Logoimage} /></div>
+           <div className='member-header-image'> <img src={user.profileUrl} /></div>
 
-            <h3>Member Name - upgrade</h3>
-            <h3>Current plan: None</h3>
-        </div>
+           <h3>Member Name: {user.firstName} {user.lastName}</h3>
+        <h3>Current plan: {user.currentPlan} </h3>
+      </div>
 
 
         <div className='mermbership-cards'>

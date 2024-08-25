@@ -64,7 +64,7 @@ const FightLeaderboard = ({ matchId }) => {
         if (roundPrediction.koPrediction1 === fighterOneRound.KO) {
           totalScore += fighterOneRound.KO;
         } else {
-          totalScore += 25; // 25 points for wrong KO pick
+          totalScore += 0; // 25 points for wrong KO pick
         }
       }
   
@@ -93,12 +93,13 @@ const FightLeaderboard = ({ matchId }) => {
         if (roundPrediction.koPrediction2 === fighterTwoRound.KO) {
           totalScore += fighterTwoRound.KO;
         } else {
-          totalScore += 25; // 25 points for wrong KO pick
+          totalScore += 0; // 25 points for wrong KO pick
         }
       }
     });
   
     return totalScore;
+    
   };
   
 
@@ -131,7 +132,7 @@ const FightLeaderboard = ({ matchId }) => {
             <img src={Logoimage} alt="Logo" />
           </div>
           <h3>Member Name - {user.firstName} {user.lastName}</h3>
-          <h3>Current plan: None</h3>
+          <h3>Current plan: {user.currentPlan}</h3>
         </div>
 
         <div className='fightwalletWrap'>
@@ -146,7 +147,7 @@ const FightLeaderboard = ({ matchId }) => {
           
           <div className='fightWallet'>
             <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-            <h2>Tokens Remaining: <span>35</span></h2>
+            <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
           </div>
         </div>
 

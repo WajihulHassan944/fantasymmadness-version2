@@ -58,12 +58,34 @@ const FightCosting = ({ matchId }) => {
 
 
 
-
-  const handleMatchClick = () => {
-    setShowPredictions(true);
+  const handleMatchClick = async () => {
+   
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/api/deduct-tokens', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user._id, // Assuming user._id is available in your user state
+          matchTokens: match.matchTokens, // Match token cost
+        }),
+      });
   
+      const data = await response.json();
+  
+      if (response.ok) {
+     
+        setShowPredictions(true);
+      } else {
+        alert(data.message || 'Could not deduct tokens. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error in deducting tokens:', error);
+      alert('An error occurred. Please try again later.');
+    }
   };
-  
+    
   if (showPredictions) {
     return  <MakePredictions matchId={matchId} />
   }
@@ -77,13 +99,13 @@ const FightCosting = ({ matchId }) => {
           <img src={user.profileUrl || Logoimage} alt="Logo" />
         </div>
         <h3>Member Name: {user.firstName} {user.lastName}</h3>
-        <h3>Current plan: None</h3>
+        <h3>Current plan: {user.currentPlan} </h3>
       </div>
 
       <div className='fightwalletWrap'>
         <div className='fightWallet'>
           <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-          <h2>Tokens Remaining: <span>35</span></h2>
+          <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
         </div>
       </div>
 
@@ -115,7 +137,7 @@ const FightCosting = ({ matchId }) => {
         </h1>
 
         <h1 className='fightTypeInFightDetails'>
-          You have <span style={{ color: '#ffc000' }}>35 tokens</span> in your wallet <i className="fa fa-circle" style={{ color: 'yellow', fontSize: '30px' }}></i>
+          You have <span style={{ color: '#ffc000' }}>{user.tokens} tokens</span> in your wallet <i className="fa fa-circle" style={{ color: 'yellow', fontSize: '30px' }}></i>
         </h1>
 
         <div className='fightDetailsPot'>

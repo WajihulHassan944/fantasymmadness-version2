@@ -98,8 +98,8 @@ const DeleteFights = () => {
                       <p>{match.matchDescription}</p>
                     </div>
                     <div className="transformed-div-four">
-                      <h1>Players</h1>
-                      <p>{match.matchTokens}</p>
+                      <h1>Status</h1>
+                      <p>{match.matchStatus}</p>
                     </div>
                   </div>
                 </div>

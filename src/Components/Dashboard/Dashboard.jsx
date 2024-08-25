@@ -5,7 +5,8 @@ import './Dashboard.css';
 import { fetchMatches } from '../../Redux/matchSlice';
 import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
-
+import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
+import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 const Dashboard = () => {
 
   const dispatch = useDispatch();
@@ -47,19 +48,50 @@ const Dashboard = () => {
   };
 
 
-  // Render the FightCosting component if a match is selected
   if (selectedMatchId) {
-    return <FightCosting matchId={selectedMatchId} />;
-  }
+  const selectedMatch = matches.find(match => match._id === selectedMatchId);
+    if (selectedMatch && user.tokens >= selectedMatch.matchTokens) {
+      return <FightCosting matchId={selectedMatchId} />;
+    } else {
+      return <PurchaseTokensIntimation matchId={selectedMatchId} />;
+    }
+}
+
   
-  // Render the FightCosting component if a match is selected
+  // Check the match status and render the appropriate component
   if (completedMatchId) {
-    return <FightLeaderboard matchId={completedMatchId} />;
+    const match = matches.find((m) => m._id === completedMatchId);
+    if (match && match.matchStatus === 'Ongoing') {
+      return <FightLeaderboard matchId={completedMatchId} />;
+    } else if (match && match.matchStatus === 'Finished') {
+      return <FinishedFight matchId={completedMatchId} />;
+    }
   }
 
-  // Filter matches to only include upcoming ones
+  
   const today = new Date();
-  const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
+  const currentTime = new Date();
+  
+  // Filter matches
+  const upcomingMatches = matches.filter((match) => {
+    // Construct matchDateTime including both date and time
+    const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+  
+    // Calculate 2 hours before the match time
+    const twoHoursBeforeMatch = new Date(matchDateTime.getTime() - 2 * 60 * 60 * 1000);
+  
+    // Return matches that are either in the future or today but more than 2 hours away,
+    // and ensure that the match date is greater than or equal to today
+    return (
+      matchDateTime >= today.setHours(0, 0, 0, 0) &&
+      currentTime < twoHoursBeforeMatch
+    );
+  });
+    
+
+
+
+
 
   function getRemainingTime(matchDate, matchTime) {
     const [year, month, day] = matchDate.split('T')[0].split('-');
@@ -86,11 +118,12 @@ const Dashboard = () => {
       hasStarted,
     };
   }
-  
   const completedMatches = matches.filter((match) => {
     const hasSubmittedPrediction = match.userPredictions && 
       match.userPredictions.some(prediction => 
-        prediction.userId.toString() === user.id.toString() && prediction.predictionStatus === 'submitted'
+        prediction.userId && user._id && 
+        prediction.userId.toString() === user._id.toString() && 
+        prediction.predictionStatus === 'submitted'
       );
     console.log('Checking match:', match);
     console.log('Has submitted prediction:', hasSubmittedPrediction);
@@ -111,7 +144,7 @@ const Dashboard = () => {
       <div className='fightwalletWrap'>
         <div className='fightWallet'>
           <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-          <h2>Tokens Remaining: <span>35</span></h2>
+          <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
         </div>
       </div>
 
@@ -204,7 +237,7 @@ const Dashboard = () => {
               <div className='transformedDivBox'>TP</div>
               <div className='transformedDivBox'>RW</div>
               <div className='transformedDivBox'>KO</div>
-              <div className='transformedDivBox'>{match.matchCategory} pending</div>
+              <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
             </div>
             <div className="transformed-div-four">
               <h1>Players</h1>
@@ -236,7 +269,7 @@ const Dashboard = () => {
       .filter((match) =>
         match.userPredictions &&
         !match.userPredictions.some(prediction =>
-          prediction.userId === user.id && prediction.predictionStatus === 'submitted'
+          prediction.userId === user._id && prediction.predictionStatus === 'submitted'
         )
       )
       .length > 0 ? (
@@ -245,7 +278,7 @@ const Dashboard = () => {
           .filter((match) =>
             match.userPredictions &&
             !match.userPredictions.some(prediction =>
-              prediction.userId === user.id && prediction.predictionStatus === 'submitted'
+              prediction.userId === user._id && prediction.predictionStatus === 'submitted'
             )
           )
           .map((match) => {
@@ -285,7 +318,7 @@ const Dashboard = () => {
                     <div className='transformedDivBox'>TP</div>
                     <div className='transformedDivBox'>RW</div>
                     <div className='transformedDivBox'>KO</div>
-                    <div className='transformedDivBox'>{match.matchCategory} pending</div>
+                    <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus} </div>
                   </div>
                   <div className="transformed-div-four">
                     <h1>Players</h1>

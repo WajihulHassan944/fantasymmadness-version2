@@ -94,7 +94,7 @@ const useLeaderboardData = (matches) => {
         if (roundPrediction.koPrediction1 === fighterOneRound.KO) {
           totalScore += fighterOneRound.KO;
         } else {
-          totalScore += 25;
+          totalScore += 0;
         }
       }
 
@@ -114,7 +114,7 @@ const useLeaderboardData = (matches) => {
         if (roundPrediction.koPrediction2 === fighterTwoRound.KO) {
           totalScore += fighterTwoRound.KO;
         } else {
-          totalScore += 25;
+          totalScore += 0;
         }
       }
     });

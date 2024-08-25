@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import "./YourFights.css";
-import Logoimage from "../../Assets/myimg.jpg";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import FightCosting from '../Dashboard/FightCosting';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData'; // Import your custom hook
+import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
 
 const YourFights = () => {
   const dispatch = useDispatch();
@@ -50,9 +50,10 @@ const YourFights = () => {
     return <FightCosting matchId={selectedMatchId} />;
   }
 
-  if (completedMatchId) {
+// Check the match status and render the appropriate component
+if (completedMatchId) {
     return <FightLeaderboard matchId={completedMatchId} />;
-  }
+ }
 
   const today = new Date();
   const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
@@ -77,13 +78,13 @@ const YourFights = () => {
   const completedMatches = matches.filter((match) => {
     const hasSubmittedPrediction = match.userPredictions && 
       match.userPredictions.some(prediction => 
-        prediction.userId.toString() === user.id.toString() && prediction.predictionStatus === 'submitted'
+        prediction.userId.toString() === user._id.toString() && prediction.predictionStatus === 'submitted'
       );
     return hasSubmittedPrediction;
   });
 
   // Find the current user's total points from the leaderboard
-  const currentUserData = leaderboard.find(player => player._id === user.id);
+  const currentUserData = leaderboard.find(player => player._id === user._id);
   const totalPoints = currentUserData ? currentUserData.totalPoints : 0;
 
   return (
@@ -93,7 +94,7 @@ const YourFights = () => {
           <img src={user.profileUrl} alt="Logo" />
         </div>
         <h3>Member Name: {user.firstName} {user.lastName}</h3>
-        <h3>Current plan: None</h3>
+        <h3>Current plan: {user.currentPlan}</h3>
       </div>
     
       <div className='fightwalletWrap'>
@@ -103,7 +104,7 @@ const YourFights = () => {
           
         <div className='fightWallet'>
         <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-        <h2>Tokens Remaining: <span>35</span></h2>
+        <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
     </div>
 </div>
 
@@ -162,7 +163,7 @@ const YourFights = () => {
               <div className='transformedDivBox'>TP</div>
               <div className='transformedDivBox'>RW</div>
               <div className='transformedDivBox'>KO</div>
-              <div className='transformedDivBox'>{match.matchCategory} pending</div>
+              <div className='transformedDivBox'>{match.matchCategory}  {match.matchStatus} </div>
             </div>
             <div className="transformed-div-four">
               <h1>Players</h1>
@@ -196,7 +197,7 @@ const YourFights = () => {
       .filter((match) =>
         match.userPredictions &&
         !match.userPredictions.some(prediction =>
-          prediction.userId === user.id && prediction.predictionStatus === 'submitted'
+          prediction.userId === user._id && prediction.predictionStatus === 'submitted'
         )
       )
       .length > 0 ? (
@@ -205,7 +206,7 @@ const YourFights = () => {
           .filter((match) =>
             match.userPredictions &&
             !match.userPredictions.some(prediction =>
-              prediction.userId === user.id && prediction.predictionStatus === 'submitted'
+              prediction.userId === user._id && prediction.predictionStatus === 'submitted'
             )
           )
           .map((match) => {
@@ -245,7 +246,7 @@ const YourFights = () => {
                     <div className='transformedDivBox'>TP</div>
                     <div className='transformedDivBox'>RW</div>
                     <div className='transformedDivBox'>KO</div>
-                    <div className='transformedDivBox'>{match.matchCategory} pending</div>
+                    <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus} </div>
                   </div>
                   <div className="transformed-div-four">
                     <h1>Players</h1>

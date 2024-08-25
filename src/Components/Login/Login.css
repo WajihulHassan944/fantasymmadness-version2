@@ -105,3 +105,24 @@
  color:#fff;
  text-decoration: none;
 }
+
+.toFlexDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: inherit;
+}
+
+.toFlexDiv .recaptcha-container {
+flex-basis: 40%;
+  transform: scale(0.80); /* Adjust the scale to reduce height */
+  transform-origin: left; /* Ensure scaling is from the left */
+   /* Optional: Add some space between the ReCAPTCHA and the button */
+   margin-left: 4px;
+}
+
+.toFlexDiv .btn-grad {
+  flex-basis: 60%;
+  width: 100% !important;
+  margin-left: -40px;
+}
