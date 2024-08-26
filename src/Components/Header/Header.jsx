@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch to dispatch actions
-import { logout } from '../../Redux/authSlice'; // Import the logout action from authSlice
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Redux/authSlice';
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
 
 const Header = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth); // Get isAuthenticated from Redux store
-  const dispatch = useDispatch(); // Initialize useDispatch
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    dispatch(logout()); // Dispatch the logout action
-    navigate('/'); // Redirect to the login page after logout
+    dispatch(logout());
+    navigate('/');
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -37,10 +46,12 @@ const Header = () => {
               Dashboard
             </NavLink>
 
-            <button onClick={handleLogout} className='sideLinks logoutButton' style={{background:'transparent' , border:'none' , outline:'none'}}>
+            <button onClick={handleLogout} className='sideLinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
               <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
             </button>
           </div>
+
+          <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
         </div>
       ) : (
         <div className='header public-header'>
@@ -62,8 +73,48 @@ const Header = () => {
               <i className="fa fa-sign-in" aria-hidden="true"></i> Login
             </NavLink>
           </div>
+
+          <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
         </div>
       )}
+
+      {/* Mobile Menu Overlay */}
+      <div className={`mobileMenu ${menuOpen ? 'active' : ''}`}>
+        <div className='closeMenuIcon' onClick={toggleMenu}>
+          <i className="fa fa-times"></i>
+        </div>
+
+        <div className='logoimg'>
+          <NavLink to="/" onClick={closeMenu}>
+            <img src={Logo} alt="Logo" />
+          </NavLink>
+        </div>
+
+        <div className='anchorLinksWrapper'>
+          {isAuthenticated ? (
+            <>
+              <NavLink to="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
+              <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Leaderboard</NavLink>
+              <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
+              <NavLink to="/profile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
+              <NavLink to="/UserDashboard" className='anchorlinks' onClick={closeMenu}>Dashboard</NavLink>
+              <button onClick={() => { handleLogout(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
+                <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
+              <NavLink to="/HowToPlay" className='anchorlinks' onClick={closeMenu}>How to play</NavLink>
+              <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
+              <NavLink to="/CreateAccount" className='anchorlinks' onClick={closeMenu}>Create account</NavLink>
+              <NavLink to="/login" className='anchorlinks' onClick={closeMenu}>
+                <i className="fa fa-sign-in" aria-hidden="true"></i> Login
+              </NavLink>
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 }

@@ -487,3 +487,180 @@
 .btn-grad{
   cursor: pointer;
 }
+
+@media (max-width: 767px){
+  
+.homeFirst{
+  min-height: 100vh;
+  width:100%;
+  overflow: hidden;
+}
+.homeFirst h1{
+  font-size: 30px;
+  line-height: 60px;
+  margin-top:85px;
+}
+.homeFirst h2{
+  font-size: 35px;
+  line-height: 59px;
+  width: 300px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  .homeSecond{
+    min-height: 40vh;
+    gap:40px;
+}
+.homeSecond .second-main-heading{
+    font-size: 38px;
+    padding:10px 20px;
+    
+   }
+.homeSecond .fightswrap{
+    gap:30px;
+} 
+.transformed-div {
+    height: 40px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+    
+}
+.fightItemOne .transformed-div h1{
+    margin-left: 45%;
+    font-size: 13px;
+    }
+.transformed-div-two {
+    height: 40px;
+    width: 170px;
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+    margin-left: 0px;
+    padding-left: 20px;
+    padding-top: 3px;
+    gap:1px;
+}
+.transformed-div-two-partOne{
+    display: flex;
+    gap: 10px;
+}
+
+.transformed-div-two-partOne h1{
+    font-size: 17px; 
+}
+.transformed-div-two-partTwo{
+    gap: 10px;
+}
+
+.transformed-div-two-partTwo h1{
+    font-size: 14px;
+  }
+
+.transformed-div-two-partTwo p{
+    font-size: 14px;
+    font-weight: 900;
+   }
+
+
+
+.transformed-div-three {
+    height: 41px;
+    width: 220px;
+    margin-right: 10px;
+    padding-left: 10px;
+    }
+    .transformed-div-four {
+        height: 41px;
+        width: 80px;
+        clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+        padding-right: 20px;
+        margin-left: 0px;
+    }
+    .transformed-div-four h1{
+    font-size: 15px;
+    }
+    .transformed-div-four p{
+    font-size: 14px;
+    font-weight: 900;
+    }
+
+
+
+.fightItem .fightersImages{
+    position: absolute;
+    top:-4px;
+    left:-8px;
+    z-index: 1;
+    display: flex;
+    gap:2px;
+}
+.fighterOne{
+    width:40px;
+    height: 40px;
+    
+}
+
+
+.fighterTwo{
+    width:40px;
+    height: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  .homeThird{
+    min-height: 70vh;
+    padding: 70px 0;
+  }
+  .homeThird .thirdHeadingOne{
+    font-size: 26px;
+  }
+  
+  .homeThird h2{
+    font-size: 25px;
+  }
+  .leaderboardHeading{
+    margin-top: 15px;
+    margin-top:20px;
+  }
+  .leaderboardHeading h3{
+    font-size: 21px;
+   }
+
+  .leaderboardItemsWrap{
+    gap:27px;
+  }
+  .leaderboardItem{
+   height: 45px;
+   width: 320px;
+   padding-left: 70px;
+   padding-right: 15px;
+  }
+
+.leaderboardItem h1{
+    font-size: 16px;
+   }
+
+.toRemove{
+  display: none;
+}
+}

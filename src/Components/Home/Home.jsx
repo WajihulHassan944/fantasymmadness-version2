@@ -41,9 +41,9 @@ const Home = () => {
         <div className='leaderboard-item-image'>
           <img src={user.profileUrl || FighterOne} alt={user.firstName} />
         </div>
-        <h1>{user.firstName} {user.lastName}</h1>
-        <h1>RW#</h1>
-        <h1>KO#</h1>
+        <h1>{user.firstName} <span className='toRemove'> {user.lastName}</span></h1>
+        <h1 className='toRemove'>RW#</h1>
+        <h1 className='toRemove'>KO#</h1>
         <h1>Points {user.totalPoints}</h1>
         <h1>#{index + 1}</h1>
       </div>
@@ -64,7 +64,7 @@ const Home = () => {
 
 
     <div className='homeSecond'>
-        <h1 className='second-main-heading'>Upcoming fights / Active fights</h1>
+        <h1 className='second-main-heading'>Upcoming fights <span className='toRemove'>/ Active fights</span></h1>
         <div className="fightswrap">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
