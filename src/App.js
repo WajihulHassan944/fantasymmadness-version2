@@ -31,6 +31,7 @@ import PreviousMatches from './Components/Admin/PreviousMatches';
 import DeleteFights from './Components/Admin/DeleteFights';
 import RegisteredUsers from './Components/Admin/RegisteredUsers';
 import FinishedFightUserBoard from './Components/FinishedFightUserBoard/FinishedFightUserBoard';
+import PublicProfile from './Components/UserProfile/PublicProfile';
 
 function AppContent() {
   const location = useLocation();
@@ -79,6 +80,7 @@ function AppContent() {
         <Route path='/upcomingfights'  element={<UpcomingFightsUser />} />
         <Route path="/fightLeaderboard" element={ <FightLeaderboard /> } /> 
         <Route path="/FinishedFight" element={ <FinishedFightUserBoard /> } />
+        <Route path="/:userId" element={ <PublicProfile /> } />
         <Route path="/administration/login" element={<AdminLogin />} />
     
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />

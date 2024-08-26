@@ -6,7 +6,6 @@ const UserProfile = () => {
   return (
     <div>
     <Profile />
-    <AddTokensToWallet />
     </div>
   )
 }
