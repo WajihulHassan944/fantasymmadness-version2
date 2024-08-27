@@ -169,7 +169,7 @@ const CreateAccount = () => {
                             <input type='email' name="email" value={formData.email} onChange={handleChange} required />
                         </div>
                         <div className='input-group'>
-                            <label>Your Phone (Mobile) <span>*</span></label>
+                            <label>Your Phone<span className='toRemove'> (Mobile)</span> <span>*</span></label>
                             <input type='text' name="phone" value={formData.phone} onChange={handleChange} required />
                         </div>
                     </div>

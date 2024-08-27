@@ -187,3 +187,34 @@ gap:10px;
 .cardone .btn-grad{
     width:100%;
 }
+
+
+
+@media (max-width: 767px){
+    
+.member-header{
+    height: 35px;
+    padding-left: 80px;
+    padding-right: 20px;
+}
+.member-header-image{
+    top:-10px;
+    left:20px;
+    width: 55px;
+    height: 55px; 
+}
+.member-header img{
+    width:100%;
+}
+.member-header h3{
+    font-size:16px;  
+}
+
+.mermbership-cards{
+    margin-top:70px;
+    gap:50px;
+    flex-direction: column;
+}
+
+
+}

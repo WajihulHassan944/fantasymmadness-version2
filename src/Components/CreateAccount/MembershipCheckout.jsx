@@ -66,8 +66,8 @@ console.log(billingInfo);
         <div className='member-header-image'>
           <img src={avatar} alt="Logo" />
         </div>
-        <h3>Member Name - {name}</h3>
-        <h3>Current plan: None</h3>
+        <h3><span className='toRemove'>Member Name - </span>{name}</h3>
+        <h3><span className='toRemove'>Current </span>Plan: None</h3>
       </div>
 
       <div className='mermbership-cards'>

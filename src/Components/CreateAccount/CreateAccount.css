@@ -233,3 +233,24 @@ flex-basis: 90%;
   font-stretch: condensed; /* Condensed style */
    
 }
+
+
+
+
+@media (max-width: 767px){
+  
+.registerCard{
+  flex-basis: 100%;
+  padding: 20px;
+  padding-left:20px;
+  margin-top: 120px;
+margin-bottom: 100px;   
+}
+
+.backgrounfImg{
+  flex-basis: 0%;
+  display: none;
+}
+
+
+ }

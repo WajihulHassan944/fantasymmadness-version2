@@ -30,7 +30,7 @@ const UpcomingFights = () => {
   return (
     <div className='upcomingFightsUser'>
       <div className='homeSecond' style={{ background: 'transparent' }}>
-        <h1 className='second-main-heading'>Upcoming fights / Active fights</h1>
+        <h1 className='second-main-heading'>Upcoming fights <span className='toRemove'>/ Active fights</span></h1>
         <div className="fightswrap">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (

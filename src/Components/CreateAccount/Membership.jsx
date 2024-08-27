@@ -70,8 +70,8 @@ const Membership = ({ email, onPlanSelected }) => {
         <div className='member-header-image'>
           <img src={memberAvatar} alt="Member Avatar" />
         </div>
-        <h3>Member Name: {memberName}</h3>
-        <h3>Current plan: None</h3>
+        <h3><span className='toRemove'>Member Name:</span> {memberName}</h3>
+        <h3><span className='toRemove'>Current</span> Plan: None</h3>
       </div>
 
       <div className='mermbership-cards'>

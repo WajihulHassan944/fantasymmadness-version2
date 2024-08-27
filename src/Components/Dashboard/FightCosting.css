@@ -190,6 +190,7 @@
     color:black;
 }
 
+
 .note{
     color:#e4c707;
     font-style: italic;
@@ -199,3 +200,36 @@
     font:bold italic 14px / 15px 'Trebuchet Ms', sans-serif;
     font-size: 17px;
 }
+
+
+
+@media (max-width: 767px){
+    
+    .fightwalletWrap{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ccc;
+        margin-top:20px;
+        padding-right: 0;
+        padding-left: 45px;
+    }
+    
+    
+    .fightwalletWrap .fightWallet h1{
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .fightwalletWrap .fightWallet h2{
+        padding: 7px 10px;
+        font-size: 18px;
+    }
+    
+    .fightwalletWrap .fightWallet h2 span{
+        padding: 2px 10px;
+        background-color: #fff;
+        color:black;
+    }
+    
+    }

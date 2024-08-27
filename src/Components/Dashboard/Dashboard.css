@@ -432,6 +432,9 @@ margin-bottom: 20px;
         width: 45px;
         background-color: #c5c5c5;
         margin-right: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     
     }
     .completedFights .transformed-three .transformedDivBox:last-of-type {
@@ -451,6 +454,9 @@ margin-bottom: 20px;
     width: 45px;
     background-color: #ebebeb;
     margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
    
@@ -689,6 +695,9 @@ background-color: #fff;
         width: 45px;
         background-color: #c5c5c5;
         margin-right: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     
     }
     .pendingFights .transformed-three   .transformedDivBox:last-of-type {
@@ -707,6 +716,9 @@ background-color: #fff;
     width: 45px;
     background-color: #ebebeb;
     margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
    
@@ -794,3 +806,301 @@ background-color: #fff;
         
     }
     
+
+
+
+
+
+
+
+    @media (max-width: 767px){
+    .fightwalletWrap .fightWallet h2{
+            font-size: 18px;
+        }
+
+        .fightsWrap{
+           align-items: center;
+           gap:40px;
+           flex-wrap: nowrap;
+           flex-direction: column;
+           margin-top: 50px;
+
+       }
+       .fightscontainer{
+           flex-basis: 100%;
+           
+       }
+       .fightscontainer .fightsheadingone {
+         font-size:20px;
+       padding:8px 0;
+       width:88%;
+       padding-top: 12px;
+       }
+       .fightscontainer .fightsheadingthree {
+        font-size:20px;
+      padding:8px 0;
+      width:88%;
+      padding-top: 12px;
+      }
+    .fightscontainer .fightsheadingtwo {
+        font-size:20px;
+      padding:10px 30px;
+      width:100%;
+      padding-top: 12px;
+      }
+
+
+
+
+
+      
+      .upcomingFights .transformed-div {
+    height: 40px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+    
+}
+
+.upcomingFights .fightItemOne{
+    display: flex;
+    gap:0;
+}
+
+.upcomingFights .fightItemOne .transformed-div h1{
+    margin-left: 45%;
+    font-size: 13px;
+    }
+    .upcomingFights .transformed-div-two {
+    height: 40px;
+    width: 170px;
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+    margin-left: -3px;
+    padding-left: 20px;
+    padding-top: 3px;
+    gap:1px;
+}
+.upcomingFights .transformed-div-two-partOne{
+    display: flex;
+    gap: 10px;
+}
+
+.upcomingFights .transformed-div-two-partOne h1{
+    font-size: 17px; 
+}
+.upcomingFights .transformed-div-two-partTwo{
+    gap: 10px;
+}
+
+.upcomingFights .transformed-div-two-partTwo h1{
+    font-size: 14px;
+  }
+
+  .upcomingFights .transformed-div-two-partTwo p{
+    font-size: 14px;
+    font-weight: 900;
+   }
+
+
+
+   .upcomingFights .transformed-div-three {
+    height: 41px;
+    width: 220px;
+    margin-right: 10px;
+    padding-left: 10px;
+    }
+    .upcomingFights .transformed-div-four {
+        height: 41px;
+        width: 80px;
+        clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+        padding-right: 20px;
+        margin-left: -5px;
+    }
+    .upcomingFights .transformed-div-four h1{
+    font-size: 15px;
+    }
+    .upcomingFights .transformed-div-four p{
+    font-size: 14px;
+    font-weight: 900;
+    }
+
+
+
+    .upcomingFights .fightItem .fightersImages{
+    position: absolute;
+    top:-4px;
+    left:-8px;
+    z-index: 1;
+    display: flex;
+    gap:2px;
+}
+.upcomingFights .fighterOne{
+    width:40px;
+    height: 40px;
+    
+}
+
+
+.upcomingFights .fighterTwo{
+    width:40px;
+    height: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.pendingFights{
+    margin-top:50px;
+}
+.pendingFights .fightItemOne{
+    display: flex;
+    gap:7px;
+}
+
+.pendingFights .transformed-div {
+    height: 40px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+    
+}
+.pendingFights .fightItemOne .transformed-div h1{
+    margin-left: 45%;
+    font-size: 13px;
+}
+    .pendingFights .transformed-div-two {
+        height: 40px;
+        width: 170px;
+        clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        padding-left: 20px;
+        padding-top: 3px;
+        gap:1px;
+    
+}
+.pendingFights .transformed-div-two-partOne{
+    display: flex;
+    gap: 10px;
+}
+
+.pendingFights .transformed-div-two-partOne h1{
+    font-size: 17px;    
+}
+.pendingFights .transformed-div-two-partTwo{
+    display: flex;
+    gap: 10px;
+}
+
+.pendingFights .transformed-div-two-partTwo h1{
+    font-size: 14px;
+}
+
+.pendingFights .transformed-div-two-partTwo p{
+    font-size: 13px;
+    font-weight: 900;
+}
+
+
+
+
+.pendingFights .fightItemTwo{
+    display: flex;
+
+}
+.pendingFights .transformed-three {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .pendingFights .transformed-three   .transformedDivBox{
+        height: 33px;
+        width: 32px;
+        margin-right: 3px;
+        font-size:13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    }
+    .pendingFights .transformed-three   .transformedDivBox:last-of-type {
+        height: 33px;
+        width: 45px;
+    }
+    .pendingFights .transformed-five{
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    padding-left: 35px;
+   }
+   
+   .pendingFights   .transformedDivBox{
+    height: 33px;
+    width: 32px;
+    margin-right: 3px;
+    
+    font-size:13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+   
+   
+   
+.pendingFights .transformed-div-four {
+    height: 33px;
+    width: 80px;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+    padding-right: 20px;
+    padding-top:5px;
+    }
+    .pendingFights .transformed-div-four h1{
+        font-size: 15px;
+    }
+
+    .pendingFights .transformed-div-four p{
+        font-size: 14px;
+        font-weight: 900;
+    }
+
+
+    .pendingFights  .fightItem .fightersImages{
+        position: absolute;
+        top:-4px;
+        left:-8px;
+        z-index: 1;
+        display: flex;
+        gap:2px;
+    }
+    .pendingFights  .fighterOne{
+    width:40px;
+    height: 40px;
+    }
+    
+    
+    .pendingFights .fighterTwo{
+        width:40px;
+    height: 40px;
+    }
+    
+
+        
+}
+

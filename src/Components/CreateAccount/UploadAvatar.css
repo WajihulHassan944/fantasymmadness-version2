@@ -78,3 +78,10 @@
   margin-bottom: 20px;
   border-radius:50%;
 }
+
+
+@media (max-width: 767px){
+  .uploadAvatar .btn-grad{
+    width:60%;
+  }
+}

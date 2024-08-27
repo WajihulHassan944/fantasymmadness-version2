@@ -126,3 +126,54 @@ flex-basis: 40%;
   width: 100% !important;
   margin-left: -40px;
 }
+
+
+
+
+
+
+
+
+
+@media (max-width: 767px){
+
+  .loginCard{
+    width:340px;
+    padding:20px 20px;
+    margin-top:100px;
+}
+.loginCard img{
+    width:120px;
+    margin-top:20px;
+}
+.login-wrapper .loginCard h1{
+   font-size: 24px;
+ margin:15px 0;
+}
+.loginCard .btn-grad{
+    width: 50%;
+    
+}
+
+.loginCard h2{
+ font-size: 23px;
+}
+.loginCard .loginNavLink{
+ font-size: 23px;
+ }
+
+.toFlexDiv .recaptcha-container {
+flex-basis: 30%;
+  transform: scale(0.65); /* Adjust the scale to reduce height */
+   margin-left: 4px;
+}
+
+.toFlexDiv .btn-grad {
+  flex-basis: 70%;
+  width: 100% !important;
+  margin-left: -96px;
+  margin-top:-1px;
+  
+}
+
+}
