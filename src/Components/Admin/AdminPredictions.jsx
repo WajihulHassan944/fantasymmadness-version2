@@ -189,7 +189,7 @@ const AdminPredictions = ({ matchId }) => {
           <div className='imgToWrap'><img src={match.fighterAImage} alt="Fighter A" /></div>
           <div className='imgToWrap'><img src={match.fighterBImage} alt="Fighter B" /></div>
         </div>
-        <h2>{match.matchFighterA} -VS- {match.matchFighterB} - Round {round}</h2>
+        <h2>{match.matchFighterA} -VS- {match.matchFighterB} <span className='toRemove'>- Round {round}</span></h2>
 
         <button className='btn-grad finishFight' onClick={handleFinishFight}>Finish Fight</button>
       </div>

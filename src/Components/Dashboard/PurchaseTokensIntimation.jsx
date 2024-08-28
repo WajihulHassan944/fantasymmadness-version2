@@ -74,8 +74,8 @@ const PurchaseTokensIntimation = ({ matchId }) => {
         <img src={user.profileUrl} alt="Logo" />
       </div>
     
-      <h3>Member Name: {user.firstName} {user.lastName}</h3>
-        <h3>Current plan: {user.currentPlan} </h3>
+      <h3><span className='toRemove'>Member Name:</span> {user.firstName} {user.lastName}</h3>
+        <h3><span className='toRemove'>Current </span>Plan: {user.currentPlan} </h3>
       </div>
 
     <div className='fightwalletWrap'>
@@ -106,7 +106,7 @@ const PurchaseTokensIntimation = ({ matchId }) => {
           <p style={{ color: "#38b90c" }}>
             {timeRemaining.hasStarted
               ? "Fight has started"
-              : `Begins in ${timeRemaining.diffHrs}:${timeRemaining.diffMins}:${timeRemaining.diffSecs}`}
+              : `${timeRemaining.diffHrs}:${timeRemaining.diffMins}:${timeRemaining.diffSecs}`}
           </p>
         </div>
 

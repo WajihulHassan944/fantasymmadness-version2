@@ -72,8 +72,8 @@ const navigate = useNavigate();
                 <div className='member-header-image'>
                     <img src={user.profileUrl} alt="Profile" />
                 </div>
-                <h3>Member Name - {user.firstName} {user.lastName}</h3>
-                <h3>Current plan: {user.currentPlan}</h3>
+                <h3><span className='toRemove'>Member Name - </span>{user.firstName} {user.lastName}</h3>
+                <h3><span className='toRemove'>Current</span> Plan: {user.currentPlan}</h3>
             </div>
 
             <div className='fightwalletWrap'>
@@ -108,7 +108,7 @@ const navigate = useNavigate();
 
                     <div className='input-wrap-one'>
                         <div className='input-group'>
-                            <label>Your Phone (Mobile) <span>*</span></label>
+                            <label>Your Phone <span className='toRemove'>(Mobile)</span> <span>*</span></label>
                             <input type='text' value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </div>
                         <div className='input-group'>
@@ -126,7 +126,7 @@ const navigate = useNavigate();
                         ></textarea>
                     </div>
 
-                    <button type="submit" className='btn-grad' style={{ width: '30%' }}>
+                    <button type="submit" className='btn-grad' >
                         {loading ? 'Saving!' : 'Save Settings'}
                     </button>
                 </form>

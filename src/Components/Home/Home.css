@@ -129,6 +129,7 @@
     flex-direction: column;
     gap:5px;
     position: relative;
+    
 }
 .fightItemOne{
     display: flex;
@@ -527,6 +528,7 @@
    }
 .homeSecond .fightswrap{
     gap:30px;
+    
 } 
 .transformed-div {
     height: 40px;

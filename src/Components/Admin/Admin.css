@@ -9,6 +9,7 @@
     background-repeat: no-repeat;
     min-height: 100vh;
     margin-left: 230px; /* Leaves 230px space from the left */
+
     
 }
 .adminWrapper .frontPageHeading{
@@ -27,4 +28,34 @@
 
 .adminWrapper .controls .active{
     color:yellowgreen;
+}
+
+
+
+@media (max-width: 767px){
+    .adminWrapper {
+        width: 100%;
+        margin-left: 0; 
+        z-index: 100;
+    }
+    .adminWrapper .frontPageHeading{
+        text-align: center;
+    }
+    .adminWrapper .controls{
+        display: flex;
+        color: #fff;
+        gap:40px;
+        font-size: 26px;
+        cursor: pointer;
+    }
+    
+.adminWrapper .controls{
+    gap:20px;
+    font-size: 21px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+       
 }

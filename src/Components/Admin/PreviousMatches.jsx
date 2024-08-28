@@ -70,7 +70,7 @@ const PreviousMatches = () => {
         <div className='prevMatches'>
             <div className='adminWrapper'>
                 <div className='homeSecond' style={{ background: 'transparent' }}>
-                    <h1 className='second-main-heading'>All fights / Previous Fights</h1>
+                    <h1 className='second-main-heading'>All fights <span className='toRemove'>/ Previous Fights</span></h1>
 
                     <div className='controls'>
                         <h5 className={filter === 'All' ? 'active' : ''} onClick={() => setFilter('All')}>All</h5>

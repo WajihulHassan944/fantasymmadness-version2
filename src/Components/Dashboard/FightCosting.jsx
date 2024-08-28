@@ -98,8 +98,8 @@ const FightCosting = ({ matchId }) => {
         <div className='member-header-image'>
           <img src={user.profileUrl || Logoimage} alt="Logo" />
         </div>
-        <h3>Member Name: {user.firstName} {user.lastName}</h3>
-        <h3>Current plan: {user.currentPlan} </h3>
+        <h3><span className='toRemove'>Member Name: </span>{user.firstName} {user.lastName}</h3>
+        <h3><span className='toRemove'>Current</span> Plan: {user.currentPlan} </h3>
       </div>
 
       <div className='fightwalletWrap'>
@@ -128,7 +128,7 @@ const FightCosting = ({ matchId }) => {
           <p style={{ color: "#38b90c" }}>
             {timeRemaining.hasStarted
               ? "Fight has started"
-              : `Begins in ${timeRemaining.diffHrs} hrs ${timeRemaining.diffMins} mins ${timeRemaining.diffSecs} secs`}
+              : `${timeRemaining.diffHrs}:${timeRemaining.diffMins}:${timeRemaining.diffSecs}`}
           </p>
         </div>
 

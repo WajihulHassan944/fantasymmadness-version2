@@ -29,3 +29,36 @@
     align-items: center;
     gap:50px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 767px){
+    .fightLeaderboard .fightwalletWrap{
+        flex-direction: column-reverse;
+        gap:20px;
+    }
+    
+    .totalPoints{
+        text-align: center !important;
+    }
+     .fightTypeInFightDetails{
+        font-size: 22px !important;
+        text-align: center !important;
+    }
+     .totalPoints h1{
+        font-size: 22px !important;
+        text-align: center !important;
+    }
+    
+
+}

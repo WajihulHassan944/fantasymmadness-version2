@@ -232,4 +232,39 @@
         color:black;
     }
     
+
+
+    .fightDetailsContainer{
+        padding:0 2px;
+    }    
+    .fightDetailsContainer .btn-grad{
+        width:50%;
+    }
+.fightDetailsContainer .fightersImagesInFightDetails{
+   margin-top: 20px;
+    
+}
+
+.fightDetailsContainer .fightersImagesInFightDetails h1{
+    font-size: 20px;
+}
+
+.fightCosting .imgWrapFights{
+    width:85px;
+    height:85px;
+}
+.fightDetailsContainer .fightTypeInFightDetails{
+    font-size:17px;
+    }
+.fightDetailsContainer .fightDetailsPot h1, .fightDetailsContainer .fightDetailsPot p{
+    font-size:20px;
+   }
+.fightDetailsContainer .beiginningTimeFight h1 , 
+.fightDetailsContainer .beiginningTimeFight p{
+    font-size:18px;
+    }
+
+
+
+
     }

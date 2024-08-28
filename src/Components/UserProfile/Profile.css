@@ -50,3 +50,42 @@
 .input-group-profile input{
     background: black;
 }
+
+.myprofile .btn-grad{
+    width: 30%;
+}
+
+
+
+@media (max-width: 767px){
+   
+    .myprofile .createAccount{
+        flex-direction: column;
+    }
+    .divTwoProfile{
+        flex-basis: 100%;
+        padding-left: 1%;
+        gap:10px;
+        margin-top:10px;
+    }
+    .divTwoProfile h1{
+        font-size:16px;
+        margin:10px 0;
+        }
+        
+    .myprofile .btn-grad{
+        width:100% !important;
+    }
+    .profile-btn{
+        width:250px !important;
+    }
+    
+.pairOfHtags{
+    width: 300px;
+    margin:25px 0;
+    margin-left: 0;
+    overflow: auto;
+
+}
+    
+}

@@ -37,7 +37,7 @@ const UpcomingFights = () => {
   return (
    <div className='adminWrapper'>
       <div className='homeSecond' style={{ background: 'transparent' }}>
-        <h1 className='second-main-heading'>Upcoming fights / Active fights</h1>
+        <h1 className='second-main-heading'><span className='toRemove'>Upcoming fights /</span> Active fights</h1>
 
         <div className='controls'>
           <h5 className={filter === 'All' ? 'active' : ''} onClick={() => setFilter('All')}>All</h5>

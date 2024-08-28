@@ -236,7 +236,7 @@ const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound)
                             </div>
                         </div>
                         <div className='scoresOfRound'>
-                            <h2>RW</h2>
+                            <h2>RL</h2>
                             <div className='scoreBox'>
                                 <p>{round.rwPrediction2 !== null ? round.rwPrediction2 : '-'}</p>
                             </div>
@@ -248,25 +248,13 @@ const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound)
                             </div>
                         </div>
                         <div className='scoresOfRound'>
-                            <h2>KO</h2>
+                            <h2>SP</h2>
                             <div className='scoreBox'>
                                 <p>{round.koPrediction2 !== null ? round.koPrediction2 : '-'}</p>
                             </div>
                         </div>
                         <div className='scoresOfRound'>
-                            <h2>SP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.spPrediction1 !== null ? round.spPrediction1 : '-'}</p>
-                            </div>
-                        </div>
-                        <div className='scoresOfRound'>
-                            <h2>SP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.spPrediction2 !== null ? round.spPrediction2 : '-'}</p>
-                            </div>
-                        </div>
-                        <div className='scoresOfRound'>
-                            <h3>Points Total</h3>
+                            <h3>Points<span className='toRemove'> total</span></h3>
                             <div className='scoreBoxSpecial'>
                                 <p>{roundPoints}</p>
                             </div>
@@ -288,8 +276,8 @@ const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound)
                         <div className='member-header-image'>
                             <img src={user.profileUrl} alt="Logo" />
                         </div>
-                        <h3>Member Name - {user.firstName} {user.lastName}</h3>
-                        <h3>Current plan: {user.currentPlan}</h3>
+                        <h3><span className='toRemove'>Member Name - </span>{user.firstName} {user.lastName}</h3>
+                        <h3><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
                     </div>
                     <div className='fightwalletWrap'>
                         <div className='totalPoints'>
@@ -323,8 +311,6 @@ const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound)
                         </div>   
                         <div className="videoWrapper">
                             <iframe
-                                width="560"
-                                height="315"
                                 src="https://www.youtube.com/embed/e3osGj488Us"
                                 title="YouTube video player"
                                 frameBorder="0"
@@ -344,7 +330,7 @@ const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound)
             </div>
             <div className='winnerDetails'>
                 <h1>Winner</h1>
-                <h2>{winner.firstName} {winner.lastName}</h2>
+                <h2>{winner.firstName}<span className='toRemove'> {winner.lastName}</span></h2>
             </div>
         </div>
                                 <div className='winnerSibDivTwo'>

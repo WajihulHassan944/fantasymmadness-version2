@@ -118,10 +118,6 @@
   
 
 
-
-
-
-
 .admin-header{
     position: fixed;
     top:0;
@@ -183,4 +179,48 @@
     left:300px;
     z-index: 99999;
     top:40px;
+}
+
+
+
+
+
+
+
+.adminLogo{
+  display: none;
+}
+
+.menuIconFontAdmin{
+ display: none;
+}
+
+
+
+@media (max-width: 767px){
+.activeAdmin{
+  display: flex;
+}
+.activeNotAdmin{
+  display: none;
+}
+.adminLogo{
+  position: absolute;
+  top:15px;
+  left: 30px;
+  display: block;
+}
+.adminLogo img{
+  width: 70px;
+}
+
+.menuIconFontAdmin{
+  display: block;
+  position: fixed;
+  top:30px;
+  right: 30px;
+  color: #fff;
+  font-size: 30px;
+  z-index: 1001;
+}
 }

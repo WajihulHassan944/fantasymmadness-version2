@@ -23,9 +23,9 @@ const GlobalLeaderboard = () => {
         <div className='leaderboard-item-image'>
           <img src={user.profileUrl || FighterOne} alt={user.firstName} />
         </div>
-        <h1>{user.firstName} {user.lastName}</h1>
-        <h1>RW#</h1>
-        <h1>KO#</h1>
+        <h1>{user.firstName} <span className='toRemove'>{user.lastName}</span></h1>
+        <h1 className='toRemove'>RW#</h1>
+        <h1 className='toRemove'>KO#</h1>
         <h1>Points {user.totalPoints}</h1>
         <h1>#{index + 1}</h1>
       </div>
@@ -40,8 +40,8 @@ const GlobalLeaderboard = () => {
         <div className='member-header-image'>
           <img src={userLoggedIn.profileUrl} alt="Logo" />
         </div>
-        <h3>Member Name - {userLoggedIn.firstName} {userLoggedIn.lastName}</h3>
-        <h3>Current plan: None</h3>
+        <h3><span className='toRemove'>Member Name - </span>{userLoggedIn.firstName} {userLoggedIn.lastName}</h3>
+        <h3><span className='toRemove'>Current </span>Plan: None</h3>
       </div>
 
       <div className='fightwalletWrap'>

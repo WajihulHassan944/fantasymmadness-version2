@@ -64,7 +64,7 @@ const DeleteFights = () => {
     <div>
       <div className='adminWrapper'>
         <div className='homeSecond' style={{ background: 'transparent' }}>
-          <h1 className='second-main-heading'>Delete Previous Fights</h1>
+          <h1 className='second-main-heading'>Delete <span className='toRemove'>Previous</span> Fights</h1>
           <div className="fightswrap">
             {matches.length > 0 ? (
               matches.map((match) => (
