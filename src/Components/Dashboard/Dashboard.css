@@ -1254,3 +1254,29 @@ background-color: #fff;
         
 }
 
+
+
+.transformedDivBoxLast{
+    height: 40px;
+    width: 115px;
+    margin-right: 3px;
+    font-size:13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: black;
+
+}
+
+.transformed-Six{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 82.5%;
+    text-align: center;
+    background-color: #fff;
+    margin-left: 50px;
+    height: 40px;
+    padding:10px;
+   }

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import "./CreateAccount.css";
-import backgroundImg from "../../Assets/new-bg.png";
-import Thankyou from './Thankyou';  // Import Thankyou component
-import UploadAvatar from './UploadAvatar';  // Import UploadAvatar component
+import React, { useState } from 'react';
+import "../CreateAccount/CreateAccount.css";
+import AffiliateThankyou from './AffiliateThankyou';  // Import Thankyou component
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
-import AffiliateCreateAccount from '../Affiliates/AffiliateCreateAccount';
+import Logo1 from "../../Assets/FA.png";
 
-const CreateAccount = () => {
+const AffiliateCreateAccount = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -19,29 +17,34 @@ const CreateAccount = () => {
         isUSCitizen: false,
         isAgreed: false,
         password: '',
+        affiliateImage: null,
     });
     const [isRegistered, setIsRegistered] = useState(false);
-    const [isVerified, setIsVerified] = useState(false);
-    const [polling, setPolling] = useState(false);
     const [buttonText, setButtonText] = useState('Register');  // State for button text
-    const [response, setResponse] = useState({});  // State for dynamic response
-    const [pollingTimedOut, setPollingTimedOut] = useState(false);  // State for polling timeout
     const [recaptchaToken, setRecaptchaToken] = useState('');  // State for reCAPTCHA token
-    const [affiliate, setAffiliate] = useState(false);  // State for polling timeout
-    
+
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
+        const { name, value, type, checked, files } = e.target;
+
+        if (name === 'affiliateImage' && files.length > 0) {
+            // If the user uploads an image, convert it to a URL and update the state
+            const file = files[0];
+            const imageUrl = URL.createObjectURL(file);
+
+            setFormData((prevData) => ({
+                ...prevData,
+                affiliateImage: imageUrl, // Update the image preview
+            }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: type === 'checkbox' ? checked : value,
+            }));
+        }
     };
 
     const handleRecaptchaChange = (token) => {
         setRecaptchaToken(token);
-    };
-    const handleAffiliateLink = () => {
-        setAffiliate(true);
     };
 
     const handleSubmit = async (e) => {
@@ -56,77 +59,35 @@ const CreateAccount = () => {
         setButtonText('Saving! Please wait');
 
         try {
-            const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/register', {
+            const formDataToSend = new FormData();
+
+            // Append other form data
+            for (const key in formData) {
+                if (key !== 'affiliateImage') {
+                    formDataToSend.append(key, formData[key]);
+                }
+            }
+
+            // Append the image file if it exists
+            if (e.target.affiliateImage.files[0]) {
+                formDataToSend.append('image', e.target.affiliateImage.files[0]);
+            }
+
+            const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/registerAffiliate', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formDataToSend,
             });
 
-            const data = await response.text();
             if (response.ok) {
                 setIsRegistered(true);
-                setPolling(true);  // Start polling for verification
-                setResponse({
-                    title: 'Thank you for registering!',
-                    message: 'Please check your email to verify your account and complete the registration process.'
-                });  // Set dynamic response for success
-            } else {
-                setResponse({
-                    title: 'Registration Failed',
-                    message: data || 'There was an error registering. Please try again.'
-                });  // Set dynamic response for failure
-            }
+            } 
         } catch (error) {
             console.error('There was an error registering!', error);
-            setResponse({
-                title: 'Registration Failed',
-                message: 'There was an error registering. Please try again.'
-            });  // Set dynamic response for catch block
         } finally {
             // Revert button text after registration
             setButtonText('Register');
         }
     };
-
-    useEffect(() => {
-        if (polling && formData.email) {
-            const interval = setInterval(async () => {
-                try {
-                    const userResponse = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/${formData.email}`);
-                    const userData = await userResponse.json();
-                    if (userResponse.ok && userData.verified) {
-                        setIsVerified(true);
-                        setPolling(false);  // Stop polling
-                    }
-                } catch (error) {
-                    console.error('Error checking verification status', error);
-                }
-            }, 5000);  // Poll every 5 seconds
-
-            // Set a timeout to stop polling after 2 minutes
-            const timeout = setTimeout(() => {
-                setPolling(false);  // Stop polling after 2 minutes
-                setPollingTimedOut(true);  // Set polling timeout flag
-            }, 120000);  // 2 minutes = 120000 milliseconds
-
-            // Clean up interval and timeout on component unmount or if polling is stopped
-            return () => {
-                clearInterval(interval);
-                clearTimeout(timeout);
-            };
-        }
-    }, [polling, formData.email]);
-
-    useEffect(() => {
-        if (pollingTimedOut) {
-            setResponse({
-                title: 'Verification Failed',
-                message: 'You did not verify your email within the allowed time. Please try registering again.'
-            });
-        }
-    }, [pollingTimedOut]);
 
     const clearPlayerName = () => {
         setFormData((prevData) => ({
@@ -135,22 +96,14 @@ const CreateAccount = () => {
         }));
     };
 
-    if (isVerified) {
-        return <UploadAvatar email={formData.email} />;  // Pass email as prop to UploadAvatar
-    }
-    if (affiliate) {
-        return <AffiliateCreateAccount />;  // Pass email as prop to UploadAvatar
-    }
-
-    if (isRegistered || pollingTimedOut) {
-        return <Thankyou response={response} />;  // Pass the dynamic response as prop to Thankyou
+    if (isRegistered) {
+        return <AffiliateThankyou />;  // Pass the dynamic response as prop to Thankyou
     }
 
     return (
-        <div className='createAccount'>
-        <p className='affiliateLink' onClick={handleAffiliateLink}>Are you an Affiliate? Click here</p>
+        <div className='createAccount affiliateCreateAccount'>
             <div className='registerCard'>
-                <h1>Register for membership</h1>
+                <h1>Affiliate Registration</h1>
                 <form onSubmit={handleSubmit}>
                     {/* Form Fields */}
                     <div className='input-wrap-one'>
@@ -166,7 +119,7 @@ const CreateAccount = () => {
 
                     <div className='input-wrap-two'>
                         <div className='input-group'>
-                            <label>Desired Player Name? <span>*</span></label>
+                            <label>Desired Affiliate Name? <span>*</span></label>
                             <input type='text' name="playerName" value={formData.playerName} onChange={handleChange} required />
                         </div>
                         <i className="fa fa-refresh" aria-hidden="true" onClick={clearPlayerName}></i>
@@ -182,6 +135,12 @@ const CreateAccount = () => {
                             <input type='text' name="phone" value={formData.phone} onChange={handleChange} required />
                         </div>
                     </div>
+                    <div className='input-wrap-two'>
+                        <div className='input-group' style={{flexBasis:'100%'}}>
+                            <label>How did you hear about us? <span>*</span></label>
+                            <input type='text' name="hearing" onChange={handleChange} required />
+                        </div>
+                    </div>
 
                     <div className='input-wrap-one'>
                         <div className='input-group'>
@@ -194,6 +153,18 @@ const CreateAccount = () => {
                         <div className='input-group'>
                             <label>Password <span>*</span></label>
                             <input type='password' name="password" value={formData.password} onChange={handleChange} required />
+                        </div>
+                    </div>
+
+                    <div className='input-wrap-one specialDivInputs'>
+                        <div className='input-group special-input-group'>
+                            <img src={formData.affiliateImage || Logo1} alt="Affiliate Logo" style={{background:'#fff', border:'2px solid blue'}} />
+                        </div>
+                    </div>
+                    <div className='input-wrap-one'>
+                        <div className='input-group'>
+                            <label>Profile Image <span>*</span></label>
+                            <input type='file' name='affiliateImage' onChange={handleChange} />
                         </div>
                     </div>
 
@@ -236,11 +207,7 @@ const CreateAccount = () => {
                                 checked={formData.isUSCitizen}
                                 onChange={handleChange}
                             />
-                            <span className={`custom-radio ${formData.isUSCitizen ? 'checked' : ''
-
-
-
-}`}></span>
+                            <span className={`custom-radio ${formData.isUSCitizen ? 'checked' : ''}`}></span>
                             I am a US citizen and reside in the United States
                         </label>
                     </div>
@@ -266,12 +233,7 @@ const CreateAccount = () => {
                     <button type="submit" className='btn-grad' style={{ minWidth: '37%' }}>{buttonText}</button>
                 </form>
             </div>
-
-            <div className='backgrounfImg'>
-                <img src={backgroundImg} alt="Background" />
-            </div>
         </div>
     );
 }
-
-export default CreateAccount;
+export default AffiliateCreateAccount;

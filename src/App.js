@@ -32,6 +32,10 @@ import DeleteFights from './Components/Admin/DeleteFights';
 import RegisteredUsers from './Components/Admin/RegisteredUsers';
 import FinishedFightUserBoard from './Components/FinishedFightUserBoard/FinishedFightUserBoard';
 import PublicProfile from './Components/UserProfile/PublicProfile';
+import AffiliateUsers from './Components/Admin/AffiliateUsers';
+import AffiliateMatches from './Components/Admin/AffiliateMatches';
+import PrivacyPolicy from './Components/LegalDocuments/PrivacyPolicy';
+import Termsofservice from './Components/LegalDocuments/Termsofservice';
 
 function AppContent() {
   const location = useLocation();
@@ -80,6 +84,8 @@ function AppContent() {
         <Route path='/upcomingfights'  element={<UpcomingFightsUser />} />
         <Route path="/fightLeaderboard" element={ <FightLeaderboard /> } /> 
         <Route path="/FinishedFight" element={ <FinishedFightUserBoard /> } />
+        <Route path="/privacy-policy" element={ <PrivacyPolicy /> } />
+        <Route path="/terms-of-service" element={ <Termsofservice /> } />
         <Route path="/:userId" element={ <PublicProfile /> } />
         <Route path="/administration/login" element={<AdminLogin />} />
     
@@ -90,9 +96,10 @@ function AppContent() {
         <Route path="/administration/DeleteMatches" element={<PrivateRouteAdmin element={<DeleteFights />} />} />
         <Route path="/administration" element={<PrivateRouteAdmin element={<Admin />} />} />
         <Route path="/administration/RegisteredUsers" element={<PrivateRouteAdmin element={<RegisteredUsers />} />} />
-
-        
-       
+        <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
+ 
+        <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
+ 
       </Routes>
 
       {showFooter && <Footer />}

@@ -20,6 +20,10 @@
     display: flex;
     gap:30px;
 }
+
+.socialIcons a{
+    text-decoration: none;
+}
 .socialIcons .iconWrap{
     border:2px solid #fff;
     border-radius: 50%;
@@ -61,6 +65,9 @@
     font:bold italic 14px / 15px 'Trebuchet Ms', sans-serif;
 }
 
+.footerLastDiv .footerlink:nth-of-type(1){
+    margin: 0 10px;
+}
 
 
 @media (max-width: 767px){

@@ -13,21 +13,38 @@ const Footer = () => {
       
       
 
-
-<div class="socialIcons">
-
-<div class="iconWrap"><i class="fa fa-facebook"></i></div>
-<div class="iconWrap"><i class="fa fa-twitter"></i></div>
-<div class="iconWrap"><i class="fa fa-instagram"></i></div>
-<div class="iconWrap"><i class="fa fa-linkedin-square" aria-hidden="true"></i></div>
-</div>
-
-
+      <div className="socialIcons">
+      <a href="https://www.facebook.com/fantasymmadness" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         className="iconWrap">
+        <i className="fa fa-facebook"></i>
+      </a>
+      <a href="https://x.com/davis_kell51697" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         className="iconWrap">
+        <i className="fa fa-twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/fantasymmadness" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         className="iconWrap">
+        <i className="fa fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/fantasymmadness" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         className="iconWrap">
+        <i className="fa fa-linkedin-square" aria-hidden="true"></i>
+      </a>
+    </div>
 <div class="footerLastDiv">
     <p><span>Fantasy Mmadness</span>
-    © 2024
+   <span style={{fontStyle:'normal', color:'#fff'}}> © </span>2024
     </p>
-    <Link to="" class="footerlink">Privacy policy</Link>
+    <Link to="/privacy-policy" class="footerlink">Privacy policy</Link>
+    <Link to="/terms-of-service" class="footerlink">Terms of service</Link>
       
 </div>
       

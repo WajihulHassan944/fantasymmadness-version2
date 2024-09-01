@@ -6,6 +6,7 @@ import Membership from '../CreateAccount/Membership'; // Import the Membership c
 import "./Login.css";
 import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
+import AffiliateLogin from '../Affiliates/AffiliateLogin';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Login = () => {
   const [planSelected, setPlanSelected] = useState(false); // New state for re-render
   const [alertShown, setAlertShown] = useState(false); // State to control alert display
   const [recaptchaToken, setRecaptchaToken] = useState('');  // State for reCAPTCHA token
-
+  const [affiliatesLogin, setAffiliatesLogin] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token && !isAuthenticated) {
@@ -71,6 +72,14 @@ const Login = () => {
     }
   }
 
+  
+  const handleAffiliateLogin = () => {
+    setAffiliatesLogin(true);
+};
+
+if(affiliatesLogin){
+  return <AffiliateLogin />;
+}
   return (
     <div className='login-wrapper'>
       <div className='loginCard'>
@@ -110,7 +119,7 @@ const Login = () => {
         </form>
 
         <h2>- OR -</h2>
-        <NavLink to="/CreateAccount" className="loginNavLink">Create your account</NavLink>
+        <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affilite? Click here</NavLink>
       </div>
     </div>
   );

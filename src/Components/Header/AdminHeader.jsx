@@ -46,10 +46,13 @@ const AdminHeader = () => {
               <NavLink to="/administration/AddNewMatch" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Create a match</NavLink>
               <NavLink to="/administration/PreviousMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>All / prev matches</NavLink>
               <NavLink to="/administration/DeleteMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Delete matches</NavLink>
-
+              <NavLink to="/administration/AffiliateMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Affiliate Matches</NavLink>
+            
               <h1 className='matchHeading'>Users</h1>
               <NavLink to="/administration/RegisteredUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Registered Users</NavLink>
               <NavLink to="/administration/SubscribedUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Subscribed Users</NavLink>
+              <NavLink to="/administration/AffiliateUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Affiliate Users</NavLink>
+              
             </div>
           </div>
 
