@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import "./AdminPredictions.css";
 import { useSelector } from 'react-redux';
@@ -8,46 +7,70 @@ const AdminPredictions = ({ matchId }) => {
   const [showKOPopup, setShowKOPopup] = useState(false);
   const [selectedRWValue, setSelectedRWValue] = useState(null);
   const [selectedKOValue, setSelectedKOValue] = useState(null);
-  
+
   const matches = useSelector((state) => state.matches.data);
   const match = matches.find((m) => m._id === matchId);
   
   const [round, setRound] = useState(1); // Start with round 1
-  const [fighterOneStats, setFighterOneStats] = useState({
-    HP: 0,
-    BP: 0,
-    TP: 0,
-    RW: 0,
-    RL: 0,
-    KO: 0,
-    SP: 0,
-  });
-  const [fighterTwoStats, setFighterTwoStats] = useState({
-    HP: 0,
-    BP: 0,
-    TP: 0,
-    RW: 0,
-    RL: 0,
-    KO: 0,
-    SP: 0,
-  });
 
-  // Compute Fighter 2's RL and SP based on Fighter 1's stats
+  // Boxing stats
+  const initialBoxingStats = {
+    HP: 0,
+    BP: 0,
+    TP: 0,
+    RW: 0,
+    RL: 0,
+    KO: 0,
+    SP: 0,
+  };
+
+  // MMA stats
+  const initialMMAStats = {
+    ST: 0,
+    KI: 0,
+    KN: 0,
+    EL: 0,
+   RW: 0,
+    RL: 0,
+    KO: 0,
+    SP: 0,
+  };
+
+  const [fighterOneStats, setFighterOneStats] = useState(
+    match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats
+  );
+
+  const [fighterTwoStats, setFighterTwoStats] = useState(
+    match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats
+  );
+
+  const [roundScores, setRoundScores] = useState([]);
+
   const computeFighterTwoStats = () => {
-    return {
-      ...fighterTwoStats,
-      RL: fighterOneStats.RW === 100 ? 25 : 100,
-      SP: fighterOneStats.KO === 500 ? 25 : 500,
-      RW: fighterOneStats.RW === 100 ? 25 : 100,
-      KO: fighterOneStats.KO === 500 ? 25 : 500,
-    };
+    if (match.matchCategory === 'boxing') {
+      return {
+        ...fighterTwoStats,
+        RL: fighterOneStats.RW === 100 ? 25 : 100,
+        SP: fighterOneStats.KO === 500 ? 25 : 500,
+        RW: fighterOneStats.RW === 100 ? 25 : 100,
+        KO: fighterOneStats.KO === 500 ? 25 : 500,
+      };
+    } else {
+      return {
+        ...fighterTwoStats,
+        RL: fighterOneStats.RW === 100 ? 25 : 100,
+        SP: fighterOneStats.KO === 500 ? 25 : 500,
+      };
+    }
   };
 
   const handleRWSelect = (value) => {
     setSelectedRWValue(value);
     setFighterOneStats((prevStats) => {
       const newStats = { ...prevStats, RW: value };
-      newStats.RL = value === 100 ? 25 : 100;
+      if (match.matchCategory === 'boxing') {
+        newStats.RL = value === 100 ? 25 : 100;
+      }
       return newStats;
     });
     setShowRWPopup(false);
@@ -57,14 +80,17 @@ const AdminPredictions = ({ matchId }) => {
     setSelectedKOValue(value);
     setFighterOneStats((prevStats) => {
       const newStats = { ...prevStats, KO: value };
-      newStats.SP = value === 500 ? 25 : 500;
+      if (match.matchCategory === 'boxing') {
+        newStats.SP = value === 500 ? 25 : 500;
+      }
       return newStats;
     });
     setShowKOPopup(false);
   };
+
   const Popup = ({ isVisible, onClose, onSelect, stat }) => {
     if (!isVisible) return null;
-  
+
     return (
       <div className="popup">
         <h3>Select value for {stat}</h3>
@@ -83,7 +109,6 @@ const AdminPredictions = ({ matchId }) => {
       </div>
     );
   };
-  
 
   const handleButtonClick = (fighter, stat) => {
     if (stat === 'RW') {
@@ -94,16 +119,16 @@ const AdminPredictions = ({ matchId }) => {
       setShowKOPopup(true);
       return;
     }
+    if (stat === 'TP') {
+      
+      return;
+    }
 
-    // Existing functionality for other stats
+    // Logic for incrementing stats
     const updateStats = (stats, stat) => {
       const newStats = { ...stats, [stat]: stats[stat] + 1 };
-      if (stat === 'HP' || stat === 'BP') {
+      if (match.matchCategory === 'boxing' && (stat === 'HP' || stat === 'BP')) {
         newStats.TP = newStats.HP + newStats.BP;
-      }
-      if (stat === 'SP') {
-        newStats.KO = 25;
-        newStats.SP = 500;
       }
       return newStats;
     };
@@ -133,32 +158,51 @@ const AdminPredictions = ({ matchId }) => {
 
       const result = await response.json();
       if (response.ok) {
-         alert(`Your prediction for Round ${round} has been submitted.`);
-        // After saving, allow navigation to the next round
-        setFighterOneStats({
-          HP: 0,
-          BP: 0,
-          TP: 0,
-          RW: 0,
-          RL: 0,
-          KO: 0,
-          SP: 0,
+        alert(`Your prediction for Round ${round} has been submitted.`);
+        setRoundScores((prevScores) => {
+          const newScores = [...prevScores];
+          newScores[round - 1] = { fighterOneStats, fighterTwoStats };
+          return newScores;
         });
-        setFighterTwoStats({
-          HP: 0,
-          BP: 0,
-          TP: 0,
-          RW: 0,
-          RL: 0,
-          KO: 0,
-          SP: 0,
-        });
+        setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+        setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
         if (round < 12) setRound(round + 1);
       } else {
         console.error('Error saving round results:', result.message);
       }
     } catch (error) {
       console.error('Network error:', error);
+    }
+  };
+
+  const handlePrev = () => {
+    if (round > 1) {
+      setRound((prevRound) => {
+        const newRound = prevRound - 1;
+        const prevScores = roundScores[newRound - 1];
+        if (prevScores) {
+          setFighterOneStats(prevScores.fighterOneStats);
+          setFighterTwoStats(prevScores.fighterTwoStats);
+        }
+        return newRound;
+      });
+    }
+  };
+
+  const handleNext = () => {
+    if (round < 12) {
+      setRound((prevRound) => {
+        const newRound = prevRound + 1;
+        const nextScores = roundScores[newRound - 1];
+        if (nextScores) {
+          setFighterOneStats(nextScores.fighterOneStats);
+          setFighterTwoStats(nextScores.fighterTwoStats);
+        } else {
+          setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+          setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+        }
+        return newRound;
+      });
     }
   };
 
@@ -210,50 +254,78 @@ const AdminPredictions = ({ matchId }) => {
         <div className='actualAdminPredictions'>
           <h1 className='subHeading2'>{match.matchFighterA}</h1>
           <div className='adminPredictionsButtonsWrapper'>
-            {['HP', 'BP', 'TP', 'RW', 'KO'].map((stat, index) => (
-              <div key={index} className='buttonBoxWrapp'>
-                <div
-                  className={`ButtonBoxAdmin makeBackgroundBlue`}
-                  onClick={() => handleButtonClick('one', stat)}
-                >
-                  <h1>{stat}</h1>
+            {match.matchCategory === 'boxing' ? (
+              ['HP', 'BP', 'TP', 'RW', 'KO'].map((stat, index) => (
+                <div key={index} className='buttonBoxWrapp'>
+                  <div
+                    className={`ButtonBoxAdmin makeBackgroundBlue`}
+                    onClick={() => handleButtonClick('one', stat)}
+                  >
+                    <h1>{stat}</h1>
+                  </div>
+                  <h1 className='outputBox'>{fighterOneStats[stat]}</h1>
                 </div>
-                <h1 className='outputBox'>{fighterOneStats[stat]}</h1>
-              </div>
-            ))}
+              ))
+            ) : (
+              ['ST', 'KI', 'KN', 'EL', 'RW', 'KO'].map((stat, index) => (
+                <div key={index} className='buttonBoxWrapp'>
+                  <div
+                    className={`ButtonBoxAdmin makeBackgroundBlue`}
+                    onClick={() => handleButtonClick('one', stat)}
+                  >
+                    <h1>{stat}</h1>
+                  </div>
+                  <h1 className='outputBox'>{fighterOneStats[stat]}</h1>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
         <div className='actualAdminPredictions'>
           <h1 className='subHeading2'>{match.matchFighterB}</h1>
           <div className='adminPredictionsButtonsWrapper'>
-            {['HP', 'BP', 'TP', 'RL', 'SP'].map((stat, index) => (
-              <div key={index} className='buttonBoxWrapp'>
-                <div
-                  className={`ButtonBoxAdmin makeBackgroundRed`}
-                  onClick={() => handleButtonClick('two', stat)}
-                >
-                  <h1>{stat}</h1>
+            {match.matchCategory === 'boxing' ? (
+              ['HP', 'BP', 'TP', 'RL', 'SP'].map((stat, index) => (
+                <div key={index} className='buttonBoxWrapp'>
+                  <div
+                    className={`ButtonBoxAdmin makeBackgroundRed`}
+                    onClick={() => handleButtonClick('two', stat)}
+                  >
+                    <h1>{stat}</h1>
+                  </div>
+                  <h1 className='outputBox'>{stat === 'RL' ? computeFighterTwoStats().RL : stat === 'SP' ? computeFighterTwoStats().SP : fighterTwoStats[stat]}</h1>
                 </div>
-                <h1 className='outputBox'>{stat === 'RL' ? computeFighterTwoStats().RL : stat === 'SP' ? computeFighterTwoStats().SP : fighterTwoStats[stat]}</h1>
-              </div>
-            ))}
+              ))
+            ) : (
+              ['ST', 'KI', 'KN', 'EL', 'RL', 'SP'].map((stat, index) => (
+                <div key={index} className='buttonBoxWrapp'>
+                  <div
+                    className={`ButtonBoxAdmin makeBackgroundRed`}
+                    onClick={() => handleButtonClick('two', stat)}
+                  >
+                    <h1>{stat}</h1>
+                  </div>
+                  <h1 className='outputBox'>{stat === 'RL' ? computeFighterTwoStats().RL : stat === 'SP' ? computeFighterTwoStats().SP : fighterTwoStats[stat]}</h1>
+               
+                </div>
+              ))
+            )}
           </div>
         </div>
 
         <div className='buttonPrevNextWrap'>
           <button
             className='btn-grad'
-            onClick={() => setRound((prevRound) => Math.max(prevRound - 1, 1))}
+            onClick={handlePrev}
             disabled={round === 1}
           >
             Prev
           </button>
 
-
           <button
             className='btn-grad'
-            onClick={() => setRound((prevRound) => Math.min(prevRound + 1, 12))}
+            onClick={handleNext}
             disabled={round === 12}
           >
             Next

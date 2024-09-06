@@ -23,6 +23,7 @@ import PlayForFree from './Components/PlayForFree/PlayForFree';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import PrivateRouteAdmin from './Components/PrivateRoute/PrivateRouteAdmin';
 
+
 import { setUser } from './Redux/userSlice'; 
 import { fetchUser } from './Redux/authSlice'; // Import fetchUser if you need to use it separately
 import { setAdminAuthenticated } from './Redux/adminAuthSlice';
@@ -36,6 +37,11 @@ import AffiliateUsers from './Components/Admin/AffiliateUsers';
 import AffiliateMatches from './Components/Admin/AffiliateMatches';
 import PrivacyPolicy from './Components/LegalDocuments/PrivacyPolicy';
 import Termsofservice from './Components/LegalDocuments/Termsofservice';
+import { setAffiliateUser } from './Redux/affiliateSlice';
+import { fetchAffiliate } from './Redux/affiliateAuthSlice';
+import AffiliateDashboard from './Components/Affiliates/AffiliateDashboard';
+import HowItWorks from './Components/Affiliates/HowItWorks';
+import AffiliateProfile from './Components/Affiliates/AffiliateProfile';
 
 function AppContent() {
   const location = useLocation();
@@ -45,16 +51,23 @@ function AppContent() {
     // For user authentication
     const userToken = localStorage.getItem('authToken');
     if (userToken) {
-      console.log('User token found:', userToken);
       dispatch(setUser({ token: userToken })); // Set the token in the auth state
       dispatch(fetchUser(userToken)); // Fetch and set user details based on the token
     }
   
+
+ // For user authentication
+ const affiliateToken = localStorage.getItem('affiliateAuthToken');
+ if (affiliateToken) {
+   dispatch(setAffiliateUser({ token: affiliateToken })); // Set the token in the auth state
+   dispatch(fetchAffiliate(affiliateToken)); // Fetch and set user details based on the token
+ }
+
+
+
     // For admin authentication
     const adminToken = localStorage.getItem('adminAuthToken');
-    console.log('Admin token from localStorage:', adminToken);
     if (adminToken) {
-      console.log('Dispatching setAdminAuthenticated action');
       dispatch(setAdminAuthenticated({ token: adminToken })); // Set the admin authentication state
     } else {
       console.log('No admin token found in localStorage');
@@ -88,7 +101,11 @@ function AppContent() {
         <Route path="/terms-of-service" element={ <Termsofservice /> } />
         <Route path="/:userId" element={ <PublicProfile /> } />
         <Route path="/administration/login" element={<AdminLogin />} />
-    
+  
+    <Route path ="/AffiliateDashboard" element={<AffiliateDashboard />} />
+    <Route path="/HowItWorks" element={<HowItWorks />} />
+    <Route path='/AffiliateProfile' element={<AffiliateProfile />} />
+
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
         <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
         <Route path="/administration/AddNewMatch" element={<PrivateRouteAdmin element={<AddNewMatch />} />} />

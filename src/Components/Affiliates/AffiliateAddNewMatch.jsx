@@ -2,45 +2,108 @@ import React, { useState } from 'react';
 import Logo from "../../Assets/logo.png";
 import Logo1 from "../../Assets/FA.png";
 import Logo2 from "../../Assets/FB.png";
+import { useSelector } from 'react-redux';
+
+
+
 const AffiliateAddNewMatch = () => {
-    const [formData, setFormData] = useState({
-        matchCategory: 'boxing',
-        matchName: '',
-        matchFighterA: '',
-        matchFighterB: '',
-        matchDescription: '',
-        matchVideoUrl: '',
-        matchDate: '',
-        matchTime: '',
-        matchTokens: '',
-        matchType: 'LIVE',
-        pot: '',
-        fighterAImage: null,
-        fighterBImage: null,
-      });
+  const [formData, setFormData] = useState({
+    matchCategory: 'boxing',
+    matchName: '',
+    matchFighterA: '',
+    matchFighterB: '',
+    matchDescription: '',
+    matchDate: '',
+    matchTime: '',
+    matchTokens: '',
+    affiliateId: '',
+    matchBy: 'affiliate',
+    matchType: 'SHADOW',
+    pot: '',
+    profit: '',
+    amountOverPotBudget: '',
+    fighterAImage: null,         // For the file object of Fighter A's image
+    fighterAImagePreview: null,  // For the preview URL of Fighter A's image
+    fighterBImage: null,         // For the file object of Fighter B's image
+    fighterBImagePreview: null,  // For the preview URL of Fighter B's image
+});
+
       const [buttonText, setButtonText] = useState('Create');  // State for button text
     
-      const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        const file = files ? files[0] : null;
-        
-        setFormData({
-          ...formData,
-          [name]: file ? URL.createObjectURL(file) : value,
-        });
-      };
-      
-    console.log(formData);
-    
-      return (
+  const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
+ 
+  if (!affiliate) {
+    return <div>Loading...</div>;
+  }
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    const file = files ? files[0] : null;
+  
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: file || value, // Handle both file and text inputs
+      ...(file && { [`${name}Preview`]: URL.createObjectURL(file) }), // Only set preview URL if it's a file
+    }));
+  };
+   
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const url = 'https://fantasymmadness-game-server-three.vercel.app/addMatch';
+  
+  const data = new FormData();
+  data.append('matchCategory', formData.matchCategory);
+  data.append('matchName', formData.matchName);
+  data.append('matchFighterA', formData.matchFighterA);
+  data.append('matchFighterB', formData.matchFighterB);
+  data.append('matchDescription', formData.matchDescription);
+  data.append('matchDate', formData.matchDate);
+  data.append('matchTime', formData.matchTime);
+  data.append('matchTokens', formData.matchTokens);
+  data.append('matchType', formData.matchType);
+  data.append('pot', formData.pot);
+  data.append('fighterAImage', formData.fighterAImage);
+  data.append('fighterBImage', formData.fighterBImage);
+  
+  data.append('affiliateId', affiliate._id);
+  data.append('matchBy', formData.matchBy);
+  data.append('profit', formData.profit);
+  data.append('amountOverPotBudget', formData.amountOverPotBudget);
+  
+
+  setButtonText('Saving, please wait...');  // Update button text
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: data,
+    });
+
+    if (response.ok) {
+      alert('Match added successfully!');
+      // Reload the page to reflect changes
+      window.location.reload();
+    } else {
+      alert('Failed to add match.');
+    }
+  } catch (error) {
+    console.error('Error adding match:', error);
+    alert('An error occurred while adding the match.');
+  } finally {
+    setButtonText('Add Match');  // Revert button text if needed
+  }
+};
+
+return (
        
        <div className='addNewMatch' style={{marginLeft:'0', width:'100%', flexDirection:'column'}}>
        <div className='member-header' style={{marginBottom:'20px'}}>
           <div className='member-header-image'>
-            <img src={Logo} alt="Logo" />
+            <img src={affiliate.profileUrl} alt="Logo" />
           </div>
-          <h3><span className='toRemove'>Affiliate Name:</span> Wajih</h3>
-          <h3>Balance: $2500</h3>
+          <h3><span className='toRemove'>Affiliate Name:</span> {affiliate.firstName} {affiliate.lastName}</h3>
+          <h3>Balance: -</h3>
         </div>
       
       
@@ -86,7 +149,7 @@ const AffiliateAddNewMatch = () => {
               <div className='input-wrap-one'>
                 <div className='input-group'>
                   <label>Amount over pot budget <span>*</span></label>
-                  <input type='text' name='matchVideoUrl' value={formData.matchVideoUrl} onChange={handleChange} />
+                  <input type='text' name='amountOverPotBudget' value={formData.amountOverPotBudget} onChange={handleChange} />
                 </div>
                 <div className='input-group'>
                   <label>Fight Date <span>*</span></label>
@@ -96,13 +159,14 @@ const AffiliateAddNewMatch = () => {
     
 
               <div className='input-wrap-one specialDivInputs'>
-        <div className='input-group special-input-group'>
-          <img src={formData.fighterAImage ? formData.fighterAImage : Logo1} alt="Fighter A" />
-        </div>
-        <div className='input-group special-input-group'>
-          <img src={formData.fighterBImage ? formData.fighterBImage : Logo2} alt="Fighter B" />
-        </div>
-      </div>
+  <div className='input-group special-input-group'>
+    <img src={formData.fighterAImagePreview ? formData.fighterAImagePreview : Logo1} alt="Fighter A" />
+  </div>
+  <div className='input-group special-input-group'>
+    <img src={formData.fighterBImagePreview ? formData.fighterBImagePreview : Logo2} alt="Fighter B" />
+  </div>
+</div>
+
 
 
 
@@ -155,10 +219,10 @@ const AffiliateAddNewMatch = () => {
                 
                 <div className='input-group'>
                   <label>Profit <span>*</span></label>
-                  <input type='number' name='pot' value={formData.pot} onChange={handleChange} />
+                  <input type='number' name='profit' value={formData.profit} onChange={handleChange} />
                 </div>
               </div>
-              <button type="submit" className='btn-grad' style={{ width: '50%' }}>{buttonText}</button>
+              <button type="submit" className='btn-grad' style={{ width: '50%' }} onClick={handleSubmit}>{buttonText}</button>
             </form>
           </div>
         </div>

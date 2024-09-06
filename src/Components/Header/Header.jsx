@@ -2,17 +2,25 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/authSlice';
+import {logoutAffiliate} from "../../Redux/affiliateAuthSlice";
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticatedAffiliate } = useSelector((state) => state.affiliateAuth);
+ 
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/');
+  };
+  const handleLogoutAffiliate = () => {
+    dispatch(logoutAffiliate());
     navigate('/');
   };
 
@@ -26,7 +34,31 @@ const Header = () => {
 
   return (
     <>
-      {isAuthenticated ? (
+
+      {isAuthenticatedAffiliate ? (
+        <div className='header user-header'>
+          <div className='logoimg'>
+            <NavLink to="/">
+              <img src={Logo} alt="Logo" />
+            </NavLink>
+          </div>
+
+          <div className='anchorLinksWrapper'>
+            <NavLink to="/AffiliateDashboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Your Fights</NavLink>
+            <NavLink to="/HowItWorks" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How it works</NavLink>
+            <NavLink to="/AffiliateProfile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
+          </div>
+
+          <div className='sideLinkswrap'>
+          
+            <button onClick={handleLogoutAffiliate} className='sideLinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
+              <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+            </button>
+          </div>
+
+          <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
+        </div>
+      ) : isAuthenticated ? (
         <div className='header user-header'>
           <div className='logoimg'>
             <NavLink to="/">
@@ -91,7 +123,17 @@ const Header = () => {
         </div>
 
         <div className='anchorLinksWrapper'>
-          {isAuthenticated ? (
+          {isAuthenticatedAffiliate ? (
+            <>
+              <NavLink to="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
+              <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Create a fight</NavLink>
+              <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>How it works</NavLink>
+              <NavLink to="/profile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
+              <button onClick={() => { handleLogoutAffiliate(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
+                <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+              </button>
+            </>
+          ) : isAuthenticated ? (
             <>
               <NavLink to="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
               <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Leaderboard</NavLink>

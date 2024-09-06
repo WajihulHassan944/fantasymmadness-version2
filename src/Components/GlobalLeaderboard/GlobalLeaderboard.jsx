@@ -41,13 +41,13 @@ const GlobalLeaderboard = () => {
           <img src={userLoggedIn.profileUrl} alt="Logo" />
         </div>
         <h3><span className='toRemove'>Member Name - </span>{userLoggedIn.firstName} {userLoggedIn.lastName}</h3>
-        <h3><span className='toRemove'>Current </span>Plan: None</h3>
+        <h3><span className='toRemove'>Current </span>Plan: {userLoggedIn.currentPlan}</h3>
       </div>
 
       <div className='fightwalletWrap'>
         <div className='fightWallet'>
           <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-          <h2>Tokens Remaining: <span>35</span></h2>
+          <h2>Tokens Remaining: <span>{userLoggedIn.tokens}</span></h2>
         </div>
       </div>
 

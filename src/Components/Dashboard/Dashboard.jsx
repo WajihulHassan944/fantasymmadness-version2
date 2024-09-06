@@ -10,6 +10,7 @@ import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 const Dashboard = () => {
 
   const dispatch = useDispatch();
+  
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
@@ -68,25 +69,21 @@ const Dashboard = () => {
     }
   }
 
-  
   const today = new Date();
-  const currentTime = new Date();
-  
-  // Filter matches
-  const upcomingMatches = matches.filter((match) => {
-    // Construct matchDateTime including both date and time
-    const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
-  
-    // Calculate 2 hours before the match time
-    const twoHoursBeforeMatch = new Date(matchDateTime.getTime() - 2 * 60 * 60 * 1000);
-  
-    // Return matches that are either in the future or today but more than 2 hours away,
-    // and ensure that the match date is greater than or equal to today
-    return (
-      matchDateTime >= today.setHours(0, 0, 0, 0) &&
-      currentTime < twoHoursBeforeMatch
-    );
-  });
+const currentTime = new Date();
+
+// Filter matches
+const upcomingMatches = matches.filter((match) => {
+  // Construct matchDateTime including both date and time
+  const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+
+  // Return matches that are either in the future or today and haven't started yet
+  return (
+    matchDateTime >= today.setHours(0, 0, 0, 0) && 
+    currentTime < matchDateTime
+  );
+});
+
     
 
 
@@ -125,8 +122,6 @@ const Dashboard = () => {
         prediction.userId.toString() === user._id.toString() && 
         prediction.predictionStatus === 'submitted'
       );
-    console.log('Checking match:', match);
-    console.log('Has submitted prediction:', hasSubmittedPrediction);
     return hasSubmittedPrediction;
   });
   

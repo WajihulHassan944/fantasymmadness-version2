@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, NavLink } from 'react-router-dom';
-import { loginUser, fetchUser } from '../../Redux/authSlice';
-import Membership from '../CreateAccount/Membership'; // Import the Membership component
+import { loginAffiliate, fetchAffiliate } from '../../Redux/affiliateAuthSlice';
 import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
 import Login from '../Login/Login';
 
 const AffiliateLogin = () => {
     const dispatch = useDispatch();
-    const { isAuthenticated, loading, error, user } = useSelector((state) => state.auth);
-  
+    const { isAuthenticatedAffiliate, loading, error, userAffiliate } = useSelector((state) => state.affiliateAuth);
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [planSelected, setPlanSelected] = useState(false); // New state for re-render
-    const [alertShown, setAlertShown] = useState(false); // State to control alert display
     const [recaptchaToken, setRecaptchaToken] = useState('');  // State for reCAPTCHA token
     const [usersLogin, setUsersLogin] = useState(false);
-    useEffect(() => {
-      const token = localStorage.getItem('authToken');
-      if (token && !isAuthenticated) {
-        // Fetch the user data if token exists and user is not authenticated
-        dispatch(fetchUser(token));
-      }
-    }, [dispatch, isAuthenticated]);
+    const [alertShown, setAlertShown] = useState(false); // State to control alert display
   
+    
+
+    
+
+    
     useEffect(() => {
-      if (user && user.currentPlan === 'None' && !planSelected && !alertShown) {
-        alert('Please select a plan to access the dashboard.');
-        setAlertShown(true); // Ensure alert is only shown once
+      const token = localStorage.getItem('affiliateAuthToken');
+      if (token && !isAuthenticatedAffiliate) {
+        // Fetch the user data if token exists and user is not authenticated
+        dispatch(fetchAffiliate(token));
       }
-    }, [user, planSelected, alertShown]);
+    }, [dispatch, isAuthenticatedAffiliate]);
   
   
     const handleRecaptchaChange = (token) => {
@@ -40,7 +37,7 @@ const AffiliateLogin = () => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-      
+    
       if (!recaptchaToken) {
         alert("Please verify that you are not a robot.");
         return;
@@ -48,33 +45,54 @@ const AffiliateLogin = () => {
   
       try {
         // Dispatch login action
-        const resultAction = await dispatch(loginUser({ email, password }));
+        const resultAction = await dispatch(loginAffiliate({ email, password }));
         const token = resultAction.payload?.token;
         
         if (token) {
           // If token is present, fetch the user details
-          dispatch(fetchUser(token));
+          dispatch(fetchAffiliate(token));
         }
+
+        setAlertShown(false);
+       
       } catch (error) {
         console.error('Login failed', error);
+        
+       
       }
     };
-  
-    // Check if user is authenticated and has a valid plan
-    if (user) {
-      if (user.currentPlan === 'None') {
-        if (!planSelected) {
-          return <Membership email={user.email} onPlanSelected={() => setPlanSelected(true)} />; // Pass setPlanSelected to Membership
-        }
-      } else if (isAuthenticated) {
-        return <Navigate to="/UserDashboard" />; // Redirect to UserDashboard
+    
+
+
+
+    useEffect(() => {
+      if (userAffiliate && !userAffiliate.verified && !alertShown) {
+        alert('Please wait for your affiliate status approval from admin.');
+        setAlertShown(true); // Ensure alert is only shown once
       }
-    }
+    }, [userAffiliate, alertShown ]);
   
+
+
+
+
     const handleUserLogin = () => {
         setUsersLogin(true);
     };
+
+   
     
+
+
+  // Check if user is authenticated and has a valid plan
+  if (userAffiliate) {
+    if (!userAffiliate.verified) {
+      console.log("Please wait for your affiliate status approval from admin");
+    } else if (isAuthenticatedAffiliate) {
+      return <Navigate to="/AffiliateDashboard" />; // Redirect to UserDashboard
+    }
+  }
+
     if(usersLogin){
       return <Login />;
     }

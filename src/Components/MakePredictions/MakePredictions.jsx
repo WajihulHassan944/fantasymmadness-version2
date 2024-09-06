@@ -5,26 +5,29 @@ import PunchHand from '../../Assets/hand-removebg-preview.png';
 import { useNavigate } from 'react-router-dom';
 
 const MakePredictions = ({ matchId }) => {
-  
   const user = useSelector((state) => state.user);
   const matches = useSelector((state) => state.matches.data);
 
   const match = matches.find((m) => m._id === matchId);
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate();
+
+  const isBoxing = match?.matchCategory === 'boxing';
 
   const [rounds, setRounds] = useState(
     Array.from({ length: 12 }, (_, i) => ({
       round: i + 1,
       hpPrediction1: '',
-      bpPrediction1: '',
       hpPrediction2: '',
+      bpPrediction1: '',
       bpPrediction2: '',
       tpPrediction1: 0,
       tpPrediction2: 0,
       rwPrediction1: 0,
       rwPrediction2: 0,
       koPrediction1: 0,
-      koPrediction2: 0
+      koPrediction2: 0,
+      elPrediction1: '', // For MMA - EL Prediction
+      elPrediction2: '', // For MMA - EL Prediction
     }))
   );
 
@@ -36,7 +39,7 @@ const MakePredictions = ({ matchId }) => {
   });
 
   const [buttonText, setButtonText] = useState('Submit Predictions');
-  
+
   useEffect(() => {
     if (!match) return;
 
@@ -69,23 +72,24 @@ const MakePredictions = ({ matchId }) => {
     const { value } = e.target;
     const updatedRounds = [...rounds];
     updatedRounds[roundIndex][field] = value;
-
-    const hpPrediction1 = parseFloat(updatedRounds[roundIndex].hpPrediction1) || 0;
-    const bpPrediction1 = parseFloat(updatedRounds[roundIndex].bpPrediction1) || 0;
-    const hpPrediction2 = parseFloat(updatedRounds[roundIndex].hpPrediction2) || 0;
-    const bpPrediction2 = parseFloat(updatedRounds[roundIndex].bpPrediction2) || 0;
-
-    updatedRounds[roundIndex].tpPrediction1 = hpPrediction1 + bpPrediction1;
-    updatedRounds[roundIndex].tpPrediction2 = hpPrediction2 + bpPrediction2;
-
+  
+    // Update TP predictions only if matchCategory is boxing
+    if (match.matchCategory === 'boxing') {
+      const hpPrediction1 = parseFloat(updatedRounds[roundIndex].hpPrediction1) || 0;
+      const bpPrediction1 = parseFloat(updatedRounds[roundIndex].bpPrediction1) || 0;
+      const hpPrediction2 = parseFloat(updatedRounds[roundIndex].hpPrediction2) || 0;
+      const bpPrediction2 = parseFloat(updatedRounds[roundIndex].bpPrediction2) || 0;
+  
+      updatedRounds[roundIndex].tpPrediction1 = hpPrediction1 + bpPrediction1;
+      updatedRounds[roundIndex].tpPrediction2 = hpPrediction2 + bpPrediction2;
+    }
+  
     setRounds(updatedRounds);
   };
-
-
-
+  
   const handleButtonClick = (roundIndex, buttonType) => {
     const updatedRounds = [...rounds];
-    
+
     if (buttonType === 'rw') {
       updatedRounds[roundIndex].rwPrediction1 = 100;
       updatedRounds[roundIndex].rwPrediction2 = 25;
@@ -114,42 +118,43 @@ const MakePredictions = ({ matchId }) => {
   const handleFinish = async () => {
     setButtonText('Saving!');
     try {
-      // Submit the predictions
       await fetch('https://fantasymmadness-game-server-three.vercel.app/api/scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           playerId: user._id,
           matchId: matchId,
-          predictions: rounds
+          predictions: rounds,
+          category: match.matchCategory,
         }),
       });
-  
-      // Update prediction status to 'submitted'
+
       await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/matches/${matchId}/updatePredictionStatus`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: user._id,
-          predictionStatus: 'submitted'
+          predictionStatus: 'submitted',
         }),
       });
-      
-      window.location.reload();
 
+      window.location.reload();
     } catch (error) {
       console.error('Error saving predictions:', error);
       alert('Failed to save predictions.');
     } finally {
-      setButtonText('Submit Predictions'); // Reset button text in case of error
+      setButtonText('Submit Predictions');
     }
   };
-  
-  
+
   if (!match) {
     return <div>Match not found</div>;
   }
 
+  const label1 = isBoxing ? 'HP' : 'ST';
+  const label2 = isBoxing ? 'BP' : 'KI';
+  const label3 = isBoxing ? 'TP' : 'KN';
+  const label4 = isBoxing ? '' : 'EL'; // MMA has an extra 'EL' field
 
   return (
     <div className='fightCosting makePredictions'>
@@ -202,94 +207,127 @@ const MakePredictions = ({ matchId }) => {
           </div>
         </div>
 
-      
-<div className='roundsWrapper'>
-{rounds.map((round, index) => (
-    <div className='roundActual' key={index}>
-        <div className='roundHeading'>
-            <h1>Round {round.round}</h1>
-        </div>
-        <div className='roundInputWrap'>
-            <div className='roundInput'>
-                <div className='roundInputDivOne'>
+        <div className='roundsWrapper'>
+          {rounds.map((round, index) => (
+            <div className='roundActual' key={index}>
+              <div className='roundHeading'>
+                <h1>Round {round.round}</h1>
+              </div>
+              <div className='roundInputWrap'>
+                <div className='roundInput'>
+                  <div className='roundInputDivOne'>
                     <i className="fa fa-caret-left" aria-hidden="true"></i>  
                     <input
-                        type='number'
-                        style={{border:'2px solid #2a8adb'}}
-                        value={round.hpPrediction1}
-                        onChange={(e) => handlePredictionChange(e, index, 'hpPrediction1')}
+                      type='number'
+                      style={{border:'2px solid #2a8adb'}}
+                      value={round.hpPrediction1}
+                      onChange={(e) => handlePredictionChange(e, index, 'hpPrediction1')}
                     />
-                </div>
-                <div className='roundinput-image'>
-                    <h2>HP</h2>
+                  </div>
+                  <div className='roundinput-image'>
+                    <h2>{label1}</h2>
                     <div className='roundInputImgWrap'>
-                        <img src={PunchHand} alt="HP Icon" />
+                      <img src={PunchHand} alt={`${label1} Icon`} />
                     </div>
-                </div>
-                <div className='roundInputDivOne'>
+                  </div>
+                  <div className='roundInputDivOne'>
                     <input
-                        type='number'
-                        style={{border:'2px solid #e1130c'}}
-                        value={round.hpPrediction2}
-                        onChange={(e) => handlePredictionChange(e, index, 'hpPrediction2')}
+                      type='number'
+                      style={{border:'2px solid #e1130c'}}
+                      value={round.hpPrediction2}
+                      onChange={(e) => handlePredictionChange(e, index, 'hpPrediction2')}
                     />
                     <i className="fa fa-caret-right" aria-hidden="true"></i>
+                  </div>
                 </div>
-            </div>
 
-            <div className='roundInput'>
-                <div className='roundInputDivOne'>
+                <div className='roundInput'>
+                  <div className='roundInputDivOne'>
                     <i className="fa fa-caret-left" aria-hidden="true"></i>  
                     <input
-                        type='number'
-                        style={{border:'2px solid #2a8adb'}}
-                        value={round.bpPrediction1}
-                        onChange={(e) => handlePredictionChange(e, index, 'bpPrediction1')}
+                      type='number'
+                      style={{border:'2px solid #2a8adb'}}
+                      value={round.bpPrediction1}
+                      onChange={(e) => handlePredictionChange(e, index, 'bpPrediction1')}
                     />
-                </div>
-                <div className='roundinput-image'>
-                    <h2>BP</h2>
+                  </div>
+                  <div className='roundinput-image'>
+                    <h2>{label2}</h2>
                     <div className='roundInputImgWrap'>
-                        <img src={PunchHand} alt="BP Icon" />
+                      <img src={PunchHand} alt={`${label2} Icon`} />
                     </div>
-                </div>
-                <div className='roundInputDivOne'>
+                  </div>
+                  <div className='roundInputDivOne'>
                     <input
-                        type='number'
-                        style={{border:'2px solid #e1130c'}}
-                        value={round.bpPrediction2}
-                        onChange={(e) => handlePredictionChange(e, index, 'bpPrediction2')}
+                      type='number'
+                      style={{border:'2px solid #e1130c'}}
+                      value={round.bpPrediction2}
+                      onChange={(e) => handlePredictionChange(e, index, 'bpPrediction2')}
                     />
                     <i className="fa fa-caret-right" aria-hidden="true"></i>
+                  </div>
                 </div>
-            </div>
 
-            <div className='roundInput' style={{border:'2px dashed #ccc', borderRadius:'15px', width:'80%', padding:'5px'}}>
-                <div className='roundInputDivOne'>
-                    <input
+                <div className='roundInput' style={{border:'2px dashed #ccc', borderRadius:'15px', width:'80%', padding:'5px'}}>
+  <div className='roundInputDivOne'>
+    <input
+      type='number'
+      style={{border:'2px solid #2a8adb', background:'#fff'}}
+      value={round.tpPrediction1}
+      onChange={(e) => handlePredictionChange(e, index, 'tpPrediction1')}
+      disabled={match.matchCategory !== 'mma'}  // Disable if not MMA
+    />
+  </div>
+  <div className='roundinput-image'>
+    <h2>{label3}</h2>
+    <div className='roundInputImgWrap'>
+      <img src={PunchHand} alt={`${label3} Icon`} />
+    </div>
+  </div>
+  <div className='roundInputDivOne'>
+    <input
+      type='number'
+      style={{border:'2px solid #e1130c', background:'#fff'}}
+      value={round.tpPrediction2}
+      onChange={(e) => handlePredictionChange(e, index, 'tpPrediction2')}
+      disabled={match.matchCategory !== 'mma'}  // Disable if not MMA
+    />
+  </div>
+</div>
+
+
+                {/* EL Field for MMA */}
+                {!isBoxing && (
+                  <div className='roundInput'>
+                    <div className='roundInputDivOne'>
+                      <i className="fa fa-caret-left" aria-hidden="true"></i>
+                      <input
                         type='number'
                         style={{border:'2px solid #2a8adb'}}
-                        value={round.tpPrediction1}
-                        onChange={(e) => handlePredictionChange(e, index, 'tpPrediction1')}
-                    />
-                </div>
-                <div className='roundinput-image'>
-                    <h2>TP</h2>
-                    <div className='roundInputImgWrap'>
-                        <img src={PunchHand} alt="TP Icon" />
+                        value={round.elPrediction1}
+                        onChange={(e) => handlePredictionChange(e, index, 'elPrediction1')}
+                      />
                     </div>
-                </div>
-                <div className='roundInputDivOne'>
-                    <input
+                    <div className='roundinput-image'>
+                      <h2>{label4}</h2>
+                      <div className='roundInputImgWrap'>
+                        <img src={PunchHand} alt={`${label4} Icon`} />
+                      </div>
+                    </div>
+                    <div className='roundInputDivOne'>
+                      <input
                         type='number'
                         style={{border:'2px solid #e1130c'}}
-                        value={round.tpPrediction2}
-                        onChange={(e) => handlePredictionChange(e, index, 'tpPrediction2')}
-                    />
-                </div>
-            </div>
+                        value={round.elPrediction2}
+                        onChange={(e) => handlePredictionChange(e, index, 'elPrediction2')}
+                      />
+                      <i className="fa fa-caret-right" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                )}
 
-
+                
+                
             <div className='roundInput' style={{paddingLeft:'40px', paddingRight:'37px'}}>
               <div className='roundInputDivOne'>
                 <input
@@ -318,57 +356,51 @@ const MakePredictions = ({ matchId }) => {
                     textAlign:'center', 
                     color:'red'
                   }} 
-                  value='RL' 
+                  value='RW' 
                   onClick={() => handleButtonClick(index, 'rl')}
                 />
               </div>
             </div>
 
-            <div className='roundInputSpecial'>
-              <div className='roundInputDivOne'>
-                <input
-                  type='button'
-                  style={{
-                    border: round.koBorder || '2px solid #95a04d', 
-                    background:'#000300', 
-                    textAlign:'center', 
-                    color:'#025204', 
-                    marginBottom:'5px'
-                  }} 
-                  value='KO' 
-                  onClick={() => handleButtonClick(index, 'ko')}
-                />
+
+
+                <div className='roundInputSpecial'>
+                  <div className='roundInputDivOne'>
+                    <input
+                      type='button'
+                      style={{
+                        border: round.koBorder || '2px solid #95a04d', 
+                        background:'#000300', 
+                        textAlign:'center', 
+                        color:'#025204', 
+                        marginBottom:'5px'
+                      }} 
+                      value='KO' 
+                      onClick={() => handleButtonClick(index, 'ko')}
+                    />
+                  </div>
+                  <div className='roundInputDivOne'>
+                    <input
+                      type='button'
+                      style={{
+                        border: round.spBorder || '2px solid #95a04d', 
+                        background:'#fff', 
+                        textAlign:'center', 
+                        color:'#2e5e6f',
+                      }} 
+                      value='SP' 
+                      onClick={() => handleButtonClick(index, 'sp')}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className='roundInputDivOne'>
-                <input
-                  type='button'
-                  style={{
-                    border: round.spBorder || '2px solid #95a04d', 
-                    background:'#fff', 
-                    textAlign:'center', 
-                    color:'#2e5e6f',
-                  }} 
-                  value='SP' 
-                  onClick={() => handleButtonClick(index, 'sp')}
-                />
-              </div>
-
-
-
-
             </div>
+          ))}
         </div>
-    </div>
-))}
 
-
-</div>
-
-
-
-<button className='btn-grad' onClick={handleFinish}>
-      {buttonText}
-    </button>
+        <button className='btn-grad' onClick={handleFinish}>
+          {buttonText}
+        </button>
       </div>
     </div>
   );

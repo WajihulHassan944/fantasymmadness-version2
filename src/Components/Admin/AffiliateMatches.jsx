@@ -27,7 +27,7 @@ const AffiliateMatches = () => {
 <div className='userItemsParent'>
 <div className='userItemsWrapper'>
   <div className='userItemsHeader'>
-    <h1>First Name</h1>
+    <h1>Fight Name</h1>
     <h1>Last Name</h1>
     <h1>Status</h1>
     <h1>Wallet</h1>

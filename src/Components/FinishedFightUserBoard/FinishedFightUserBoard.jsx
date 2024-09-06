@@ -51,8 +51,7 @@ const FinishedFightUserBoard = ({ matchId }) => {
     }, [matchId]);
 
 
-
-const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound) => {
+    const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound) => {
         if (!fighterOneRound || !fighterTwoRound || !roundPrediction) {
             console.error('Fighter round data is missing in calculateRoundPoints', fighterOneRound, fighterTwoRound);
             return 0;
@@ -67,203 +66,318 @@ const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound)
             }
         };
     
-        // Check and calculate points for fighter one
-        addPoints(roundPrediction.hpPrediction1, fighterOneRound.HP, roundPrediction.hpPrediction1);
-        addPoints(roundPrediction.bpPrediction1, fighterOneRound.BP, roundPrediction.bpPrediction1);
-        addPoints(roundPrediction.tpPrediction1, fighterOneRound.TP, roundPrediction.tpPrediction1);
-        if (roundPrediction.rwPrediction1 !== null && roundPrediction.rwPrediction1 === fighterOneRound.RW) {
-            roundPoints += roundPrediction.rwPrediction1;
-        }
-        if (roundPrediction.koPrediction1 !== null) {
-            roundPoints += roundPrediction.koPrediction1 === fighterOneRound.KO ? fighterOneRound.KO : 0;
-        }
+        // For boxing
+        if (match.matchCategory === 'boxing') {
+            // Fighter One
+            addPoints(roundPrediction.hpPrediction1, fighterOneRound.HP, roundPrediction.hpPrediction1);
+            addPoints(roundPrediction.bpPrediction1, fighterOneRound.BP, roundPrediction.bpPrediction1);
+            addPoints(roundPrediction.tpPrediction1, fighterOneRound.TP, roundPrediction.tpPrediction1);
+            if (roundPrediction.rwPrediction1 !== null && roundPrediction.rwPrediction1 === fighterOneRound.RW) {
+                roundPoints += roundPrediction.rwPrediction1;
+            }
+            if (roundPrediction.koPrediction1 !== null) {
+                roundPoints += roundPrediction.koPrediction1 === fighterOneRound.KO ? fighterOneRound.KO : 0;
+            }
     
-        // Check and calculate points for fighter two
-        addPoints(roundPrediction.hpPrediction2, fighterTwoRound.HP, roundPrediction.hpPrediction2);
-        addPoints(roundPrediction.bpPrediction2, fighterTwoRound.BP, roundPrediction.bpPrediction2);
-        addPoints(roundPrediction.tpPrediction2, fighterTwoRound.TP, roundPrediction.tpPrediction2);
-        if (roundPrediction.rwPrediction2 !== null && roundPrediction.rwPrediction2 === fighterTwoRound.RW) {
-            roundPoints += roundPrediction.rwPrediction2;
-        }
-        if (roundPrediction.koPrediction2 !== null) {
-            roundPoints += roundPrediction.koPrediction2 === fighterTwoRound.KO ? fighterTwoRound.KO : 0;
+            // Fighter Two
+            addPoints(roundPrediction.hpPrediction2, fighterTwoRound.HP, roundPrediction.hpPrediction2);
+            addPoints(roundPrediction.bpPrediction2, fighterTwoRound.BP, roundPrediction.bpPrediction2);
+            addPoints(roundPrediction.tpPrediction2, fighterTwoRound.TP, roundPrediction.tpPrediction2);
+            if (roundPrediction.rwPrediction2 !== null && roundPrediction.rwPrediction2 === fighterTwoRound.RW) {
+                roundPoints += roundPrediction.rwPrediction2;
+            }
+            if (roundPrediction.koPrediction2 !== null) {
+                roundPoints += roundPrediction.koPrediction2 === fighterTwoRound.KO ? fighterTwoRound.KO : 0;
+            }
+    
+        } else if (match.matchCategory === 'mma') {
+            // For MMA
+            // Fighter One
+            addPoints(roundPrediction.hpPrediction1, fighterOneRound.ST, roundPrediction.hpPrediction1);
+            addPoints(roundPrediction.bpPrediction1, fighterOneRound.KI, roundPrediction.bpPrediction1);
+            addPoints(roundPrediction.tpPrediction1, fighterOneRound.KN, roundPrediction.tpPrediction1);
+            if (roundPrediction.rwPrediction1 !== null && roundPrediction.rwPrediction1 === fighterOneRound.RW) {
+                roundPoints += roundPrediction.rwPrediction1;
+            }
+            if (roundPrediction.koPrediction1 !== null) {
+                roundPoints += roundPrediction.koPrediction1 === fighterOneRound.KO ? fighterOneRound.KO : 0;
+            }
+            if (roundPrediction.elPrediction1 !== null) {
+                roundPoints += roundPrediction.elPrediction1 <= fighterOneRound.EL ? roundPrediction.elPrediction1 : 0;
+            }
+    
+            // Fighter Two
+            addPoints(roundPrediction.hpPrediction2, fighterTwoRound.ST, roundPrediction.hpPrediction2);
+            addPoints(roundPrediction.bpPrediction2, fighterTwoRound.KI, roundPrediction.bpPrediction2);
+            addPoints(roundPrediction.tpPrediction2, fighterTwoRound.KN, roundPrediction.tpPrediction2);
+            if (roundPrediction.rwPrediction2 !== null && roundPrediction.rwPrediction2 === fighterTwoRound.RW) {
+                roundPoints += roundPrediction.rwPrediction2;
+            }
+            if (roundPrediction.koPrediction2 !== null) {
+                roundPoints += roundPrediction.koPrediction2 === fighterTwoRound.KO ? fighterTwoRound.KO : 0;
+            }
+            if (roundPrediction.elPrediction2 !== null) {
+                roundPoints += roundPrediction.elPrediction2 <= fighterTwoRound.EL ? roundPrediction.elPrediction2 : 0;
+            }
         }
     
         return roundPoints;
     };
-    
+        
 
     
 
-
-  const calculatePoints = (userPrediction, fighterOneStats, fighterTwoStats) => {
-    let totalScore = 0;
-  
-    userPrediction.forEach((roundPrediction, index) => {
-      const fighterOneRound = fighterOneStats[index];
-      const fighterTwoRound = fighterTwoStats[index];
-  
-      if (!fighterOneRound || !fighterTwoRound || !roundPrediction) return;
-  
-      // Head Punches (HP) - Fighter One
-      if (roundPrediction.hpPrediction1 !== null && roundPrediction.hpPrediction1 <= fighterOneRound.HP) {
-        totalScore += roundPrediction.hpPrediction1;
-      }
-  
-      // Body Punches (BP) - Fighter One
-      if (roundPrediction.bpPrediction1 !== null && roundPrediction.bpPrediction1 <= fighterOneRound.BP) {
-        totalScore += roundPrediction.bpPrediction1;
-      }
-  
-      // Total Punches (TP) - Fighter One
-      if (roundPrediction.tpPrediction1 !== null && roundPrediction.tpPrediction1 <= fighterOneRound.TP) {
-        totalScore += roundPrediction.tpPrediction1;
-      }
-  
-      // Picking Round Winner (RW) - Fighter One
-      if (roundPrediction.rwPrediction1 !== null && roundPrediction.rwPrediction1 === fighterOneRound.RW) {
-        totalScore += roundPrediction.rwPrediction1;
-      }
-  
-      // Knock Out (KO) - Fighter One
-      if (roundPrediction.koPrediction1 !== null) {
-        if (roundPrediction.koPrediction1 === fighterOneRound.KO) {
-          totalScore += fighterOneRound.KO;
-        } else {
-          totalScore += 0; // 25 points for wrong KO pick
-        }
-      }
-  
-      // Head Punches (HP) - Fighter Two
-      if (roundPrediction.hpPrediction2 !== null && roundPrediction.hpPrediction2 <= fighterTwoRound.HP) {
-        totalScore += roundPrediction.hpPrediction2;
-      }
-  
-      // Body Punches (BP) - Fighter Two
-      if (roundPrediction.bpPrediction2 !== null && roundPrediction.bpPrediction2 <= fighterTwoRound.BP) {
-        totalScore += roundPrediction.bpPrediction2;
-      }
-  
-      // Total Punches (TP) - Fighter Two
-      if (roundPrediction.tpPrediction2 !== null && roundPrediction.tpPrediction2 <= fighterTwoRound.TP) {
-        totalScore += roundPrediction.tpPrediction2;
-      }
-  
-      // Picking Round Winner (RW) - Fighter Two
-      if (roundPrediction.rwPrediction2 !== null && roundPrediction.rwPrediction2 === fighterTwoRound.RW) {
-        totalScore += roundPrediction.rwPrediction2;
-      }
-  
-      // Knock Out (KO) - Fighter Two
-      if (roundPrediction.koPrediction2 !== null) {
-        if (roundPrediction.koPrediction2 === fighterTwoRound.KO) {
-          totalScore += fighterTwoRound.KO;
-        } else {
-          totalScore += 0; // 25 points for wrong KO pick
-        }
-      }
-    });
-  
-    return totalScore;
+    const calculatePoints = (userPrediction, fighterOneStats, fighterTwoStats) => {
+        let totalScore = 0;
     
-  };
-  
-
-    const renderRoundResults = (predictions) => {
-        return predictions.map((round, index) => {
-            // Check if any meaningful prediction is made for the current round
-            const hasValidPredictions = round.hpPrediction1 !== null || round.bpPrediction1 !== null || 
-                                        round.tpPrediction1 !== null || round.rwPrediction1 !== null || 
-                                        round.koPrediction1 !== null || round.hpPrediction2 !== null || 
-                                        round.bpPrediction2 !== null || round.tpPrediction2 !== null || 
-                                        round.rwPrediction2 !== null || round.koPrediction2 !== null;
+        userPrediction.forEach((roundPrediction, index) => {
+            const fighterOneRound = fighterOneStats[index];
+            const fighterTwoRound = fighterTwoStats[index];
     
-            let roundPoints = 0;
-            if (hasValidPredictions) {
-                const fighterOneRound = match.BoxingMatch.fighterOneStats[index];
-                const fighterTwoRound = match.BoxingMatch.fighterTwoStats[index];
+            if (!fighterOneRound || !fighterTwoRound || !roundPrediction) return;
     
-                roundPoints = calculateRoundPoints(round, fighterOneRound, fighterTwoRound);
-                totalPoints += roundPoints;
+            // For Boxing
+            if (match.matchCategory === 'boxing') {
+                // Fighter One Predictions
+                // Head Punches (HP)
+                if (roundPrediction.hpPrediction1 !== null && roundPrediction.hpPrediction1 <= fighterOneRound.HP) {
+                    totalScore += roundPrediction.hpPrediction1;
+                }
+    
+                // Body Punches (BP)
+                if (roundPrediction.bpPrediction1 !== null && roundPrediction.bpPrediction1 <= fighterOneRound.BP) {
+                    totalScore += roundPrediction.bpPrediction1;
+                }
+    
+                // Total Punches (TP)
+                if (roundPrediction.tpPrediction1 !== null && roundPrediction.tpPrediction1 <= fighterOneRound.TP) {
+                    totalScore += roundPrediction.tpPrediction1;
+                }
+    
+                // Round Winner (RW)
+                if (roundPrediction.rwPrediction1 !== null && roundPrediction.rwPrediction1 === fighterOneRound.RW) {
+                    totalScore += roundPrediction.rwPrediction1;
+                }
+    
+                // Knock Out (KO)
+                if (roundPrediction.koPrediction1 !== null && roundPrediction.koPrediction1 === fighterOneRound.KO) {
+                    totalScore += fighterOneRound.KO;
+                }
+    
+                // Fighter Two Predictions
+                // Head Punches (HP)
+                if (roundPrediction.hpPrediction2 !== null && roundPrediction.hpPrediction2 <= fighterTwoRound.HP) {
+                    totalScore += roundPrediction.hpPrediction2;
+                }
+    
+                // Body Punches (BP)
+                if (roundPrediction.bpPrediction2 !== null && roundPrediction.bpPrediction2 <= fighterTwoRound.BP) {
+                    totalScore += roundPrediction.bpPrediction2;
+                }
+    
+                // Total Punches (TP)
+                if (roundPrediction.tpPrediction2 !== null && roundPrediction.tpPrediction2 <= fighterTwoRound.TP) {
+                    totalScore += roundPrediction.tpPrediction2;
+                }
+    
+                // Round Winner (RW)
+                if (roundPrediction.rwPrediction2 !== null && roundPrediction.rwPrediction2 === fighterTwoRound.RW) {
+                    totalScore += roundPrediction.rwPrediction2;
+                }
+    
+                // Knock Out (KO)
+                if (roundPrediction.koPrediction2 !== null && roundPrediction.koPrediction2 === fighterTwoRound.KO) {
+                    totalScore += fighterTwoRound.KO;
+                }
+    
+            // For MMA
+            } else if (match.matchCategory === 'mma') {
+                // Fighter One Predictions
+                // Strikes (ST)
+                if (roundPrediction.hpPrediction1 !== null && roundPrediction.hpPrediction1 <= fighterOneRound.ST) {
+                    totalScore += roundPrediction.hpPrediction1;
+                }
+    
+                // Kicks (KI)
+                if (roundPrediction.bpPrediction1 !== null && roundPrediction.bpPrediction1 <= fighterOneRound.KI) {
+                    totalScore += roundPrediction.bpPrediction1;
+                }
+    
+                // Knockdowns (KN)
+                if (roundPrediction.tpPrediction1 !== null && roundPrediction.tpPrediction1 <= fighterOneRound.KN) {
+                    totalScore += roundPrediction.tpPrediction1;
+                }
+    
+                // Elbow Strikes (EL)
+                if (roundPrediction.elPrediction1 !== null && roundPrediction.elPrediction1 <= fighterOneRound.EL) {
+                    totalScore += roundPrediction.elPrediction1;
+                }
+    
+                // Round Winner (RW)
+                if (roundPrediction.rwPrediction1 !== null && roundPrediction.rwPrediction1 === fighterOneRound.RW) {
+                    totalScore += roundPrediction.rwPrediction1;
+                }
+    
+                // Knock Out (KO)
+                if (roundPrediction.koPrediction1 !== null && roundPrediction.koPrediction1 === fighterOneRound.KO) {
+                    totalScore += fighterOneRound.KO;
+                }
+    
+                // Fighter Two Predictions
+                // Strikes (ST)
+                if (roundPrediction.hpPrediction2 !== null && roundPrediction.hpPrediction2 <= fighterTwoRound.ST) {
+                    totalScore += roundPrediction.hpPrediction2;
+                }
+    
+                // Kicks (KI)
+                if (roundPrediction.bpPrediction2 !== null && roundPrediction.bpPrediction2 <= fighterTwoRound.KI) {
+                    totalScore += roundPrediction.bpPrediction2;
+                }
+    
+                // Knockdowns (KN)
+                if (roundPrediction.tpPrediction2 !== null && roundPrediction.tpPrediction2 <= fighterTwoRound.KN) {
+                    totalScore += roundPrediction.tpPrediction2;
+                }
+    
+                // Elbow Strikes (EL)
+                if (roundPrediction.elPrediction2 !== null && roundPrediction.elPrediction2 <= fighterTwoRound.EL) {
+                    totalScore += roundPrediction.elPrediction2;
+                }
+    
+                // Round Winner (RW)
+                if (roundPrediction.rwPrediction2 !== null && roundPrediction.rwPrediction2 === fighterTwoRound.RW) {
+                    totalScore += roundPrediction.rwPrediction2;
+                }
+    
+                // Knock Out (KO)
+                if (roundPrediction.koPrediction2 !== null && roundPrediction.koPrediction2 === fighterTwoRound.KO) {
+                    totalScore += fighterTwoRound.KO;
+                }
             }
+        });
     
-            return (
-                <div key={index} className='roundResultDiv'>
-                    <h1>Round {round.round} Complete</h1>
-                    <div className='line'></div>
-                    <div className='scoresWrapper'>
-                        {/* Render prediction scores */}
-                        <div className='scoresOfRound'>
-                            <h2>HP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.hpPrediction1 !== null ? round.hpPrediction1 : '-'}</p>
-                            </div>
+        return totalScore;
+    };
+    
+
+  const renderRoundResults = (predictions) => {
+    const scoreLabels = match.matchCategory === 'boxing' 
+        ? { hp: 'HP', bp: 'BP', tp: 'TP', rw: 'RW',rl:'RL', ko: 'KO', sp:'SP' }
+        : { hp: 'ST', bp: 'KI', tp: 'KN', rw: 'RW',rl:'RL', ko: 'KO', sp:'SP' , el:'EL' };
+
+    return predictions.map((round, index) => {
+        // Check if any meaningful prediction is made for the current round
+        const hasValidPredictions = round.hpPrediction1 !== null || round.bpPrediction1 !== null || 
+                                    round.tpPrediction1 !== null || round.rwPrediction1 !== null || 
+                                    round.koPrediction1 !== null || round.hpPrediction2 !== null || 
+                                    round.bpPrediction2 !== null || round.tpPrediction2 !== null || 
+                                    round.elPrediction1 !== null || round.elPrediction2 !== null || 
+                                    round.rwPrediction2 !== null || round.koPrediction2 !== null;
+
+        let roundPoints = 0;
+        if (hasValidPredictions) {
+            const fighterOneRound = match.BoxingMatch.fighterOneStats[index];
+            const fighterTwoRound = match.BoxingMatch.fighterTwoStats[index];
+
+            roundPoints = calculateRoundPoints(round, fighterOneRound, fighterTwoRound);
+            totalPoints += roundPoints;
+        }
+
+        return (
+            <div key={index} className='roundResultDiv'>
+                <h1>Round {round.round} Complete</h1>
+                <div className='line'></div>
+                <div className='scoresWrapper'>
+                    {/* Render prediction scores dynamically */}
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.hp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.hpPrediction1 !== null ? round.hpPrediction1 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>HP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.hpPrediction2 !== null ? round.hpPrediction2 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.hp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.hpPrediction2 !== null ? round.hpPrediction2 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>BP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.bpPrediction1 !== null ? round.bpPrediction1 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.bp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.bpPrediction1 !== null ? round.bpPrediction1 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>BP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.bpPrediction2 !== null ? round.bpPrediction2 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.bp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.bpPrediction2 !== null ? round.bpPrediction2 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>TP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.tpPrediction1 !== null ? round.tpPrediction1 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.tp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.tpPrediction1 !== null ? round.tpPrediction1 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>TP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.tpPrediction2 !== null ? round.tpPrediction2 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.tp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.tpPrediction2 !== null ? round.tpPrediction2 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>RW</h2>
-                            <div className='scoreBox'>
-                                <p>{round.rwPrediction1 !== null ? round.rwPrediction1 : '-'}</p>
-                            </div>
+                    </div>
+                    {match.matchCategory === "mma" && (
+    <>
+        <div className='scoresOfRound'>
+            <h2>{scoreLabels.el}</h2>
+            <div className='scoreBox'>
+                <p>{round.elPrediction1 !== null ? round.elPrediction1 : '-'}</p>
+            </div>
+        </div>
+        <div className='scoresOfRound'>
+            <h2>{scoreLabels.el}</h2>
+            <div className='scoreBox'>
+                <p>{round.elPrediction2 !== null ? round.elPrediction2 : '-'}</p>
+            </div>
+        </div>
+    </>
+)}
+
+                   
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.rw}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.rwPrediction1 !== null ? round.rwPrediction1 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>RL</h2>
-                            <div className='scoreBox'>
-                                <p>{round.rwPrediction2 !== null ? round.rwPrediction2 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.rl}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.rwPrediction2 !== null ? round.rwPrediction2 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>KO</h2>
-                            <div className='scoreBox'>
-                                <p>{round.koPrediction1 !== null ? round.koPrediction1 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.ko}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.koPrediction1 !== null ? round.koPrediction1 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h2>SP</h2>
-                            <div className='scoreBox'>
-                                <p>{round.koPrediction2 !== null ? round.koPrediction2 : '-'}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h2>{scoreLabels.sp}</h2>
+                        <div className='scoreBox'>
+                            <p>{round.koPrediction2 !== null ? round.koPrediction2 : '-'}</p>
                         </div>
-                        <div className='scoresOfRound'>
-                            <h3>Points<span className='toRemove'> total</span></h3>
-                            <div className='scoreBoxSpecial'>
-                                <p>{roundPoints}</p>
-                            </div>
+                    </div>
+                    <div className='scoresOfRound'>
+                        <h3>Points<span className='toRemove'> total</span></h3>
+                        <div className='scoreBoxSpecial'>
+                            <p>{roundPoints}</p>
                         </div>
                     </div>
                 </div>
-            );
-        });
-    };
+            </div>
+        );
+    });
+};
 
 
     const userScore = scores.length > 0 ? scores[0] : null;

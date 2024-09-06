@@ -46,6 +46,9 @@ const AddNewMatch = () => {
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
 
+    
+    data.append('approvalOfMatch', 'approved');
+
     setButtonText('Saving, please wait...');  // Update button text
 
     try {
