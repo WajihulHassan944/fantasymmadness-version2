@@ -42,6 +42,52 @@
   }
   
 
+.homeFirst{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../../Assets/banner.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-direction: column;
+
+}
+.homeFirst h1{
+    font-size: 60px;
+    line-height: 60px;
+    color: #fff;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    text-transform: uppercase;
+    -webkit-text-shadow: 6px 5px 6px #201e1f;
+    -moz-text-shadow: 6px 5px 6px #201e1f;
+    -o-text-shadow: 6px 5px 6px #201e1f;
+    text-shadow: 6px 5px 6px #201e1f;
+    text-align: center;
+    margin-top:85px;
+}
+.homeFirst h2{
+    color: #d30c23;
+    font-size: 65px;
+    line-height: 79px;
+    text-align: center;
+    padding: 27px 0;
+    width: 1120px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    text-transform: uppercase;
+    -webkit-text-shadow: 6px 5px 6px #201e1f;
+    -moz-text-shadow: 6px 5px 6px #201e1f;
+    -o-text-shadow: 6px 5px 6px #201e1f;
+    text-shadow: 6px 5px 6px #201e1f;
+}
+
+
+
 .homeSecond{
     display: flex;
     justify-content: flex-start;
@@ -807,168 +853,3 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin-top: 10px;
 }
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
-
-@font-face {
-    font-family: 'UFCSans';
-    src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'UFCSans';
-    src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: condensed;
-  }
-  
-  @font-face {
-    font-family: 'UFCSans';
-    src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: condensed;
-  }
-  
-
-
-  @font-face {
-    font-family: 'UfcSansRegular';
-    src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'UFCSans';
-    src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
-    font-weight: normal;
-    font-style: oblique;
-  }
-  
-
-.homeFirst{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../../Assets/boxing-victory.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  flex-direction: column;
-  padding-top: 170px;
-  padding-bottom: 70px;
-
-}
-.homeFirst h1{
-    font-size: 60px;
-    line-height: 60px;
-    color: #fff;
-    font-family: 'Bungee', sans-serif;
-    text-transform: uppercase;
-    text-align: center;
-    margin-top:85px;
-}
-.homeFirst h2{
-    color: #d30c23;
-    font-size: 65px;
-    line-height: 79px;
-    text-align: center;
-    padding: 27px 0;
-    width: 1120px;
-    font-family: 'Bungee', sans-serif;
-    text-transform: uppercase;
-    -webkit-text-shadow: 6px 5px 6px #201e1f;
-    -moz-text-shadow: 6px 5px 6px #201e1f;
-    -o-text-shadow: 6px 5px 6px #201e1f;
-    text-shadow: 6px 5px 6px #201e1f;
-    margin-bottom: 100px;
-}
-
-
-
-
-
-
-
-.homeFourth{
-  display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../../Assets/RING2.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-direction: column;
-}
-
-.video-embed-wrapper {
-  width: 100%;
-  max-width: 800px; /* Adjust as needed */
-  margin: 0 auto; /* Center the video on the page */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-  text-align: center;
-}
-
-.video-embed-wrapper iframe {
-  width: 100%;
-  height: 450px; /* Adjust the height as needed */
-  border-radius: 8px; /* Optional: rounded corners on the iframe */
-}
-
-
-
-
-
-
-
-
-
-@media (max-width: 767px){
-  
-  .homeFirst{
-    
-    min-height: 100vh;
-    width:100%;
-    overflow: hidden;
-    padding-top:140px;
-  }
-  .homeFirst h1{
-    font-size: 30px;
-    line-height: 60px;
-    margin-top:85px;
-  }
-  .homeFirst h2{
-    font-size: 35px;
-    line-height: 59px;
-    width: 300px;
-    margin-bottom: 140px;
-    }
-  
-
-
-    
-.video-embed-wrapper {
-  margin:0; /* Center the video on the page */
-  border-radius: 10px; /* Rounded corners */
- }
-
-.video-embed-wrapper iframe {
-  width: 100%;
-  height: 200px; /* Adjust the height as needed */
-  border-radius: 8px; /* Optional: rounded corners on the iframe */
-}
-
-  }  
-
-
-
-

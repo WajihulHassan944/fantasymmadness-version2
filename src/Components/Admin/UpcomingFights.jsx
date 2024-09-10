@@ -2,12 +2,14 @@ import React, { useEffect , useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import AdminPredictions from './AdminPredictions';
+import ShowScores from './ShowScores';
 
 const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
+  const [finishedMatchId, setFinishedMatchId] = useState(null);
   const [filter, setFilter] = useState('All');
 
   useEffect(() => {
@@ -20,6 +22,9 @@ const UpcomingFights = () => {
   const handleMatchClick = (matchId) => {
     setSelectedMatchId(matchId); // Set the selected match ID
   };
+  const handleFinishedMatchClick = (matchId) => {
+    setFinishedMatchId(matchId); // Set the selected match ID
+  };
 
   
   // Render the FightCosting component if a match is selected
@@ -27,6 +32,9 @@ const UpcomingFights = () => {
     return <AdminPredictions matchId={selectedMatchId} />;
   }
 
+  if (finishedMatchId) {
+    return <ShowScores matchId={finishedMatchId} />;
+  }
 
   const filteredMatches = matches.filter((match) => {
     if (filter === 'All') return true;
@@ -53,7 +61,7 @@ const UpcomingFights = () => {
                 key={match._id}
                 onClick={match.matchStatus === 'Ongoing' 
                   ? () => handleMatchClick(match._id) 
-                  : () => alert('Scores already submitted')
+                  : () => handleFinishedMatchClick(match._id)
                 }
               >
                 <div className='fightersImages'>

@@ -42,6 +42,7 @@ import { fetchAffiliate } from './Redux/affiliateAuthSlice';
 import AffiliateDashboard from './Components/Affiliates/AffiliateDashboard';
 import HowItWorks from './Components/Affiliates/HowItWorks';
 import AffiliateProfile from './Components/Affiliates/AffiliateProfile';
+import Calandar from './Components/Admin/Calandar';
 
 function AppContent() {
   const location = useLocation();
@@ -116,6 +117,7 @@ function AppContent() {
         <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
  
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
+        <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
  
       </Routes>
 

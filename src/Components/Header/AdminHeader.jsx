@@ -42,11 +42,11 @@ const AdminHeader = () => {
 
             <div className='anchorLinksWrapperAdmin'>
               <h1 className='matchHeading'>Matches</h1>
-              <NavLink to="/administration/upcomingFights" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Submit Scores</NavLink>
+              <NavLink to="/administration/upcomingFights" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Submit/View Scores</NavLink>
               <NavLink to="/administration/AddNewMatch" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Create a match</NavLink>
               <NavLink to="/administration/PreviousMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>All / prev matches</NavLink>
               <NavLink to="/administration/DeleteMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Delete matches</NavLink>
-              <NavLink to="/administration/AffiliateMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Affiliate Matches</NavLink>
+              <NavLink to="/administration/Calendar" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Calandar</NavLink>
             
               <h1 className='matchHeading'>Users</h1>
               <NavLink to="/administration/RegisteredUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLink' : 'anchorlinksAdmin')}>Registered Users</NavLink>

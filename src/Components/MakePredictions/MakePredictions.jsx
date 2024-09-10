@@ -20,8 +20,8 @@ const MakePredictions = ({ matchId }) => {
       hpPrediction2: '',
       bpPrediction1: '',
       bpPrediction2: '',
-      tpPrediction1: 0,
-      tpPrediction2: 0,
+      tpPrediction1: '',
+      tpPrediction2: '',
       rwPrediction1: 0,
       rwPrediction2: 0,
       koPrediction1: 0,
@@ -72,17 +72,6 @@ const MakePredictions = ({ matchId }) => {
     const { value } = e.target;
     const updatedRounds = [...rounds];
     updatedRounds[roundIndex][field] = value;
-  
-    // Update TP predictions only if matchCategory is boxing
-    if (match.matchCategory === 'boxing') {
-      const hpPrediction1 = parseFloat(updatedRounds[roundIndex].hpPrediction1) || 0;
-      const bpPrediction1 = parseFloat(updatedRounds[roundIndex].bpPrediction1) || 0;
-      const hpPrediction2 = parseFloat(updatedRounds[roundIndex].hpPrediction2) || 0;
-      const bpPrediction2 = parseFloat(updatedRounds[roundIndex].bpPrediction2) || 0;
-  
-      updatedRounds[roundIndex].tpPrediction1 = hpPrediction1 + bpPrediction1;
-      updatedRounds[roundIndex].tpPrediction2 = hpPrediction2 + bpPrediction2;
-    }
   
     setRounds(updatedRounds);
   };
@@ -275,7 +264,7 @@ const MakePredictions = ({ matchId }) => {
       style={{border:'2px solid #2a8adb', background:'#fff'}}
       value={round.tpPrediction1}
       onChange={(e) => handlePredictionChange(e, index, 'tpPrediction1')}
-      disabled={match.matchCategory !== 'mma'}  // Disable if not MMA
+       
     />
   </div>
   <div className='roundinput-image'>
@@ -290,7 +279,7 @@ const MakePredictions = ({ matchId }) => {
       style={{border:'2px solid #e1130c', background:'#fff'}}
       value={round.tpPrediction2}
       onChange={(e) => handlePredictionChange(e, index, 'tpPrediction2')}
-      disabled={match.matchCategory !== 'mma'}  // Disable if not MMA
+       
     />
   </div>
 </div>
