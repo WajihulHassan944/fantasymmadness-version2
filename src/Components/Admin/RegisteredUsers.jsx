@@ -53,7 +53,7 @@ const RegisteredUsers = () => {
               </div>
               <h1>  {user.firstName} <span className='toRemove'>{user.lastName}</span></h1>
 <h1 className='toRemove'>Current Plan: {user.currentPlan}</h1>
-              <button onClick={() => handleView(user)} className='viewButton'>View</button>
+              <button onClick={() => handleView(user)} className='viewButtonUsers'>View</button>
               <button onClick={() => handleDelete(user._id)} className='deleteButton'>Delete</button>
             </div>
           ))}

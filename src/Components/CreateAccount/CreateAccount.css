@@ -237,6 +237,39 @@ flex-basis: 90%;
 }
 
 
+.affiliateLink {
+  color: red;
+  position: absolute;
+  top: 140px;
+  right: 30px;
+  font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+  font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+  font-size: 22px;
+  cursor: pointer;
+  animation: blinkText 2s steps(1, end) infinite; /* Adjust timing as needed */
+}
+
+@keyframes blinkText {
+  0%, 100% {
+    visibility: visible;
+  }
+  50% {
+    visibility: hidden;
+  }
+}
+
+/* Stop animation on hover */
+.affiliateLink:hover {
+  animation: none;
+  visibility: visible; /* Ensure it's visible when hovered */
+}
+
+ .affiliateCreateAccount{
+  background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(../../Assets/banner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+ }
 
 
 @media (max-width: 767px){
@@ -254,26 +287,11 @@ margin-bottom: 100px;
   display: none;
 }
 
-
- }
-
-
-
- .affiliateLink{
-  color: red;
-  position: absolute;
-  top:140px;
+.affiliateLink {
+  top: 100px;
   right: 30px;
-  font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
-  font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
-font-size: 22px;  
-  cursor: pointer;
- }
+  font-size: 22px;
+  }
 
 
- .affiliateCreateAccount{
-  background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(../../Assets/banner.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
  }

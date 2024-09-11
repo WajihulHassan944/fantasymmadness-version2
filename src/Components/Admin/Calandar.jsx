@@ -105,20 +105,24 @@ const Calandar = () => {
             )}
 
             {/* Match Modal */}
+           
             {modalVisible && currentMatch && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeMatchModal}>&times;</span>
-                        <h3>{currentMatch.matchName}</h3>
-                        <p>{currentMatch.matchDescription}</p>
-                        <div className="match-images">
-                            <img src={currentMatch.fighterAImage} alt={currentMatch.matchFighterA} />
-                            <img src={currentMatch.fighterBImage} alt={currentMatch.matchFighterB} />
-                        </div>
-                        {/* Add more match details here as needed */}
-                    </div>
-                </div>
-            )}
+    <div className="modal">
+        <div className="modal-content">
+            <span className="close" onClick={closeMatchModal}>&times;</span>
+            <h3>{currentMatch.matchName}</h3>
+            <p>{currentMatch.matchDescription}</p>
+            <p><strong>Date:</strong> {new Date(currentMatch.matchDate).toLocaleDateString()}</p>
+            <p><strong>Time:</strong> {currentMatch.matchTime}</p>
+            <p><strong>Venue:</strong> {currentMatch.venue}</p>
+            <div className="match-images">
+                <img src={currentMatch.fighterAImage} alt={currentMatch.matchFighterA} />
+                <img src={currentMatch.fighterBImage} alt={currentMatch.matchFighterB} />
+            </div>
+        </div>
+    </div>
+)}
+
         </div>
     );
 };
