@@ -53,7 +53,7 @@ const FinishedFightUserBoard = ({ matchId }) => {
 
     const calculateRoundPoints = (roundPrediction, fighterOneRound, fighterTwoRound) => {
         if (!fighterOneRound || !fighterTwoRound || !roundPrediction) {
-            console.error('Fighter round data is missing in calculateRoundPoints', fighterOneRound, fighterTwoRound);
+            console.error('Fighter round data is missing in calculateRoundPoints',roundPrediction, fighterOneRound, fighterTwoRound);
             return 0;
         }
     
@@ -276,11 +276,24 @@ const FinishedFightUserBoard = ({ matchId }) => {
 
         let roundPoints = 0;
         if (hasValidPredictions) {
-            const fighterOneRound = match.BoxingMatch.fighterOneStats[index];
-            const fighterTwoRound = match.BoxingMatch.fighterTwoStats[index];
-
-            roundPoints = calculateRoundPoints(round, fighterOneRound, fighterTwoRound);
-            totalPoints += roundPoints;
+            let fighterOneRound, fighterTwoRound;
+    
+            // Check match category and get the corresponding fighter stats
+            if (match.matchCategory === 'boxing' && match.BoxingMatch) {
+                fighterOneRound = match.BoxingMatch.fighterOneStats[index];
+                fighterTwoRound = match.BoxingMatch.fighterTwoStats[index];
+            } else if (match.matchCategory === 'mma' && match.MMAMatch) {
+                fighterOneRound = match.MMAMatch.fighterOneStats[index];
+                fighterTwoRound = match.MMAMatch.fighterTwoStats[index];
+            }
+    
+            // Ensure fighter stats are available before calculating points
+            if (fighterOneRound && fighterTwoRound) {
+                roundPoints = calculateRoundPoints(round, fighterOneRound, fighterTwoRound);
+                totalPoints += roundPoints;
+            } else {
+                console.error('Fighter round data is missing in calculateRoundPoints', round, fighterOneRound, fighterTwoRound);
+            }
         }
 
         return (

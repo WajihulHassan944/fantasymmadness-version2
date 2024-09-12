@@ -14,7 +14,7 @@ const MakePredictions = ({ matchId }) => {
   const isBoxing = match?.matchCategory === 'boxing';
 
   const [rounds, setRounds] = useState(
-    Array.from({ length: 12 }, (_, i) => ({
+    Array.from({ length: match.maxRounds }, (_, i) => ({
       round: i + 1,
       hpPrediction1: '',
       hpPrediction2: '',

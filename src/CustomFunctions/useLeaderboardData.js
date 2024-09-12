@@ -30,8 +30,8 @@ const useLeaderboardData = (matches) => {
           const match = matchesData.find(m => m._id === score.matchId);
           if (!match) return;
 
-          const fighterOneStats = match.BoxingMatch ? match.BoxingMatch.fighterOneStats : match.MmaMatch.fighterOneStats;
-          const fighterTwoStats = match.BoxingMatch ? match.BoxingMatch.fighterTwoStats : match.MmaMatch.fighterTwoStats;
+          const fighterOneStats = match.matchCategory === 'boxing' ? match.BoxingMatch.fighterOneStats : match.MMAMatch.fighterOneStats;
+          const fighterTwoStats = match.matchCategory === 'boxing' ? match.BoxingMatch.fighterTwoStats : match.MMAMatch.fighterTwoStats;
 
           uniquePlayers.add(score.playerId);
 

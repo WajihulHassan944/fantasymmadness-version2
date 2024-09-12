@@ -43,6 +43,7 @@ import AffiliateDashboard from './Components/Affiliates/AffiliateDashboard';
 import HowItWorks from './Components/Affiliates/HowItWorks';
 import AffiliateProfile from './Components/Affiliates/AffiliateProfile';
 import Calandar from './Components/Admin/Calandar';
+import EmailTemplate from './Components/Admin/EmailTemplate';
 
 function AppContent() {
   const location = useLocation();
@@ -118,6 +119,7 @@ function AppContent() {
  
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
+        <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />
  
       </Routes>
 

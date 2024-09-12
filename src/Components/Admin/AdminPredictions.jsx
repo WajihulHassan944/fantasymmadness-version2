@@ -157,17 +157,25 @@ const AdminPredictions = ({ matchId }) => {
       });
 
       const result = await response.json();
+     
       if (response.ok) {
         alert(`Your prediction for Round ${round} has been submitted.`);
+        
         setRoundScores((prevScores) => {
           const newScores = [...prevScores];
           newScores[round - 1] = { fighterOneStats, fighterTwoStats };
           return newScores;
         });
-        setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
-        setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
-        if (round < 12) setRound(round + 1);
-      } else {
+      
+        // Only clear the stats if the current round is not the last round
+        if (round < match.maxRounds) {
+          setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+          setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+          setRound(round + 1);
+        }
+      }
+      
+      else {
         console.error('Error saving round results:', result.message);
       }
     } catch (error) {
@@ -190,7 +198,7 @@ const AdminPredictions = ({ matchId }) => {
   };
 
   const handleNext = () => {
-    if (round < 12) {
+    if (round < match.maxRounds) {
       setRound((prevRound) => {
         const newRound = prevRound + 1;
         const nextScores = roundScores[newRound - 1];
@@ -326,7 +334,7 @@ const AdminPredictions = ({ matchId }) => {
           <button
             className='btn-grad'
             onClick={handleNext}
-            disabled={round === 12}
+            disabled={round === match.maxRounds}
           >
             Next
           </button>

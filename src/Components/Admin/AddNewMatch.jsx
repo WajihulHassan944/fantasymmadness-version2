@@ -16,6 +16,7 @@ const AddNewMatch = () => {
     pot: '',
     fighterAImage: null,
     fighterBImage: null,
+    maxRounds: '',
   });
   const [buttonText, setButtonText] = useState('Add Match');  // State for button text
 
@@ -45,8 +46,7 @@ const AddNewMatch = () => {
     data.append('pot', formData.pot);
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
-
-    
+    data.append('maxRounds', formData.maxRounds);
     data.append('approvalOfMatch', 'approved');
 
     setButtonText('Saving, please wait...');  // Update button text
@@ -59,7 +59,6 @@ const AddNewMatch = () => {
 
       if (response.ok) {
         alert('Match added successfully!');
-        // Reload the page to reflect changes
         window.location.reload();
       } else {
         alert('Failed to add match.');
@@ -117,10 +116,37 @@ const AddNewMatch = () => {
               <input type='text' name='matchVideoUrl' value={formData.matchVideoUrl} onChange={handleChange} />
             </div>
             <div className='input-group'>
-              <label>Match Date <span>*</span></label>
-              <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
+              <label>Max Rounds <span>*</span></label>
+              <input type='number' name='maxRounds' value={formData.maxRounds} onChange={handleChange} />
             </div>
+         
           </div>
+
+          {formData.matchType === 'LIVE' && (
+            <>
+              <div className='input-wrap-one'>
+                <div className='input-group'>
+                  <label>Match Date <span>*</span></label>
+                  <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
+                </div>
+                <div className='input-group'>
+                  <label>Match time <span>*</span></label>
+                  <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
+                </div>
+              </div>
+
+              <div className='input-wrap-one'>
+                <div className='input-group'>
+                  <label>Match Tokens <span>*</span></label>
+                  <input type='number' name='matchTokens' value={formData.matchTokens} onChange={handleChange} />
+                </div>
+                <div className='input-group'>
+                  <label>POT <span>*</span></label>
+                  <input type='number' name='pot' value={formData.pot} onChange={handleChange} />
+                </div>
+              </div>
+            </>
+          )}
 
           <div className='input-wrap-one'>
             <div className='input-group'>
@@ -135,26 +161,11 @@ const AddNewMatch = () => {
 
           <div className='input-wrap-one'>
             <div className='input-group'>
-              <label>Match time <span>*</span></label>
-              <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
-            </div>
-            <div className='input-group'>
-              <label>Match Tokens <span>*</span></label>
-              <input type='number' name='matchTokens' value={formData.matchTokens} onChange={handleChange} />
-            </div>
-          </div>
-
-          <div className='input-wrap-one'>
-            <div className='input-group'>
               <label>Fight <span>*</span></label>
               <select name='matchType' value={formData.matchType} onChange={handleChange}>
                 <option value="LIVE">LIVE</option>
                 <option value="SHADOW">SHADOW</option>
               </select>
-            </div>
-            <div className='input-group'>
-              <label>POT <span>*</span></label>
-              <input type='number' name='pot' value={formData.pot} onChange={handleChange} />
             </div>
           </div>
 

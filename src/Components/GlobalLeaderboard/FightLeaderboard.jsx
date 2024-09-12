@@ -169,8 +169,12 @@ const FightLeaderboard = ({ matchId }) => {
     return scores.map((score, index) => {
       const user = users.find(u => u._id === score.playerId);
       if (!user) return null;
+
+      
   
-      const totalPoints = calculatePoints(score.predictions, match.BoxingMatch.fighterOneStats, match.BoxingMatch.fighterTwoStats);
+      const totalPoints = match.matchCategory === 'boxing'  
+      ? calculatePoints(score.predictions, match.BoxingMatch.fighterOneStats, match.BoxingMatch.fighterTwoStats, 'boxing')
+      : calculatePoints(score.predictions, match.MMAMatch.fighterOneStats, match.MMAMatch.fighterTwoStats, 'mma');
   
       return (
         <div className='leaderboardItem' key={index}>

@@ -142,7 +142,7 @@ const FightCosting = ({ matchId }) => {
 
         <div className='fightDetailsPot'>
           <h1>MAX :</h1>
-          <p style={{ color: "#38b90c" }}>12 Rounds</p>
+          <p style={{ color: "#38b90c" }}>{match.maxRounds} Rounds</p>
         </div>
 
         <button className='btn-grad' onClick={() => handleMatchClick()}>Play?</button>

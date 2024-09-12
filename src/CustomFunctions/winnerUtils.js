@@ -20,8 +20,8 @@ export const getWinnerDetails = async (matchId) => {
             const user = usersData.find(u => u._id === score.playerId);
             if (!user) return;
 
-            const fighterOneStats = match.BoxingMatch ? match.BoxingMatch.fighterOneStats : match.MmaMatch.fighterOneStats;
-            const fighterTwoStats = match.BoxingMatch ? match.BoxingMatch.fighterTwoStats : match.MmaMatch.fighterTwoStats;
+            const fighterOneStats = match.matchCategory === 'boxing' ? match.BoxingMatch.fighterOneStats : match.MMAMatch.fighterOneStats;
+            const fighterTwoStats = match.matchCategory === 'boxing' ? match.BoxingMatch.fighterTwoStats : match.MMAMatch.fighterTwoStats;
             const totalPoints = calculatePoints(score.predictions, fighterOneStats, fighterTwoStats, match.matchCategory);
 
             if (totalPoints > highestPoints) {
