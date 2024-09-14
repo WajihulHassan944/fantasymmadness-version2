@@ -44,6 +44,9 @@ import HowItWorks from './Components/Affiliates/HowItWorks';
 import AffiliateProfile from './Components/Affiliates/AffiliateProfile';
 import Calandar from './Components/Admin/Calandar';
 import EmailTemplate from './Components/Admin/EmailTemplate';
+import Promo from './Components/Affiliates/Promo';
+import ShadowFightsLibrary from './Components/Admin/ShadowFightsLibrary';
+import Contact from './Components/Footer/Contact';
 
 function AppContent() {
   const location = useLocation();
@@ -103,6 +106,7 @@ function AppContent() {
         <Route path="/terms-of-service" element={ <Termsofservice /> } />
         <Route path="/:userId" element={ <PublicProfile /> } />
         <Route path="/administration/login" element={<AdminLogin />} />
+        <Route path="/contact" element={<Contact />} />
   
     <Route path ="/AffiliateDashboard" element={<AffiliateDashboard />} />
     <Route path="/HowItWorks" element={<HowItWorks />} />
@@ -116,11 +120,12 @@ function AppContent() {
         <Route path="/administration" element={<PrivateRouteAdmin element={<Admin />} />} />
         <Route path="/administration/RegisteredUsers" element={<PrivateRouteAdmin element={<RegisteredUsers />} />} />
         <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
+        <Route path="/administration/ShadowFightsLibrary" element={<PrivateRouteAdmin element={<ShadowFightsLibrary />} />} />
  
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
         <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />
- 
+        <Route path="/:matchId/:affiliateId" element={<Promo />} />
       </Routes>
 
       {showFooter && <Footer />}

@@ -23,9 +23,20 @@ const UpcomingFights = () => {
     }
   }, [matchStatus, dispatch]);
 
-  // Filter matches to only include upcoming ones
   const today = new Date();
-  const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
+const currentTime = new Date();
+
+// Filter matches
+const upcomingMatches = matches.filter((match) => {
+  // Construct matchDateTime including both date and time
+  const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+
+  // Return matches that are either in the future or today and haven't started yet
+  return (
+    matchDateTime >= today.setHours(0, 0, 0, 0) && 
+    currentTime < matchDateTime
+  );
+});
 
   return (
     <div className='upcomingFightsUser'>
@@ -34,7 +45,7 @@ const UpcomingFights = () => {
         <div className="fightswrap">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id} onClick={handleFightClick}>
+              <div className="fightItem" key={match._id} onClick={handleFightClick} data-aos="zoom-out">
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -65,7 +76,7 @@ const UpcomingFights = () => {
                   </div>
                   <div className="transformed-div-four">
                     <h1>Players</h1>
-                    <p>{match.matchTokens}</p>
+                    <p>{match.userPredictions.length}</p>
                   </div>
                 </div>    
               </div>

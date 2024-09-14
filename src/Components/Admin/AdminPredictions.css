@@ -225,7 +225,6 @@ h1.subHeading2{
     width:28%;
    }
 
-
 .actualPredictionsWrapper .popup {
     position: fixed;
     top: 50%;
@@ -242,3 +241,73 @@ h1.subHeading2{
 
   }
   
+
+  
+.adminPredictions .popupPredictions{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../../Assets//BlackredBackground.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+    width:450px;
+    height:200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    gap:30px;
+}
+.popupPredictions form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.popupPredictions form input{
+    width: 100%;
+}
+.popupPredictions form button{
+    padding: 8px 20px;
+    color:#fff;
+    background-color: gray;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+
+.adminPredictions .popup {
+
+    width:400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.adminPredictions .popup button{
+    width:70px;
+    height:70px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    background-color: blue;
+    color: #ccc;
+    border:4px solid #ccc;
+    cursor: pointer;
+}
+.adminPredictions .popup button:nth-of-type(2){
+background-color: red;
+}

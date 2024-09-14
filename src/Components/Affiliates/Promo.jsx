@@ -7,20 +7,75 @@ import { useEffect, useState } from 'react';
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const AffiliateMatchDetails = ({matchId, affiliateId}) => {
+const Promo = () => {
   const dispatch = useDispatch();
-  const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
+  const { matchId, affiliateId } = useParams();  
+ const navigate = useNavigate();
+  const [affiliate, setAffiliate] = useState(null);
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const match = matches.find((m) => m.shadowFightId === matchId && m.affiliateId === affiliateId);
   const [navigateDashboard, setNavigateToDash] = useState(null);
   
+  const user = useSelector((state) => state.user); // Access user details from Redux store
+   
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
+
+
+  useEffect(() => {
+    const fetchAffiliateData = async () => {
+      try {
+        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/affiliates');
+        const affiliates = await response.json();
+        const filteredAffiliate = affiliates.find((aff) => aff._id === affiliateId);
+        setAffiliate(filteredAffiliate);
+      } catch (error) {
+        console.error('Error fetching affiliate data:', error);
+      }
+    };
+
+    fetchAffiliateData();
+  }, [affiliateId]);
+
+
+  const handleJoinLeague = async () => {
+    if (!isAuthenticated) {
+        window.open('/login', '_blank'); // Open login page in a new window
+        return;
+      }
+         const userId = user._id;
+    const userEmail = user.email;
+  
+    try {
+      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/${affiliateId}/join`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, userEmail }), // Include userId and userEmail in the request body
+      });
+  
+      if (response.ok) {
+        alert('Successfully joined the league');
+        window.location.reload(); // Reload the page after joining
+      } else {
+        const data = await response.json();
+        alert(`${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error joining league:', error);
+    }
+  };
+  
+
 
 
   if(!match){
@@ -54,20 +109,8 @@ const handleDashboardOpening = (id) =>{
 if(navigateDashboard){
   return <AffiliateFightLeaderboard matchId={navigateDashboard} />
 }
-
-
-const copyToClipboard = () => {
-  const url = `http://localhost:3000/${matchId}/${affiliateId}`;
-  navigator.clipboard.writeText(url)
-    .then(() => {
-      alert("URL copied to clipboard!");
-    })
-    .catch(err => {
-      console.error("Failed to copy: ", err);
-    });
-};
     return (
-        <div className='fightDetails'>
+        <div className='fightDetails' >
           
           
           <div className='member-header' style={{marginBottom:'30px'}}>
@@ -75,7 +118,7 @@ const copyToClipboard = () => {
               <img src={affiliate.profileUrl} alt="Logo" />
             </div>
             <h3>Affiliate Name - {affiliate.firstName} {affiliate.lastName}</h3>
-            <h3>Balance: -</h3>
+            <h3>Users Joined League: {affiliate.usersJoined.length}</h3>
           </div>
     
     
@@ -94,12 +137,7 @@ const copyToClipboard = () => {
                     <h1 style={{background:'#e90000', padding:'5px 10px', fontSize:'22px'}}>This fight is approved.</h1>
             </div>
 
-            <div className='fightDetailsPot'>
-    <h1 style={{color:'#ebcd03', fontSize:'22px'}}>
-      Amount over pot budget: {match.amountOverPotBudget} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Profit: {match.profit}
-    </h1>
- </div>
+          
 
 
                 <h1 className='fightTypeInFightDetails' style={{fontSize:'21.5px'}}>Fight type: <span>{match.matchCategory}</span>
@@ -120,20 +158,12 @@ const copyToClipboard = () => {
     
 
 
-                <div className='fightDetailsPot'>
-                    <h1 style={{fontSize:'21.5px'}}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>
-                 </div>
-                <div className='fightDetailsPot'>
-                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}}>http://localhost:3000/{matchId}/{affiliateId}</h1>
-                </div>
-
 <div style={{width:'100%', display:'flex', gap:'20px', flexWrap:'wrap', justifyContent:'center', alignItems:'center'}}>
-                <button className='btn-grad' style={{width:'14%'}} onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
-                <button className='btn-grad' style={{width:'14%'}} onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>
+                <button className='btn-grad' style={{width:'14%'}} onClick={handleJoinLeague}>Join my league</button>
                 </div>
     </div>
         </div>
       )
     }
-    
-export default AffiliateMatchDetails
+
+export default Promo

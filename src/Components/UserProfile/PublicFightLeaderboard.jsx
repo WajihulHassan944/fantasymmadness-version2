@@ -140,7 +140,7 @@ const PublicFightLeaderboard = ({ matchId ,name, plan, profileUrl }) => {
               <span style={{color:"#38b90c"}}>{match.matchType} </span> - 
               <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
             </h1>
-            <h1 style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>500</span></h1>
+            <h1 style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>{match.userPredictions.length}</span></h1>
           </div>
           
        

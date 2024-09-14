@@ -180,7 +180,7 @@ const PublicProfile = () => {
               </div>
               <div className="transformed-div-four">
                 <h1>Players</h1>
-                <p>400</p>
+                <p>{match.userPredictions.length}</p>
               </div>
             </div>
             <div className="transformed-five">
@@ -263,7 +263,7 @@ const PublicProfile = () => {
                     </div>
                     <div className="transformed-div-four">
                       <h1>Players</h1>
-                      <p>400</p>
+                      <p>{match.userPredictions.length}</p>
                     </div>
                   </div>
                   <div className="transformed-five">

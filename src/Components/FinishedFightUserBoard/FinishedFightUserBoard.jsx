@@ -259,7 +259,11 @@ const FinishedFightUserBoard = ({ matchId }) => {
         return totalScore;
     };
     
-
+    const getYouTubeEmbedUrl = (url) => {
+        const videoId = url.split('youtu.be/')[1]?.split('?')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+      };
+      
   const renderRoundResults = (predictions) => {
     const scoreLabels = match.matchCategory === 'boxing' 
         ? { hp: 'HP', bp: 'BP', tp: 'TP', rw: 'RW',rl:'RL', ko: 'KO', sp:'SP' }
@@ -401,27 +405,27 @@ const FinishedFightUserBoard = ({ matchId }) => {
                 <div className='fightDetails global-leaderboard'>
                     <div className='member-header'>
                         <div className='member-header-image'>
-                            <img src={user.profileUrl} alt="Logo" />
+                            <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />
                         </div>
-                        <h3><span className='toRemove'>Member Name - </span>{user.firstName} {user.lastName}</h3>
-                        <h3><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
+                        <h3 data-aos="zoom-in"><span className='toRemove'>Member Name - </span>{user.firstName} {user.lastName}</h3>
+                        <h3 data-aos="zoom-in"><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
                     </div>
                     <div className='fightwalletWrap'>
                         <div className='totalPoints'>
-                            <h1 className='fightTypeInFightDetails'>
+                            <h1 data-aos="zoom-in" className='fightTypeInFightDetails'>
                                 Fight type: <span>{match.matchCategory}</span> - 
                                 <span style={{color:"#38b90c"}}>{match.matchType} </span> - 
                                 <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
                             </h1>
-                            <h1 style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>500</span></h1>
+                            <h1 data-aos="zoom-in" style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>{match.userPredictions.length}</span></h1>
                         </div>
-                        <div className='fightWallet'>
+                        <div className='fightWallet' data-aos="zoom-in">
                             <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
                             <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
                         </div>
                     </div>
                     <div className='homeThird'>
-                        <div className='fightersImagesInFightDetails'>
+                        <div className='fightersImagesInFightDetails' data-aos="zoom-in">
                             <div className='flexColumn'>
                                 <div className='imgWrapFights' style={{border:'none'}}>
                                     <img src={match.fighterAImage} style={{border:'3px solid blue'}} alt={match.matchFighterA} />
@@ -437,16 +441,18 @@ const FinishedFightUserBoard = ({ matchId }) => {
                             </div>
                         </div>   
                         <div className="videoWrapper">
-                            <iframe
-                                src="https://www.youtube.com/embed/e3osGj488Us"
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            ></iframe>
-                        </div>
-                        <div className='leaderboardHeading'>
-                            <h3>FIGHT COMPLETED</h3>
+      <iframe
+        src={getYouTubeEmbedUrl(match.matchVideoUrl)}
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
+    
+    
+    <div className='leaderboardHeading'>
+                            <h3 data-aos="zoom-in">FIGHT COMPLETED</h3>
                         </div>
                         <div className='roundResultsWrapper'>
                             {userScore ? renderRoundResults(userScore.predictions) : <p>No data available.</p>}

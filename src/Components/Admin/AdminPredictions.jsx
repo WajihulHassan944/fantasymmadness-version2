@@ -12,6 +12,8 @@ const AdminPredictions = ({ matchId }) => {
   const match = matches.find((m) => m._id === matchId);
   
   const [round, setRound] = useState(1); // Start with round 1
+  const [showVideoUrlPopup, setShowVideoUrlPopup] = useState(true); // Show popup on load
+  const [videoUrl, setVideoUrl] = useState(''); // Store input value
 
   // Boxing stats
   const initialBoxingStats = {
@@ -64,6 +66,8 @@ const AdminPredictions = ({ matchId }) => {
     }
   };
 
+
+
   const handleRWSelect = (value) => {
     setSelectedRWValue(value);
     setFighterOneStats((prevStats) => {
@@ -93,17 +97,17 @@ const AdminPredictions = ({ matchId }) => {
 
     return (
       <div className="popup">
-        <h3>Select value for {stat}</h3>
+        <h3>Select value for Fighter A</h3>
         {stat === 'RW' && (
           <>
-            <button onClick={() => { onSelect(100); onClose(); }}>100</button>
-            <button onClick={() => { onSelect(25); onClose(); }}>25</button>
+            <button onClick={() => { onSelect(100); onClose(); }}>RW</button>
+            <button onClick={() => { onSelect(25); onClose(); }}>RL</button>
           </>
         )}
         {stat === 'KO' && (
           <>
-            <button onClick={() => { onSelect(500); onClose(); }}>500</button>
-            <button onClick={() => { onSelect(25); onClose(); }}>25</button>
+            <button onClick={() => { onSelect(500); onClose(); }}>KO</button>
+            <button onClick={() => { onSelect(25); onClose(); }}>SP</button>
           </>
         )}
       </div>
@@ -233,8 +237,64 @@ const AdminPredictions = ({ matchId }) => {
     }
   };
 
+
+  const handleVideoUrlSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form behavior
+
+    if (!videoUrl) {
+      alert('Please enter a video URL.');
+      return;
+    }
+
+    // Send POST request with matchId and matchVideoUrl
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/updateMatchVideo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          matchId,
+          matchVideoUrl: videoUrl,
+        }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('Video URL Added successfully. Now you can play.');
+        setShowVideoUrlPopup(false); // Close the popup after successful submission
+      } else {
+        console.error('Error updating video URL:', result.message);
+        alert('Error updating video URL.');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      alert('Network error while updating video URL.');
+    }
+  };
+
+
   return (
     <div className='adminPredictions'>
+
+{showVideoUrlPopup && (
+        <div className="popupPredictions">
+          <h3>Please add the match video URL</h3>
+          <form onSubmit={handleVideoUrlSubmit}>
+            <input
+              type="text"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              placeholder="Enter match video URL"
+              required
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      )}
+
+
+
       <h1>{match.matchType} &nbsp; &nbsp; &nbsp;{match.matchName} &nbsp; - &nbsp; {match.matchCategory} &nbsp;&nbsp;&nbsp; Round {round}</h1>
       <div className='adminPredictionsHeader'>
         <div className='imagesWrapperAdminPredictions'>

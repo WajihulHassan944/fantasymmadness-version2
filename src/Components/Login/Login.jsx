@@ -82,7 +82,7 @@ if(affiliatesLogin){
 }
   return (
     <div className='login-wrapper'>
-      <div className='loginCard'>
+      <div className='loginCard' data-aos="zoom-in">
         <img src={logoimage} alt="Logo" />
         <h1>Please Login Below</h1>
 

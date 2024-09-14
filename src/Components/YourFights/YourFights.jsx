@@ -91,18 +91,18 @@ if (completedMatchId) {
     <div className='userdashboard yourFightsWrapper'>
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={user.profileUrl} alt="Logo" />
+          <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />
         </div>
-        <h3><span className='toRemove'>Member Name:</span> {user.firstName} {user.lastName}</h3>
-        <h3><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
+        <h3 data-aos="zoom-in"><span className='toRemove'>Member Name:</span> {user.firstName} {user.lastName}</h3>
+        <h3 data-aos="zoom-in"><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
       </div>
     
       <div className='fightwalletWrap'>
-        <div className='totalPoints'>
+        <div className='totalPoints' data-aos="zoom-in">
           <h1>Your Total Points : <span style={{color:"#38b90c"}}>{totalPoints}</span></h1>
         </div>
           
-        <div className='fightWallet'>
+        <div className='fightWallet' data-aos="zoom-in">
         <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
         <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
     </div>
@@ -130,7 +130,7 @@ if (completedMatchId) {
       const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
       return (
-        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}>
+        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)} data-aos="zoom-in">
           <div className='fightersImages'>
             <div className='fighterOne'>
               <img src={match.fighterAImage} alt="Fighter One" />
@@ -167,7 +167,7 @@ if (completedMatchId) {
             </div>
             <div className="transformed-div-four">
               <h1>Players</h1>
-              <p>400</p>
+              <p>{match.userPredictions.length}</p>
             </div>
           </div>
           <div className="transformed-five">
@@ -213,7 +213,7 @@ if (completedMatchId) {
             const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
             return (
-              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)}>
+              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)} data-aos="zoom-in">
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
@@ -250,7 +250,7 @@ if (completedMatchId) {
                   </div>
                   <div className="transformed-div-four">
                     <h1>Players</h1>
-                    <p>400</p>
+                    <p>{match.userPredictions.length}</p>
                   </div>
                 </div>
                 <div className="transformed-five">

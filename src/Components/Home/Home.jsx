@@ -5,10 +5,10 @@ const Home = () => {
   return (
     <>
     <div className='homeFirst'>
-    <h1>The thrill of combat</h1>
-    <h2>Boxing, MMA, And Kickboxing</h2>
+    <h1 data-aos="zoom-out">The thrill of combat</h1>
+    <h2 data-aos="zoom-out">Boxing, MMA, And Kickboxing</h2>
 
-    <div class="video-embed-wrapper">
+    <div class="video-embed-wrapper" >
     <iframe 
         width="560" 
         height="315" 
@@ -16,21 +16,10 @@ const Home = () => {
         title="YouTube video player" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
+        allowfullscreen >
     </iframe>
 </div> 
     </div>
-
-
-
-
-
-
-      
-
-
-
-
 
     </>
   )

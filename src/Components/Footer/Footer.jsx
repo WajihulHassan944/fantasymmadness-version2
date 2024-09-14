@@ -14,7 +14,7 @@ const Footer = () => {
       
 
       <div className="socialIcons">
-      <a href="https://www.facebook.com/fantasymmadness" 
+      <a href="https://www.facebook.com/share/2pzYV9XdQpAU7n6p/?mibextid=LQQJ4d" 
          target="_blank" 
          rel="noopener noreferrer" 
          className="iconWrap">
@@ -32,12 +32,7 @@ const Footer = () => {
          className="iconWrap">
         <i className="fa fa-instagram"></i>
       </a>
-      <a href="https://www.linkedin.com/company/fantasymmadness" 
-         target="_blank" 
-         rel="noopener noreferrer" 
-         className="iconWrap">
-        <i className="fa fa-linkedin-square" aria-hidden="true"></i>
-      </a>
+     
     </div>
 <div class="footerLastDiv">
     <p><span>Fantasy Mmadness</span>
@@ -45,6 +40,7 @@ const Footer = () => {
     </p>
     <Link to="/privacy-policy" class="footerlink">Privacy policy</Link>
     <Link to="/terms-of-service" class="footerlink">Terms of service</Link>
+    <Link to="/contact" class="footerlink">Contact</Link>
       
 </div>
       

@@ -1,66 +1,117 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 const AffiliateAddNewMatch = ({ matchId }) => {
+
   const [formData, setFormData] = useState({
-    matchId: '',
+    shadowFightId: '',
     matchTokens: '',
     affiliateId: '',
     pot: '',
     profit: '',
     amountOverPotBudget: '',
+    matchDate: '',
+    matchTime: '',
+
   });
 
-  const matches = useSelector((state) => state.matches.data);
-  const match = matches.find((m) => m._id === matchId);
+  const [promoMatches, setPromoMatches] = useState([]); 
+    
+  useEffect(() => {
+    const fetchPromoMatches = async () => {
+      try {
+        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/shadow');
+        if (!response.ok) {
+          throw new Error('Failed to fetch promo matches');
+        }
+        const data = await response.json();
+        setPromoMatches(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPromoMatches();
+  }, []);
+
+
   const [buttonText, setButtonText] = useState('Create');
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
+  const promoDetails = promoMatches.find((m) => m._id === matchId);
+if(!promoDetails){
+  return <p>Loading...</p>;
+}
 
   if (!affiliate) {
     return <div>Loading...</div>;
   }
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+  
     const numericFields = ['matchTokens', 'pot', 'profit', 'amountOverPotBudget'];
-    const newValue = numericFields.includes(name) ? parseFloat(value) || 0 : value;
-
+    const dateFields = ['matchDate', 'matchTime'];
+  
+    let newValue;
+  
+    if (numericFields.includes(name)) {
+      newValue = parseFloat(value) || 0;
+    } else if (dateFields.includes(name)) {
+      newValue = value; // Keep date and time as string
+    } else {
+      newValue = value;
+    }
+  
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: newValue,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = 'https://fantasymmadness-game-server-three.vercel.app/addPromoMatch';
-    
-    // Send the data as JSON
-    const requestBody = {
-      matchId: matchId,
-      matchTokens: formData.matchTokens,
-      affiliateId: affiliate._id,
-      pot: formData.pot,
-      profit: formData.profit,
-      amountOverPotBudget: formData.amountOverPotBudget
-    };
-
+  
+    const url = 'https://fantasymmadness-game-server-three.vercel.app/addMatch';
+  
+    const matchDetails = promoMatches.find((m) => m._id === matchId);
+    if (!matchDetails) {
+      alert('Match not found!');
+      return;
+    }
+  
+    const data = new FormData();
+    data.append('matchTokens', formData.matchTokens);
+    data.append('shadowFightId', matchDetails._id);
+    data.append('affiliateId', affiliate._id);
+    data.append('pot', formData.pot);
+    data.append('profit', formData.profit);
+    data.append('amountOverPotBudget', formData.amountOverPotBudget);
+    data.append('matchDate', formData.matchDate);
+    data.append('matchTime', formData.matchTime);
+  
+    // Append image URLs directly if available
+    data.append('fighterAImageUrl', matchDetails.fighterAImage);
+    data.append('fighterBImageUrl', matchDetails.fighterBImage);
+  
+    // Append other match details
+    data.append('matchCategory', matchDetails.matchCategory);
+    data.append('matchName', matchDetails.matchName);
+    data.append('matchFighterA', matchDetails.matchFighterA);
+    data.append('matchFighterB', matchDetails.matchFighterB);
+    data.append('matchDescription', matchDetails.matchDescription);
+    data.append('matchVideoUrl', matchDetails.matchVideoUrl);
+    data.append('matchType', 'SHADOW');
+    data.append('maxRounds', matchDetails.maxRounds);
+  
     setButtonText('Saving, please wait...');
-
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
+        body: data,
       });
-
-      const responseData = await response.json();
-
+  
       if (response.ok) {
-        alert(responseData.message);
+        const responseData = await response.json();
+        alert('Match added successfully!');
         console.log(responseData.data);
         window.location.reload();
       } else {
@@ -68,12 +119,13 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       }
     } catch (error) {
       console.error('Error adding match:', error);
-      alert('An error occurred while adding the match.');
+      window.location.reload();
+
     } finally {
       setButtonText('Add Match');
     }
   };
-
+    
   return (
     <div className='addNewMatch' style={{ marginLeft: '0', width: '100%', flexDirection: 'column' }}>
       <div className='member-header' style={{ marginBottom: '20px' }}>
@@ -91,7 +143,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
           <div className='input-wrap-one'>
             <div className='input-group'>
               <label>Fight Name</label>
-              <input type='text' name='matchName' value={match.matchName} disabled style={{ background: '#fff' }} />
+              <input type='text' name='matchName' value={promoDetails.matchName} disabled style={{ background: '#fff' }} />
             </div>
             <div className='input-group'>
               <label>Profit <span>*</span></label>
@@ -115,6 +167,16 @@ const AffiliateAddNewMatch = ({ matchId }) => {
               <label style={{ color: 'yellow' }}>Note - You will need 70 players in order for this fight to start. If the budget is not reached by the start time, the fight will not start and tokens will be returned to members' wallets.</label>
             </div>
           </div>
+          <div className='input-wrap-one'>
+                <div className='input-group'>
+                  <label>Match Date <span>*</span></label>
+                  <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
+                </div>
+                <div className='input-group'>
+                  <label>Match time <span>*</span></label>
+                  <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
+                </div>
+              </div>
 
           <div className='input-wrap-one'>
             <div className='input-group'>

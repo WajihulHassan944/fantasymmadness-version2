@@ -30,8 +30,12 @@ const AddNewMatch = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = 'https://fantasymmadness-game-server-three.vercel.app/addMatch';
-    
+
+    const url =
+      formData.matchType === 'LIVE'
+        ? 'https://fantasymmadness-game-server-three.vercel.app/addMatch'
+        : 'https://fantasymmadness-game-server-three.vercel.app/addShadow';
+
     const data = new FormData();
     data.append('matchCategory', formData.matchCategory);
     data.append('matchName', formData.matchName);
@@ -39,15 +43,17 @@ const AddNewMatch = () => {
     data.append('matchFighterB', formData.matchFighterB);
     data.append('matchDescription', formData.matchDescription);
     data.append('matchVideoUrl', formData.matchVideoUrl);
-    data.append('matchDate', formData.matchDate);
-    data.append('matchTime', formData.matchTime);
-    data.append('matchTokens', formData.matchTokens);
-    data.append('matchType', formData.matchType);
-    data.append('pot', formData.pot);
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-    data.append('approvalOfMatch', 'approved');
+
+      data.append('matchDate', formData.matchDate);
+      data.append('matchType', formData.matchType);
+    
+      data.append('matchTime', formData.matchTime);
+      data.append('matchTokens', formData.matchTokens);
+      data.append('pot', formData.pot);
+    
 
     setButtonText('Saving, please wait...');  // Update button text
 
@@ -67,7 +73,7 @@ const AddNewMatch = () => {
       console.error('Error adding match:', error);
       alert('An error occurred while adding the match.');
     } finally {
-      setButtonText('Add Match');  // Revert button text if needed
+      setButtonText('Add Match');  // Revert button text
     }
   };
 
@@ -110,18 +116,7 @@ const AddNewMatch = () => {
             </div>
           </div>
 
-          <div className='input-wrap-one'>
-            <div className='input-group'>
-              <label>Video ID <span>*</span></label>
-              <input type='text' name='matchVideoUrl' value={formData.matchVideoUrl} onChange={handleChange} />
-            </div>
-            <div className='input-group'>
-              <label>Max Rounds <span>*</span></label>
-              <input type='number' name='maxRounds' value={formData.maxRounds} onChange={handleChange} />
-            </div>
-         
-          </div>
-
+          
           {formData.matchType === 'LIVE' && (
             <>
               <div className='input-wrap-one'>
@@ -130,7 +125,7 @@ const AddNewMatch = () => {
                   <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
                 </div>
                 <div className='input-group'>
-                  <label>Match time <span>*</span></label>
+                  <label>Match Time <span>*</span></label>
                   <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
                 </div>
               </div>
@@ -167,6 +162,11 @@ const AddNewMatch = () => {
                 <option value="SHADOW">SHADOW</option>
               </select>
             </div>
+            <div className='input-group'>
+              <label>Max Rounds <span>*</span></label>
+              <input type='number' name='maxRounds' value={formData.maxRounds} onChange={handleChange} />
+            </div>
+          
           </div>
 
           <button type="submit" className='btn-grad' style={{ width: '50%' }}>{buttonText}</button>

@@ -11,14 +11,14 @@ const PlayForFree = () => {
   return (
     <div>
       <div className='howtoplay-wrapper'>
-        <h1>PLAY For Free</h1>
+        <h1 data-aos="zoom-out">PLAY For Free</h1>
         <p>
           Welcome to Fantasy-MMadness, the ultimate destination for fantasy MMA enthusiasts! 
           Whether you're a seasoned player or new to the world of fantasy sports, our "Play for Free" 
           option is perfect for you.
         </p>
 
-        <h1>Why Play for Free?</h1>
+        <h1 data-aos="zoom-out">Why Play for Free?</h1>
         <p>
           Experience the Thrill: Dive into the action without any cost. Create your dream MMA lineup and 
           compete against other players for bragging rights.
@@ -28,7 +28,7 @@ const PlayForFree = () => {
           Perfect for those who want to play just for fun.
         </p>
 
-        <h1>How to Get Started</h1>
+        <h1 data-aos="zoom-out">How to Get Started</h1>
         <p>
           Sign Up for Free: Before you can make predictions, you need to sign up for a free account. 
           It’s quick, easy, and gives you access to all our exciting features.
@@ -38,7 +38,7 @@ const PlayForFree = () => {
           to see how you rank against other players in real-time.
         </p>
 
-        <h1>What Are You Waiting For?</h1>
+        <h1 data-aos="zoom-out">What Are You Waiting For?</h1>
         <p>
           Join the fun today and experience the excitement of Fantasy-MMadness without any cost. 
           Click the button below to start playing for free!

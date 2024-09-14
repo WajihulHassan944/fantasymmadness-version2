@@ -7,6 +7,8 @@ import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
+import ReactHowler from "react-howler";
+
 const Dashboard = () => {
 
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Dashboard = () => {
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
   
   const [time, setTime] = useState(new Date()); // State to trigger re-render every minute
-
+  const [isPlaying, setIsPlaying] = useState(true); 
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
@@ -31,6 +33,9 @@ const Dashboard = () => {
 
     return () => clearInterval(timer); // Clear interval on unmount
   }, []);
+
+
+  
 
   const user = useSelector((state) => state.user); // Access user details from Redux store
 
@@ -128,16 +133,22 @@ const upcomingMatches = matches.filter((match) => {
 
   return (
     <div className='userdashboard'>
+      <ReactHowler
+        src="./soundtwo.mp3" // Path to your audio file
+        playing={isPlaying} // Controls whether the audio is playing
+        loop={true} // Loop the audio indefinitely
+        volume={0.5} // Set the volume (0 to 1)
+      />
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={user.profileUrl} alt="Logo" />
+          <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />
         </div>
-        <h3><span className='toRemove'>Member Name: </span>{user.firstName} {user.lastName}</h3>
-              <h3><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
+        <h3 data-aos="zoom-in"><span className='toRemove'>Member Name: </span>{user.firstName} {user.lastName}</h3>
+              <h3 data-aos="zoom-in"><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
       </div>
 
       <div className='fightwalletWrap'>
-        <div className='fightWallet'>
+        <div className='fightWallet' data-aos="zoom-in">
           <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
           <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
         </div>
@@ -148,7 +159,7 @@ const upcomingMatches = matches.filter((match) => {
           <h1 className='fightsheadingone'>UPCOMING / ACTIVE FIGHTS</h1>
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id}>
+              <div className="fightItem" key={match._id} data-aos="zoom-in">
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -169,7 +180,7 @@ const upcomingMatches = matches.filter((match) => {
                     <div className='transformed-div-two-partTwo'>
                       <p>{new Date(match.matchDate).toLocaleDateString()}</p>
                       <h1>{match.matchType}</h1>
-                      <h1>pot ${match.pot}</h1>
+                     
                     </div>
                   </div>
                 </div>
@@ -179,7 +190,7 @@ const upcomingMatches = matches.filter((match) => {
                   </div>
                   <div className="transformed-div-four">
                     <h1>Players</h1>
-                    <p>{match.matchTokens}</p>
+                    <p>{match.userPredictions.length}</p>
                   </div>
                 </div>    
               </div>
@@ -199,7 +210,7 @@ const upcomingMatches = matches.filter((match) => {
       const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
       return (
-        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}>
+        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}  data-aos="zoom-in" >
           <div className='fightersImages'>
             <div className='fighterOne'>
               <img src={match.fighterAImage} alt="Fighter One" />
@@ -226,26 +237,57 @@ const upcomingMatches = matches.filter((match) => {
             </div>
           </div>
           <div className='fightItemTwo'>
-            <div className="transformed-three">
-              <div className='transformedDivBox'>HP</div>
-              <div className='transformedDivBox'>BP</div>
-              <div className='transformedDivBox'>TP</div>
-              <div className='transformedDivBox'>RW</div>
-              <div className='transformedDivBox'>KO</div>
-              <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
-            </div>
-            <div className="transformed-div-four">
-              <h1>Players</h1>
-              <p>400</p>
-            </div>
-          </div>
-          <div className="transformed-five">
-            <div className='transformedDivBox'>HP</div>
-            <div className='transformedDivBox'>BP</div>
-            <div className='transformedDivBox'>TP</div>
-            <div className='transformedDivBox'>RW</div>
-            <div className='transformedDivBox'>KO</div>
-          </div>
+  <div className="transformed-three">
+    {
+      match.matchCategory === "boxing" ? (
+        <>
+          <div className='transformedDivBox'>HP</div>
+          <div className='transformedDivBox'>BP</div>
+          <div className='transformedDivBox'>TP</div>
+          <div className='transformedDivBox'>RW</div>
+          <div className='transformedDivBox'>KO</div>
+          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+        </>
+      ) : (
+        <>
+          <div className='transformedDivBox'>ST</div>
+          <div className='transformedDivBox'>KI</div>
+          <div className='transformedDivBox'>KN</div>
+          <div className='transformedDivBox'>RW</div>
+          <div className='transformedDivBox'>KO</div>
+          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+        </>
+      )
+    }
+  </div>
+  <div className="transformed-div-four">
+    <h1>Players</h1>
+    <p>{match.userPredictions.length}</p>
+  </div>
+</div>
+
+<div className="transformed-five">
+  {
+    match.matchCategory === "boxing" ? (
+      <>
+        <div className='transformedDivBox'>HP</div>
+        <div className='transformedDivBox'>BP</div>
+        <div className='transformedDivBox'>TP</div>
+        <div className='transformedDivBox'>RW</div>
+        <div className='transformedDivBox'>KO</div>
+      </>
+    ) : (
+      <>
+        <div className='transformedDivBox'>ST</div>
+        <div className='transformedDivBox'>KI</div>
+        <div className='transformedDivBox'>KN</div>
+        <div className='transformedDivBox'>RW</div>
+        <div className='transformedDivBox'>KO</div>
+      </>
+    )
+  }
+</div>
+
         </div>
       );
     })
@@ -280,7 +322,7 @@ const upcomingMatches = matches.filter((match) => {
             const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
             return (
-              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)}>
+              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)} data-aos="zoom-in">
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
@@ -307,26 +349,57 @@ const upcomingMatches = matches.filter((match) => {
                   </div>
                 </div>
                 <div className='fightItemTwo'>
-                  <div className="transformed-three">
-                    <div className='transformedDivBox'>HP</div>
-                    <div className='transformedDivBox'>BP</div>
-                    <div className='transformedDivBox'>TP</div>
-                    <div className='transformedDivBox'>RW</div>
-                    <div className='transformedDivBox'>KO</div>
-                    <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus} </div>
-                  </div>
-                  <div className="transformed-div-four">
-                    <h1>Players</h1>
-                    <p>400</p>
-                  </div>
-                </div>
-                <div className="transformed-five">
-                  <div className='transformedDivBox'>HP</div>
-                  <div className='transformedDivBox'>BP</div>
-                  <div className='transformedDivBox'>TP</div>
-                  <div className='transformedDivBox'>RW</div>
-                  <div className='transformedDivBox'>KO</div>
-                </div>
+  <div className="transformed-three">
+    {
+      match.matchCategory === "boxing" ? (
+        <>
+          <div className='transformedDivBox'>HP</div>
+          <div className='transformedDivBox'>BP</div>
+          <div className='transformedDivBox'>TP</div>
+          <div className='transformedDivBox'>RW</div>
+          <div className='transformedDivBox'>KO</div>
+          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+        </>
+      ) : (
+        <>
+          <div className='transformedDivBox'>ST</div>
+          <div className='transformedDivBox'>KI</div>
+          <div className='transformedDivBox'>KN</div>
+          <div className='transformedDivBox'>RW</div>
+          <div className='transformedDivBox'>KO</div>
+          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+        </>
+      )
+    }
+  </div>
+  <div className="transformed-div-four">
+    <h1>Players</h1>
+    <p>{match.userPredictions.length}</p>
+  </div>
+</div>
+
+<div className="transformed-five">
+  {
+    match.matchCategory === "boxing" ? (
+      <>
+        <div className='transformedDivBox'>HP</div>
+        <div className='transformedDivBox'>BP</div>
+        <div className='transformedDivBox'>TP</div>
+        <div className='transformedDivBox'>RW</div>
+        <div className='transformedDivBox'>KO</div>
+      </>
+    ) : (
+      <>
+        <div className='transformedDivBox'>ST</div>
+        <div className='transformedDivBox'>KI</div>
+        <div className='transformedDivBox'>KN</div>
+        <div className='transformedDivBox'>RW</div>
+        <div className='transformedDivBox'>KO</div>
+      </>
+    )
+  }
+</div>
+
               </div>
             );
           })

@@ -8,7 +8,9 @@ const DeleteFights = () => {
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
 
+
   const [selectedMatchId, setSelectedMatchId] = useState(null);
+  const [selectedAffiliateId, setSelectedAffiliateId] = useState(null); // State to store affiliateId
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState(''); // State to manage popup message
 
@@ -18,8 +20,9 @@ const DeleteFights = () => {
     }
   }, [matchStatus, dispatch]);
 
-  const handleMatchDeleteClick = (id) => {
+  const handleMatchDeleteClick = (id, affiliateId) => {
     setSelectedMatchId(id);
+    setSelectedAffiliateId(affiliateId); // Store the affiliateId (it can be null/undefined)
     setShowPopup(true);
     setPopupMessage('Are you sure you want to delete this match?');
   };
@@ -27,9 +30,13 @@ const DeleteFights = () => {
   const handleConfirmDelete = async () => {
     if (selectedMatchId) {
       try {
-        const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}`, {
-          method: 'DELETE',
-        });
+        // Construct the URL with or without affiliateId based on its existence
+        let url = `https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}`;
+        if (selectedAffiliateId) {
+          url += `?affiliateId=${selectedAffiliateId}`; // Add affiliateId only if it exists
+        }
+
+        const response = await fetch(url, { method: 'DELETE' });
 
         if (response.ok) {
           dispatch(fetchMatches()); // Refresh the match list after deletion
@@ -37,12 +44,14 @@ const DeleteFights = () => {
           setTimeout(() => {
             setShowPopup(false);
             setSelectedMatchId(null);
-          }, 1000); // Hide popup after 3 seconds
+            setSelectedAffiliateId(null);
+          }, 1000); // Hide popup after 1 second
         } else {
           setPopupMessage('Failed to delete the match');
           setTimeout(() => {
             setShowPopup(false);
             setSelectedMatchId(null);
+            setSelectedAffiliateId(null);
           }, 1000);
         }
       } catch (error) {
@@ -50,6 +59,7 @@ const DeleteFights = () => {
         setTimeout(() => {
           setShowPopup(false);
           setSelectedMatchId(null);
+          setSelectedAffiliateId(null);
         }, 1000);
       }
     }
@@ -58,6 +68,7 @@ const DeleteFights = () => {
   const handleCancelDelete = () => {
     setShowPopup(false);
     setSelectedMatchId(null);
+    setSelectedAffiliateId(null); // Clear affiliateId on cancel
   };
 
   return (
@@ -68,7 +79,7 @@ const DeleteFights = () => {
           <div className="fightswrap">
             {matches.length > 0 ? (
               matches.map((match) => (
-                <div className="fightItem" key={match._id} onClick={() => handleMatchDeleteClick(match._id)}>
+                <div className="fightItem" key={match._id} onClick={() => handleMatchDeleteClick(match._id, match.affiliateId || null)}>
                   <div className='fightersImages'>
                     <div className='fighterOne'>
                       <img src={match.fighterAImage} alt={match.matchFighterA} />
