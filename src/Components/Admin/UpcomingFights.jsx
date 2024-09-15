@@ -78,7 +78,7 @@ const UpcomingFights = () => {
                   </div>
                   <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
-                      <h1>{match.matchCategory}</h1>
+                      <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
                       <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                     </div>
                     <div className='transformed-div-two-partTwo'>

@@ -22,11 +22,6 @@ import AddNewMatch from './Components/Admin/AddNewMatch';
 import PlayForFree from './Components/PlayForFree/PlayForFree';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import PrivateRouteAdmin from './Components/PrivateRoute/PrivateRouteAdmin';
-
-
-import { setUser } from './Redux/userSlice'; 
-import { fetchUser } from './Redux/authSlice'; // Import fetchUser if you need to use it separately
-import { setAdminAuthenticated } from './Redux/adminAuthSlice';
 import FightLeaderboard from './Components/GlobalLeaderboard/FightLeaderboard';
 import PreviousMatches from './Components/Admin/PreviousMatches';
 import DeleteFights from './Components/Admin/DeleteFights';
@@ -37,6 +32,9 @@ import AffiliateUsers from './Components/Admin/AffiliateUsers';
 import AffiliateMatches from './Components/Admin/AffiliateMatches';
 import PrivacyPolicy from './Components/LegalDocuments/PrivacyPolicy';
 import Termsofservice from './Components/LegalDocuments/Termsofservice';
+import { setUser } from './Redux/userSlice';
+import { fetchUser } from './Redux/authSlice';
+import { setAdminAuthenticated } from './Redux/adminAuthSlice';
 import { setAffiliateUser } from './Redux/affiliateSlice';
 import { fetchAffiliate } from './Redux/affiliateAuthSlice';
 import AffiliateDashboard from './Components/Affiliates/AffiliateDashboard';
@@ -47,48 +45,54 @@ import EmailTemplate from './Components/Admin/EmailTemplate';
 import Promo from './Components/Affiliates/Promo';
 import ShadowFightsLibrary from './Components/Admin/ShadowFightsLibrary';
 import Contact from './Components/Footer/Contact';
+import ReactHowler from 'react-howler';
+import mainAudio from './main.mp3'; // Replace with actual path
 
 function AppContent() {
   const location = useLocation();
-  const dispatch = useDispatch(); // Initialize dispatch
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    // For user authentication
     const userToken = localStorage.getItem('authToken');
     if (userToken) {
-      dispatch(setUser({ token: userToken })); // Set the token in the auth state
-      dispatch(fetchUser(userToken)); // Fetch and set user details based on the token
+      dispatch(setUser({ token: userToken }));
+      dispatch(fetchUser(userToken));
     }
-  
 
- // For user authentication
- const affiliateToken = localStorage.getItem('affiliateAuthToken');
- if (affiliateToken) {
-   dispatch(setAffiliateUser({ token: affiliateToken })); // Set the token in the auth state
-   dispatch(fetchAffiliate(affiliateToken)); // Fetch and set user details based on the token
- }
+    const affiliateToken = localStorage.getItem('affiliateAuthToken');
+    if (affiliateToken) {
+      dispatch(setAffiliateUser({ token: affiliateToken }));
+      dispatch(fetchAffiliate(affiliateToken));
+    }
 
-
-
-    // For admin authentication
     const adminToken = localStorage.getItem('adminAuthToken');
     if (adminToken) {
-      dispatch(setAdminAuthenticated({ token: adminToken })); // Set the admin authentication state
-    } else {
-      console.log('No admin token found in localStorage');
+      dispatch(setAdminAuthenticated({ token: adminToken }));
     }
   }, [dispatch]);
 
-  
   const showPublicHeader = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showAdminHeader = location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showFooter = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
 
+  // Determine if we are not on the homepage
+  const isNotHomepage = location.pathname !== '/';
+
   return (
     <>
+      {/* Conditionally play background music if not on the homepage */}
+      {isNotHomepage && (
+        <ReactHowler
+          src={mainAudio}
+          playing={true}
+          loop={true}
+          volume={0.5}
+        />
+      )}
+
       {showPublicHeader && <Header />}
       {showAdminHeader && <AdminHeader />}
-      
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/HowToPlay" element={<HowToPlay />} />
@@ -99,18 +103,18 @@ function AppContent() {
         <Route path="/leaderboard" element={<GlobalLeaderboard />} />
         <Route path="/YourFights" element={<YourFights />} />
         <Route path="/PlayForFree" element={<PlayForFree />} />
-        <Route path='/upcomingfights'  element={<UpcomingFightsUser />} />
-        <Route path="/fightLeaderboard" element={ <FightLeaderboard /> } /> 
-        <Route path="/FinishedFight" element={ <FinishedFightUserBoard /> } />
-        <Route path="/privacy-policy" element={ <PrivacyPolicy /> } />
-        <Route path="/terms-of-service" element={ <Termsofservice /> } />
-        <Route path="/:userId" element={ <PublicProfile /> } />
+        <Route path="/upcomingfights" element={<UpcomingFightsUser />} />
+        <Route path="/fightLeaderboard" element={<FightLeaderboard />} />
+        <Route path="/FinishedFight" element={<FinishedFightUserBoard />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<Termsofservice />} />
+        <Route path="/:userId" element={<PublicProfile />} />
         <Route path="/administration/login" element={<AdminLogin />} />
         <Route path="/contact" element={<Contact />} />
-  
-    <Route path ="/AffiliateDashboard" element={<AffiliateDashboard />} />
-    <Route path="/HowItWorks" element={<HowItWorks />} />
-    <Route path='/AffiliateProfile' element={<AffiliateProfile />} />
+
+        <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
+        <Route path="/HowItWorks" element={<HowItWorks />} />
+        <Route path="/AffiliateProfile" element={<AffiliateProfile />} />
 
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
         <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
@@ -121,7 +125,7 @@ function AppContent() {
         <Route path="/administration/RegisteredUsers" element={<PrivateRouteAdmin element={<RegisteredUsers />} />} />
         <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
         <Route path="/administration/ShadowFightsLibrary" element={<PrivateRouteAdmin element={<ShadowFightsLibrary />} />} />
- 
+
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
         <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />

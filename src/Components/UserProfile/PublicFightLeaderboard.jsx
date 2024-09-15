@@ -136,7 +136,7 @@ const PublicFightLeaderboard = ({ matchId ,name, plan, profileUrl }) => {
         <div className='fightwalletWrap'>
           <div className='totalPoints'>
             <h1 className='fightTypeInFightDetails'>
-              Fight type: <span>{match.matchCategory}</span> - 
+              Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span> - 
               <span style={{color:"#38b90c"}}>{match.matchType} </span> - 
               <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
             </h1>

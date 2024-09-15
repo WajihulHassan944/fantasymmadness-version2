@@ -295,7 +295,7 @@ const AdminPredictions = ({ matchId }) => {
 
 
 
-      <h1>{match.matchType} &nbsp; &nbsp; &nbsp;{match.matchName} &nbsp; - &nbsp; {match.matchCategory} &nbsp;&nbsp;&nbsp; Round {round}</h1>
+      <h1>{match.matchType} &nbsp; &nbsp; &nbsp;{match.matchName} &nbsp; - &nbsp; {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} &nbsp;&nbsp;&nbsp; Round {round}</h1>
       <div className='adminPredictionsHeader'>
         <div className='imagesWrapperAdminPredictions'>
           <div className='imgToWrap'><img src={match.fighterAImage} alt="Fighter A" /></div>

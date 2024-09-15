@@ -176,7 +176,7 @@ const PublicProfile = () => {
                 <div className='transformedDivBox'>TP</div>
                 <div className='transformedDivBox'>RW</div>
                 <div className='transformedDivBox'>KO</div>
-                <div className='transformedDivBox'>{match.matchCategory}  {match.matchStatus} </div>
+                <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}  {match.matchStatus} </div>
               </div>
               <div className="transformed-div-four">
                 <h1>Players</h1>
@@ -259,7 +259,7 @@ const PublicProfile = () => {
                       <div className='transformedDivBox'>TP</div>
                       <div className='transformedDivBox'>RW</div>
                       <div className='transformedDivBox'>KO</div>
-                      <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus} </div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus} </div>
                     </div>
                     <div className="transformed-div-four">
                       <h1>Players</h1>

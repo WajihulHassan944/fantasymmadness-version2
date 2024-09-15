@@ -33,19 +33,24 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script>
-      // Function to play audio when the page is clicked
-      const playAudioOnClick = () => {
-        const audio = new Audio("soundone.mp3");
-        audio.currentTime = 0; // Reset the audio to start
-        audio.play().catch((error) => {
-          console.error("Audio play failed:", error);
-        });
+      // Function to play audio when specific elements are clicked
+      const playAudioOnClick = (event) => {
+        // Check if the clicked element has the class 'anchorlinksAdmin' or 'anchorlinks'
+        if (event.target.classList.contains('anchorlinksAdmin') || event.target.classList.contains('anchorlinks')
+        || event.target.classList.contains('sideLinksAdmin')  || event.target.classList.contains('sideLinks')
+      ) {
+          const audio = new Audio("soundone.mp3");
+          audio.currentTime = 0; // Reset the audio to start
+          audio.play().catch((error) => {
+            console.error("Audio play failed:", error);
+          });
+        }
       };
-
+    
       // Attach the click event listener to the document
       document.addEventListener("click", playAudioOnClick);
     </script>
-    <!--
+     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 

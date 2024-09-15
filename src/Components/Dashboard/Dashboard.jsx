@@ -7,7 +7,6 @@ import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
-import ReactHowler from "react-howler";
 
 const Dashboard = () => {
 
@@ -19,7 +18,6 @@ const Dashboard = () => {
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
   
   const [time, setTime] = useState(new Date()); // State to trigger re-render every minute
-  const [isPlaying, setIsPlaying] = useState(true); 
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
@@ -133,12 +131,6 @@ const upcomingMatches = matches.filter((match) => {
 
   return (
     <div className='userdashboard'>
-      <ReactHowler
-        src="./soundtwo.mp3" // Path to your audio file
-        playing={isPlaying} // Controls whether the audio is playing
-        loop={true} // Loop the audio indefinitely
-        volume={0.5} // Set the volume (0 to 1)
-      />
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />
@@ -174,7 +166,7 @@ const upcomingMatches = matches.filter((match) => {
                   </div>
                   <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
-                      <h1>{match.matchCategory}</h1>
+                    <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
                       <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                     </div>
                     <div className='transformed-div-two-partTwo'>
@@ -246,7 +238,7 @@ const upcomingMatches = matches.filter((match) => {
           <div className='transformedDivBox'>TP</div>
           <div className='transformedDivBox'>RW</div>
           <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
         </>
       ) : (
         <>
@@ -255,7 +247,7 @@ const upcomingMatches = matches.filter((match) => {
           <div className='transformedDivBox'>KN</div>
           <div className='transformedDivBox'>RW</div>
           <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
         </>
       )
     }
@@ -358,7 +350,7 @@ const upcomingMatches = matches.filter((match) => {
           <div className='transformedDivBox'>TP</div>
           <div className='transformedDivBox'>RW</div>
           <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
         </>
       ) : (
         <>
@@ -367,7 +359,7 @@ const upcomingMatches = matches.filter((match) => {
           <div className='transformedDivBox'>KN</div>
           <div className='transformedDivBox'>RW</div>
           <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategory} {match.matchStatus}</div>
+          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
         </>
       )
     }

@@ -102,7 +102,7 @@ const copyToClipboard = () => {
  </div>
 
 
-                <h1 className='fightTypeInFightDetails' style={{fontSize:'21.5px'}}>Fight type: <span>{match.matchCategory}</span>
+                <h1 className='fightTypeInFightDetails' style={{fontSize:'21.5px'}}>Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span>
                 - <span style={{color:'#3fd50b'}}>{match.matchType} </span> - <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
                 </h1>
     

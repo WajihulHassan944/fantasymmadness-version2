@@ -75,35 +75,68 @@ const MakePredictions = ({ matchId }) => {
   
     setRounds(updatedRounds);
   };
-  
-  const handleButtonClick = (roundIndex, buttonType) => {
-    const updatedRounds = [...rounds];
 
-    if (buttonType === 'rw') {
-      updatedRounds[roundIndex].rwPrediction1 = 100;
-      updatedRounds[roundIndex].rwPrediction2 = 25;
-      updatedRounds[roundIndex].rwBorder = '2px solid crimson';
-      updatedRounds[roundIndex].rlBorder = '';
-    } else if (buttonType === 'rl') {
-      updatedRounds[roundIndex].rwPrediction1 = 25;
-      updatedRounds[roundIndex].rwPrediction2 = 100;
-      updatedRounds[roundIndex].rwBorder = '';
-      updatedRounds[roundIndex].rlBorder = '2px solid crimson';
-    } else if (buttonType === 'ko') {
-      updatedRounds[roundIndex].koPrediction1 = 500;
-      updatedRounds[roundIndex].koPrediction2 = 25;
-      updatedRounds[roundIndex].koBorder = '2px solid crimson';
-      updatedRounds[roundIndex].spBorder = '';
-    } else if (buttonType === 'sp') {
-      updatedRounds[roundIndex].koPrediction1 = 25;
-      updatedRounds[roundIndex].koPrediction2 = 500;
-      updatedRounds[roundIndex].koBorder = '';
-      updatedRounds[roundIndex].spBorder = '2px solid crimson';
-    }
-
-    setRounds(updatedRounds);
+  const handleDragStart = (e, buttonType, roundIndex) => {
+    console.log(`Drag started for buttonType: ${buttonType}, roundIndex: ${roundIndex}`);
+    e.dataTransfer.setData('buttonType', buttonType);
+    e.dataTransfer.setData('roundIndex', roundIndex);
   };
-
+  
+  const handleDrop = (e, droppedButtonType, roundIndex) => {
+    const draggedButtonType = e.dataTransfer.getData('buttonType');
+    const draggedRoundIndex = e.dataTransfer.getData('roundIndex');
+  
+    console.log(`Dropped buttonType: ${droppedButtonType} on roundIndex: ${roundIndex}`);
+    console.log(`Dragged buttonType: ${draggedButtonType} from roundIndex: ${draggedRoundIndex}`);
+  
+    // Ensure the drop happens within the same round
+    if (draggedRoundIndex !== String(roundIndex)) return;
+  
+    // Create a deep clone of the rounds array to avoid mutation
+    const updatedRounds = [...rounds];
+    const updatedRound = { ...updatedRounds[roundIndex] };
+  
+    // Handle RW to RL switch
+    if (draggedButtonType === 'rw' && droppedButtonType === 'rl') {
+      updatedRound.rwIsLeft = true;
+      updatedRound.rwPrediction1 = 100;
+      updatedRound.rwPrediction2 = 25;
+      console.log('RW moved to the left');
+    }
+  
+    // Handle RL to RW switch
+    if (draggedButtonType === 'rl' && droppedButtonType === 'rw') {
+      updatedRound.rwIsLeft = false;
+      updatedRound.rwPrediction1 = 25;
+      updatedRound.rwPrediction2 = 100;
+      console.log('RL moved to the right');
+    }
+  
+    // Handle KO to SP switch
+    if (draggedButtonType === 'ko' && droppedButtonType === 'sp') {
+      updatedRound.koIsLeft = true;
+      updatedRound.koPrediction1 = 500;
+      updatedRound.koPrediction2 = 25;
+      console.log('KO moved to the left');
+    }
+  
+    // Handle SP to KO switch
+    if (draggedButtonType === 'sp' && droppedButtonType === 'ko') {
+      updatedRound.koIsLeft = false;
+      updatedRound.koPrediction1 = 25;
+      updatedRound.koPrediction2 = 500;
+      console.log('SP moved to the right');
+    }
+  
+    // Replace the specific round object with the updated one
+    updatedRounds[roundIndex] = updatedRound;
+  
+    console.log('Updated rounds:', updatedRounds);
+  
+    // Update the state, ensuring React re-renders the UI
+    setRounds([...updatedRounds]); // Make sure to pass a new array to trigger re-render
+  };
+            
   const handleFinish = async () => {
     setButtonText('Saving!');
     try {
@@ -164,7 +197,7 @@ const MakePredictions = ({ matchId }) => {
 
       <div className='fightDetailsContainer'>
         <h1 className='fightTypeInFightDetails'>
-          Fight type: <span>{match.matchCategory}</span> - 
+          Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span> - 
           <span className='makeGreen'> {match.matchType} </span> - 
           <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
         </h1>
@@ -316,72 +349,90 @@ const MakePredictions = ({ matchId }) => {
                 )}
 
                 
-                
-            <div className='roundInput' style={{paddingLeft:'40px', paddingRight:'37px'}}>
-              <div className='roundInputDivOne'>
-                <input
-                  type='button'
-                  style={{
-                    border: round.rwBorder || '2px solid #2a8adb', 
-                    background:'#02fc1f', 
-                    textAlign:'center', 
-                    color:'#025204', 
-                  }} 
-                  value='RW' 
-                  onClick={() => handleButtonClick(index, 'rw')}
-                />
-              </div>
+                <div className='roundInput' style={{ paddingLeft: '40px', paddingRight: '37px' }}>
+    <div className='roundInputDivOne'>
+      {/* RW Button */}
+      <input
+        type='button'
+        draggable
+        onDragStart={(e) => handleDragStart(e, 'rw', index)}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => handleDrop(e, 'rw', index)}
+        style={{
+          border: round.rwIsLeft ? '2px solid crimson' : '2px solid #2a8adb',
+          background: round.rwIsLeft ? '#02fc1f' : '#fff',
+          textAlign: 'center',
+          color: round.rwIsLeft ? '#025204' : 'red',
+        }}
+        value={round.rwIsLeft ? 'RW' : 'RL'} // Dynamically update text
+      />
+    </div>
+
+    <div className='roundinput-image'>
+      <h2 style={{ marginTop: '8px' }}>- OR -</h2>
+    </div>
+
+    <div className='roundInputDivOne'>
+      {/* RL Button */}
+      <input
+        type='button'
+        draggable
+        onDragStart={(e) => handleDragStart(e, 'rl', index)}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => handleDrop(e, 'rl', index)}
+        style={{
+          border: !round.rwIsLeft ? '2px solid crimson' : '2px solid #2a8adb',
+          background: !round.rwIsLeft ? '#02fc1f' : '#fff',
+          textAlign: 'center',
+          color: !round.rwIsLeft ? '#025204' : 'red',
+        }}
+        value={!round.rwIsLeft ? 'RW' : 'RL'} // Dynamically update text
+      />
+    </div>
+  </div>
 
 
-              <div className='roundinput-image'>
-                <h2 style={{marginTop:'8px'}}>- OR -</h2>
-              </div>
-              <div className='roundInputDivOne'>
-                <input
-                  type='button'
-                  style={{
-                    border: round.rlBorder || '2px solid #2a8adb', 
-                    background:'#fff', 
-                    textAlign:'center', 
-                    color:'red'
-                  }} 
-                  value='RW' 
-                  onClick={() => handleButtonClick(index, 'rl')}
-                />
-              </div>
-            </div>
+<div className='roundInput' style={{ paddingLeft: '40px', paddingRight: '37px', marginTop: '10px' }}>
+  <div className='roundInputDivOne'>
+    <input
+      type='button'
+      draggable
+      onDragStart={(e) => handleDragStart(e, 'ko', index)}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => handleDrop(e, 'ko', index)}
+      style={{
+        border: round.koIsLeft ? '2px solid crimson' : '2px solid #95a04d',
+        background: round.koIsLeft ? '#000300' : '#fff',
+        textAlign: 'center',
+        color: round.koIsLeft ? '#025204' : '#2e5e6f',
+        marginBottom: '5px',
+      }}
+      value={round.koIsLeft ? 'KO' : 'SP'}
+    />
+  </div>
 
+  <div className='roundinput-image'>
+    <h2 style={{ marginTop: '8px' }}>- OR -</h2>
+  </div>
 
+  <div className='roundInputDivOne'>
+    <input
+      type='button'
+      draggable
+      onDragStart={(e) => handleDragStart(e, 'sp', index)}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => handleDrop(e, 'sp', index)}
+      style={{
+        border: !round.koIsLeft ? '2px solid crimson' : '2px solid #95a04d',
+        background: !round.koIsLeft ? '#000300' : '#fff',
+        textAlign: 'center',
+        color: !round.koIsLeft ? '#025204' : '#2e5e6f',
+      }}
+      value={!round.koIsLeft ? 'KO' : 'SP'}
+    />
+  </div>
+</div>
 
-                <div className='roundInputSpecial'>
-                  <div className='roundInputDivOne'>
-                    <input
-                      type='button'
-                      style={{
-                        border: round.koBorder || '2px solid #95a04d', 
-                        background:'#000300', 
-                        textAlign:'center', 
-                        color:'#025204', 
-                        marginBottom:'5px'
-                      }} 
-                      value='KO' 
-                      onClick={() => handleButtonClick(index, 'ko')}
-                    />
-                  </div>
-                  <div className='roundInputDivOne'>
-                    <input
-                      type='button'
-                      style={{
-                        border: round.spBorder || '2px solid #95a04d', 
-                        background:'#fff', 
-                        textAlign:'center', 
-                        color:'#2e5e6f',
-                      }} 
-                      value='SP' 
-                      onClick={() => handleButtonClick(index, 'sp')}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           ))}

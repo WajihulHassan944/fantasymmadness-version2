@@ -206,7 +206,7 @@ const getYouTubeEmbedUrl = (url) => {
         <div className='fightwalletWrap'>
           <div className='totalPoints'>
             <h1 className='fightTypeInFightDetails' data-aos="zoom-in">
-              Fight type: <span>{match.matchCategory}</span> - 
+              Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span> - 
               <span style={{color:"#38b90c"}}>{match.matchType} </span> - 
               <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
             </h1>

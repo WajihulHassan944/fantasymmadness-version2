@@ -110,7 +110,7 @@ if(promoMatchDetails.matchId){
             <div className='transformed-div-two-partTwo'>
               <p >
                 {match.matchType} &nbsp;
-                {match.matchCategory}
+                {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}
               </p>
             </div>
           </div>
@@ -148,7 +148,7 @@ if(promoMatchDetails.matchId){
             <div className='transformed-div-two-partTwo'>
               <p >
                 {match.matchType} &nbsp;
-                {match.matchCategory}
+                {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}
               </p>
             </div>
           </div>

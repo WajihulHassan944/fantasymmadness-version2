@@ -23,7 +23,7 @@ const AddNewMatch = () => {
   const [displayCategory, setDisplayCategory] = useState('boxing');
   
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
   
     if (name === 'matchCategory') {
       let categoryOne = value;
@@ -47,11 +47,12 @@ const AddNewMatch = () => {
     } else {
       setFormData({
         ...formData,
-        [name]: value
+        [name]: files ? files[0] : value // Handles both text and file inputs
       });
     }
   };
 
+  
   
   
   const handleSubmit = async (e) => {

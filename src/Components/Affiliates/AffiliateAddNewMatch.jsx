@@ -12,6 +12,8 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     amountOverPotBudget: '',
     matchDate: '',
     matchTime: '',
+    matchCategoryTwo:'',
+ 
 
   });
 
@@ -93,6 +95,7 @@ if(!promoDetails){
   
     // Append other match details
     data.append('matchCategory', matchDetails.matchCategory);
+    data.append('matchCategoryTwo', matchDetails.matchCategoryTwo);
     data.append('matchName', matchDetails.matchName);
     data.append('matchFighterA', matchDetails.matchFighterA);
     data.append('matchFighterB', matchDetails.matchFighterB);

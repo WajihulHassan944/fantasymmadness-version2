@@ -61,7 +61,7 @@ const ShowScores = ({ matchId }) => {
         <div className='fightCosting makePredictions' style={{width:'calc(100% - 230px)' , marginLeft:'230px' , paddingTop:'50px'}}>
             <div className='fightDetailsContainer'>
                 <h1 className='fightTypeInFightDetails'>
-                    Fight type: <span>{match.matchCategory}</span> - 
+                    Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span> - 
                     <span className='makeGreen'> {match.matchType} </span> - 
                     <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
                 </h1>

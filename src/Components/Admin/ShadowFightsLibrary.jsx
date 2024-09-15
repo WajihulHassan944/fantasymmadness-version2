@@ -118,7 +118,7 @@ const ShadowFightsLibrary = () => {
                                         </div>
                                         <div className="transformed-div-four">
                                             <h1>{match.matchType}</h1>
-                                            <p>{match.matchCategory}</p>
+                                            <p>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +136,8 @@ const ShadowFightsLibrary = () => {
                         <h2>{selectedMatch.matchFighterA} -VS- {selectedMatch.matchFighterB}</h2>
                         <p>{selectedMatch.matchDescription}</p>
                         <p>Type: {selectedMatch.matchType}</p>
-                        <p>Category: {selectedMatch.matchCategory}</p>
+                        
+                        <p>Category: {selectedMatch.matchCategoryTwo ? selectedMatch.matchCategoryTwo : selectedMatch.matchCategory}</p>
                         <div className="popup-actions">
                             <button onClick={handleDeleteClick} style={{background:'crimson'}}>Delete Match</button>
                             <button onClick={handleViewAffiliatesClick}>View Affiliates</button>
