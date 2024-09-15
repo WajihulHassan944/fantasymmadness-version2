@@ -89,7 +89,6 @@ function AppContent() {
           volume={0.5}
         />
       )}
-
       {showPublicHeader && <Header />}
       {showAdminHeader && <AdminHeader />}
 

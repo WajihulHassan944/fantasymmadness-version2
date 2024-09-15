@@ -6,7 +6,7 @@ const Home = () => {
     <>
     <div className='homeFirst'>
     <h1 data-aos="zoom-out">The thrill of combat</h1>
-    <h2 data-aos="zoom-out">Boxing, MMA, And Kickboxing</h2>
+    <h2 data-aos="zoom-out">Boxing, MMA,<br /> Kickboxing & BK</h2>
 
     <div class="video-embed-wrapper" >
     <iframe 
@@ -18,6 +18,7 @@ const Home = () => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
         allowfullscreen >
     </iframe>
+    
 </div> 
     </div>
 
