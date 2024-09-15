@@ -17,17 +17,43 @@ const AddNewMatch = () => {
     fighterAImage: null,
     fighterBImage: null,
     maxRounds: '',
+    matchCategoryTwo:'',
   });
   const [buttonText, setButtonText] = useState('Add Match');  // State for button text
-
+  const [displayCategory, setDisplayCategory] = useState('boxing');
+  
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value
-    });
+    const { name, value } = e.target;
+  
+    if (name === 'matchCategory') {
+      let categoryOne = value;
+      let categoryTwo = '';
+      
+      setDisplayCategory(value); // Update the displayed value
+  
+      if (value === 'kickboxing') {
+        categoryOne = 'mma';
+        categoryTwo = 'kickboxing';
+      } else if (value === 'Bare-knuckle') {
+        categoryOne = 'boxing';
+        categoryTwo = 'Bare-knuckle';
+      }
+  
+      setFormData({
+        ...formData,
+        matchCategory: categoryOne,
+        matchCategoryTwo: categoryTwo
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
 
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,6 +64,7 @@ const AddNewMatch = () => {
 
     const data = new FormData();
     data.append('matchCategory', formData.matchCategory);
+    data.append('matchCategoryTwo', formData.matchCategoryTwo);
     data.append('matchName', formData.matchName);
     data.append('matchFighterA', formData.matchFighterA);
     data.append('matchFighterB', formData.matchFighterB);
@@ -84,14 +111,16 @@ const AddNewMatch = () => {
 
         <form onSubmit={handleSubmit}>
           <div className='input-wrap-one'>
-            <div className='input-group'>
-              <label>Select Category <span>*</span></label>
-              <select name='matchCategory' value={formData.matchCategory} onChange={handleChange}>
-                <option value="boxing">Boxing</option>
-                <option value="mma">MMA</option>
-                <option value="kickboxing">Kickboxing</option>
-              </select>
-            </div>
+          <div className='input-group'>
+  <label>Select Category <span>*</span></label>
+  <select name='matchCategory' value={displayCategory} onChange={handleChange}>
+    <option value="boxing">Boxing</option>
+    <option value="mma">MMA</option>
+    <option value="kickboxing">Kickboxing</option>
+    <option value="Bare-knuckle">Bare-knuckle</option>
+  </select>
+</div>
+
             <div className='input-group'>
               <label>Match Name <span>*</span></label>
               <input type='text' name='matchName' value={formData.matchName} onChange={handleChange} />
