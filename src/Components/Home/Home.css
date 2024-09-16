@@ -41,7 +41,10 @@
     font-style: oblique;
   }
   
-
+  .no-hover iframe {
+    pointer-events: none;
+  }
+  
 .homeSecond{
     display: flex;
     justify-content: flex-start;
