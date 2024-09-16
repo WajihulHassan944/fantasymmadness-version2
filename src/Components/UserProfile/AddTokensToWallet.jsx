@@ -45,7 +45,7 @@ const AddTokensToWallet = () => {
                 </div>
 
                 
-     <button className='btn-grad'>SELECT</button>
+     <button className='btn-grad' onClick={() => window.open("https://www.mymemberaccount.com/member-enrollment/11304", "_blank")}>SELECT</button>
 
             </div>
 
@@ -74,7 +74,7 @@ const AddTokensToWallet = () => {
                 </div>
 
                 
-     <button className='btn-grad'>SELECT</button>
+     <button className='btn-grad' onClick={() => window.open("https://www.mymemberaccount.com/member-enrollment/11304", "_blank")}>SELECT</button>
 
             </div>
 
@@ -106,7 +106,7 @@ const AddTokensToWallet = () => {
                 </div>
 
                 
-     <button className='btn-grad'>SELECT</button>
+     <button className='btn-grad' onClick={() => window.open("https://www.mymemberaccount.com/member-enrollment/11304", "_blank")}>SELECT</button>
 
             </div>
 

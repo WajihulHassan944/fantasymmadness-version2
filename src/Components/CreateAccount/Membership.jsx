@@ -96,7 +96,7 @@ const Membership = ({ email, onPlanSelected }) => {
             <li>Share fight portfolio</li>
             <li>Get on the FMMA Leaderboard</li>
           </div>
-          <button className='btn-grad' onClick={() => handleSelectPlan('standard')}>SELECT</button>
+          <button className='btn-grad' onClick={() => window.open("https://www.mymemberaccount.com/member-enrollment/11304", "_blank")}>SELECT</button>
         </div>
 
         <div className='cardone'>
