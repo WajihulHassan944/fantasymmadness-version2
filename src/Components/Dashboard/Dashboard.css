@@ -440,6 +440,7 @@ margin-bottom: 20px;
     .completedFights .transformed-three .transformedDivBox:last-of-type {
         height: 46px;
         width: 65px;
+        font-size: 13px;
     }
     
    .transformed-five{

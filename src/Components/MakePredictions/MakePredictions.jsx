@@ -28,8 +28,8 @@ const MakePredictions = ({ matchId }) => {
       koPrediction2: 0,
       elPrediction1: '',
       elPrediction2: '',
-      rwBorder: '2px solid #2a8adb',
-      rlBorder: '2px solid #2a8adb',
+      rwBorder: '2px solid #95a04d',
+      rlBorder: '2px solid #95a04d',
       koBorder: '2px solid #95a04d',
       spBorder: '2px solid #95a04d',
       rwText: 'RW',
@@ -94,15 +94,15 @@ const MakePredictions = ({ matchId }) => {
       if (currentRound.rwText === 'RW') {
         currentRound.rwPrediction1 = 100;
         currentRound.rwPrediction2 = 25;
-        currentRound.rwBorder = '2px solid crimson';
-        currentRound.rlBorder = '2px solid #2a8adb';
+        currentRound.rwBorder = '2px solid #95a04d';
+        currentRound.rlBorder = '2px solid #95a04d';
         currentRound.rwText = 'RL';
         currentRound.rlText = 'RW';
       } else {
         currentRound.rwPrediction1 = 25;
         currentRound.rwPrediction2 = 100;
-        currentRound.rwBorder = '2px solid #2a8adb';
-        currentRound.rlBorder = '2px solid crimson';
+        currentRound.rwBorder = '2px solid #95a04d';
+        currentRound.rlBorder = '2px solid #95a04d';
         currentRound.rwText = 'RW';
         currentRound.rlText = 'RL';
       }
@@ -110,7 +110,7 @@ const MakePredictions = ({ matchId }) => {
       if (currentRound.koText === 'KO') {
         currentRound.koPrediction1 = 500;
         currentRound.koPrediction2 = 25;
-        currentRound.koBorder = '2px solid crimson';
+        currentRound.koBorder = '2px solid #95a04d';
         currentRound.spBorder = '2px solid #95a04d';
         currentRound.koText = 'SP';
         currentRound.spText = 'KO';
@@ -118,7 +118,7 @@ const MakePredictions = ({ matchId }) => {
         currentRound.koPrediction1 = 25;
         currentRound.koPrediction2 = 500;
         currentRound.koBorder = '2px solid #95a04d';
-        currentRound.spBorder = '2px solid crimson';
+        currentRound.spBorder = '2px solid #95a04d';
         currentRound.koText = 'KO';
         currentRound.spText = 'SP';
       }
@@ -344,9 +344,9 @@ const MakePredictions = ({ matchId }) => {
       type='button'
       style={{
         border: round.rwBorder,
-        background: '#02fc1f',
+        background: '#264fa4',
         textAlign: 'center',
-        color: '#025204',
+        color: '#fff',
       }}
       value={round.rwText}
       onClick={() => handleButtonClick(index, 'rw')}
@@ -362,9 +362,9 @@ const MakePredictions = ({ matchId }) => {
       type='button'
       style={{
         border: round.rlBorder,
-        background: '#fff',
+        background: '#8a1318',
         textAlign: 'center',
-        color: 'red'
+        color: '#fff'
       }}
       value={round.rlText}
       onClick={() => handleButtonClick(index, 'rw')}
@@ -378,9 +378,9 @@ const MakePredictions = ({ matchId }) => {
       type='button'
       style={{
         border: round.koBorder,
-        background: '#000300',
+        background: '#264fa4',
         textAlign: 'center',
-        color: '#025204',
+        color: '#fff',
         marginBottom: '5px'
       }}
       value={round.koText}
@@ -397,9 +397,9 @@ const MakePredictions = ({ matchId }) => {
       type='button'
       style={{
         border: round.spBorder,
-        background: '#fff',
+        background: '#8a1318',
         textAlign: 'center',
-        color: '#2e5e6f',
+        color: '#fff',
       }}
       value={round.spText}
       onClick={() => handleButtonClick(index, 'ko')}

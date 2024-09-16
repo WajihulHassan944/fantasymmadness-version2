@@ -152,7 +152,10 @@ const CreateAccount = () => {
 
     return (
         <div className='createAccount'>
-        <p className='affiliateLink' onClick={handleAffiliateLink}>Are you an Affiliate? Click here</p>
+        
+        <p className='affiliateLinkppp'  >Fighters Only!</p>
+        
+        <p className='affiliateLink' onClick={handleAffiliateLink} >Are you an Affiliate? Click here</p>
             <div className='registerCard'>
                 <h1>Register for membership</h1>
                 <form onSubmit={handleSubmit}>

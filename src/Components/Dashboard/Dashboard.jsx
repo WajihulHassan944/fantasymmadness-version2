@@ -64,12 +64,7 @@ const Dashboard = () => {
   
   // Check the match status and render the appropriate component
   if (completedMatchId) {
-    const match = matches.find((m) => m._id === completedMatchId);
-    if (match && match.matchStatus === 'Ongoing') {
-      return <FightLeaderboard matchId={completedMatchId} />;
-    } else if (match && match.matchStatus === 'Finished') {
-      return <FinishedFight matchId={completedMatchId} />;
-    }
+    return <FightCosting matchId={completedMatchId} />;
   }
 
   const today = new Date();
