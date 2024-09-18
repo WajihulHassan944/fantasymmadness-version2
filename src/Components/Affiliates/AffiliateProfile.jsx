@@ -26,11 +26,7 @@ const AffiliateProfile = () => {
       
         const [loading, setLoading] = useState(false);
         const [loadingTwo, setLoadingTwo] = useState(false);
- // Disable other payment fields if one is filled
- const isVenmoDisabled = venmoId !== '';
- const isCashAppDisabled = cashAppId !== '';
- const isPaypalDisabled = paypalEmail !== '';
-
+ 
         if (!affiliate) {
             return <div>Loading...</div>;
           }             
@@ -72,54 +68,57 @@ const AffiliateProfile = () => {
             }
         };
     
-    
         const handleSubmittingDetails = async (e) => {
-            e.preventDefault();
-            setLoading(true);
-        
-            // Determine which payment method is selected
-            let preferredPaymentMethod = '';
-            let preferredPaymentMethodValue = '';
-        
-            if (venmoId) {
-              preferredPaymentMethod = 'Venmo';
-              preferredPaymentMethodValue = venmoId;
-            } else if (cashAppId) {
-              preferredPaymentMethod = 'CashApp';
-              preferredPaymentMethodValue = cashAppId;
-            } else if (paypalEmail) {
-              preferredPaymentMethod = 'PayPal';
-              preferredPaymentMethodValue = paypalEmail;
-            }
-        
-            try {
-              const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/updatePayment/${affiliate._id}`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  preferredPaymentMethod,
-                  preferredPaymentMethodValue,
-                }),
-              });
-        
-              if (!response.ok) {
-                alert(response.message);
-              }
-        
+          e.preventDefault();
+          setLoading(true);
+      
+          // Determine which payment method is selected
+          let preferredPaymentMethod = '';
+          let preferredPaymentMethodValue = '';
+      
+          // Prioritize selection based on user input
+          if (venmoId.trim()) {
+            preferredPaymentMethod = 'Venmo';
+            preferredPaymentMethodValue = venmoId;
+          } else if (cashAppId.trim()) {
+            preferredPaymentMethod = 'CashApp';
+            preferredPaymentMethodValue = cashAppId;
+          } else if (paypalEmail.trim()) {
+            preferredPaymentMethod = 'PayPal';
+            preferredPaymentMethodValue = paypalEmail;
+          } else {
+            alert("Please enter a valid payment method.");
+            setLoading(false);
+            return; // stop further execution if no method is selected
+          }
+      
+          try {
+            const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/updatePayment/${affiliate._id}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                preferredPaymentMethod,
+                preferredPaymentMethodValue,
+              }),
+            });
+      
+            if (!response.ok) {
+              alert('Failed to save payment method.');
+            } else {
               const data = await response.json();
-              alert('Setting Saved successfully:', data);
-              window.location.reload();
-            } catch (error) {
-              console.error('Error updating profile:', error);
-            } finally {
-              setLoading(false);
-              
+              alert('Settings saved successfully.');
+              // Update the state to reflect the change without reloading
+              // Optional: Update Redux store with the new values if needed
             }
-          };
-
-    
+          } catch (error) {
+            console.error('Error updating profile:', error);
+          } finally {
+            setLoading(false);
+          }
+      };
+      
 
     
         return (
@@ -177,7 +176,7 @@ const AffiliateProfile = () => {
                         </div>
     
                         <button type="submit" className='btn-grad' >
-                            {loading ? 'Saving!' : 'Save Settings'}
+                            {loadingTwo ? 'Saving!' : 'Save Settings'}
                         </button>
                     </form>
                     
