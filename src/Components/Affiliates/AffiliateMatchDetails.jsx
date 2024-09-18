@@ -95,12 +95,12 @@ const copyToClipboard = () => {
                     <h1 style={{background:'#e90000', padding:'5px 10px', fontSize:'22px'}}>This fight is approved.</h1>
             </div>
 
-            <div className='fightDetailsPot'>
+      {/*      <div className='fightDetailsPot'>
     <h1 style={{color:'#ebcd03', fontSize:'22px'}}>
       Amount over pot budget: {match.amountOverPotBudget} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       Profit: {match.profit}
     </h1>
- </div>
+ </div>*/}
 
 
                 <h1 className='fightTypeInFightDetails' style={{fontSize:'21.5px'}}>Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span>

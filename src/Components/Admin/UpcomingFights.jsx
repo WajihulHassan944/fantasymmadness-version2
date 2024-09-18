@@ -27,10 +27,13 @@ const UpcomingFights = () => {
   };
 
   
-  // Render the FightCosting component if a match is selected
-  if (selectedMatchId) {
-    return <AdminPredictions matchId={selectedMatchId} />;
-  }
+const currentTime = new Date();
+
+if (selectedMatchId) {
+      return <AdminPredictions matchId={selectedMatchId} />;
+ 
+}
+
 
   if (finishedMatchId) {
     return <ShowScores matchId={finishedMatchId} />;

@@ -47,6 +47,7 @@ import ShadowFightsLibrary from './Components/Admin/ShadowFightsLibrary';
 import Contact from './Components/Footer/Contact';
 import ReactHowler from 'react-howler';
 import mainAudio from './main.mp3'; // Replace with actual path
+import YoutubeArchive from './Components/Admin/YoutubeArchive';
 
 function AppContent() {
   const location = useLocation();
@@ -122,6 +123,7 @@ function AppContent() {
         <Route path="/administration/RegisteredUsers" element={<PrivateRouteAdmin element={<RegisteredUsers />} />} />
         <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
         <Route path="/administration/ShadowFightsLibrary" element={<PrivateRouteAdmin element={<ShadowFightsLibrary />} />} />
+        <Route path="/administration/YoutubeArchive" element={<PrivateRouteAdmin element={<YoutubeArchive />} />} />
 
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />

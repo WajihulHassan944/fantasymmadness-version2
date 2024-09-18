@@ -108,20 +108,20 @@ const handleDeleteUser = async(id) => {
       <div className='userItemsParent'>
         <div className='userItemsWrapper'>
           <div className='userItemsHeader'>
+           <h1>Profile</h1>
             <h1>First Name</h1>
             <h1>Last Name</h1>
             <h1>Status</h1>
-            <h1>Wallet</h1>
             <h1>View</h1>
             <h1>Delete</h1>
           </div>
           {filteredUsers.length > 0 ? (
             filteredUsers.map(user => (
               <div className='userItem' key={user._id}>
+               <img src={user.profileUrl} />
                 <h1>{user.firstName}</h1>
                 <h1>{user.lastName}</h1>
                 <h1>{user.verified ? 'Approved' : 'Pending'}</h1>
-                <h1>-</h1>
                 <button className='viewButton' onClick={() => handleViewUserDetails(user)}>View</button>
                 <button className='deleteButton' onClick={() => handleDeleteUser(user._id)}>{deleteText}</button>
               </div>

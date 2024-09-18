@@ -88,11 +88,9 @@
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    background-color: #f2f2f2;
 }
 
-.userItem:nth-child(even) {
-    background-color: #f2f2f2; /* Alternate row colors */
-}
 
 .userItem h1 {
     font-size: 14px;
@@ -101,7 +99,7 @@
     color: #333;
 }
 
-.viewButton {
+.userItem .viewButton {
     padding: 10px 0;
     background-color: #007bff;
     color: white;
@@ -110,9 +108,25 @@
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease;
+    width:100px;
+    margin-left: auto;
+    margin-right: auto;
     
 }
-
+.userItem .deleteButton{
+    width:100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.userItem img{
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
 .viewButton:hover {
     background-color: #0056b3;
 }

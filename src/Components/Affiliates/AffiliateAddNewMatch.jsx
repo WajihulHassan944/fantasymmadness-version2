@@ -149,28 +149,28 @@ if(!promoDetails){
               <input type='text' name='matchName' value={promoDetails.matchName} disabled style={{ background: '#fff' }} />
             </div>
             <div className='input-group'>
-              <label>Profit <span>*</span></label>
-              <input type='number' name='profit' value={formData.profit} onChange={handleChange} />
+              <label>POT - Winner Award <span>*</span></label>
+              <input type='number' name='pot' value={formData.pot} onChange={handleChange} />
             </div>
           </div>
 
           <div className='input-wrap-one'>
-            <div className='input-group'>
+          {/*  <div className='input-group'>
               <label>Amount over pot budget <span>*</span></label>
               <input type='number' name='amountOverPotBudget' value={formData.amountOverPotBudget} onChange={handleChange} />
-            </div>
+            </div>  */}
             <div className='input-group'>
               <label>Player Buy in (Tokens) <span>*</span></label>
               <input type='number' name='matchTokens' value={formData.matchTokens} onChange={handleChange} />
             </div>
           </div>
 
-          <div className='input-wrap-one'>
+     {/*     <div className='input-wrap-one'>
             <div className='input-group' style={{ flexBasis: '100%', margin: '10px 0' }}>
               <label style={{ color: 'yellow' }}>Note - You will need 70 players in order for this fight to start. If the budget is not reached by the start time, the fight will not start and tokens will be returned to members' wallets.</label>
             </div>
           </div>
-          <div className='input-wrap-one'>
+          */}         <div className='input-wrap-one'>
                 <div className='input-group'>
                   <label>Match Date <span>*</span></label>
                   <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
@@ -180,13 +180,6 @@ if(!promoDetails){
                   <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
                 </div>
               </div>
-
-          <div className='input-wrap-one'>
-            <div className='input-group'>
-              <label>POT - Winner Award <span>*</span></label>
-              <input type='number' name='pot' value={formData.pot} onChange={handleChange} />
-            </div>
-          </div>
 
           <button type="submit" className='btn-grad' style={{ width: '50%' }} onClick={handleSubmit}>{buttonText}</button>
         </form>

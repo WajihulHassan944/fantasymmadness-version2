@@ -190,7 +190,6 @@ const AffiliateProfile = () => {
               type='text'
               value={venmoId}
               onChange={(e) => setVenmoId(e.target.value)}
-              disabled={isCashAppDisabled || isPaypalDisabled}
               style={{color:'#fff'}}
             />
           </div>
@@ -200,7 +199,6 @@ const AffiliateProfile = () => {
               type='text'
               value={cashAppId}
               onChange={(e) => setCashAppId(e.target.value)}
-              disabled={isVenmoDisabled || isPaypalDisabled}
               style={{color:'#fff'}}
             />
           </div>
@@ -210,7 +208,6 @@ const AffiliateProfile = () => {
               type='text'
               value={paypalEmail}
               onChange={(e) => setPaypalEmail(e.target.value)}
-              disabled={isVenmoDisabled || isCashAppDisabled}
               style={{color:'#fff'}}
             />
           </div>
