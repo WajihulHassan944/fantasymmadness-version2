@@ -4,6 +4,7 @@ import authReducer from './authSlice';
 import userReducer from './userSlice';
 import adminAuthReducer from './adminAuthSlice';
 import affiliateAuthReducer from './affiliateAuthSlice';  // Updated to affiliateAuthReducer
+import musicReducer from './musicSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     user: userReducer,
     adminAuth: adminAuthReducer,
     affiliateAuth: affiliateAuthReducer,
+    music: musicReducer, 
   },
 });
 

@@ -55,16 +55,17 @@ if(navigateDashboard){
   return <AffiliateFightLeaderboard matchId={navigateDashboard} />
 }
 
-
 const copyToClipboard = () => {
-  const url = `http://localhost:3000/${matchId}/${affiliateId}`;
-  navigator.clipboard.writeText(url)
-    .then(() => {
-      alert("URL copied to clipboard!");
-    })
-    .catch(err => {
-      console.error("Failed to copy: ", err);
-    });
+  if (match && affiliate) {
+    const url = `fantasymmadness.com/${match.matchName}/${affiliate.firstName}`;
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        alert("URL copied to clipboard!");
+      })
+      .catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+  }
 };
     return (
         <div className='fightDetails'>
@@ -124,7 +125,7 @@ const copyToClipboard = () => {
                     <h1 style={{fontSize:'21.5px'}}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>
                  </div>
                 <div className='fightDetailsPot'>
-                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}}>http://localhost:3000/{matchId}/{affiliateId}</h1>
+                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}}>fantasymmadness.com/{match.matchName}/{affiliate.firstName}</h1>
                 </div>
 
 <div style={{width:'100%', display:'flex', gap:'20px', flexWrap:'wrap', justifyContent:'center', alignItems:'center'}}>

@@ -1,6 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch } from 'react-redux';
+import { stopMusic, playMusic } from '../../Redux/musicSlice';
 import "./Home.css";
+
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    dispatch(stopMusic());
+
+    return () => dispatch(playMusic());
+  }, [ dispatch]);
+
+
 
   return (
     <>

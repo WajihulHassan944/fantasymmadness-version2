@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import FighterOne from "../../Assets/fighterOne.png";
 import Logoimage from "../../Assets/myimg.jpg";
 import "./FightLeaderboard.css";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { stopMusic, playMusic } from '../../Redux/musicSlice';
 
 const FightLeaderboard = ({ matchId }) => {
   const [scores, setScores] = useState([]);
@@ -10,8 +11,11 @@ const FightLeaderboard = ({ matchId }) => {
   const user = useSelector((state) => state.user);
   const matches = useSelector((state) => state.matches.data);
   const match = matches.find((m) => m._id === matchId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(stopMusic());
+
     fetch('https://fantasymmadness-game-server-three.vercel.app/api/scores')
       .then(response => response.json())
       .then(data => setScores(data.filter(score => score.matchId === matchId))) // Filter scores by matchId
@@ -21,7 +25,9 @@ const FightLeaderboard = ({ matchId }) => {
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
-  }, [matchId]);
+
+      return () => dispatch(playMusic());
+  }, [matchId, dispatch]);
 
   
 

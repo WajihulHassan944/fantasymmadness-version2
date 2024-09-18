@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Home/Home';
@@ -51,7 +51,7 @@ import mainAudio from './main.mp3'; // Replace with actual path
 function AppContent() {
   const location = useLocation();
   const dispatch = useDispatch();
-
+  const isPlaying = useSelector((state) => state.music.isPlaying);
   useEffect(() => {
     const userToken = localStorage.getItem('authToken');
     if (userToken) {
@@ -74,14 +74,11 @@ function AppContent() {
   const showPublicHeader = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showAdminHeader = location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showFooter = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
-
-  // Determine if we are not on the homepage
-  const isNotHomepage = location.pathname !== '/';
-
+  const isAdministrationRoute = location.pathname.startsWith('/administration');
+  
   return (
     <>
-      {/* Conditionally play background music if not on the homepage */}
-      {isNotHomepage && (
+     {!isAdministrationRoute && isPlaying && (
         <ReactHowler
           src={mainAudio}
           playing={true}
@@ -89,7 +86,8 @@ function AppContent() {
           volume={0.5}
         />
       )}
-      {showPublicHeader && <Header />}
+      
+        {showPublicHeader && <Header />}
       {showAdminHeader && <AdminHeader />}
 
       <Routes>
@@ -128,7 +126,7 @@ function AppContent() {
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
         <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />
-        <Route path="/:matchId/:affiliateId" element={<Promo />} />
+        <Route path="/:matchName/:firstName" element={<Promo />} />
       </Routes>
 
       {showFooter && <Footer />}

@@ -5,8 +5,8 @@ import './Dashboard.css';
 import { fetchMatches } from '../../Redux/matchSlice';
 import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
-import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
+import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserBoard';
 
 const Dashboard = () => {
 
@@ -64,7 +64,12 @@ const Dashboard = () => {
   
   // Check the match status and render the appropriate component
   if (completedMatchId) {
-    return <FightCosting matchId={completedMatchId} />;
+    const matchCom = matches.find(match => match._id === completedMatchId);
+    if (matchCom && matchCom.matchStatus === "Ongoing") {
+      return <FightLeaderboard matchId={completedMatchId} />;
+    } else {
+      return <FinishedFightUserBoard matchId={completedMatchId} />;
+    }
   }
 
   const today = new Date();
