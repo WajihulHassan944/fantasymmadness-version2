@@ -175,3 +175,13 @@
     background-color: #ccc;
     color:black;
 }
+
+.promobtn{
+    width: 14%;
+}
+@media (max-width: 767px){
+.specialtextmine{
+   width:300px;
+   overflow: auto;
+}
+}

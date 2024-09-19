@@ -75,7 +75,7 @@ const copyToClipboard = () => {
 
 
     return (
-        <div className='fightDetails'>
+        <div className='fightDetails' style={{paddingBottom:'50px'}}>
           
           
           <div className='member-header' style={{marginBottom:'30px'}}>
@@ -132,12 +132,12 @@ const copyToClipboard = () => {
                     <h1 style={{fontSize:'21.5px'}}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>
                  </div>
                 <div className='fightDetailsPot'>
-                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}}>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h1>
+                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}} className='specialtextmine'>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h1>
                 </div>
 
 <div style={{width:'100%', display:'flex', gap:'20px', flexWrap:'wrap', justifyContent:'center', alignItems:'center'}}>
-                <button className='btn-grad' style={{width:'14%'}} onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
-                <button className='btn-grad' style={{width:'14%'}} onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>
+                <button className='btn-grad promobtn'  onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
+                <button className='btn-grad promobtn'  onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>
                 </div>
     </div>
         </div>

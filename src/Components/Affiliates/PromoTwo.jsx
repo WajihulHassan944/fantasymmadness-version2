@@ -138,7 +138,7 @@ console.log(matchId, affiliateId);
           </div>
   
           <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
-            <button className='btn-grad' style={{ width: '14%' }} onClick={handleJoinLeague}>Join my league</button>
+            <button className='btn-grad promobtn' onClick={handleJoinLeague}>Join my league</button>
           </div>
         </div>
       </div>
