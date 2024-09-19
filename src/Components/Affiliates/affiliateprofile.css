@@ -1,0 +1,106 @@
+.inputParent{
+    display: flex;
+    gap:15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.inputParent img{
+    width: 100px;
+    height: 100%;
+    margin-top: 20px;
+    object-fit: cover;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #4997cf; /* Change to preferred color */
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  
+  .allpromotion{
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../../Assets/new-bg.png);
+  }
+  .allpromotion .allContainer{
+    margin: auto;
+    
+  }
+  .allpromotion .allContainer h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500;
+    font-stretch: condensed;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 40px;
+    line-height: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, .55);
+    }
+    
+  .allpromotion .allContainer h2{
+    font-family: Arial, sans-serif;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-left:auto;
+    letter-spacing: 1.5px;
+    font-size: 20px;
+    line-height: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, .55);
+    margin-top: 30px;
+    }
+    .allpromotion .allContainer h1 span{
+      color:blue;
+      cursor: pointer;
+    }

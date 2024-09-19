@@ -24,9 +24,9 @@ const ShowScores = ({ matchId }) => {
     
             const roundData = stats.fighterOneStats.map((round, index) => {
                 // Determine borders based on values for fighter one
-                const rwBorder = round.RW === 100 ? '5px solid red' : '';
-                const koBorder = round.KO === 500 ? '5px solid red' : '';
-                const spBorder = round.SP === 500 ? '5px solid red' : '';
+                const rwBorder = round.RW === 100 ? '2px solid #95a04d' : '';
+                const koBorder = round.KO === 500 ? '2px solid #95a04d' : '';
+                const spBorder = round.SP === 500 ? '2px solid #95a04d' : '';
                 
                 return {
                     round: round.roundNumber,
@@ -39,7 +39,7 @@ const ShowScores = ({ matchId }) => {
                     tpPrediction2: stats.fighterTwoStats[index]?.TP || stats.fighterTwoStats[index]?.KN,
                     elPrediction2: stats.fighterTwoStats[index]?.EL || 0,
                     rwBorder,
-                    rlBorder: round.RL === 100 ? '5px solid red' : '', // Example for RL, adjust as needed
+                    rlBorder: round.RL === 100 ? '2px solid #95a04d' : '', // Example for RL, adjust as needed
                     koBorder,
                     spBorder,
                 };
@@ -200,68 +200,74 @@ const ShowScores = ({ matchId }) => {
                                     </div>
                                 )}
 
+                                <div className='roundInput' style={{paddingLeft: '40px', paddingRight: '37px'}}>
+    <div className='roundInputDivOne'>
+        <input
+            type='button'
+            style={{
+                border: round.rwBorder || '2px solid #95a04d', 
+                background: '#264fa4', 
+                textAlign: 'center', 
+                color: '#fff', 
+            }}
+            value={round.rwBorder ? 'RW' : 'RL'}
+            disabled={true}
+        />
+    </div>
+
+    <div className='roundinput-image'>
+        <h2 style={{marginTop: '8px'}}>- OR -</h2>
+    </div>
+
+    <div className='roundInputDivOne'>
+        <input
+            type='button'
+            style={{
+                border: round.rlBorder || '2px solid #95a04d', 
+                background: '#8a1318', 
+                textAlign: 'center', 
+                color: '#fff'
+            }}
+            value={round.rlBorder ? 'RW' : 'RL'}
+            disabled={true}
+        />
+    </div>
+</div>
+
+
                                 <div className='roundInput' style={{paddingLeft:'40px', paddingRight:'37px'}}>
-                                    <div className='roundInputDivOne'>
-                                        <input
-                                            type='button'
-                                            style={{
-                                                border: round.rwBorder || '2px solid #2a8adb', 
-                                                background:'#02fc1f', 
-                                                textAlign:'center', 
-                                                color:'#025204', 
-                                            }} 
-                                            value='RW' 
-                                            disabled={true}
-                                        />
-                                    </div>
+    <div className='roundInputDivOne'>
+        <input
+            type='button'
+            style={{
+                border: round.koBorder || '2px solid #95a04d', 
+                background: '#264fa4', 
+                textAlign: 'center', 
+                color: '#fff', 
+                marginBottom: '5px'
+            }}
+            value={round.koBorder ? 'KO' : 'SP'}
+            disabled={true}
+        />
+    </div>
+    <div className='roundInputDivOne'>
+        <input
+            type='button'
+            style={{
+                border: round.spBorder || '2px solid #95a04d', 
+                background: '#8a1318', 
+                textAlign: 'center', 
+                color: '#fff',
+            }}
+            value={round.spBorder ? 'KO' : 'SP'}
+            disabled={true}
+        />
+    </div>
+</div>
 
-                                    <div className='roundinput-image'>
-                                        <h2 style={{marginTop:'8px'}}>- OR -</h2>
-                                    </div>
-                                    <div className='roundInputDivOne'>
-                                        <input
-                                            type='button'
-                                            style={{
-                                                border: round.rlBorder || '2px solid #2a8adb', 
-                                                background:'#fff', 
-                                                textAlign:'center', 
-                                                color:'red'
-                                            }} 
-                                            value='RW' 
-                                            disabled={true}
-                                        />
-                                    </div>
-                                </div>
 
-                                <div className='roundInputSpecial'>
-                                    <div className='roundInputDivOne'>
-                                        <input
-                                            type='button'
-                                            style={{
-                                                border: round.koBorder || '2px solid #95a04d', 
-                                                background:'#000300', 
-                                                textAlign:'center', 
-                                                color:'#025204', 
-                                                marginBottom:'5px'
-                                            }} 
-                                            value='KO' 
-                                            disabled={true}
-                                        />
-                                    </div>
-                                    <div className='roundInputDivOne'>
-                                        <input
-                                            type='button'
-                                            style={{
-                                                border: round.spBorder || '2px solid #95a04d', 
-                                                background:'#fff', 
-                                                textAlign:'center', 
-                                                color:'#2e5e6f',
-                                            }} 
-                                            value='SP' 
-                                            disabled={true}
-                                        />
-                                    </div>
-                                </div>
+
+                                
                             </div>
                         </div>
                     ))}

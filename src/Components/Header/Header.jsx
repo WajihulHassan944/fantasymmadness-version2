@@ -47,7 +47,8 @@ const Header = () => {
             <NavLink to="/AffiliateDashboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Your Fights</NavLink>
             <NavLink to="/HowItWorks" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How it works</NavLink>
             <NavLink to="/AffiliateProfile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
-          </div>
+            <NavLink to="/AffiliatePromotion" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Promotions</NavLink>
+            </div>
 
           <div className='sideLinkswrap'>
           
@@ -125,10 +126,10 @@ const Header = () => {
         <div className='anchorLinksWrapper'>
           {isAuthenticatedAffiliate ? (
             <>
-              <NavLink to="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
-              <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Create a fight</NavLink>
-              <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>How it works</NavLink>
-              <NavLink to="/profile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
+              <NavLink to="/AffiliateDashboard" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
+              <NavLink to="/HowItWorks" className='anchorlinks' onClick={closeMenu}>How it works</NavLink>
+              <NavLink to="/AffiliateProfile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
+              <NavLink to="/AffiliatePromotion" className='anchorlinks' onClick={closeMenu}>Promotions</NavLink>
               <button onClick={() => { handleLogoutAffiliate(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </button>

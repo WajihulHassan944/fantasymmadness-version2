@@ -57,7 +57,12 @@ if(navigateDashboard){
 
 const copyToClipboard = () => {
   if (match && affiliate) {
-    const url = `fantasymmadness.com/${match.matchName}/${affiliate.firstName}`;
+    const fullName = `${affiliate.firstName} ${affiliate.lastName}`; // Combine first and last name
+    const encodedMatchName = encodeURIComponent(match.matchName);  // Encode matchName
+    const encodedFullName = encodeURIComponent(fullName);  // Encode fullName
+    
+    const url = `https://fantasymmadness.com/shadow/${encodedMatchName}/${encodedFullName}`;
+    
     navigator.clipboard.writeText(url)
       .then(() => {
         alert("URL copied to clipboard!");
@@ -67,6 +72,8 @@ const copyToClipboard = () => {
       });
   }
 };
+
+
     return (
         <div className='fightDetails'>
           
@@ -125,7 +132,7 @@ const copyToClipboard = () => {
                     <h1 style={{fontSize:'21.5px'}}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>
                  </div>
                 <div className='fightDetailsPot'>
-                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}}>fantasymmadness.com/{match.matchName}/{affiliate.firstName}</h1>
+                    <h1 style={{color:'#8abafe', fontSize:'21.5px'}}>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h1>
                 </div>
 
 <div style={{width:'100%', display:'flex', gap:'20px', flexWrap:'wrap', justifyContent:'center', alignItems:'center'}}>

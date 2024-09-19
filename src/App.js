@@ -48,6 +48,8 @@ import Contact from './Components/Footer/Contact';
 import ReactHowler from 'react-howler';
 import mainAudio from './main.mp3'; // Replace with actual path
 import YoutubeArchive from './Components/Admin/YoutubeArchive';
+import AffiliateAllFightPromotion from './Components/Affiliates/AffiliateAllFightPromotion';
+import AffiliateAllPromos from './Components/Affiliates/AffiliateAllPromos';
 
 function AppContent() {
   const location = useLocation();
@@ -113,6 +115,7 @@ function AppContent() {
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
         <Route path="/AffiliateProfile" element={<AffiliateProfile />} />
+        <Route path="/AffiliatePromotion" element={<AffiliateAllFightPromotion />} />
 
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
         <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
@@ -124,11 +127,13 @@ function AppContent() {
         <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
         <Route path="/administration/ShadowFightsLibrary" element={<PrivateRouteAdmin element={<ShadowFightsLibrary />} />} />
         <Route path="/administration/YoutubeArchive" element={<PrivateRouteAdmin element={<YoutubeArchive />} />} />
-
+        <Route path="/affiliate/:affiliateName" element={<AffiliateAllPromos />} />
+      
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
         <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />
-        <Route path="/:matchName/:firstName" element={<Promo />} />
+        <Route path="/shadow/:matchName/:fullName" element={<Promo />} />
+       
       </Routes>
 
       {showFooter && <Footer />}

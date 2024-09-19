@@ -6,7 +6,7 @@ import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 
 const Promo = () => {
   const dispatch = useDispatch();
-  const { matchName, firstName } = useParams();
+  const { matchName, fullName } = useParams();
   const navigate = useNavigate();
 
   const [affiliate, setAffiliate] = useState(null);
@@ -18,35 +18,59 @@ const Promo = () => {
   const user = useSelector((state) => state.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  
   useEffect(() => {
     if (matchStatus === 'idle') {
+      console.log("Fetching matches...");
       dispatch(fetchMatches());
+    } else {
+      console.log("Matches already fetched or fetching...");
     }
   }, [matchStatus, dispatch]);
 
+  // Fetch affiliate data based on fullName from URL
   useEffect(() => {
     const fetchAffiliateData = async () => {
       try {
-        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/affiliates');
-        const affiliates = await response.json();
-        const filteredAffiliate = affiliates.find((aff) => aff.firstName === firstName);
-        setAffiliate(filteredAffiliate);
+        console.log("Fetching affiliate data for fullName:", fullName);
+        const response = await fetch(
+          `https://fantasymmadness-game-server-three.vercel.app/affiliateByName?fullName=${encodeURIComponent(fullName)}`
+        );
+        console.log("Affiliate API response status:", response.status);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const affiliateData = await response.json();
+        console.log("Fetched affiliate data:", affiliateData);
+        setAffiliate(affiliateData);
       } catch (error) {
         console.error('Error fetching affiliate data:', error);
       }
     };
 
-    fetchAffiliateData();
-  }, [firstName]);
+    if (fullName) {
+      fetchAffiliateData();
+    } else {
+      console.error("Full name is not available");
+    }
+  }, [fullName]);
 
+  // Find the match associated with the affiliate
   useEffect(() => {
     if (affiliate) {
+      console.log("Affiliate data available:", affiliate);
       const affiliateId = affiliate._id;
       const foundMatch = matches.find((m) => m.matchName === matchName && m.affiliateId === affiliateId);
+      console.log("Found match:", foundMatch);
       setMatch(foundMatch);
+    } else {
+      console.log("Waiting for affiliate data...");
     }
   }, [affiliate, matches, matchName]);
 
+  // Handle join league action
   const handleJoinLeague = async () => {
     if (!isAuthenticated) {
       window.open('/login', '_blank'); // Open login page in a new window
@@ -55,6 +79,8 @@ const Promo = () => {
 
     const userId = user._id;
     const userEmail = user.email;
+
+    console.log("User attempting to join league:", userId, userEmail);
 
     try {
       const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/${affiliate._id}/join`, {
@@ -77,36 +103,17 @@ const Promo = () => {
     }
   };
 
-  const handleDeleteFight = async (id) => {
-    try {
-      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/matches/${id}?affiliateId=${affiliate._id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        alert("Promotion Deleted");
-        window.location.reload();
-      } else {
-        console.error('Failed to delete:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error deleting match:', error);
-    }
-  };
-
-  const handleDashboardOpening = (id) => {
-    setNavigateToDash(id);
-  };
-
   if (navigateDashboard) {
     return <AffiliateFightLeaderboard matchId={navigateDashboard} />;
   }
 
   if (!match) {
+    console.log("Match not found or still loading...");
     return <p>Loading...</p>;
   }
 
   if (!affiliate) {
+    console.log("Affiliate not found or still loading...");
     return <div>Loading...</div>;
   }
 
