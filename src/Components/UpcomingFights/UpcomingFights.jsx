@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import './UpcomingFightsUser.css';
@@ -8,7 +8,9 @@ const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
-
+  const [upcomingMatches, setUpcomingMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
   const navigate = useNavigate();
 
 
@@ -16,36 +18,81 @@ const UpcomingFights = () => {
     navigate('/login');
   };
 
+  useEffect(() => {
+    const today = new Date();
+    const currentTime = new Date();
+  
+    const fetchUpcomingMatches = async () => {
+      try {
+        // Fetch all affiliates
+        const affiliateResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/affiliates");
+        const affiliates = await affiliateResponse.json();
+  
+        // Fetch all users
+        const usersResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/users");
+        const users = await usersResponse.json();
+  
+        // Filter matches based on matchType
+        const filteredMatches = matches.map((match) => {
+          const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+  
+          if (match.matchType === "LIVE") {
+            // Only check date and time for LIVE matches
+            if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
+              return { ...match, blurred: false }; // No blurring for LIVE matches
+            }
+          } else if (match.matchType === "SHADOW") {
+            // Find the affiliate by affiliateId for SHADOW matches
+            const affiliate = affiliates.find(a => a._id === match.affiliateId);
+            if (affiliate) {
+              const usersJoinedIds = affiliate.usersJoined.map(user => user.userId);
+  
+              // Filter users who meet token requirement
+              const eligibleUsers = users.filter(user => usersJoinedIds.includes(user._id) && parseInt(user.tokens, 10) >= match.matchTokens);
+              console.log(eligibleUsers.length);
+  
+              // Calculate the required number of users
+              const requiredUsers = match.pot / match.matchTokens;
+  
+              // If eligible users are fewer than required, blur the match
+              const isBlurred = eligibleUsers.length < requiredUsers;
+  
+              if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
+                return { ...match, blurred: isBlurred }; // Add blur condition for SHADOW matches
+              }
+            }
+          }
+          return null;
+        }).filter(Boolean); // Filter out null values where no condition is met
+  
+        // Set filtered matches
+        setUpcomingMatches(filteredMatches);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchUpcomingMatches();
+  }, [matches]);
 
+  
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
 
-  const today = new Date();
-const currentTime = new Date();
-
-// Filter matches
-const upcomingMatches = matches.filter((match) => {
-  // Construct matchDateTime including both date and time
-  const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
-
-  // Return matches that are either in the future or today and haven't started yet
-  return (
-    matchDateTime >= today.setHours(0, 0, 0, 0) && 
-    currentTime < matchDateTime
-  );
-});
 
   return (
     <div className='upcomingFightsUser'>
       <div className='homeSecond' style={{ background: 'transparent' }}>
         <h1 className='second-main-heading'>Upcoming fights <span className='toRemove'>/ Active fights</span></h1>
-        <div className="fightswrap">
+        <div className="fightswrap" data-aos="zoom-out">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id} onClick={handleFightClick} data-aos="zoom-out">
+              <div  className={`fightItem ${match.blurred ? 'blurred' : ''}`} key={match._id} onClick={handleFightClick} >
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />

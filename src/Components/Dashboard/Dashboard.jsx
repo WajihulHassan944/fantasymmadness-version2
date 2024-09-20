@@ -17,6 +17,9 @@ const Dashboard = () => {
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
   
+  const [upcomingMatches, setUpcomingMatches] = useState([]);
+const [loading, setLoading] = useState(true);
+
   const [time, setTime] = useState(new Date()); // State to trigger re-render every minute
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -32,6 +35,68 @@ const Dashboard = () => {
     return () => clearInterval(timer); // Clear interval on unmount
   }, []);
 
+
+
+  useEffect(() => {
+    const today = new Date();
+    const currentTime = new Date();
+  
+    const fetchUpcomingMatches = async () => {
+      try {
+        // Fetch all affiliates
+        const affiliateResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/affiliates");
+        const affiliates = await affiliateResponse.json();
+  
+        // Fetch all users
+        const usersResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/users");
+        const users = await usersResponse.json();
+  
+        // Filter matches based on matchType
+        const filteredMatches = matches.map((match) => {
+          const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+  
+          if (match.matchType === "LIVE") {
+            // Only check date and time for LIVE matches
+            if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
+              return { ...match, blurred: false }; // No blurring for LIVE matches
+            }
+          } else if (match.matchType === "SHADOW") {
+            // Find the affiliate by affiliateId for SHADOW matches
+            const affiliate = affiliates.find(a => a._id === match.affiliateId);
+            if (affiliate) {
+              const usersJoinedIds = affiliate.usersJoined.map(user => user.userId);
+  
+              // Filter users who meet token requirement
+              const eligibleUsers = users.filter(user => usersJoinedIds.includes(user._id) && parseInt(user.tokens, 10) >= match.matchTokens);
+              console.log(eligibleUsers.length);
+  
+              // Calculate the required number of users
+              const requiredUsers = match.pot / match.matchTokens;
+  
+              // If eligible users are fewer than required, blur the match
+              const isBlurred = eligibleUsers.length < requiredUsers;
+  
+              if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
+                return { ...match, blurred: isBlurred }; // Add blur condition for SHADOW matches
+              }
+            }
+          }
+          return null;
+        }).filter(Boolean); // Filter out null values where no condition is met
+  
+        // Set filtered matches
+        setUpcomingMatches(filteredMatches);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchUpcomingMatches();
+  }, [matches]);
+  
+    
 
   
 
@@ -71,23 +136,6 @@ const Dashboard = () => {
       return <FinishedFightUserBoard matchId={completedMatchId} />;
     }
   }
-
-  const today = new Date();
-const currentTime = new Date();
-
-// Filter matches
-const upcomingMatches = matches.filter((match) => {
-  // Construct matchDateTime including both date and time
-  const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
-
-  // Return matches that are either in the future or today and haven't started yet
-  return (
-    matchDateTime >= today.setHours(0, 0, 0, 0) && 
-    currentTime < matchDateTime
-  );
-});
-
-    
 
 
 
@@ -147,11 +195,12 @@ const upcomingMatches = matches.filter((match) => {
       </div>
 
       <div className='fightsWrap'>
-        <div className='upcomingFights fightscontainer'>
+        <div className='upcomingFights fightscontainer' >
           <h1 className='fightsheadingone'>UPCOMING / ACTIVE FIGHTS</h1>
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div className="fightItem" key={match._id} data-aos="zoom-in">
+              <div  className={`fightItem ${match.blurred ? 'blurred' : ''}`}
+              key={match._id} >
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -202,7 +251,7 @@ const upcomingMatches = matches.filter((match) => {
       const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
       return (
-        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}  data-aos="zoom-in" >
+        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}   >
           <div className='fightersImages'>
             <div className='fighterOne'>
               <img src={match.fighterAImage} alt="Fighter One" />
@@ -291,6 +340,8 @@ const upcomingMatches = matches.filter((match) => {
 
 <div className='pendingFights fightscontainer'>
   <h1 className='fightsheadingthree'>Your Pending Fights</h1>
+  
+  
 
   {upcomingMatches.length > 0 ? (
     // Filter matches where user predictions are not submitted
@@ -314,8 +365,18 @@ const upcomingMatches = matches.filter((match) => {
             const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
             return (
-              <div className="fightItem" key={match._id} onClick={() => handleMatchClick(match._id)} data-aos="zoom-in">
-                <div className='fightersImages'>
+              <div
+              className={`fightItem ${match.blurred ? 'blurred' : ''}`}
+              key={match._id}
+              onClick={() => {
+                if (match.matchType === "SHADOW" && match.blurred) {
+                  alert("Affiliate criteria has not been met for this SHADOW match.");
+                } else {
+                  handleMatchClick(match._id);
+                }
+              }}
+             
+            >   <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
                   </div>
@@ -401,6 +462,7 @@ const upcomingMatches = matches.filter((match) => {
   ) : (
     <p className='noMatch'>No pending matches</p>
   )}
+
 </div>
 
       </div>
