@@ -92,7 +92,7 @@ const UpcomingFights = () => {
         <div className="fightswrap" data-aos="zoom-out">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
-              <div  className={`fightItem ${match.blurred ? 'blurred' : ''}`} key={match._id} onClick={handleFightClick} >
+              <div  className='fightItem' key={match._id} onClick={handleFightClick} >
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -105,7 +105,7 @@ const UpcomingFights = () => {
                   <div className="transformed-div">
                     <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
-                  <div className="transformed-div-two">
+                  <div  className={`transformed-div-two ${match.blurred ? 'blurred' : ''}`}>
                     <div className='transformed-div-two-partOne'>
                     <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
 
@@ -118,7 +118,7 @@ const UpcomingFights = () => {
                     </div>
                   </div>
                 </div>
-                <div className='fightItemTwo'>
+                <div   className={`fightItemTwo ${match.blurred ? 'blurred' : ''}`}>
                   <div className="transformed-div-three">
                     <p>{match.matchDescription}</p>
                   </div>

@@ -55,6 +55,8 @@ function AppContent() {
   const location = useLocation();
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.music.isPlaying);
+  const seekPosition = useSelector((state) => state.music.seekPosition);
+
   useEffect(() => {
     const userToken = localStorage.getItem('authToken');
     if (userToken) {
@@ -81,12 +83,12 @@ function AppContent() {
   
   return (
     <>
-     {!isAdministrationRoute && isPlaying && (
+      {!isAdministrationRoute && isPlaying && (
         <ReactHowler
           src={mainAudio}
-          playing={true}
-          loop={true}
-          volume={0.5}
+          playing={isPlaying} // Controlled by Redux
+          volume={0.3}
+          seek={seekPosition} // Start at the last seek position
         />
       )}
       
