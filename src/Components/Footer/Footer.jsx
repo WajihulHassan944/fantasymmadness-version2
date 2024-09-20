@@ -36,17 +36,16 @@ const Footer = () => {
           <span>Fantasy Mmadness</span>
           <span style={{ fontStyle: 'normal', color: '#fff' }}> © </span>2024
         </p>
-        <Link to="/privacy-policy" className="footerlink">Privacy policy</Link>
+      <div>  <Link to="/privacy-policy" className="footerlink">Privacy policy</Link>
         <Link to="/terms-of-service" className="footerlink">Terms of service</Link>
-        <Link to="/contact" className="footerlink">Contact</Link>
-        <a href="https://www.authorize.net/" target="_blank" rel="noopener noreferrer" className="footerlink">Authorize.net</a>
-
+        </div> <Link to="/contact" className="footerlink">Contact</Link>
+       
         {/* Placeholder for Authorize.net link
         <Link to="#" className="footerlink">Authorize.net</Link> */}
       </div>
 
       <div className="footerLastDiv">
-        <p style={{ fontStyle: 'normal', letterSpacing: '1px' }}>
+        <p style={{ fontStyle: 'normal', letterSpacing: '1px' }} className='speciallastp'>
           <span>2350 Beaver Ruin Rd, Norcross Georgia 30071</span>
         </p>
       </div>

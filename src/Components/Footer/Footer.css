@@ -93,7 +93,11 @@
     font-size:21px;
 }
 
-
+.speciallastp{
+    text-align: center !important;
+    font-size:12px !important;
+    line-height: 1.4;
+}
 
 
 .footerLastDiv{
