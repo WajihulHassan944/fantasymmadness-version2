@@ -275,7 +275,7 @@ if (completedMatchId) {
             const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
             return (
-              <div  className='fightItem'
+              <div className='fightItem'
               key={match._id}
               onClick={() => {
                 if (match.matchType === "SHADOW" && match.blurred) {
@@ -284,7 +284,7 @@ if (completedMatchId) {
                   handleMatchClick(match._id);
                 }
               }} >
-                <div className='fightersImages'>
+                <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
                   </div>
@@ -293,10 +293,10 @@ if (completedMatchId) {
                   </div>
                 </div>
                 <div className='fightItemOne'>
-                  <div className="transformed-div">
+                  <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
                     <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
-                  <div className={`transformed-div-two ${match.blurred ? 'blurred' : ''}`}>
+                  <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
                       <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
                     </div>
@@ -309,7 +309,7 @@ if (completedMatchId) {
                     </div>
                   </div>
                 </div>
-                <div className={`fightItemTwo ${match.blurred ? 'blurred' : ''}`}>
+                <div className='fightItemTwo'>
                   <div className="transformed-three">
                     <div className='transformedDivBox'>HP</div>
                     <div className='transformedDivBox'>BP</div>
@@ -323,7 +323,7 @@ if (completedMatchId) {
                     <p>{match.userPredictions.length}</p>
                   </div>
                 </div>
-                <div className={`transformed-five ${match.blurred ? 'blurred' : ''}`}>
+                <div className="transformed-five">
                   <div className='transformedDivBox'>HP</div>
                   <div className='transformedDivBox'>BP</div>
                   <div className='transformedDivBox'>TP</div>

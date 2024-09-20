@@ -201,7 +201,7 @@ const [loading, setLoading] = useState(true);
             upcomingMatches.map((match) => (
               <div  className='fightItem'
               key={match._id} >
-                <div className='fightersImages'>
+                <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
                   </div>
@@ -210,10 +210,10 @@ const [loading, setLoading] = useState(true);
                   </div>
                 </div>
                 <div className='fightItemOne'>
-                  <div className="transformed-div" >
+                  <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
                     <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
-                  <div className={`transformed-div-two ${match.blurred ? 'blurred' : ''}`}>
+                  <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
                     <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
                       <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
@@ -225,7 +225,7 @@ const [loading, setLoading] = useState(true);
                     </div>
                   </div>
                 </div>
-                <div className={`fightItemTwo ${match.blurred ? 'blurred' : ''}`}>
+                <div className='fightItemTwo'>
                   <div className="transformed-div-three">
                     <p>{match.matchDescription}</p>
                   </div>
@@ -366,7 +366,7 @@ const [loading, setLoading] = useState(true);
 
             return (
               <div
-              className='fightItem'
+             className='fightItem'
               key={match._id}
               onClick={() => {
                 if (match.matchType === "SHADOW" && match.blurred) {
@@ -376,7 +376,7 @@ const [loading, setLoading] = useState(true);
                 }
               }}
              
-            >   <div className='fightersImages'>
+            >   <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
                   </div>
@@ -385,10 +385,10 @@ const [loading, setLoading] = useState(true);
                   </div>
                 </div>
                 <div className='fightItemOne'>
-                  <div className="transformed-div">
+                  <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
                     <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
-                  <div className={`transformed-div-two ${match.blurred ? 'blurred' : ''}`}>
+                  <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
                       <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
                     </div>
@@ -401,7 +401,7 @@ const [loading, setLoading] = useState(true);
                     </div>
                   </div>
                 </div>
-                <div className={`fightItemTwo ${match.blurred ? 'blurred' : ''}`}>
+                <div className='fightItemTwo'>
   <div className="transformed-three">
     {
       match.matchCategory === "boxing" ? (
@@ -431,7 +431,7 @@ const [loading, setLoading] = useState(true);
   </div>
 </div>
 
-<div className={`transformed-five ${match.blurred ? 'blurred' : ''}`}>
+<div className="transformed-five">
   {
     match.matchCategory === "boxing" ? (
       <>
