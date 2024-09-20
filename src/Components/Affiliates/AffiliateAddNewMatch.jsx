@@ -13,12 +13,11 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     matchDate: '',
     matchTime: '',
     matchCategoryTwo:'',
- 
-
   });
 
-  const [promoMatches, setPromoMatches] = useState([]); 
-    
+  const [promoMatches, setPromoMatches] = useState([]);
+  const [requiredUsers, setRequiredUsers] = useState(null);  // Default initial value
+
   useEffect(() => {
     const fetchPromoMatches = async () => {
       try {
@@ -36,25 +35,26 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     fetchPromoMatches();
   }, []);
 
-
   const [buttonText, setButtonText] = useState('Create');
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const promoDetails = promoMatches.find((m) => m._id === matchId);
-if(!promoDetails){
-  return <p>Loading...</p>;
-}
+
+  if(!promoDetails) {
+    return <p>Loading...</p>;
+  }
 
   if (!affiliate) {
     return <div>Loading...</div>;
   }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     const numericFields = ['matchTokens', 'pot', 'profit', 'amountOverPotBudget'];
     const dateFields = ['matchDate', 'matchTime'];
-  
+
     let newValue;
-  
+
     if (numericFields.includes(name)) {
       newValue = parseFloat(value) || 0;
     } else if (dateFields.includes(name)) {
@@ -62,23 +62,37 @@ if(!promoDetails){
     } else {
       newValue = value;
     }
-  
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: newValue,
     }));
+
+    // Dynamically calculate the required number of players in real-time
+    if (name === 'pot' || name === 'matchTokens') {
+      const potValue = name === 'pot' ? newValue : formData.pot;
+      const matchTokensValue = name === 'matchTokens' ? newValue : formData.matchTokens;
+
+      // Avoid division by zero for matchTokens
+      if (matchTokensValue > 0) {
+        setRequiredUsers(potValue / matchTokensValue);
+      } else {
+        setRequiredUsers(0);  // Set to 0 if matchTokens is invalid
+      }
+    }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const url = 'https://fantasymmadness-game-server-three.vercel.app/addMatch';
-  
+
     const matchDetails = promoMatches.find((m) => m._id === matchId);
     if (!matchDetails) {
       alert('Match not found!');
       return;
     }
-  
+
     const data = new FormData();
     data.append('matchTokens', formData.matchTokens);
     data.append('shadowFightId', matchDetails._id);
@@ -88,11 +102,11 @@ if(!promoDetails){
     data.append('amountOverPotBudget', formData.amountOverPotBudget);
     data.append('matchDate', formData.matchDate);
     data.append('matchTime', formData.matchTime);
-  
+
     // Append image URLs directly if available
     data.append('fighterAImageUrl', matchDetails.fighterAImage);
     data.append('fighterBImageUrl', matchDetails.fighterBImage);
-  
+
     // Append other match details
     data.append('matchCategory', matchDetails.matchCategory);
     data.append('matchCategoryTwo', matchDetails.matchCategoryTwo);
@@ -103,15 +117,15 @@ if(!promoDetails){
     data.append('matchVideoUrl', matchDetails.matchVideoUrl);
     data.append('matchType', 'SHADOW');
     data.append('maxRounds', matchDetails.maxRounds);
-  
+
     setButtonText('Saving, please wait...');
-  
+
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: data,
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
         alert('Match added successfully!');
@@ -123,12 +137,11 @@ if(!promoDetails){
     } catch (error) {
       console.error('Error adding match:', error);
       window.location.reload();
-
     } finally {
       setButtonText('Add Match');
     }
   };
-    
+
   return (
     <div className='addNewMatch' style={{ marginLeft: '0', width: '100%', flexDirection: 'column' }}>
       <div className='member-header' style={{ marginBottom: '20px' }}>
@@ -155,31 +168,28 @@ if(!promoDetails){
           </div>
 
           <div className='input-wrap-one'>
-          {/*  <div className='input-group'>
-              <label>Amount over pot budget <span>*</span></label>
-              <input type='number' name='amountOverPotBudget' value={formData.amountOverPotBudget} onChange={handleChange} />
-            </div>  */}
             <div className='input-group'>
               <label>Player Buy in (Tokens) <span>*</span></label>
               <input type='number' name='matchTokens' value={formData.matchTokens} onChange={handleChange} />
             </div>
           </div>
 
-     {/*     <div className='input-wrap-one'>
+          <div className='input-wrap-one'>
             <div className='input-group' style={{ flexBasis: '100%', margin: '10px 0' }}>
-              <label style={{ color: 'yellow' }}>Note - You will need 70 players in order for this fight to start. If the budget is not reached by the start time, the fight will not start and tokens will be returned to members' wallets.</label>
+              <label style={{ color: 'yellow' }}>Note - You will need {requiredUsers > 0 ? Math.ceil(requiredUsers) : 0} players in order for this fight to start. If the budget is not reached by the start time, the fight will not start so you need to have sufficient players in your league.</label>
             </div>
           </div>
-          */}         <div className='input-wrap-one'>
-                <div className='input-group'>
-                  <label>Match Date <span>*</span></label>
-                  <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
-                </div>
-                <div className='input-group'>
-                  <label>Match time <span>*</span></label>
-                  <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
-                </div>
-              </div>
+
+          <div className='input-wrap-one'>
+            <div className='input-group'>
+              <label>Match Date <span>*</span></label>
+              <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
+            </div>
+            <div className='input-group'>
+              <label>Match time <span>*</span></label>
+              <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
+            </div>
+          </div>
 
           <button type="submit" className='btn-grad' style={{ width: '50%' }} onClick={handleSubmit}>{buttonText}</button>
         </form>
