@@ -33,17 +33,25 @@ if (selectedMatchId) {
   const selectedMatch = matches.find(match => match._id === selectedMatchId);
 
   if (selectedMatch) {
-    // Construct matchDateTime including both date and time
-    const matchDateTime = new Date(`${selectedMatch.matchDate.split('T')[0]}T${selectedMatch.matchTime}:00`);
+    // Check if the match type is "LIVE"
+    if (selectedMatch.matchType === "LIVE") {
+      // Construct matchDateTime including both date and time
+      const matchDateTime = new Date(`${selectedMatch.matchDate.split('T')[0]}T${selectedMatch.matchTime}:00`);
 
-    // Check if the current time is equal to or later than the match time
-    if (currentTime >= matchDateTime) {
+      // Check if the current time is equal to or later than the match time
+      if (currentTime >= matchDateTime) {
+        return <AdminPredictions matchId={selectedMatchId} />;
+      } else {
+        alert('The match time has not been reached yet.');
+      }
+    } 
+    // If the match type is "SHADOW", just render the component without the time check
+    else if (selectedMatch.matchType === "SHADOW") {
       return <AdminPredictions matchId={selectedMatchId} />;
-    } else {
-      alert('The match time has not been reached yet.');
     }
   }
 }
+
 
 
   if (finishedMatchId) {
