@@ -42,8 +42,7 @@
   }
   
   .no-hover iframe {
-    pointer-events: none;
-  }
+    }
   
 .homeSecond{
     display: flex;

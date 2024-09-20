@@ -69,6 +69,8 @@ const RegisteredUsers = () => {
           <p><strong>Current Plan:</strong> {selectedUser.currentPlan}</p>
           <p><strong>Zip Code:</strong> {selectedUser.zipCode}</p>
           <p><strong>Verified:</strong> {selectedUser.verified ? 'Yes' : 'No'}</p>
+          <p><strong>Preferred Payment method:</strong> {selectedUser.preferredPaymentMethod}</p>
+          <p><strong>Payment Id:</strong> {selectedUser.preferredPaymentMethodValue}</p>
           <button onClick={() => setSelectedUser(null)} className='closeButton'>Close</button>
         </div>
       )}

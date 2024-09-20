@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import "./Profile.css";
 import { useNavigate } from 'react-router-dom';
 import AddTokensToWallet from './AddTokensToWallet';
+import cashapp from "../../Assets/cashapp.png";
+import venmo from "../../Assets/venmo.png";
+import paypal from "../../Assets/paypal.png";
+
 
 const Profile = () => {
     const user = useSelector((state) => state.user); // Access user details from Redux store
@@ -14,10 +18,40 @@ const navigate = useNavigate();
     const [phone, setPhone] = useState(user.phone || '');
     const [zipCode, setZipCode] = useState(user.zipCode || '');
     const [shortBio, setShortBio] = useState(user.shortBio || '');
+    const [venmoId, setVenmoId] = useState(
+        user?.preferredPaymentMethod === 'Venmo' ? user.preferredPaymentMethodValue : ''
+      );
+      const [cashAppId, setCashAppId] = useState(
+        user?.preferredPaymentMethod === 'CashApp' ? user.preferredPaymentMethodValue : ''
+      );
+      const [paypalEmail, setPaypalEmail] = useState(
+        user?.preferredPaymentMethod === 'PayPal' ? user.preferredPaymentMethodValue : ''
+      );
+      const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
+        user?.preferredPaymentMethod || ''
+      );
+
+      const [loadingTwo, setLoadingTwo] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [showPredictions, setShowPredictions] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+          setFirstName(user.firstName || '');
+          setLastName(user.lastName || '');
+          setPlayerName(user.playerName || '');
+          setPhone(user.phone || '');
+          setZipCode(user.zipCode || '');
+          setShortBio(user.shortBio || '');
+          setSelectedPaymentMethod(user.preferredPaymentMethod || '');
+          const paymentValue = user.preferredPaymentMethodValue || '';
+          if (user.preferredPaymentMethod === 'Venmo') setVenmoId(paymentValue);
+          else if (user.preferredPaymentMethod === 'CashApp') setCashAppId(paymentValue);
+          else if (user.preferredPaymentMethod === 'PayPal') setPaypalEmail(paymentValue);
+        }
+      }, [user]);
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -54,6 +88,66 @@ const navigate = useNavigate();
 
 
 
+    const handleSubmittingDetails = async (e) => {
+        e.preventDefault();
+        setLoadingTwo(true);
+    
+        let preferredPaymentMethod = '';
+        let preferredPaymentMethodValue = '';
+    
+        if (venmoId.trim()) {
+          preferredPaymentMethod = 'Venmo';
+          preferredPaymentMethodValue = venmoId;
+        } else if (cashAppId.trim()) {
+          preferredPaymentMethod = 'CashApp';
+          preferredPaymentMethodValue = cashAppId;
+        } else if (paypalEmail.trim()) {
+          preferredPaymentMethod = 'PayPal';
+          preferredPaymentMethodValue = paypalEmail;
+        } else {
+          alert("Please enter a valid payment method.");
+          setLoadingTwo(false);
+          return;
+        }
+    
+        // Clear other fields based on the selected method
+        if (preferredPaymentMethod === 'Venmo') {
+          setCashAppId('');
+          setPaypalEmail('');
+        } else if (preferredPaymentMethod === 'CashApp') {
+          setVenmoId('');
+          setPaypalEmail('');
+        } else if (preferredPaymentMethod === 'PayPal') {
+          setVenmoId('');
+          setCashAppId('');
+        }
+    
+        try {
+          const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/updatePayment/${user._id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              preferredPaymentMethod,
+              preferredPaymentMethodValue,
+            }),
+          });
+    
+          if (!response.ok) {
+            alert('Failed to save payment method.');
+          } else {
+            const data = await response.json();
+            alert('Settings saved successfully.');
+            // Optionally update Redux store or other state management here
+          }
+        } catch (error) {
+          console.error('Error updating payment method:', error);
+        } finally {
+          setLoadingTwo(false);
+        }
+      };
+    
     
 
   const handleAddTokenClick = async () => {
@@ -131,35 +225,110 @@ const navigate = useNavigate();
                     </button>
                 </form>
                 
-
-            <div className='divTwoProfile' >
-            
-            {/*       <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Delete My Account</button> */}
-                   <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Cancel My Subscription</button>
+                <div className='divTwoProfile' style={{ marginTop: '1px' }}>
+                  {/*       <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Delete My Account</button> */}
+                  <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Cancel My Subscription</button>
                    <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handleAddTokenClick()}>Add tokens to Wallet</button>
                   <div className='pairOfHtags'>
                    <h1>Your Public player profile link:</h1>
-                   <h1>http://localhost:3000/{user._id}</h1>
+                   <h1>fantasymmadness.com/{user._id}</h1>
    
    </div>
-   
-   <h1>Prefered payment method-choose 1</h1>
-                       <div className='input-group-profile'>
-                           <label>Venmo Id </label>
-                           <input type='text' />
-                       </div>
-                       <div className='input-group-profile'>
-                           <label>Cash app Id </label>
-                           <input type='text' />
-                       </div>
-                       <div className='input-group-profile'>
-                           <label>Paypal Email Address </label>
-                           <input type='text' />
-                       </div>
-   
-                       <button type="submit" className='btn-grad ' style={{width:'40%'}}>Save settings</button>
-                  
-                               </div>
+  <h1>Preferred payment method - choose 1</h1>
+
+  {/* Venmo */}
+  <div className='inputParent'>
+    <div className='input-group-profile'>
+      <label style={{ color: '#4997cf' }}>Venmo Id </label>
+      <input
+        type='text'
+        value={venmoId}
+        onChange={(e) => {
+          setVenmoId(e.target.value);
+          setCashAppId(''); // Clear CashApp input
+          setPaypalEmail(''); // Clear PayPal input
+        }}
+        style={{ color: '#fff', borderColor: '#4997cf' }}
+      />
+    </div>
+    <label className='switch'>
+      <input
+        type='radio'
+        name='paymentMethod'
+        value='venmo'
+        checked={selectedPaymentMethod === 'Venmo'}
+        onChange={() => setSelectedPaymentMethod('Venmo')}
+      />
+      <span className='slider round'></span>
+    </label>
+    <img src={venmo} alt='Venmo' />
+  </div>
+
+  {/* Cash App */}
+  <div className='inputParent'>
+    <div className='input-group-profile'>
+      <label style={{ color: '#00d54b' }}>Cash app Id </label>
+      <input
+        type='text'
+        value={cashAppId}
+        onChange={(e) => {
+          setCashAppId(e.target.value);
+          setVenmoId(''); // Clear Venmo input
+          setPaypalEmail(''); // Clear PayPal input
+        }}
+        style={{ color: '#fff', borderColor: '#00d54b' }}
+      />
+    </div>
+    <label className='switch'>
+      <input
+        type='radio'
+        name='paymentMethod'
+        value='cashApp'
+        checked={selectedPaymentMethod === 'CashApp'}
+        onChange={() => setSelectedPaymentMethod('CashApp')}
+      />
+      <span className='slider round'></span>
+    </label>
+    <img src={cashapp} alt='Cash App' />
+  </div>
+
+  {/* PayPal */}
+  <div className='inputParent'>
+    <div className='input-group-profile'>
+      <label style={{ color: '#0773c3' }}>Paypal Email Address </label>
+      <input
+        type='text'
+        value={paypalEmail}
+        onChange={(e) => {
+          setPaypalEmail(e.target.value);
+          setVenmoId(''); // Clear Venmo input
+          setCashAppId(''); // Clear CashApp input
+        }}
+        style={{ color: '#fff', borderColor: '#0773c3' }}
+      />
+    </div>
+    <label className='switch'>
+      <input
+        type='radio'
+        name='paymentMethod'
+        value='paypal'
+        checked={selectedPaymentMethod === 'PayPal'}
+        onChange={() => setSelectedPaymentMethod('PayPal')}
+      />
+      <span className='slider round'></span>
+    </label>
+    <img src={paypal} alt='PayPal' />
+  </div>
+
+  {/* Submit Button */}
+  <button type="submit" className='btn-grad' style={{ width: '40%' }} onClick={handleSubmittingDetails}>
+    {loadingTwo ? 'Saving!' : 'Save Settings'}
+  </button>
+</div>
+
+
+
+
             </div>
         </div>
     );
