@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./AdminPredictions.css";
 import { useSelector } from 'react-redux';
 
-const AdminPredictions = ({ matchId }) => {
+const AdminPredictions = ({ matchId, filter }) => {
+  
   const [showRWPopup, setShowRWPopup] = useState(false);
   const [showKOPopup, setShowKOPopup] = useState(false);
   const [selectedRWValue, setSelectedRWValue] = useState(null);
   const [selectedKOValue, setSelectedKOValue] = useState(null);
-
+  const [shadowMatches, setShadowMatches] = useState([]);
   const matches = useSelector((state) => state.matches.data);
-  const match = matches.find((m) => m._id === matchId);
+
+  useEffect(() => {
+    if (filter !== 'normal') {
+      const fetchShadowMatch = async () => {
+        try {
+          const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/shadow`);
+          const shadowData = await response.json();
+          setShadowMatches(shadowData);
+        } catch (error) {
+          console.error('Error fetching shadow match data:', error);
+        }
+      };
+      fetchShadowMatch();
+    }
+  }, [filter]);
+
+  let match;
+  if (filter === 'shadowTemplate') {
+    match = shadowMatches.find((m) => m._id === matchId);
+  } else {
+    match = matches.find((m) => m._id === matchId);
+  }
+
   
   const [round, setRound] = useState(1); // Start with round 1
   const [showVideoUrlPopup, setShowVideoUrlPopup] = useState(true); // Show popup on load
@@ -37,19 +60,19 @@ const AdminPredictions = ({ matchId }) => {
     KO: 0,
     SP: 0,
   };
-
-  const [fighterOneStats, setFighterOneStats] = useState(
-    match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats
-  );
-
-  const [fighterTwoStats, setFighterTwoStats] = useState(
-    match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats
-  );
-
-  const [roundScores, setRoundScores] = useState([]);
-
+  const [fighterOneStats, setFighterOneStats] = useState(initialBoxingStats); // Default initialization
+  const [fighterTwoStats, setFighterTwoStats] = useState(initialBoxingStats); // Default initialization
+  
+  useEffect(() => {
+    if (match) {
+      const initialStats = match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats;
+      setFighterOneStats(initialStats);
+      setFighterTwoStats(initialStats);
+    }
+  }, [match]);
+    const [roundScores, setRoundScores] = useState([]);
   const computeFighterTwoStats = () => {
-    if (match.matchCategory === 'boxing') {
+    if (match?.matchCategory === 'boxing') {
       return {
         ...fighterTwoStats,
         RL: fighterOneStats.RW === 100 ? 25 : 100,
@@ -145,47 +168,48 @@ const AdminPredictions = ({ matchId }) => {
   };
 
   const handleSave = async () => {
-    const payload = {
-      fighterOneStats: { ...fighterOneStats, roundNumber: round },
-      fighterTwoStats: { ...computeFighterTwoStats(), roundNumber: round },
-    };
-    console.log(payload);
+  const payload = {
+    fighterOneStats: { ...fighterOneStats, roundNumber: round },
+    fighterTwoStats: { ...computeFighterTwoStats(), roundNumber: round },
+  };
+  console.log(payload);
 
-    try {
-      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/match/addRoundResults/${matchId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+  try {
+    const apiUrl = filter === 'normal'
+      ? `https://fantasymmadness-game-server-three.vercel.app/match/addRoundResults/${matchId}`
+      : `https://fantasymmadness-game-server-three.vercel.app/shadow/addShadowRoundResults/${matchId}`;
+
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(`Your prediction for Round ${round} has been submitted.`);
+
+      setRoundScores((prevScores) => {
+        const newScores = [...prevScores];
+        newScores[round - 1] = { fighterOneStats, fighterTwoStats };
+        return newScores;
       });
 
-      const result = await response.json();
-     
-      if (response.ok) {
-        alert(`Your prediction for Round ${round} has been submitted.`);
-        
-        setRoundScores((prevScores) => {
-          const newScores = [...prevScores];
-          newScores[round - 1] = { fighterOneStats, fighterTwoStats };
-          return newScores;
-        });
-      
-        // Only clear the stats if the current round is not the last round
-        if (round < match.maxRounds) {
-          setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
-          setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
-          setRound(round + 1);
-        }
+      if (round < match.maxRounds) {
+        setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+        setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+        setRound(round + 1);
       }
-      
-      else {
-        console.error('Error saving round results:', result.message);
-      }
-    } catch (error) {
-      console.error('Network error:', error);
+    } else {
+      console.error('Error saving round results:', result.message);
     }
-  };
+  } catch (error) {
+    console.error('Network error:', error);
+  }
+};
 
   const handlePrev = () => {
     if (round > 1) {
@@ -218,12 +242,18 @@ const AdminPredictions = ({ matchId }) => {
     }
   };
 
+  
   const handleFinishFight = async () => {
+    const endpoint =
+      filter === 'normal'
+        ? `https://fantasymmadness-game-server-three.vercel.app/finishMatch/${matchId}`
+        : `https://fantasymmadness-game-server-three.vercel.app/finishShadow/${matchId}`;
+  
     try {
-      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/finishMatch/${matchId}`, {
+      const response = await fetch(endpoint, {
         method: 'POST',
       });
-
+  
       const result = await response.json();
       if (response.ok) {
         alert('The match has been finished.');
@@ -236,19 +266,21 @@ const AdminPredictions = ({ matchId }) => {
       console.error('Network error:', error);
     }
   };
-
-
+  
   const handleVideoUrlSubmit = async (e) => {
     e.preventDefault(); // Prevent default form behavior
-
+  
     if (!videoUrl) {
       alert('Please enter a video URL.');
       return;
     }
-
-    // Send POST request with matchId and matchVideoUrl
+  
     try {
-      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/updateMatchVideo', {
+      const apiUrl = filter === 'normal'
+        ? 'https://fantasymmadness-game-server-three.vercel.app/updateMatchVideo'
+        : 'https://fantasymmadness-game-server-three.vercel.app/updateShadowVideo';
+  
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -258,7 +290,7 @@ const AdminPredictions = ({ matchId }) => {
           matchVideoUrl: videoUrl,
         }),
       });
-
+  
       const result = await response.json();
       if (response.ok) {
         alert('Video URL Added successfully. Now you can play.');
@@ -273,6 +305,10 @@ const AdminPredictions = ({ matchId }) => {
     }
   };
 
+  
+  if(!match){
+    return <p>loading.</p>;
+  }
 
   return (
     <div className='adminPredictions'>

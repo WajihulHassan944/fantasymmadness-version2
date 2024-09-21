@@ -2,9 +2,51 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PunchHand from '../../Assets/hand-removebg-preview.png';
 
-const ShowScores = ({ matchId }) => {
+const ShowScores = ({ matchId, filter }) => {
+    const [shadowMatches, setShadowMatches] = useState([]);
     const matches = useSelector((state) => state.matches.data);
-    const match = matches.find((m) => m._id === matchId);
+    
+    
+
+
+
+
+    useEffect(() => {
+        if (filter !== 'normal') {
+          const fetchShadowMatch = async () => {
+            try {
+              const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/shadow`);
+              const shadowData = await response.json();
+              setShadowMatches(shadowData);
+            } catch (error) {
+              console.error('Error fetching shadow match data:', error);
+            }
+          };
+          fetchShadowMatch();
+        }
+      }, [filter]);
+    
+      let match;
+      if (filter === 'shadowTemplate') {
+        match = shadowMatches.find((m) => m._id === matchId);
+      } else {
+        match = matches.find((m) => m._id === matchId);
+      }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const isBoxing = match?.matchCategory === 'boxing';
 

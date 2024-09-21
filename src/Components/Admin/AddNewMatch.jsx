@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./AddNewMatch.css";
+import AdminPredictions from './AdminPredictions';
 
 const AddNewMatch = () => {
   const [formData, setFormData] = useState({
@@ -17,20 +18,24 @@ const AddNewMatch = () => {
     fighterAImage: null,
     fighterBImage: null,
     maxRounds: '',
-    matchCategoryTwo:'',
+    matchCategoryTwo: '',
   });
+  
   const [buttonText, setButtonText] = useState('Add Match');  // State for button text
   const [displayCategory, setDisplayCategory] = useState('boxing');
-  
+  const [matchId, setMatchId] = useState(null); // State to store matchId for AdminPredictions
+  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
+  const [showAdminPredictions, setShowAdminPredictions] = useState(false);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-  
+
     if (name === 'matchCategory') {
       let categoryOne = value;
       let categoryTwo = '';
-      
+
       setDisplayCategory(value); // Update the displayed value
-  
+
       if (value === 'kickboxing') {
         categoryOne = 'mma';
         categoryTwo = 'kickboxing';
@@ -38,11 +43,11 @@ const AddNewMatch = () => {
         categoryOne = 'boxing';
         categoryTwo = 'Bare-knuckle';
       }
-  
+
       setFormData({
         ...formData,
         matchCategory: categoryOne,
-        matchCategoryTwo: categoryTwo
+        matchCategoryTwo: categoryTwo,
       });
     } else {
       setFormData({
@@ -52,9 +57,7 @@ const AddNewMatch = () => {
     }
   };
 
-  
-  
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -74,14 +77,11 @@ const AddNewMatch = () => {
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-
-      data.append('matchDate', formData.matchDate);
-      data.append('matchType', formData.matchType);
-    
-      data.append('matchTime', formData.matchTime);
-      data.append('matchTokens', formData.matchTokens);
-      data.append('pot', formData.pot);
-    
+    data.append('matchDate', formData.matchDate);
+    data.append('matchType', formData.matchType);
+    data.append('matchTime', formData.matchTime);
+    data.append('matchTokens', formData.matchTokens);
+    data.append('pot', formData.pot);
 
     setButtonText('Saving, please wait...');  // Update button text
 
@@ -92,8 +92,16 @@ const AddNewMatch = () => {
       });
 
       if (response.ok) {
+        const result = await response.json();  // Parse the JSON response
+        console.log('Response received:', result);  // Log the full response
         alert('Match added successfully!');
-        window.location.reload();
+
+        if (formData.matchType === 'SHADOW') {
+          setMatchId(result.matchId); // Store the matchId
+          setShowPopup(true); // Show the popup
+        } else {
+          window.location.reload();  // Reload for LIVE matches
+        }
       } else {
         alert('Failed to add match.');
       }
@@ -105,6 +113,20 @@ const AddNewMatch = () => {
     }
   };
 
+  
+  const handlePopupResponse = (response) => {
+    setShowPopup(false); // Hide the popup
+    if (response === 'yes') {
+      setShowAdminPredictions(true); // Trigger rendering of AdminPredictions
+    } else {
+      window.location.reload();
+    }
+  };
+  
+  if (showAdminPredictions && matchId) {
+    return <AdminPredictions matchId={matchId} filter={'shadowTemplate'} />;
+  }
+  
   return (
     <div className='addNewMatch'>
       <div className='registerCard'>
@@ -112,15 +134,15 @@ const AddNewMatch = () => {
 
         <form onSubmit={handleSubmit}>
           <div className='input-wrap-one'>
-          <div className='input-group'>
-  <label>Select Category <span>*</span></label>
-  <select name='matchCategory' value={displayCategory} onChange={handleChange}>
-    <option value="boxing">Boxing</option>
-    <option value="mma">MMA</option>
-    <option value="kickboxing">Kickboxing</option>
-    <option value="Bare-knuckle">Bare-knuckle</option>
-  </select>
-</div>
+            <div className='input-group'>
+              <label>Select Category <span>*</span></label>
+              <select name='matchCategory' value={displayCategory} onChange={handleChange}>
+                <option value="boxing">Boxing</option>
+                <option value="mma">MMA</option>
+                <option value="kickboxing">Kickboxing</option>
+                <option value="Bare-knuckle">Bare-knuckle</option>
+              </select>
+            </div>
 
             <div className='input-group'>
               <label>Match Name <span>*</span></label>
@@ -146,7 +168,6 @@ const AddNewMatch = () => {
             </div>
           </div>
 
-          
           {formData.matchType === 'LIVE' && (
             <>
               <div className='input-wrap-one'>
@@ -196,12 +217,23 @@ const AddNewMatch = () => {
               <label>Max Rounds <span>*</span></label>
               <input type='number' name='maxRounds' value={formData.maxRounds} onChange={handleChange} />
             </div>
-          
           </div>
 
           <button type="submit" className='btn-grad' style={{ width: '50%' }}>{buttonText}</button>
         </form>
+
+       
       </div>
+
+
+
+      {showPopup && (
+        <div className='popup'>
+          <h2>Want to submit scores now?</h2>
+          <button onClick={() => handlePopupResponse('yes')}>Yes</button>
+          <button onClick={() => handlePopupResponse('no')}>Not Now</button>
+        </div>
+      )}
     </div>
   );
 };

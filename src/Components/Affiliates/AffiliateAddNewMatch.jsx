@@ -82,6 +82,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     }
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -92,6 +93,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       alert('Match not found!');
       return;
     }
+    console.log(matchDetails);
 
     const data = new FormData();
     data.append('matchTokens', formData.matchTokens);
@@ -108,6 +110,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('fighterBImageUrl', matchDetails.fighterBImage);
 
     // Append other match details
+    data.append('matchStatus', matchDetails.matchStatus);
     data.append('matchCategory', matchDetails.matchCategory);
     data.append('matchCategoryTwo', matchDetails.matchCategoryTwo);
     data.append('matchName', matchDetails.matchName);
@@ -118,6 +121,10 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('matchType', 'SHADOW');
     data.append('maxRounds', matchDetails.maxRounds);
 
+  // Append BoxingMatch and MMAMatch stats
+  data.append('BoxingMatch', JSON.stringify(matchDetails.BoxingMatch));
+  data.append('MMAMatch', JSON.stringify(matchDetails.MMAMatch));
+  
     setButtonText('Saving, please wait...');
 
     try {
