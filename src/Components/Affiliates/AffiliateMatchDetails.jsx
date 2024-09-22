@@ -8,7 +8,8 @@ import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 
-const AffiliateMatchDetails = ({matchId, affiliateId}) => {
+const AffiliateMatchDetails = ({matchId, affiliateId, isBlurred }) => {
+  
   const dispatch = useDispatch();
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const matches = useSelector((state) => state.matches.data);
@@ -92,11 +93,15 @@ const copyToClipboard = () => {
             <h1 className='fightDetailsContainerFirstHeading'>Fight: <span>{match.matchName}</span></h1>
     
             <div className='fightersImagesInFightDetails'>
-                <div className='imgWrapFights'><img src={match.fighterAImage} /></div>
-                <h1>VS</h1>
-                <div className='imgWrapFights'><img src={match.fighterBImage} /></div>
+  <div className='imgWrapFights'>
+    <img src={match.fighterAImage} className={`${isBlurred ? 'blurred' : ''}`} alt="Fighter A" />
+  </div>
+  <h1>VS</h1>
+  <div className='imgWrapFights'>
+    <img src={match.fighterBImage} className={`${isBlurred ? 'blurred' : ''}`} alt="Fighter B" />
+  </div>
+</div>
 
-            </div>
             
             <div className='fightDetailsPot'>
                     <h1 style={{background:'#e90000', padding:'5px 10px', fontSize:'22px'}}>This fight is approved.</h1>
@@ -111,7 +116,7 @@ const copyToClipboard = () => {
 
 
                 <h1 className='fightTypeInFightDetails' style={{fontSize:'21.5px'}}>Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span>
-                - <span style={{color:'#3fd50b'}}>{match.matchType} </span> - <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
+                - <span style={{color:'#3fd50b'}}>{match.matchType} </span> - <span className={`${isBlurred ? 'blurred' : ''}`}>{match.matchFighterA} </span> VS <span className={`${isBlurred ? 'blurred' : ''}`}> {match.matchFighterB} </span>
                 </h1>
     
                 <div className='fightDetailsPot'>

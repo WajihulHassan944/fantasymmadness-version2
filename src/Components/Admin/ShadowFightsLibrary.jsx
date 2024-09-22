@@ -44,17 +44,28 @@ const ShadowFightsLibrary = () => {
         setShowFightPopup(true);
     };
 
-  
     const handleDeleteClick = async () => {
         if (selectedMatch) {
             try {
                 const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/shadowfighttodelete/${selectedMatch._id}`, { method: 'DELETE' });
+    
+                // Log the entire response object
+                console.log('Full response object:', response);
+    
+                // Check if the response is OK
                 if (response.ok) {
+                    // Parse the response body to log it
+                    const responseData = await response.json();
+                    console.log('Response body:', responseData);
+    
+                    // Proceed with your existing logic
                     setShowFightPopup(false);
                     setSelectedMatch(null);
-                    fetchMatchesData(); // Refresh match list by calling fetchMatchesData
-                    dispatch(fetchMatches()); // You can keep this for Redux state management if necessary
+                    fetchMatchesData(); // Refresh match list
+                    dispatch(fetchMatches()); // Redux state update
                 } else {
+                    // Handle unsuccessful response
+                    console.error('Failed to delete the match:', response.statusText);
                     alert("Failed to delete the match");
                 }
             } catch (error) {
@@ -62,6 +73,7 @@ const ShadowFightsLibrary = () => {
             }
         }
     };
+    
     const handleViewAffiliatesClick = () => {
         setShowAffiliatesPopup(true);
     };

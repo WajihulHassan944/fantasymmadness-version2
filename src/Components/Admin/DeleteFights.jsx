@@ -35,9 +35,19 @@ const DeleteFights = () => {
         if (selectedAffiliateId) {
           url += `?affiliateId=${selectedAffiliateId}`; // Add affiliateId only if it exists
         }
-
+  
+        // Send DELETE request
         const response = await fetch(url, { method: 'DELETE' });
-
+        
+        // Log the entire response object
+        console.log('Response:', response);
+  
+        // Parse the JSON response body
+        const responseData = await response.json();
+  
+        // Log the parsed response data
+        console.log('Response Data:', responseData);
+  
         if (response.ok) {
           dispatch(fetchMatches()); // Refresh the match list after deletion
           setPopupMessage('Match deleted successfully');
@@ -55,6 +65,7 @@ const DeleteFights = () => {
           }, 1000);
         }
       } catch (error) {
+        console.error('Error:', error); // Log the error to console
         setPopupMessage('Server error, please try again later');
         setTimeout(() => {
           setShowPopup(false);
@@ -64,7 +75,7 @@ const DeleteFights = () => {
       }
     }
   };
-
+  
   const handleCancelDelete = () => {
     setShowPopup(false);
     setSelectedMatchId(null);
