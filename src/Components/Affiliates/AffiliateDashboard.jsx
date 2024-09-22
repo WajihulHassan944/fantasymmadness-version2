@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import "../YourFights/YourFights.css";
 import AffiliateAddNewMatch from './AffiliateAddNewMatch';
 import AffiliateMatchDetails from './AffiliateMatchDetails';
 
 const AffiliateDashboard = () => {
-  const dispatch = useDispatch();
-  
-  const matches = useSelector((state) => state.matches.data);
-  const matchStatus = useSelector((state) => state.matches.status);
   const [shadowMatchId, setShadowMatchId] = useState(null);
-  const [promoMatchDetails, setPromoMatchDetails] = useState({ matchId: null, affiliateId: null, isBlurred:null });
+  const [promoMatchDetails, setPromoMatchDetails] = useState({ matchId: null, affiliateId: null });
  const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const [promoMatches, setPromoMatches] = useState([]);
-  const [users, setUsers] = useState([]); 
-
+  
   useEffect(() => {
     const fetchPromoMatches = async () => {
       try {
@@ -33,21 +28,6 @@ const AffiliateDashboard = () => {
     fetchPromoMatches();
   }, []);
 
-  useEffect(() => {
-    if (matchStatus === 'idle') {
-      dispatch(fetchMatches());
-    }
-  }, [matchStatus, dispatch]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const usersResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/users");
-      const usersData = await usersResponse.json();
-      setUsers(usersData);
-    };
-    
-    fetchUsers();
-  }, []);
 
   const promoMatchIds = promoMatches.map((promoMatch) => promoMatch._id);
 
@@ -64,7 +44,7 @@ const AffiliateDashboard = () => {
   }
 
   const handlePromoMatchClick = (matchId, affiliateId, isBlurred) => {
-    setPromoMatchDetails({ matchId, affiliateId, isBlurred }); // Set the selected match ID, affiliate ID, and isBlurred status
+    setPromoMatchDetails({ matchId, affiliateId }); // Set the selected match ID, affiliate ID, and isBlurred status
   };
   
   if (promoMatchDetails.matchId) {
@@ -72,26 +52,10 @@ const AffiliateDashboard = () => {
       <AffiliateMatchDetails
         matchId={promoMatchDetails.matchId}
         affiliateId={promoMatchDetails.affiliateId}
-        isBlurred={promoMatchDetails.isBlurred}
       />
     );
   }
-  const today = new Date();
-  const currentTime = today.getTime();
 
-  const promoMatchesWithBlur = promoMatches.map((promoMatch) => {
-    const matchInList = matches.find(match => match.shadowFightId === promoMatch._id);
-    
-    if (matchInList) {
-      const usersJoinedIds = affiliate.usersJoined.map(user => user.userId);
-      const eligibleUsers = users.filter(user => usersJoinedIds.includes(user._id) && parseInt(user.tokens, 10) >= matchInList.matchTokens);
-      const requiredUsers = matchInList.pot / matchInList.matchTokens;
-      const isBlurred = eligibleUsers.length < requiredUsers;
-      return { ...promoMatch, blurred: isBlurred };
-    }
-    
-    return promoMatch;
-  });
 
   return (
     <div className='userdashboard yourFightsWrapper'>
@@ -106,13 +70,13 @@ const AffiliateDashboard = () => {
       <div className='fightsWrap'>
         <div className='completedFights fightscontainer'>
           <h1 className='fightsheadingtwo'>ALL SHADOW FIGHTS</h1>
-          {promoMatchesWithBlur && promoMatchesWithBlur
+          {promoMatches && promoMatches
             .filter(match => 
               !match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
             )
             .map((match, index) => (
               <div className="fightItem" key={index} onClick={() => handleShadowMatchClick(match._id)}>
-                <div className={`fightersImages  blurred`}>
+                <div className={`fightersImages`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />
                   </div>
@@ -121,7 +85,7 @@ const AffiliateDashboard = () => {
                   </div>
                 </div>
                 <div className='fightItemOne'>
-                  <div className={`transformed-div blurred`}>
+                  <div className={`transformed-div`}>
                     <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
                   <div className="transformed-div-two">
@@ -141,12 +105,12 @@ const AffiliateDashboard = () => {
 
         <div className='pendingFights fightscontainer'>
           <h1 className='fightsheadingthree'>Your Promotion Fights</h1>
-          {promoMatchesWithBlur && promoMatchesWithBlur
+          {promoMatches && promoMatches
             .filter(match => 
               match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
             )
             .map((match, index) => (
-              <div className="fightItem" key={index} onClick={() => handlePromoMatchClick(match._id, affiliate._id, match.blurred)}>
+              <div className="fightItem" key={index} onClick={() => handlePromoMatchClick(match._id, affiliate._id)}>
                 <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />

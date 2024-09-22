@@ -1,14 +1,11 @@
 import React from 'react'
-import Logoimage from "../../Assets/myimg.jpg";
-import FighterOne from "../../Assets/fighterOne.png";
-import FightTwo from "../../Assets/fighterTwo.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 
-const AffiliateMatchDetails = ({matchId, affiliateId, isBlurred }) => {
+const AffiliateMatchDetails = ({matchId, affiliateId}) => {
   
   const dispatch = useDispatch();
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
@@ -94,11 +91,11 @@ const copyToClipboard = () => {
     
             <div className='fightersImagesInFightDetails'>
   <div className='imgWrapFights'>
-    <img src={match.fighterAImage} className={`${isBlurred ? 'blurred' : ''}`} alt="Fighter A" />
+    <img src={match.fighterAImage}  alt="Fighter A" />
   </div>
   <h1>VS</h1>
   <div className='imgWrapFights'>
-    <img src={match.fighterBImage} className={`${isBlurred ? 'blurred' : ''}`} alt="Fighter B" />
+    <img src={match.fighterBImage}  alt="Fighter B" />
   </div>
 </div>
 
@@ -116,7 +113,7 @@ const copyToClipboard = () => {
 
 
                 <h1 className='fightTypeInFightDetails' style={{fontSize:'21.5px'}}>Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span>
-                - <span style={{color:'#3fd50b'}}>{match.matchType} </span> - <span className={`${isBlurred ? 'blurred' : ''}`}>{match.matchFighterA} </span> VS <span className={`${isBlurred ? 'blurred' : ''}`}> {match.matchFighterB} </span>
+                - <span style={{color:'#3fd50b'}}>{match.matchType} </span> - <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
                 </h1>
     
                 <div className='fightDetailsPot'>
