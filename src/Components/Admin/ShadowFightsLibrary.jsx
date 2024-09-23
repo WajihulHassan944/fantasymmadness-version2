@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import "./shadowLibrary.css";
+import EditMatch from './EditMatch';
 const ShadowFightsLibrary = () => {
     const dispatch = useDispatch();
     const [matches, setMatches] = useState([]);
@@ -9,7 +10,8 @@ const ShadowFightsLibrary = () => {
     const [showFightPopup, setShowFightPopup] = useState(false);
     const [showAffiliatesPopup, setShowAffiliatesPopup] = useState(false);
     const [affiliates, setAffiliates] = useState([]);
-
+    const [editAffiliates, setEditAffiliates] = useState(null);
+    
 
     // Function to fetch matches
     const fetchMatchesData = async () => {
@@ -78,6 +80,10 @@ const ShadowFightsLibrary = () => {
         setShowAffiliatesPopup(true);
     };
 
+    const handleEditAffiliatesClick = (id) => {
+        setEditAffiliates(id);
+    };
+
     const closeFightPopup = () => {
         setShowFightPopup(false);
         setSelectedMatch(null);
@@ -94,6 +100,10 @@ const ShadowFightsLibrary = () => {
           )
         : [];
 
+
+        if(editAffiliates){
+            return <EditMatch matchId={selectedMatch._id} isShadow={true}  />
+        }
     return (
         <div className='shadowLibrary'>
             <div className='adminWrapper '>
@@ -151,9 +161,22 @@ const ShadowFightsLibrary = () => {
                         
                         <p>Category: {selectedMatch.matchCategoryTwo ? selectedMatch.matchCategoryTwo : selectedMatch.matchCategory}</p>
                         <div className="popup-actions">
-                            <button onClick={handleDeleteClick} style={{background:'crimson'}}>Delete Match</button>
-                            <button onClick={handleViewAffiliatesClick}>View Affiliates</button>
-                            <button onClick={closeFightPopup} style={{background:'gray'}}>Close</button>
+                            <button onClick={handleDeleteClick} style={{background:'crimson', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'}}>Delete Match</button>
+                            <button onClick={handleViewAffiliatesClick} style={{boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'}}>View Affiliates</button>
+                            <button 
+  onClick={handleEditAffiliatesClick} 
+  style={{ 
+    background: '#FFC107', 
+    color: '#333', 
+    border: 'none', 
+    padding: '10px 20px', 
+    borderRadius: '5px', 
+    cursor: 'pointer',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+  }}>
+  Edit Template
+</button>
+    <button onClick={closeFightPopup} style={{background:'gray' ,boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'}}>Close</button>
                         </div>
                     </div>
                 </div>

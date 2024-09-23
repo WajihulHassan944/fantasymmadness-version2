@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
+import EditMatch from './EditMatch'; // Import your EditMatch component
 import "./deleteFights.css";
 
 const DeleteFights = () => {
@@ -8,11 +9,11 @@ const DeleteFights = () => {
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
 
-
   const [selectedMatchId, setSelectedMatchId] = useState(null);
-  const [selectedAffiliateId, setSelectedAffiliateId] = useState(null); // State to store affiliateId
+  const [selectedAffiliateId, setSelectedAffiliateId] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(''); // State to manage popup message
+  const [popupMessage, setPopupMessage] = useState(''); 
+  const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
 
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -20,77 +21,74 @@ const DeleteFights = () => {
     }
   }, [matchStatus, dispatch]);
 
-  const handleMatchDeleteClick = (id, affiliateId) => {
+  const handleMatchClick = (id, affiliateId) => {
     setSelectedMatchId(id);
-    setSelectedAffiliateId(affiliateId); // Store the affiliateId (it can be null/undefined)
+    setSelectedAffiliateId(affiliateId);
     setShowPopup(true);
-    setPopupMessage('Are you sure you want to delete this match?');
+    setPopupMessage('Delete or Edit this match?');
   };
 
   const handleConfirmDelete = async () => {
     if (selectedMatchId) {
       try {
-        // Construct the URL with or without affiliateId based on its existence
         let url = `https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}`;
         if (selectedAffiliateId) {
-          url += `?affiliateId=${selectedAffiliateId}`; // Add affiliateId only if it exists
+          url += `?affiliateId=${selectedAffiliateId}`;
         }
-  
-        // Send DELETE request
         const response = await fetch(url, { method: 'DELETE' });
-        
-        // Log the entire response object
-        console.log('Response:', response);
-  
-        // Parse the JSON response body
         const responseData = await response.json();
-  
-        // Log the parsed response data
-        console.log('Response Data:', responseData);
-  
+
         if (response.ok) {
-          dispatch(fetchMatches()); // Refresh the match list after deletion
+          dispatch(fetchMatches());
           setPopupMessage('Match deleted successfully');
           setTimeout(() => {
             setShowPopup(false);
             setSelectedMatchId(null);
             setSelectedAffiliateId(null);
-          }, 1000); // Hide popup after 1 second
+          }, 1000);
         } else {
           setPopupMessage('Failed to delete the match');
           setTimeout(() => {
             setShowPopup(false);
-            setSelectedMatchId(null);
-            setSelectedAffiliateId(null);
           }, 1000);
         }
       } catch (error) {
-        console.error('Error:', error); // Log the error to console
         setPopupMessage('Server error, please try again later');
         setTimeout(() => {
           setShowPopup(false);
-          setSelectedMatchId(null);
-          setSelectedAffiliateId(null);
         }, 1000);
       }
     }
   };
-  
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setShowPopup(false); // Close the popup
+  };
+
   const handleCancelDelete = () => {
     setShowPopup(false);
     setSelectedMatchId(null);
-    setSelectedAffiliateId(null); // Clear affiliateId on cancel
+    setSelectedAffiliateId(null);
   };
+
+  if (isEditing && selectedMatchId) {
+    return <EditMatch matchId={selectedMatchId} isShadow={false} />; // Render EditMatch with matchId as a prop
+  }
 
   return (
     <div>
       <div className='adminWrapper'>
         <div className='homeSecond' style={{ background: 'transparent' }}>
-          <h1 className='second-main-heading'>Delete <span className='toRemove'>Previous</span> Fights</h1>
+          <h1 className='second-main-heading'>Delete / Update Fights</h1>
           <div className="fightswrap">
             {matches.length > 0 ? (
               matches.map((match) => (
-                <div className="fightItem" key={match._id} onClick={() => handleMatchDeleteClick(match._id, match.affiliateId || null)}>
+                <div
+                  className="fightItem"
+                  key={match._id}
+                  onClick={() => handleMatchClick(match._id, match.affiliateId || null)}
+                >
                   <div className='fightersImages'>
                     <div className='fighterOne'>
                       <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -105,7 +103,7 @@ const DeleteFights = () => {
                     </div>
                     <div className="transformed-div-two">
                       <div className='transformed-div-two-partOne'>
-                        <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
+                        <h1>{match.matchCategoryTwo || match.matchCategory}</h1>
                         <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                       </div>
                       <div className='transformed-div-two-partTwo'>
@@ -137,12 +135,11 @@ const DeleteFights = () => {
         <div className="popup">
           <div className="popup-content">
             <h2>{popupMessage}</h2>
-            {!popupMessage.includes('deleted successfully') && ( // Hide buttons if success message is shown
-              <div className="popup-actions">
-                <button onClick={handleConfirmDelete}>Yes, Delete</button>
-                <button onClick={handleCancelDelete}>Cancel</button>
-              </div>
-            )}
+            <div className="popup-actions">
+              <button onClick={handleConfirmDelete}>Delete</button>
+              <button onClick={handleEditClick}>Edit</button>
+              <button onClick={handleCancelDelete}>Cancel</button>
+            </div>
           </div>
         </div>
       )}

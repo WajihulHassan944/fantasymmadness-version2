@@ -123,7 +123,7 @@ function AppContent() {
         <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
         <Route path="/administration/AddNewMatch" element={<PrivateRouteAdmin element={<AddNewMatch />} />} />
         <Route path="/administration/PreviousMatches" element={<PrivateRouteAdmin element={<PreviousMatches />} />} />
-        <Route path="/administration/DeleteMatches" element={<PrivateRouteAdmin element={<DeleteFights />} />} />
+        <Route path="/administration/DeleteUpdateMatches" element={<PrivateRouteAdmin element={<DeleteFights />} />} />
         <Route path="/administration" element={<PrivateRouteAdmin element={<Admin />} />} />
         <Route path="/administration/RegisteredUsers" element={<PrivateRouteAdmin element={<RegisteredUsers />} />} />
         <Route path="/administration/AffiliateUsers" element={<PrivateRouteAdmin element={<AffiliateUsers />} />} />
