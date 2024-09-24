@@ -131,6 +131,20 @@ flex-basis: 40%;
 
 
 
+.google-login-wrapper {
+  width: 100%;  /* Makes the Google button full width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-left: auto;
+  padding-right: auto;
+}
+
+.google-login-wrapper > div {
+  width: 50%; 
+}
 
 
 
@@ -176,4 +190,6 @@ flex-basis: 30%;
   
 }
 
+
 }
+

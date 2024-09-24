@@ -5,7 +5,7 @@ const PlayForFree = () => {
   const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   const handlePlayNowClick = () => {
-    navigate('/CreateAccount'); // Navigate to the CreateAccount component when the button is clicked
+    navigate('/login'); 
   };
 
   return (

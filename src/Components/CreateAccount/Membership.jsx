@@ -43,7 +43,7 @@ const Membership = ({ email, onPlanSelected }) => {
 
         if (response.ok) {
           alert('You have successfully subscribed to the Free membership plan.');
-          navigate('/login'); 
+          navigate('/UserDashboard'); 
           onPlanSelected(); // Trigger re-render in the Login component
         } else {
           console.error('Failed to subscribe to the Free membership plan');

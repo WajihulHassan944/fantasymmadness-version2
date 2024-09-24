@@ -13,6 +13,12 @@ const Profile = () => {
 const navigate = useNavigate();
     // Local state to manage form inputs
     const [firstName, setFirstName] = useState(user.firstName || '');
+   
+    const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(user.isNotificationsEnabled || false);
+    const [isSubscribed, setIsSubscribed] = useState(user.isSubscribed || false);
+    const [isUSCitizen, setIsUSCitizen] = useState(user.isUSCitizen || false);
+    const [email, setemail] = useState(user.email || '');
+
     const [lastName, setLastName] = useState(user.lastName || '');
     const [playerName, setPlayerName] = useState(user.playerName || '');
     const [phone, setPhone] = useState(user.phone || '');
@@ -35,24 +41,31 @@ const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showPredictions, setShowPredictions] = useState(false);
-
     useEffect(() => {
-        if (user) {
+      if (user) {
           setFirstName(user.firstName || '');
           setLastName(user.lastName || '');
           setPlayerName(user.playerName || '');
+          setemail(user.email || '');
+          
           setPhone(user.phone || '');
           setZipCode(user.zipCode || '');
           setShortBio(user.shortBio || '');
           setSelectedPaymentMethod(user.preferredPaymentMethod || '');
+          
           const paymentValue = user.preferredPaymentMethodValue || '';
           if (user.preferredPaymentMethod === 'Venmo') setVenmoId(paymentValue);
           else if (user.preferredPaymentMethod === 'CashApp') setCashAppId(paymentValue);
           else if (user.preferredPaymentMethod === 'PayPal') setPaypalEmail(paymentValue);
-        }
-      }, [user]);
-    
-    const handleSubmit = async (e) => {
+  
+          // Set the new fields
+          setIsNotificationsEnabled(user.isNotificationsEnabled || false); // Handle notifications preference
+          setIsSubscribed(user.isSubscribed || false);                     // Handle subscription status
+          setIsUSCitizen(user.isUSCitizen || false);                     // Handle citizenship status
+      }
+  }, [user]);
+      
+      const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
@@ -67,14 +80,17 @@ const navigate = useNavigate();
                     playerName,
                     phone,
                     zipCode,
-                    shortBio
+                    shortBio,
+                    isNotificationsEnabled, // Include the notifications preference
+                    isSubscribed,           // Include the subscription status
+                    isUSCitizen             // Include the citizenship status
                 })
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to update profile');
             }
-
+    
             const data = await response.json();
             alert('Profile updated successfully:', data);
             window.location.reload();
@@ -85,8 +101,7 @@ const navigate = useNavigate();
             setLoading(false); // Set loading to false after the request is completed
         }
     };
-
-
+    
 
     const handleSubmittingDetails = async (e) => {
         e.preventDefault();
@@ -177,7 +192,7 @@ const navigate = useNavigate();
                 </div>
             </div>
 
-            <div className='createAccount' style={{ background: 'transparent', marginTop: '-100px' }}>
+            <div className='createAccount' style={{ background: 'transparent'}}>
                 <form className='registerCard' onSubmit={handleSubmit}>
                     <h1>Edit your profile</h1>
 
@@ -211,6 +226,14 @@ const navigate = useNavigate();
                         </div>
                     </div>
 
+                    <div className='input-wrap-one'>
+                        <div className='input-group' >
+                            <label>Email</label>
+                            <input type='text' value={email} disabled style={{background:'#fff', color:'gray' , pointerEvents:'none'}} />
+                        </div>
+                       </div>
+
+
                     <div className='termsConditions'>
                         <h2>Your Short Bio</h2>
                         <textarea
@@ -220,12 +243,69 @@ const navigate = useNavigate();
                         ></textarea>
                     </div>
 
+
+
+
+
+
+        <div className="checking" style={{ backgroundColor: "#367cde", color: '#333' }}>
+            <label className="custom-radio-label">
+                <input
+                    type="checkbox"
+                    name="isNotificationsEnabled"
+                    checked={isNotificationsEnabled}
+                    onChange={(e) => setIsNotificationsEnabled(e.target.checked)}
+                />
+                <span className={`custom-radio ${isNotificationsEnabled ? 'checked' : ''}`}></span>
+                I would like to be sent activity notifications via SMS
+            </label>
+        </div>
+
+        <div className="checking">
+            <label className="custom-radio-label">
+                <input
+                    type="checkbox"
+                    name="isSubscribed"
+                    checked={isSubscribed}
+                    onChange={(e) => setIsSubscribed(e.target.checked)}
+                />
+                <span className={`custom-radio ${isSubscribed ? 'checked' : ''}`}></span>
+                Subscribe to fmma E-list for updates and promotions
+            </label>
+        </div>
+
+        <div className="checking" style={{ backgroundColor: '#fff' }}>
+            <label className="custom-radio-label">
+                <input
+                    type="checkbox"
+                    name="isUSCitizen"
+                    checked={isUSCitizen}
+                    onChange={(e) => setIsUSCitizen(e.target.checked)}
+                />
+                <span className={`custom-radio ${isUSCitizen ? 'checked' : ''}`}></span>
+                I am a US citizen and reside in the United States
+            </label>
+        </div>
+
+                    <div className="checking">
+                        <label className="custom-radio-label">
+                            <input
+                                type="checkbox"
+                                name="isAgreed"
+                                checked={true}
+                            />
+                            <span className={`custom-radio ${'checked'}`}></span>
+                            I have read and agree to the terms and conditions
+                        </label>
+                    </div>
+
+
                     <button type="submit" className='btn-grad' >
                         {loading ? 'Saving!' : 'Save Settings'}
                     </button>
                 </form>
                 
-                <div className='divTwoProfile' style={{ marginTop: '1px' }}>
+                <div className='divTwoProfile' >
                   {/*       <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Delete My Account</button> */}
                   <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Cancel My Subscription</button>
                    <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handleAddTokenClick()}>Add tokens to Wallet</button>
