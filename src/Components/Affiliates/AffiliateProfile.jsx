@@ -4,6 +4,7 @@ import cashapp from "../../Assets/cashapp.png";
 import venmo from "../../Assets/venmo.png";
 import paypal from "../../Assets/paypal.png";
 import "./affiliateprofile.css";
+import { toast } from 'react-toastify';
 
 const AffiliateProfile = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
@@ -47,99 +48,134 @@ const AffiliateProfile = () => {
   }, [affiliate]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoadingTwo(true);
-    try {
-      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile-affiliate/${affiliate._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          playerName,
-          phone,
-          zipCode,
-          shortBio,
-        }),
+      e.preventDefault();
+      setLoadingTwo(true);
+  
+      const updateAffiliateProfilePromise = new Promise(async (resolve, reject) => {
+          try {
+              const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile-affiliate/${affiliate._id}`, {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      firstName,
+                      lastName,
+                      playerName,
+                      phone,
+                      zipCode,
+                      shortBio,
+                  }),
+              });
+  
+              if (!response.ok) {
+                  reject(new Error('Failed to update profile')); // Reject if response isn't ok
+              } else {
+                  const data = await response.json();
+                  resolve(data); // Resolve with the response data
+              }
+          } catch (error) {
+              console.error('Error updating profile:', error);
+              reject(new Error('Error updating profile')); // Reject on error
+          }
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to update profile');
-      }
-
-      const data = await response.json();
-      alert('Profile updated successfully:', data);
-      // Optionally update Redux store or other state management here
-      // window.location.reload(); // Consider removing this if you update the state without reloading
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    } finally {
-      setLoadingTwo(false);
-    }
+  
+      // Use toast.promise to handle pending, success, and error states
+      toast.promise(updateAffiliateProfilePromise, {
+          pending: 'Updating profile...',
+          success: {
+              render({ data }) {
+                  return `Profile updated successfully! 👌`; // Display success message
+              },
+          },
+          error: {
+              render({ data }) {
+                  return data.message || 'Failed to update profile'; // Display error message
+              }
+          }
+      }).finally(() => {
+          setLoadingTwo(false); // Reset loading state after promise settles
+      });
   };
 
+  
   const handleSubmittingDetails = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    let preferredPaymentMethod = '';
-    let preferredPaymentMethodValue = '';
-
-    if (venmoId.trim()) {
-      preferredPaymentMethod = 'Venmo';
-      preferredPaymentMethodValue = venmoId;
-    } else if (cashAppId.trim()) {
-      preferredPaymentMethod = 'CashApp';
-      preferredPaymentMethodValue = cashAppId;
-    } else if (paypalEmail.trim()) {
-      preferredPaymentMethod = 'PayPal';
-      preferredPaymentMethodValue = paypalEmail;
-    } else {
-      alert("Please enter a valid payment method.");
-      setLoading(false);
-      return;
-    }
-
-    // Clear other fields based on the selected method
-    if (preferredPaymentMethod === 'Venmo') {
-      setCashAppId('');
-      setPaypalEmail('');
-    } else if (preferredPaymentMethod === 'CashApp') {
-      setVenmoId('');
-      setPaypalEmail('');
-    } else if (preferredPaymentMethod === 'PayPal') {
-      setVenmoId('');
-      setCashAppId('');
-    }
-
-    try {
-      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/updatePayment/${affiliate._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          preferredPaymentMethod,
-          preferredPaymentMethodValue,
-        }),
-      });
-
-      if (!response.ok) {
-        alert('Failed to save payment method.');
+      e.preventDefault();
+      setLoading(true);
+  
+      let preferredPaymentMethod = '';
+      let preferredPaymentMethodValue = '';
+  
+      if (venmoId.trim()) {
+          preferredPaymentMethod = 'Venmo';
+          preferredPaymentMethodValue = venmoId;
+      } else if (cashAppId.trim()) {
+          preferredPaymentMethod = 'CashApp';
+          preferredPaymentMethodValue = cashAppId;
+      } else if (paypalEmail.trim()) {
+          preferredPaymentMethod = 'PayPal';
+          preferredPaymentMethodValue = paypalEmail;
       } else {
-        const data = await response.json();
-        alert('Settings saved successfully.');
-        // Optionally update Redux store or other state management here
+          toast.error("Please enter a valid payment method.");
+          setLoading(false);
+          return;
       }
-    } catch (error) {
-      console.error('Error updating payment method:', error);
-    } finally {
-      setLoading(false);
-    }
+  
+      // Clear other fields based on the selected method
+      if (preferredPaymentMethod === 'Venmo') {
+          setCashAppId('');
+          setPaypalEmail('');
+      } else if (preferredPaymentMethod === 'CashApp') {
+          setVenmoId('');
+          setPaypalEmail('');
+      } else if (preferredPaymentMethod === 'PayPal') {
+          setVenmoId('');
+          setCashAppId('');
+      }
+  
+      const updatePaymentPromise = new Promise(async (resolve, reject) => {
+          try {
+              const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/updatePayment/${affiliate._id}`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      preferredPaymentMethod,
+                      preferredPaymentMethodValue,
+                  }),
+              });
+  
+              if (!response.ok) {
+                  reject(new Error('Failed to save payment method')); // Reject if response isn't ok
+              } else {
+                  const data = await response.json();
+                  resolve(data); // Resolve with the response data
+              }
+          } catch (error) {
+              console.error('Error updating payment method:', error);
+              reject(new Error('Error updating payment method')); // Reject on error
+          }
+      });
+  
+      // Use toast.promise to handle pending, success, and error states
+      toast.promise(updatePaymentPromise, {
+          pending: 'Saving payment method...',
+          success: {
+              render({ data }) {
+                  return 'Settings saved successfully! 👌'; // Display success message
+              },
+          },
+          error: {
+              render({ data }) {
+                  return data.message || 'Failed to save payment method'; // Display error message
+              }
+          }
+      }).finally(() => {
+          setLoading(false); // Reset loading state after promise settles
+      });
   };
-
+  
   if (!affiliate) {
     return <div>Loading...</div>;
   }

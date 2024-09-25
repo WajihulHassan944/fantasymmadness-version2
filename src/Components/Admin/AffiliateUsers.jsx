@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./AffiliateUsers.css";
 import UserDetails from './UserDetails';
+import { toast } from 'react-toastify';
 
 const AffiliateUsers = () => {
   const [affiliateUsers, setAffiliateUsers] = useState([]);
@@ -56,27 +57,40 @@ const [deleteText, setDeleteText] = useState("Delete");
     return <UserDetails user={selectedUser} />;
   }
 
-const handleDeleteUser = async(id) => {
-  try {
-    setDeleteText("Deleting...")
-    const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliatetodelete/${id}`, {
-      method: 'DELETE',
+  const handleDeleteUser = async (id) => {
+    const deleteUserPromise = new Promise(async (resolve, reject) => {
+      try {
+        setDeleteText("Deleting...");
+        const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliatetodelete/${id}`, {
+          method: 'DELETE',
+        });
+  
+        if (response.ok) {
+          setAffiliateUsers(affiliateUsers.filter(user => user._id !== id)); // Update state after deletion
+          resolve(); // Resolve the promise on success
+        } else {
+          reject(new Error('Delete Failed')); // Reject on error response
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        reject(new Error('Error deleting user')); // Reject on network error
+      }
     });
-
-    if (response.ok) {
-      setAffiliateUsers(affiliateUsers.filter(user => user._id !== id));
-      
-    setDeleteText("Deleted");
-    } else {
-      
-    setDeleteText("Delete Failed");
-    }
-  } catch (error) {
-    console.error('Error deleting user:', error);
-    setDeleteText("Delete Failed");
-  }
-
-}
+  
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(deleteUserPromise, {
+      pending: 'Deleting user...',
+      success: 'User deleted successfully 👌',
+      error: {
+        render({ data }) {
+          return data.message || 'Failed to delete user';
+        }
+      }
+    }).finally(() => {
+      setDeleteText("Delete"); // Revert button text after operation
+    });
+  };
+  
 
   return (
     <div className='affiliateUsersWrapper'>

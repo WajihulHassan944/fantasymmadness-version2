@@ -4,6 +4,7 @@ import { Navigate, NavLink } from 'react-router-dom';
 import { loginAffiliate, fetchAffiliate } from '../../Redux/affiliateAuthSlice';
 import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
+import { toast } from 'react-toastify';
 import Login from '../Login/Login';
 
 const AffiliateLogin = () => {
@@ -35,33 +36,47 @@ const AffiliateLogin = () => {
   };
   
   
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      if (!recaptchaToken) {
-        alert("Please verify that you are not a robot.");
-        return;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!recaptchaToken) {
+      toast.error("Please verify that you are not a robot."); // Replacing alert with toast error
+      return;
     }
   
+    const loginAffiliatePromise = new Promise(async (resolve, reject) => {
       try {
         // Dispatch login action
         const resultAction = await dispatch(loginAffiliate({ email, password }));
         const token = resultAction.payload?.token;
-        
+  
         if (token) {
-          // If token is present, fetch the user details
+          // If token is present, fetch the affiliate details
           dispatch(fetchAffiliate(token));
+          setAlertShown(false); // Reset alert if shown previously
+          resolve(); // Resolve promise on successful login
+        } else {
+          reject(new Error('Login failed. Please check your credentials.')); // Reject on failed login
         }
-
-        setAlertShown(false);
-       
       } catch (error) {
         console.error('Login failed', error);
-        
-       
+        reject(new Error('An error occurred during login.')); // Reject on network error
       }
-    };
-    
+    });
+  
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(loginAffiliatePromise, {
+      pending: 'Logging in...',
+      success: 'Login successful 👌',
+      error: {
+        render({ data }) {
+          return data.message || 'Login failed';
+        }
+      }
+    });
+  };
+  
 
 
 

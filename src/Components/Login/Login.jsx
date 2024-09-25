@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import { loginUser, fetchUser } from '../../Redux/authSlice';
@@ -13,7 +15,6 @@ import AffiliateLogin from '../Affiliates/AffiliateLogin';
 const Login = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, loading, error, user } = useSelector((state) => state.auth);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [planSelected, setPlanSelected] = useState(false);
@@ -28,77 +29,107 @@ const Login = () => {
     }
   }, [dispatch, isAuthenticated]);
 
-  {/*useEffect(() => {
-    if (user && user.currentPlan === 'None' && !planSelected && !alertShown) {
-      alert('Please select a plan to access the dashboard.');
-      setAlertShown(true);
-    }
-  }, [user, planSelected, alertShown]);
-*/}
+
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken(token);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     if (!recaptchaToken) {
-      alert("Please verify that you are not a robot.");
+      toast.error("Please verify that you are not a robot."); // Replacing alert with toast error
       return;
     }
-
-    try {
-      const resultAction = await dispatch(loginUser({ email, password }));
-      const token = resultAction.payload?.token;
-      
-      if (token) {
-        dispatch(fetchUser(token));
+  
+    const loginPromise = new Promise(async (resolve, reject) => {
+      try {
+        const resultAction = await dispatch(loginUser({ email, password }));
+        const token = resultAction.payload?.token;
+  
+        if (token) {
+          dispatch(fetchUser(token));
+          resolve(); // Resolve promise on successful login
+        } else {
+          reject(new Error('Login failed. Please check your credentials.')); // Reject if login failed
+        }
+      } catch (error) {
+        console.error('Login failed', error);
+        reject(new Error('An error occurred during login.')); // Reject on network error
       }
-    } catch (error) {
-      console.error('Login failed', error);
-    }
+    });
+  
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(loginPromise, {
+      pending: 'Logging in...',
+      success: 'Login successful 👌',
+      error: {
+        render({ data }) {
+          return data.message || 'Login failed';
+        }
+      }
+    });
   };
-
+  
 
   const handleGoogleSuccess = async (response) => {
     const { credential } = response;
-    try {
-      // Send the Google token to your backend API for verification and user handling
-      const res = await fetch('https://fantasymmadness-game-server-three.vercel.app/google-login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: credential, // Send the token here
-        }),
-      });
   
-      if (!res.ok) {
-        throw new Error('Google login failed');
+    const googleLoginPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Send the Google token to your backend API for verification and user handling
+        const res = await fetch('https://fantasymmadness-game-server-three.vercel.app/google-login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: credential, // Send the token here
+          }),
+        });
+  
+        if (!res.ok) {
+          throw new Error('Google login failed'); // Throw an error if response is not ok
+        }
+  
+        const data = await res.json();
+        console.log('Google login response:', data);
+  
+        if (data.token) {
+          localStorage.setItem('authToken', data.token);
+          dispatch(fetchUser(data.token));  // Fetch the user info after successful login
+          resolve(); // Resolve the promise on successful login
+        } else {
+          reject(new Error('No token returned from Google login.')); // Reject if no token
+        }
+      } catch (error) {
+        console.error('Error during Google login:', error);
+        reject(new Error('Error during Google login.')); // Reject on error
       }
+    });
   
-      const data = await res.json();
-      console.log('Google login response:', data);
-  
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        dispatch(fetchUser(data.token));  // Fetch the user info after successful login
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(googleLoginPromise, {
+      pending: 'Logging in with Google...',
+      success: 'Google login successful! 👌',
+      error: {
+        render({ data }) {
+          return data.message || 'Google login failed';
+        }
       }
-    } catch (error) {
-      console.error('Error during Google login:', error);
-    }
+    });
   };
-
+  
   
 
   const handleGoogleError = () => {
     console.error('Google Login Failed');
   };
 
+
   if (user) {
-    if (user.currentPlan === 'None' && !planSelected) {
-      return <Membership email={user.email} onPlanSelected={() => setPlanSelected(true)} />;
+    if (user.currentPlan === 'None') {
+      return <Membership email={user.email} />;
     } else if (isAuthenticated) {
       return <Navigate to="/UserDashboard" />;
     }

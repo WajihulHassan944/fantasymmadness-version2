@@ -5,6 +5,7 @@ import { logout } from '../../Redux/authSlice';
 import {logoutAffiliate} from "../../Redux/affiliateAuthSlice";
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -14,13 +15,20 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-
+  
   const handleLogout = () => {
+    // Dispatch logout action
     dispatch(logout());
+    
+    // Show a success toast notification
+    toast.success("Successfully logged out 👋");
+  
+    // Navigate to the home page
     navigate('/');
   };
-  const handleLogoutAffiliate = () => {
+    const handleLogoutAffiliate = () => {
     dispatch(logoutAffiliate());
+    toast.success("Successfully logged out 👋");
     navigate('/');
   };
 

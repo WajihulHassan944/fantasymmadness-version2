@@ -6,6 +6,7 @@ import AddTokensToWallet from './AddTokensToWallet';
 import cashapp from "../../Assets/cashapp.png";
 import venmo from "../../Assets/venmo.png";
 import paypal from "../../Assets/paypal.png";
+import { toast } from 'react-toastify';
 
 
 const Profile = () => {
@@ -64,79 +65,98 @@ const navigate = useNavigate();
           setIsUSCitizen(user.isUSCitizen || false);                     // Handle citizenship status
       }
   }, [user]);
-      
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile/${user._id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    firstName,
-                    lastName,
-                    playerName,
-                    phone,
-                    zipCode,
-                    shortBio,
-                    isNotificationsEnabled, // Include the notifications preference
-                    isSubscribed,           // Include the subscription status
-                    isUSCitizen             // Include the citizenship status
-                })
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to update profile');
-            }
-    
-            const data = await response.json();
-            alert('Profile updated successfully:', data);
-            window.location.reload();
-           
-        } catch (error) {
-            console.error('Error updating profile:', error);
-        } finally {
-            setLoading(false); // Set loading to false after the request is completed
-        }
-    };
-    
+
+  
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+  
+      const updateProfilePromise = new Promise(async (resolve, reject) => {
+          try {
+              const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile/${user._id}`, {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      firstName,
+                      lastName,
+                      playerName,
+                      phone,
+                      zipCode,
+                      shortBio,
+                      isNotificationsEnabled, // Include the notifications preference
+                      isSubscribed,           // Include the subscription status
+                      isUSCitizen             // Include the citizenship status
+                  })
+              });
+  
+              if (!response.ok) {
+                  reject(new Error('Failed to update profile')); // Reject if response isn't ok
+              } else {
+                  const data = await response.json();
+                  resolve(data); // Resolve with the response data
+              }
+          } catch (error) {
+              console.error('Error updating profile:', error);
+              reject(new Error('Error updating profile')); // Reject on error
+          }
+      });
+  
+      // Use toast.promise to handle pending, success, and error states
+      toast.promise(updateProfilePromise, {
+          pending: 'Updating profile...',
+          success: {
+              render({ data }) {
+                  return `Profile updated successfully! 👌`; // Display success message
+              },
+          },
+          error: {
+              render({ data }) {
+                  return data.message || 'Failed to update profile'; // Display error message
+              }
+          }
+      }).finally(() => {
+          setLoading(false); // Reset loading state after promise settles
+      });
+  };
+   
 
     const handleSubmittingDetails = async (e) => {
-        e.preventDefault();
-        setLoadingTwo(true);
+      e.preventDefault();
+      setLoadingTwo(true);
     
-        let preferredPaymentMethod = '';
-        let preferredPaymentMethodValue = '';
+      let preferredPaymentMethod = '';
+      let preferredPaymentMethodValue = '';
     
-        if (venmoId.trim()) {
-          preferredPaymentMethod = 'Venmo';
-          preferredPaymentMethodValue = venmoId;
-        } else if (cashAppId.trim()) {
-          preferredPaymentMethod = 'CashApp';
-          preferredPaymentMethodValue = cashAppId;
-        } else if (paypalEmail.trim()) {
-          preferredPaymentMethod = 'PayPal';
-          preferredPaymentMethodValue = paypalEmail;
-        } else {
-          alert("Please enter a valid payment method.");
-          setLoadingTwo(false);
-          return;
-        }
+      if (venmoId.trim()) {
+        preferredPaymentMethod = 'Venmo';
+        preferredPaymentMethodValue = venmoId;
+      } else if (cashAppId.trim()) {
+        preferredPaymentMethod = 'CashApp';
+        preferredPaymentMethodValue = cashAppId;
+      } else if (paypalEmail.trim()) {
+        preferredPaymentMethod = 'PayPal';
+        preferredPaymentMethodValue = paypalEmail;
+      } else {
+        toast.error("Please enter a valid payment method."); // Replacing alert with toast error
+        setLoadingTwo(false);
+        return;
+      }
     
-        // Clear other fields based on the selected method
-        if (preferredPaymentMethod === 'Venmo') {
-          setCashAppId('');
-          setPaypalEmail('');
-        } else if (preferredPaymentMethod === 'CashApp') {
-          setVenmoId('');
-          setPaypalEmail('');
-        } else if (preferredPaymentMethod === 'PayPal') {
-          setVenmoId('');
-          setCashAppId('');
-        }
+      // Clear other fields based on the selected method
+      if (preferredPaymentMethod === 'Venmo') {
+        setCashAppId('');
+        setPaypalEmail('');
+      } else if (preferredPaymentMethod === 'CashApp') {
+        setVenmoId('');
+        setPaypalEmail('');
+      } else if (preferredPaymentMethod === 'PayPal') {
+        setVenmoId('');
+        setCashAppId('');
+      }
     
+      const updatePaymentPromise = new Promise(async (resolve, reject) => {
         try {
           const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/updatePayment/${user._id}`, {
             method: 'POST',
@@ -150,18 +170,30 @@ const navigate = useNavigate();
           });
     
           if (!response.ok) {
-            alert('Failed to save payment method.');
+            reject(new Error('Failed to save payment method.')); // Reject if response isn't ok
           } else {
             const data = await response.json();
-            alert('Settings saved successfully.');
-            // Optionally update Redux store or other state management here
+            resolve(data); // Resolve with the response data
           }
         } catch (error) {
           console.error('Error updating payment method:', error);
-        } finally {
-          setLoadingTwo(false);
+          reject(new Error('Error updating payment method.')); // Reject on error
         }
-      };
+      });
+    
+      // Use toast.promise to handle pending, success, and error states
+      toast.promise(updatePaymentPromise, {
+        pending: 'Saving payment method...',
+        success: 'Settings saved successfully! 👌',
+        error: {
+          render({ data }) {
+            return data.message || 'Failed to save payment method';
+          }
+        }
+      }).finally(() => {
+        setLoadingTwo(false); // Reset loading state after promise settles
+      });
+    };
     
     
 

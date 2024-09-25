@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import EditMatch from './EditMatch'; // Import your EditMatch component
 import "./deleteFights.css";
+import { toast } from 'react-toastify';
 
 const DeleteFights = () => {
   const dispatch = useDispatch();
@@ -28,38 +29,53 @@ const DeleteFights = () => {
     setPopupMessage('Delete or Edit this match?');
   };
 
+  
   const handleConfirmDelete = async () => {
     if (selectedMatchId) {
-      try {
-        let url = `https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}`;
-        if (selectedAffiliateId) {
-          url += `?affiliateId=${selectedAffiliateId}`;
+      const deleteMatchPromise = new Promise(async (resolve, reject) => {
+        try {
+          let url = `https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}`;
+          if (selectedAffiliateId) {
+            url += `?affiliateId=${selectedAffiliateId}`;
+          }
+  
+          const response = await fetch(url, { method: 'DELETE' });
+          const responseData = await response.json();
+  
+          if (response.ok) {
+            dispatch(fetchMatches());  // Refresh match data
+            resolve();  // Resolve promise on success
+  
+            setTimeout(() => {
+              setShowPopup(false);
+              setSelectedMatchId(null);
+              setSelectedAffiliateId(null);
+            }, 1000);
+          } else {
+            reject(new Error('Failed to delete the match'));  // Reject on error response
+          }
+        } catch (error) {
+          reject(new Error('Server error, please try again later'));  // Reject on network error
         }
-        const response = await fetch(url, { method: 'DELETE' });
-        const responseData = await response.json();
-
-        if (response.ok) {
-          dispatch(fetchMatches());
-          setPopupMessage('Match deleted successfully');
-          setTimeout(() => {
-            setShowPopup(false);
-            setSelectedMatchId(null);
-            setSelectedAffiliateId(null);
-          }, 1000);
-        } else {
-          setPopupMessage('Failed to delete the match');
-          setTimeout(() => {
-            setShowPopup(false);
-          }, 1000);
+      });
+  
+      // Use toast.promise to handle pending, success, and error states
+      toast.promise(deleteMatchPromise, {
+        pending: 'Deleting match...',
+        success: 'Match deleted successfully 👌',
+        error: {
+          render({ data }) {
+            return data.message || 'Failed to delete match';
+          }
         }
-      } catch (error) {
-        setPopupMessage('Server error, please try again later');
+      }).finally(() => {
         setTimeout(() => {
-          setShowPopup(false);
+          setShowPopup(false);  // Close popup after operation
         }, 1000);
-      }
+      });
     }
   };
+  
 
   const handleEditClick = () => {
     setIsEditing(true);

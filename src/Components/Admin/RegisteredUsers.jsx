@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import FighterOne from "../../Assets/fighterOne.png";
 import "./RegisteredUsers.css";
+import { toast } from 'react-toastify';
+
+
 const RegisteredUsers = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -20,23 +23,35 @@ const RegisteredUsers = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
+
+const handleDelete = async (id) => {
+  const deletePromise = new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/usertodelete/${id}`, {
         method: 'DELETE',
       });
-
+      
       if (response.ok) {
         setUsers(users.filter(user => user._id !== id));
-        alert('User deleted successfully');
+        resolve(); // Resolve the promise on success
       } else {
-        alert('Failed to delete user');
+        reject(); // Reject if response isn't ok
       }
     } catch (error) {
-      console.error('Error deleting user:', error);
+      reject(); // Reject on error
     }
-  };
+  });
 
+  toast.promise(deletePromise, {
+    pending: 'Deleting user...',
+    success: 'User deleted successfully 👌',
+    error: 'Failed to delete user 🤯',
+  });
+};
+
+  
+  
+  
   const handleView = (user) => {
     setSelectedUser(user);
   };

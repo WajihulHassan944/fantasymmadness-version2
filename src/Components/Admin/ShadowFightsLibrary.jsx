@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import "./shadowLibrary.css";
 import EditMatch from './EditMatch';
+import { toast } from 'react-toastify';
+
 const ShadowFightsLibrary = () => {
     const dispatch = useDispatch();
     const [matches, setMatches] = useState([]);
@@ -45,37 +47,53 @@ const ShadowFightsLibrary = () => {
         setSelectedMatch(match);
         setShowFightPopup(true);
     };
-
+    
+    
     const handleDeleteClick = async () => {
-        if (selectedMatch) {
-            try {
-                const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/shadowfighttodelete/${selectedMatch._id}`, { method: 'DELETE' });
+      if (selectedMatch) {
+        const deleteShadowFightPromise = new Promise(async (resolve, reject) => {
+          try {
+            const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/shadowfighttodelete/${selectedMatch._id}`, { method: 'DELETE' });
     
-                // Log the entire response object
-                console.log('Full response object:', response);
+            // Log the entire response object
+            console.log('Full response object:', response);
     
-                // Check if the response is OK
-                if (response.ok) {
-                    // Parse the response body to log it
-                    const responseData = await response.json();
-                    console.log('Response body:', responseData);
+            if (response.ok) {
+              const responseData = await response.json();
+              console.log('Response body:', responseData);
     
-                    // Proceed with your existing logic
-                    setShowFightPopup(false);
-                    setSelectedMatch(null);
-                    fetchMatchesData(); // Refresh match list
-                    dispatch(fetchMatches()); // Redux state update
-                } else {
-                    // Handle unsuccessful response
-                    console.error('Failed to delete the match:', response.statusText);
-                    alert("Failed to delete the match");
-                }
-            } catch (error) {
-                console.error("Error deleting match:", error);
+              // Proceed with the existing logic
+              setShowFightPopup(false);
+              setSelectedMatch(null);
+              fetchMatchesData(); // Refresh match list
+              dispatch(fetchMatches()); // Redux state update
+    
+              resolve(); // Resolve on successful deletion
+            } else {
+              console.error('Failed to delete the match:', response.statusText);
+              reject(new Error('Failed to delete the match.')); // Reject on error response
             }
-        }
-    };
+          } catch (error) {
+            console.error("Error deleting match:", error);
+            reject(new Error('Error deleting match.')); // Reject on network error
+          }
+        });
     
+        // Use toast.promise to handle pending, success, and error states
+        toast.promise(deleteShadowFightPromise, {
+          pending: 'Deleting match...',
+          success: 'Match deleted successfully 👌',
+          error: {
+            render({ data }) {
+              return data.message || 'Failed to delete match';
+            }
+          }
+        });
+      }
+    };
+
+    
+
     const handleViewAffiliatesClick = () => {
         setShowAffiliatesPopup(true);
     };

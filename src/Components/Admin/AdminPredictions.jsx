@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./AdminPredictions.css";
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const AdminPredictions = ({ matchId, filter }) => {
   
@@ -166,51 +167,67 @@ const AdminPredictions = ({ matchId, filter }) => {
       setFighterTwoStats((prevStats) => updateStats(prevStats, stat));
     }
   };
-
+  
+  
   const handleSave = async () => {
-  const payload = {
-    fighterOneStats: { ...fighterOneStats, roundNumber: round },
-    fighterTwoStats: { ...computeFighterTwoStats(), roundNumber: round },
-  };
-  console.log(payload);
-
-  try {
-    const apiUrl = filter === 'normal'
-      ? `https://fantasymmadness-game-server-three.vercel.app/match/addRoundResults/${matchId}`
-      : `https://fantasymmadness-game-server-three.vercel.app/shadow/addShadowRoundResults/${matchId}`;
-
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      alert(`Your prediction for Round ${round} has been submitted.`);
-
-      setRoundScores((prevScores) => {
-        const newScores = [...prevScores];
-        newScores[round - 1] = { fighterOneStats, fighterTwoStats };
-        return newScores;
-      });
-
-      if (round < match.maxRounds) {
-        setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
-        setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
-        setRound(round + 1);
+    const payload = {
+      fighterOneStats: { ...fighterOneStats, roundNumber: round },
+      fighterTwoStats: { ...computeFighterTwoStats(), roundNumber: round },
+    };
+    console.log(payload);
+  
+    const saveRoundResultsPromise = new Promise(async (resolve, reject) => {
+      try {
+        const apiUrl = filter === 'normal'
+          ? `https://fantasymmadness-game-server-three.vercel.app/match/addRoundResults/${matchId}`
+          : `https://fantasymmadness-game-server-three.vercel.app/shadow/addShadowRoundResults/${matchId}`;
+  
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          setRoundScores((prevScores) => {
+            const newScores = [...prevScores];
+            newScores[round - 1] = { fighterOneStats, fighterTwoStats };
+            return newScores;
+          });
+  
+          if (round < match.maxRounds) {
+            setFighterOneStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+            setFighterTwoStats(match.matchCategory === 'boxing' ? initialBoxingStats : initialMMAStats);
+            setRound(round + 1);
+          }
+          resolve(); // Resolve the promise on success
+        } else {
+          console.error('Error saving round results:', result.message);
+          reject(new Error('Error saving round results.')); // Reject if response isn't ok
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        reject(new Error('Network error while saving round results.')); // Reject on network error
       }
-    } else {
-      console.error('Error saving round results:', result.message);
-    }
-  } catch (error) {
-    console.error('Network error:', error);
-  }
-};
-
+    });
+  
+    // Use toast.promise to show pending, success, and error states
+    toast.promise(saveRoundResultsPromise, {
+      pending: `Saving results for Round ${round}...`,
+      success: `Your prediction for Round ${round} has been submitted 👌`,
+      error: {
+        render({ data }) {
+          // `data` contains the error object thrown in the promise reject
+          return data.message || 'Failed to save round results';
+        }
+      }
+    });
+  };
+  
   const handlePrev = () => {
     if (round > 1) {
       setRound((prevRound) => {
@@ -243,43 +260,63 @@ const AdminPredictions = ({ matchId, filter }) => {
   };
 
   
+
+  
   const handleFinishFight = async () => {
     const endpoint =
       filter === 'normal'
         ? `https://fantasymmadness-game-server-three.vercel.app/finishMatch/${matchId}`
         : `https://fantasymmadness-game-server-three.vercel.app/finishShadow/${matchId}`;
   
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-      });
+    const finishFightPromise = new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+        });
   
-      const result = await response.json();
-      if (response.ok) {
-        alert('The match has been finished.');
-        console.log('Match status updated to Finished:', result.match);
-        window.location.reload();
-      } else {
-        console.error('Error finishing match:', result.message);
+        const result = await response.json();
+        if (response.ok) {
+          console.log('Match status updated to Finished:', result.match);
+          resolve(); // Resolve the promise on success
+        } else {
+          console.error('Error finishing match:', result.message);
+          reject(new Error('Error finishing match.')); // Reject on error response
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        reject(new Error('Network error while finishing the match.')); // Reject on network error
       }
-    } catch (error) {
-      console.error('Network error:', error);
-    }
+    });
+  
+    // Use toast.promise to handle the pending, success, and error states
+    toast.promise(finishFightPromise, {
+      pending: 'Finishing the match...',
+      success: 'The match has been finished 👌',
+      error: {
+        render({ data }) {
+          return data.message || 'Failed to finish the match';
+        }
+      }
+    }).then(() => {
+      window.location.reload(); // Reload page after successful finish
+    });
   };
+    
   
-  const handleVideoUrlSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form behavior
-  
-    if (!videoUrl) {
-      alert('Please enter a video URL.');
-      return;
-    }
-  
+const handleVideoUrlSubmit = async (e) => {
+  e.preventDefault(); // Prevent default form behavior
+
+  if (!videoUrl) {
+    toast.error('Please enter a video URL.'); // Error toast for empty input
+    return;
+  }
+
+  const updateVideoPromise = new Promise(async (resolve, reject) => {
     try {
       const apiUrl = filter === 'normal'
         ? 'https://fantasymmadness-game-server-three.vercel.app/updateMatchVideo'
         : 'https://fantasymmadness-game-server-three.vercel.app/updateShadowVideo';
-  
+
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -290,21 +327,33 @@ const AdminPredictions = ({ matchId, filter }) => {
           matchVideoUrl: videoUrl,
         }),
       });
-  
+
       const result = await response.json();
       if (response.ok) {
-        alert('Video URL Added successfully. Now you can play.');
         setShowVideoUrlPopup(false); // Close the popup after successful submission
+        resolve(); // Resolve the promise on success
       } else {
         console.error('Error updating video URL:', result.message);
-        alert('Error updating video URL.');
+        reject(new Error('Error updating video URL.')); // Reject with error message
       }
     } catch (error) {
       console.error('Network error:', error);
-      alert('Network error while updating video URL.');
+      reject(new Error('Network error while updating video URL.')); // Reject with network error
     }
-  };
+  });
 
+  // Use toast.promise to handle the pending, success, and error states
+  toast.promise(updateVideoPromise, {
+    pending: 'Saving video URL...',
+    success: 'Video URL added successfully 👌',
+    error: {
+      render({ data }) {
+        // `data` contains the error object thrown in the promise reject
+        return data.message || 'Failed to update video URL';
+      }
+    }
+  });
+};
   
   if(!match){
     return <p>loading.</p>;

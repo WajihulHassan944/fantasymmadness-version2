@@ -50,6 +50,8 @@ import mainAudio from './main.mp3'; // Replace with actual path
 import YoutubeArchive from './Components/Admin/YoutubeArchive';
 import AffiliateAllFightPromotion from './Components/Affiliates/AffiliateAllFightPromotion';
 import AffiliateAllPromos from './Components/Affiliates/AffiliateAllPromos';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AppContent() {
   const location = useLocation();
@@ -83,6 +85,7 @@ function AppContent() {
   
   return (
     <>
+    <ToastContainer />
       {!isAdministrationRoute && isPlaying && (
         <ReactHowler
           src={mainAudio}

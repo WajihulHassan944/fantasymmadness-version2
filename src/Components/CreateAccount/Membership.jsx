@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Membership.css";
 import MembershipCheckout from './MembershipCheckout';
+import { toast } from 'react-toastify';
 
-const Membership = ({ email, onPlanSelected }) => {
+const Membership = ({ email }) => {
   const [memberName, setMemberName] = useState('');
   const [memberAvatar, setMemberAvatar] = useState('');
   const [loading, setLoading] = useState(true);
@@ -32,29 +33,32 @@ const Membership = ({ email, onPlanSelected }) => {
     fetchUserDetails();
   }, [email]);
 
-  const handleSelectPlan = async (plan) => {
-    if (plan === 'free') {
-      try {
-        const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/${email}/subscribe`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan: 'Free' }),
-        });
 
-        if (response.ok) {
-          alert('You have successfully subscribed to the Free membership plan.');
-          navigate('/UserDashboard'); 
-          onPlanSelected(); // Trigger re-render in the Login component
-        } else {
-          console.error('Failed to subscribe to the Free membership plan');
+const handleSelectPlan = async (plan) => {
+    if (plan === 'free') {
+        try {
+            const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/${email}/subscribe`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: 'Free' }),
+            });
+
+            if (response.ok) {
+                toast.success('You have successfully subscribed to the Free membership plan.');
+                navigate('/UserDashboard'); 
+             
+              } else {
+                toast.error('Failed to subscribe to the Free membership plan');
+                console.error('Failed to subscribe to the Free membership plan');
+            }
+        } catch (error) {
+            toast.error('Error subscribing to the Free membership plan. Please try again later.');
+            console.error('Error subscribing to the Free membership plan:', error);
         }
-      } catch (error) {
-        console.error('Error subscribing to the Free membership plan:', error);
-      }
     } else if (plan === 'standard') {
-      setSelectedPlan('standard');
+        setSelectedPlan('standard');
     }
-  };
+};
 
   if (loading) {
     return <div>Loading...</div>;
