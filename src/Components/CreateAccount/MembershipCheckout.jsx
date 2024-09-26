@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import "./MembershipCheckout.css";
 import { Link, useNavigate } from 'react-router-dom';
 import Cards from "../../Assets/visa-mastercard-amex_0.png";
+import { useSelector } from 'react-redux';
 
-const MembershipCheckout = ({ email, name, avatar }) => {
+const MembershipCheckout = () => {
+  const user = useSelector((state) => state.user); // Access user details from Redux store
+
   const [billingInfo, setBillingInfo] = useState({
-    firstName: '',
-    lastName: '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
     address: '',
     city: '',
     state: '',
@@ -18,7 +21,9 @@ const MembershipCheckout = ({ email, name, avatar }) => {
     securityCode: '',
     termsAccepted: false,
   });
-const navigate = useNavigate();
+
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setBillingInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
@@ -27,36 +32,62 @@ const navigate = useNavigate();
   const handleCheckboxChange = (e) => {
     setBillingInfo((prevInfo) => ({ ...prevInfo, termsAccepted: e.target.checked }));
   };
-
+  const handleTokenizeCard = async (card, billingAddress, contactEmail) => {
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/api/tokenize-card', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          card,
+          billingAddress,
+          contactEmail
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json(); // Get error details from the response
+        throw new Error(errorData.message || 'Error tokenizing card');
+      }
+  
+      const data = await response.json();
+      alert('Card tokenized and saved successfully!');
+      navigate('/success');
+    } catch (error) {
+      console.error('Card tokenization error:', error);
+      alert(`Error tokenizing card: ${error.message}`); // Display detailed error message
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(email);
+
     if (!billingInfo.termsAccepted) {
       alert('Please accept the terms and conditions');
       return;
     }
-console.log(billingInfo);
-    try {
-      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/${email}/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          plan: 'Standard'
-         
-        }),
-      });
 
-      if (response.ok) {
-        alert('Subscription updated successfully');
-        // Redirect or update UI as needed
-        navigate('/login');
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || 'Error updating subscription');
-      }
+    const { creditCardNumber, expMonth, expYear, securityCode } = billingInfo;
+    const card = {
+      name: `${billingInfo.firstName} ${billingInfo.lastName}`,
+      number: creditCardNumber,
+      exp: `${expMonth}/${expYear}`,
+      cvv: securityCode,
+    };
+
+    const billingAddress = {
+      address: billingInfo.address,
+      city: billingInfo.city,
+      state: billingInfo.state,
+      zipCode: billingInfo.zipCode,
+      phone: billingInfo.phone,
+    };
+
+    try {
+      await handleTokenizeCard(card, billingAddress, user.email); // Call tokenization API
     } catch (error) {
-      console.error('Error updating subscription:', error);
-      alert('An error occurred while updating your subscription. Please try again later.');
+      console.error('Error during tokenization:', error);
     }
   };
 
@@ -64,37 +95,13 @@ console.log(billingInfo);
     <div className='membership-chackout-wrapper'>
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={avatar} alt="Logo" />
+          <img src={user.profileUrl} alt="Profile" />
         </div>
-        <h3><span className='toRemove'>Member Name - </span>{name}</h3>
-        <h3><span className='toRemove'>Current </span>Plan: None</h3>
+        <h3><span className='toRemove'>Member Name - </span>{user.firstName} {user.lastName}</h3>
+        <h3><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>
       </div>
 
       <div className='mermbership-cards'>
-        <div className='cardone'>
-          <h1 className='cardHeading'>Standard membership</h1>
-          <div className='cardprice'>
-            <div className="ribbon">
-              <span>Tokens</span>
-            </div>
-            <p>$</p>
-            <div className='cardprice-two'>
-              <h1>10</h1>
-              <h2>Monthly</h2>
-            </div>
-            <p>00</p>
-          </div>
-          <div className='card-features'>
-            <li>Access to dashboard</li>
-            <li>Tokens can accumulate</li>
-            <li>Play and win prizes</li>
-            <li>Share fight portfolio</li>
-            <li>Get on the FMMA Leaderboard</li>
-          </div>
-          <button className='btn-grad' >SELECTED</button>
-          <h2 className='cardCoupon'>Coupon Applied <br /><br /> 10 Free Tokens <br /> 50% Off First Month <br /> Total: $5.00</h2>
-        </div>
-
         <div className='billingInformation'>
           <h2>Billing Information</h2>
           <div className='input-group'>
@@ -154,7 +161,7 @@ console.log(billingInfo);
                       {year}
                     </option>
                   );
-                })}
+                })} 
               </select>
             </div>
           </div>
@@ -166,7 +173,7 @@ console.log(billingInfo);
 
           <div className='input-group'>
             <h3>Please read <Link to="/" style={{color:'#ccc' }}>Terms and Conditions</Link></h3>
-            <div style={{display: 'flex' , justifyContent: 'space-between' , alignItems: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               <h3>I have read terms and conditions </h3>
               <input type="checkbox" className='checkboxCreditCard' checked={billingInfo.termsAccepted} onChange={handleCheckboxChange} />
             </div>
@@ -178,6 +185,6 @@ console.log(billingInfo);
       </div>
     </div>
   );
-}
+};
 
 export default MembershipCheckout;

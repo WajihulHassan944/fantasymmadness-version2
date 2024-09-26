@@ -7,6 +7,7 @@ import cashapp from "../../Assets/cashapp.png";
 import venmo from "../../Assets/venmo.png";
 import paypal from "../../Assets/paypal.png";
 import { toast } from 'react-toastify';
+import MembershipCheckout from '../CreateAccount/MembershipCheckout';
 
 
 const Profile = () => {
@@ -39,7 +40,7 @@ const navigate = useNavigate();
       );
 
       const [loadingTwo, setLoadingTwo] = useState(false);
-
+const [membershipGo, setMembershipGo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showPredictions, setShowPredictions] = useState(false);
     useEffect(() => {
@@ -201,12 +202,20 @@ const navigate = useNavigate();
     setShowPredictions(true);
   };
 
+  const handlepaymentDetailsClick = async () => {
+    setMembershipGo(true);
+  };
 
+  
   if (showPredictions) {
     return  <AddTokensToWallet userId={user._id} />
     
   }
 
+  if (membershipGo) {
+    return  <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl} />
+    
+  }
     return (
         <div className='myprofile'>
             <div className='member-header'>
@@ -339,7 +348,7 @@ const navigate = useNavigate();
                 
                 <div className='divTwoProfile' >
                   {/*       <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Delete My Account</button> */}
-                  <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Cancel My Subscription</button>
+                  <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handlepaymentDetailsClick()}>My Payment Details</button>
                    <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handleAddTokenClick()}>Add tokens to Wallet</button>
                   <div className='pairOfHtags'>
                    <h1>Your Public player profile link:</h1>

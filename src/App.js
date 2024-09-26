@@ -52,6 +52,7 @@ import AffiliateAllFightPromotion from './Components/Affiliates/AffiliateAllFigh
 import AffiliateAllPromos from './Components/Affiliates/AffiliateAllPromos';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TransactionList from './Components/CreateAccount/TransactionList';
 
 function AppContent() {
   const location = useLocation();
@@ -116,6 +117,7 @@ function AppContent() {
         <Route path="/:userId" element={<PublicProfile />} />
         <Route path="/administration/login" element={<AdminLogin />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/transaction" element={<TransactionList />} />
 
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />

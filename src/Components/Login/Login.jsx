@@ -149,7 +149,7 @@ const Login = () => {
         <img src={logoimage} alt="Logo" />
         <h1>Please Login Below</h1>
 
-        {error && <p className="error">{error}</p>}
+      {/*  {error && <p className="error">{error}</p>}  */}
 
         <form onSubmit={handleSubmit}>
           <input
