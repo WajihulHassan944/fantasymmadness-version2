@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import "./MembershipCheckout.css";
 import { Link, useNavigate } from 'react-router-dom';
 import Cards from "../../Assets/visa-mastercard-amex_0.png";
 import { useSelector } from 'react-redux';
 
-const MembershipCheckout = () => {
-  const user = useSelector((state) => state.user); // Access user details from Redux store
+const MembershipCheckout = (userId) => {
+  const reduxUser = useSelector((state) => state.user); // Access user details from Redux store
+  const [user, setUser] = useState(reduxUser);
 
+  
+  
   const [billingInfo, setBillingInfo] = useState({
     firstName: user.firstName || '',
     lastName: user.lastName || '',
@@ -21,6 +24,46 @@ const MembershipCheckout = () => {
     securityCode: '',
     termsAccepted: false,
   });
+
+
+  useEffect(() => {
+    // If user is not found in Redux store, fetch user data using userId prop
+    if (!user || !user._id) {
+      const fetchUser = async () => {
+        try {
+          const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/users');
+          if (!response.ok) {
+            throw new Error(`Error fetching users: ${response.statusText}`);
+          }
+          const users = await response.json();
+          // Filter the fetched users to find the user with the provided userId
+          const foundUser = users.find(u => u._id === userId);
+          if (foundUser) {
+            setUser(foundUser);
+            setBillingInfo((prevInfo) => ({
+              ...prevInfo,
+              firstName: foundUser.firstName,
+              lastName: foundUser.lastName,
+            }));
+          } else {
+            console.error('User not found');
+          }
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        }
+      };
+
+      fetchUser();
+    } else {
+      // If user is already set in Redux, update billing info
+      setBillingInfo((prevInfo) => ({
+        ...prevInfo,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      }));
+    }
+  }, [userId, user]);
+
 
   const navigate = useNavigate();
 

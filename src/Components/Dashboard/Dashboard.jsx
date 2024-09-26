@@ -181,7 +181,7 @@ const [loading, setLoading] = useState(true);
     <div className='userdashboard'>
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />
+          <img src={user.profileUrl} alt={user.firstName} data-aos="zoom-in" />
         </div>
         <h3 data-aos="zoom-in"><span className='toRemove'>Member Name: </span>{user.firstName} {user.lastName}</h3>
               <h3 data-aos="zoom-in"><span className='toRemove'>Current </span>Plan: {user.currentPlan}</h3>

@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 const Membership = ({ email }) => {
   const [memberName, setMemberName] = useState('');
   const [memberAvatar, setMemberAvatar] = useState('');
+  const [id, setId] = useState('');
+ 
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState(null);
 
@@ -17,9 +19,10 @@ const Membership = ({ email }) => {
         const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/user/${email}`);
         if (response.ok) {
           const data = await response.json();
-          const { firstName, lastName, profileUrl } = data;
+          const { firstName, lastName, profileUrl , _id } = data;
           setMemberName(`${firstName} ${lastName}`);
           setMemberAvatar(profileUrl);
+          setId(_id);
         } else {
           console.error('Failed to fetch user details');
         }
@@ -65,7 +68,7 @@ const handleSelectPlan = async (plan) => {
   }
 
   if (selectedPlan === 'standard') {
-    return <MembershipCheckout email={email} name={memberName} avatar={memberAvatar} />;
+    return <MembershipCheckout userId={id} />;
   }
 
   return (
@@ -100,7 +103,7 @@ const handleSelectPlan = async (plan) => {
             <li>Share fight portfolio</li>
             <li>Get on the FMMA Leaderboard</li>
           </div>
-          <button className='btn-grad' onClick={() => window.open("https://www.mymemberaccount.com/member-enrollment/11304", "_blank")}>SELECT</button>
+          <button className='btn-grad' onClick={() => handleSelectPlan('standard')}>SELECT</button>
         </div>
 
         <div className='cardone'>
