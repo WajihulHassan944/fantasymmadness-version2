@@ -91,7 +91,7 @@ const handleSelectPlan = async (plan) => {
             <p>$</p>
             <div className='cardprice-two'>
               <h1>10</h1>
-              <h2>Monthly</h2>
+              <h2>First Time</h2>
             </div>
             <p>00</p>
           </div>
