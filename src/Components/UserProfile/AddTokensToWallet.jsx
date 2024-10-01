@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
 import "./AddTokensToWallet.css";
 import { useSelector } from 'react-redux';
+import MembershipCheckout from '../CreateAccount/MembershipCheckout';
 
 const AddTokensToWallet = () => {
     const user = useSelector((state) => state.user);
     const [customAmount, setCustomAmount] = useState(0);
     const [isCustomPopupVisible, setCustomPopupVisible] = useState(false);
 
+
+    // Check if user.billing exists
+    if (!user.billing) {
+        return (
+            <MembershipCheckout 
+                userId={user._id} 
+                email={user.email} 
+                name={`${user.firstName} ${user.lastName}`} 
+                avatar={user.profileUrl} 
+            />
+        );
+    }
+
     // Function to handle sending payment request
     const handlePayment = async (amount) => {
         try {
-            const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/api/make-payment', {
+            const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/api/authorize-net/transaction', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     amount,
-                    userId: user._id, // Pass the user ID from the logged-in user
+                    email: user.email, // Pass the user ID from the logged-in user
                 }),
             });
 
@@ -26,12 +40,19 @@ const AddTokensToWallet = () => {
             }
 
             const data = await response.json();
-            alert('Payment successful! Transaction details: ' + JSON.stringify(data.transaction));
-        } catch (error) {
-            console.error('Payment error:', error);
-            alert('Payment failed, please try again.');
+           
+        // Check if transaction details exist in the response
+        if (data.status === 'success' && data.transaction) {
+            alert('Payment successful! Tokens Added to your wallet');
+            window.location.reload();
+        } else {
+            alert('Payment successful! But no transaction details were found.');
         }
-    };
+    } catch (error) {
+        console.error('Payment error:', error);
+        alert('Payment failed, please try again.');
+    }
+};
 
     // Function for handling custom amount
     const handleCustomPayment = () => {
@@ -116,8 +137,8 @@ const AddTokensToWallet = () => {
                         onChange={(e) => setCustomAmount(e.target.value)} 
                         placeholder="Enter custom amount" 
                     />
-                    <button className="btn-grad" onClick={handleCustomPayment}>Submit</button>
-                    <button className="btn-grad" onClick={() => setCustomPopupVisible(false)}>Cancel</button>
+                    <button className="btn-grads" onClick={handleCustomPayment}>Submit</button>
+                    <button className="btn-grads" onClick={() => setCustomPopupVisible(false)}>Cancel</button>
                 </div>
             )}
         </div>

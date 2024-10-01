@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./MembershipCheckout.css";
 import { Link, useNavigate } from 'react-router-dom';
 import Cards from "../../Assets/visa-mastercard-amex_0.png";
@@ -8,23 +8,21 @@ const MembershipCheckout = (userId) => {
   const reduxUser = useSelector((state) => state.user); // Access user details from Redux store
   const [user, setUser] = useState(reduxUser);
 
-  
-  
   const [billingInfo, setBillingInfo] = useState({
     firstName: user.firstName || '',
     lastName: user.lastName || '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    phone: '',
+    address: user.billing.address || '',
+    city: user.billing.city || '',
+    state: user.billing.state || '',
+    zipCode: user.zipCode || '',
+    phone: user.phone || '',
     creditCardNumber: '',
     expMonth: '',
     expYear: '',
     securityCode: '',
     termsAccepted: false,
+    amount: '1',
   });
-
 
   useEffect(() => {
     // If user is not found in Redux store, fetch user data using userId prop
@@ -58,12 +56,22 @@ const MembershipCheckout = (userId) => {
       // If user is already set in Redux, update billing info
       setBillingInfo((prevInfo) => ({
         ...prevInfo,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: user.firstName || prevInfo.firstName,
+        lastName: user.lastName || prevInfo.lastName,
+        address: user.billing?.address || prevInfo.address,
+        city: user.billing?.city || prevInfo.city,
+        state: user.billing?.state || prevInfo.state,
+        zipCode: user.zipCode || prevInfo.zipCode,
+        phone: user.phone || prevInfo.phone,
+        // Keep other fields unchanged
+        creditCardNumber: prevInfo.creditCardNumber,
+        expMonth: prevInfo.expMonth,
+        expYear: prevInfo.expYear,
+        securityCode: prevInfo.securityCode,
+        termsAccepted: prevInfo.termsAccepted,
       }));
     }
   }, [userId, user]);
-
 
   const navigate = useNavigate();
 
@@ -77,33 +85,41 @@ const MembershipCheckout = (userId) => {
   };
   const handleTokenizeCard = async (card, billingAddress, contactEmail) => {
     try {
-      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/api/tokenize-card', {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/api/authorize-net/first-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          card,
-          billingAddress,
-          contactEmail
+          amount: billingInfo.amount, // Ensure to set the amount you want to send
+          cardNumber: card.number,
+          expirationDate: `${card.exp}`,
+          cardCode: card.cvv,
+          email: contactEmail,
+          firstName: billingInfo.firstName,
+          lastName: billingInfo.lastName,
+          address: billingAddress.address,
+          city: billingAddress.city,
+          state: billingAddress.state,
+          zip: billingAddress.zipCode,
+          country: "US" // You can dynamically set this if needed
         }),
       });
   
       if (!response.ok) {
-        const errorData = await response.json(); // Get error details from the response
+        const errorData = await response.json();
         throw new Error(errorData.message || 'Error tokenizing card');
       }
   
       const data = await response.json();
-      alert('Card tokenized and saved successfully!');
-      navigate('/success');
+      alert('Payment saved successfully!');
+      window.location.reload();
     } catch (error) {
-      console.error('Card tokenization error:', error);
-      alert(`Error tokenizing card: ${error.message}`); // Display detailed error message
+      console.error('Card error:', error);
+      alert(`Error card: ${error.message}`);
     }
   };
-  
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!billingInfo.termsAccepted) {
@@ -118,7 +134,6 @@ const MembershipCheckout = (userId) => {
       exp: `${expMonth}/${expYear}`,
       cvv: securityCode,
     };
-
     const billingAddress = {
       address: billingInfo.address,
       city: billingInfo.city,
@@ -149,11 +164,11 @@ const MembershipCheckout = (userId) => {
           <h2>Billing Information</h2>
           <div className='input-group'>
             <label>First Name</label>
-            <input type='text' name="firstName" value={billingInfo.firstName} onChange={handleInputChange} />
+            <input type='text' name="firstName" value={billingInfo.firstName} onChange={handleInputChange} disabled style={{background:'#fff'}} />
           </div>
           <div className='input-group'>
             <label>Last Name</label>
-            <input type='text' name="lastName" value={billingInfo.lastName} onChange={handleInputChange} />
+            <input type='text' name="lastName" value={billingInfo.lastName} onChange={handleInputChange} disabled style={{background:'#fff'}} />
           </div>
           <div className='input-group'>
             <label>Address</label>
@@ -204,7 +219,7 @@ const MembershipCheckout = (userId) => {
                       {year}
                     </option>
                   );
-                })} 
+                })}
               </select>
             </div>
           </div>
@@ -224,10 +239,14 @@ const MembershipCheckout = (userId) => {
 
           <button className='submitcardbtn' onClick={handleSubmit} style={{cursor:'pointer'}}>Submit</button>
           <img src={Cards} className='cardaimg' alt="Accepted cards" />
+       
+       
+        
+        
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default MembershipCheckout;
