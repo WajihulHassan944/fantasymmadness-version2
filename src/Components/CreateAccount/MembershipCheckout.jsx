@@ -11,9 +11,9 @@ const MembershipCheckout = (userId) => {
   const [billingInfo, setBillingInfo] = useState({
     firstName: user.firstName || '',
     lastName: user.lastName || '',
-    address: user.billing.address || '',
-    city: user.billing.city || '',
-    state: user.billing.state || '',
+    address: user.billing?.address || '',
+    city: user.billing?.city || '',
+    state: user.billing?.state || '',
     zipCode: user.zipCode || '',
     phone: user.phone || '',
     creditCardNumber: '',

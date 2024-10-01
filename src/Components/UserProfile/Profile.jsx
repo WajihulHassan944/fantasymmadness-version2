@@ -213,7 +213,7 @@ const [membershipGo, setMembershipGo] = useState(null);
   }
 
   if (membershipGo) {
-    return  <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl} />
+    return  <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl}  />
     
   }
     return (
