@@ -7,20 +7,17 @@ const AddTokensToWallet = () => {
     const user = useSelector((state) => state.user);
     const [customAmount, setCustomAmount] = useState(0);
     const [isCustomPopupVisible, setCustomPopupVisible] = useState(false);
+    const [isVisible, setVisible] = useState(false);
 
 
     // Check if user.billing exists
     if (!user.billing) {
-        return (
-            <MembershipCheckout 
-                userId={user._id} 
-                email={user.email} 
-                name={`${user.firstName} ${user.lastName}`} 
-                avatar={user.profileUrl} 
-            />
-        );
+        setVisible(true);
     }
+if(isVisible){
+    return  <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl} />
 
+}
     // Function to handle sending payment request
     const handlePayment = async (amount) => {
         try {
