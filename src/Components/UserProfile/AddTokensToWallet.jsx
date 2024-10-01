@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./AddTokensToWallet.css";
 import { useSelector } from 'react-redux';
 import MembershipCheckout from '../CreateAccount/MembershipCheckout';
@@ -7,17 +7,9 @@ const AddTokensToWallet = () => {
     const user = useSelector((state) => state.user);
     const [customAmount, setCustomAmount] = useState(0);
     const [isCustomPopupVisible, setCustomPopupVisible] = useState(false);
-    const [isVisible, setVisible] = useState(false);
+    const [isVisible, setVisible] = useState(null);
 
 
-    // Check if user.billing exists
-    if (!user.billing) {
-        setVisible(true);
-    }
-if(isVisible){
-    return  <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl} />
-
-}
     // Function to handle sending payment request
     const handlePayment = async (amount) => {
         try {
@@ -47,7 +39,7 @@ if(isVisible){
         }
     } catch (error) {
         console.error('Payment error:', error);
-        alert('Payment failed, please try again.');
+        alert('Payment failed, please try again. If you have not submitted details then goto Profile > My payment Details');
     }
 };
 
