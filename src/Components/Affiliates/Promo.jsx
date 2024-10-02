@@ -123,8 +123,8 @@ const Promo = () => {
         <div className='member-header-image'>
           <img src={affiliate.profileUrl} alt="Affiliate" />
         </div>
-        <h3>Affiliate Name - {affiliate.firstName} {affiliate.lastName}</h3>
-        <h3>Users Joined League: {affiliate.usersJoined.length}</h3>
+        <h3>Affiliate<span className="toRemove"> Name</span> - {affiliate.firstName} <span className="toRemove">{affiliate.lastName}</span></h3>
+        <h3>Users Joined <span className="toRemove"> League</span>: {affiliate.usersJoined.length}</h3>
       </div>
 
       <div className='fightDetailsContainer'>

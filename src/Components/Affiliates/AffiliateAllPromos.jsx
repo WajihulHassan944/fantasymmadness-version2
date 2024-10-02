@@ -88,13 +88,13 @@ if(promoMatchDetails.matchId){
             <div className='member-header-image'>
               <img src={affiliate.profileUrl} alt="Logo" />
             </div>
-            <h3><span className='toRemove'>Affiliate Name:</span>{affiliate.firstName} {affiliate.lastName}</h3>
-            <h3>Users Joined League: {affiliate.usersJoined.length}</h3>
+            <h3>Affiliate<span className='toRemove'> Name</span>:{affiliate.firstName} <span className='toRemove'> {affiliate.lastName}</span></h3>
+            <h3>Users Joined <span className='toRemove'> League</span>: {affiliate.usersJoined.length}</h3>
             </div>
         
         
     
-    <div className='fightsWrap'>
+    <div className='fightsWrap myspecialpromotion'>
     
     
     

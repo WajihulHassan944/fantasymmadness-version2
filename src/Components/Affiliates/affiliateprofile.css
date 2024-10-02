@@ -104,3 +104,28 @@
       color:blue;
       cursor: pointer;
     }
+
+
+    @media (max-width: 767px){
+      .allpromotion .allContainer{
+        padding: 0 20px;
+      }
+      .allpromotion .allContainer h1{
+        letter-spacing: 1px;
+        font-size: 20px;
+        line-height: 2.5rem;
+        }
+        
+      .allpromotion .allContainer h2{
+        letter-spacing: 1px;
+        font-size: 15px;
+        line-height: 2.5rem;
+        margin-top: 30px;
+        }
+        .allpromotion .allContainer h1 span{
+          color:blue;
+          cursor: pointer;
+        }
+    
+     
+    }

@@ -15,6 +15,7 @@
 
 
 @media (max-width: 767px){
+
     .yourFightsWrapper .fightwalletWrap{
         justify-content: center;
         align-items: center;
@@ -36,4 +37,8 @@
         font-size: 17px !important;
     }
      
+    .myspecialpromotion{
+        margin-top:-30px;
+    }
+    
 }

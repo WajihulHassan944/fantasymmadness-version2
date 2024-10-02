@@ -67,7 +67,7 @@ const AffiliateDashboard = () => {
         <h3>Balance: --</h3>
       </div>
 
-      <div className='fightsWrap'>
+      <div className='fightsWrap myspecialpromotion'>
         <div className='completedFights fightscontainer'>
           <h1 className='fightsheadingtwo'>ALL SHADOW FIGHTS</h1>
           {promoMatches && promoMatches
