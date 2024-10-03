@@ -81,7 +81,7 @@ const copyToClipboard = () => {
               <img src={affiliate.profileUrl} alt="Logo" />
             </div>
             <h3>Affiliate <span className="toRemove">Name </span>- {affiliate.firstName} {affiliate.lastName}</h3>
-            <h3>Balance: -</h3>
+            <h3>Users <span className="toRemove"> in my League</span> : {affiliate.usersJoined.length}</h3>
           </div>
     
     

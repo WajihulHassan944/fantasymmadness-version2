@@ -197,7 +197,7 @@ const AffiliateFightLeaderboard = ({ matchId }) => {
               <img src={affiliate.profileUrl} alt="Logo" />
             </div>
             <h3><span className='toRemove'>Affiliate Name -</span> {affiliate.firstName} {affiliate.lastName}</h3>
-            <h3>Balance: -</h3>
+            <h3>Users <span className="toRemove"> in my League</span> : {affiliate.usersJoined.length}</h3>
           </div>
   
           <div className='fightwalletWrap'>
@@ -207,7 +207,7 @@ const AffiliateFightLeaderboard = ({ matchId }) => {
                 <span style={{color:"#38b90c"}}>{match.matchType} </span> - 
                 <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
               </h1>
-              <h1 style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>500</span></h1>
+              <h1 style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>{match.userPredictions.length}</span></h1>
             </div>
             
            

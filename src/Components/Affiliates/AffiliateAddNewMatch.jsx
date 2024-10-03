@@ -156,7 +156,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
           <img src={affiliate.profileUrl} alt="Logo" />
         </div>
         <h3><span className='toRemove'>Affiliate Name:</span> {affiliate.firstName} {affiliate.lastName}</h3>
-        <h3>Balance: -</h3>
+        <h3>Users <span className="toRemove"> in my League</span> : {affiliate.usersJoined.length}</h3>
       </div>
 
       <div className='registerCard' style={{ maxWidth: '700px', marginTop: '10px' }}>
