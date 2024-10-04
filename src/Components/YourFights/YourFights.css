@@ -40,5 +40,26 @@
     .myspecialpromotion{
         margin-top:-30px;
     }
-    
+
+   .yourFightsWrapper .fightItemOne .transformed-div h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 9px;
+    padding-right: 10px;
+   }
+   .yourFightsWrapper  .transformed-div {
+    height: 50px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+.yourFightsWrapper  .transformed-div-two {
+    height: 50px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+.yourFightsWrapper  .fightItem .fightersImages {
+    top: 2px;
+    left: -7px;
+    gap: 2px;
+}
 }
