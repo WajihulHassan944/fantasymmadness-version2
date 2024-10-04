@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./AdminPredictions.css";
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { getWinnerDetails } from '../../CustomFunctions/winnerUtils';
 
 const AdminPredictions = ({ matchId, filter }) => {
   
@@ -261,19 +262,18 @@ const AdminPredictions = ({ matchId, filter }) => {
 
   
 
-  
   const handleFinishFight = async () => {
     const endpoint =
       filter === 'normal'
         ? `https://fantasymmadness-game-server-three.vercel.app/finishMatch/${matchId}`
         : `https://fantasymmadness-game-server-three.vercel.app/finishShadow/${matchId}`;
-  
+
     const finishFightPromise = new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint, {
           method: 'POST',
         });
-  
+
         const result = await response.json();
         if (response.ok) {
           console.log('Match status updated to Finished:', result.match);
@@ -287,7 +287,7 @@ const AdminPredictions = ({ matchId, filter }) => {
         reject(new Error('Network error while finishing the match.')); // Reject on network error
       }
     });
-  
+
     // Use toast.promise to handle the pending, success, and error states
     toast.promise(finishFightPromise, {
       pending: 'Finishing the match...',
@@ -297,11 +297,46 @@ const AdminPredictions = ({ matchId, filter }) => {
           return data.message || 'Failed to finish the match';
         }
       }
-    }).then(() => {
+    }).then(async () => {
+      // Reward the winner only if the filter is 'normal'
+      if (filter === 'normal') {
+        try {
+          // Get the winner details
+          const winnerDetails = await getWinnerDetails(matchId);
+          
+          // Get the pot value for the match
+          const match = matches.find(m => m._id === matchId);
+          const matchTokens = match?.pot;
+
+          // Reward tokens to the winner
+          if (winnerDetails && matchTokens) {
+            const rewardResponse = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/reward-tokens/${winnerDetails.userId}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                tokens: matchTokens,
+                matchId: matchId,
+              }),
+            });
+
+            const rewardData = await rewardResponse.json();
+            if (rewardData.success) {
+              toast.success('Tokens rewarded successfully!');
+            } else {
+              toast.error('Failed to reward tokens.');
+            }
+          }
+        } catch (error) {
+          console.error('Error rewarding tokens:', error);
+          toast.error('Failed to reward tokens due to an error.');
+        }
+      }
+
       window.location.reload(); // Reload page after successful finish
     });
-  };
-    
+  };  
   
 const handleVideoUrlSubmit = async (e) => {
   e.preventDefault(); // Prevent default form behavior

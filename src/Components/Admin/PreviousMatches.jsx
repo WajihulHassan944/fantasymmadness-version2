@@ -60,12 +60,20 @@ const PreviousMatches = () => {
     };
 
     const filteredMatches = matches.filter((match) => {
+        const matchDate = new Date(match.matchDate);
+        const tenDaysAgo = new Date();
+        tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+    
+        if (match.matchStatus === 'Finished' && matchDate < tenDaysAgo) {
+            return false; // Don't include matches older than 10 days with "Finished" status
+        }
+    
         if (filter === 'All') return match.matchStatus === 'Finished';
         if (filter === 'Rewarded') return match.matchReward === 'Rewarded' && match.matchStatus === 'Finished';
         if (filter === 'NotRewarded') return match.matchReward === 'NotRewarded' && match.matchStatus === 'Finished';
         return false;
     });
-
+    
     return (
         <div className='prevMatches'>
             <div className='adminWrapper'>
