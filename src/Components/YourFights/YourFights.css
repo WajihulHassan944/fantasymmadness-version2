@@ -41,9 +41,9 @@
         margin-top:-30px;
     }
 
-   .yourFightsWrapper .fightItemOne .transformed-div h1{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 9px;
+    .fightItemOne .transformed-div h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+    font-size: 9px !important;
     padding-right: 10px;
    }
    .yourFightsWrapper  .transformed-div {
