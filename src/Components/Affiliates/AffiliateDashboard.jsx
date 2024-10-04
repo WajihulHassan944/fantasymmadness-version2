@@ -10,6 +10,33 @@ const AffiliateDashboard = () => {
   const [promoMatchDetails, setPromoMatchDetails] = useState({ matchId: null, affiliateId: null });
  const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const [promoMatches, setPromoMatches] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
+  
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+  
+  useEffect(() => {
+    if (showPopup) {
+      // Fetch users from the API
+      fetch("https://fantasymmadness-game-server-three.vercel.app/users")
+        .then((response) => response.json())
+        .then((data) => {
+          const matchedUsers = affiliate.usersJoined.map((affiliateUser) => {
+            const matchedUser = data.find(
+              (user) => user._id === affiliateUser.userId
+            );
+            return {
+              ...matchedUser,
+              joinedAt: affiliateUser.joinedAt,
+            };
+          });
+          setUserDetails(matchedUsers);
+        })
+        .catch((error) => console.error("Error fetching users:", error));
+    }
+  }, [showPopup]);
   
   useEffect(() => {
     const fetchPromoMatches = async () => {
@@ -64,8 +91,38 @@ const AffiliateDashboard = () => {
           <img src={affiliate.profileUrl} alt="Logo" />
         </div>
         <h3><span className='toRemove'>Affiliate Name:</span>{affiliate.firstName} {affiliate.lastName}</h3>
-        <h3>Users <span className="toRemove"> in my League</span> : {affiliate.usersJoined.length}</h3>
-      </div>
+        <h3 style={{ cursor: 'pointer' }} onClick={togglePopup}>
+  Users <span className="toRemove">in my League</span> : {affiliate.usersJoined.length}
+</h3>
+{showPopup && (
+  <div className="popupUsersJoined">
+    <div className="popup-content">
+      <h3>Users in your League</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Joined At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {userDetails.map((user, index) => (
+            <tr key={index}>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
+              <td>{user.email}</td>
+              <td>{new Date(user.joinedAt).toLocaleDateString()}</td> {/* Format the joinedAt date */}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button onClick={togglePopup}>Close</button>
+    </div>
+  </div>
+)}
+  </div>
 
       <div className='fightsWrap myspecialpromotion'>
         <div className='completedFights fightscontainer'>
