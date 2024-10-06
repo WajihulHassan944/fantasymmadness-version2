@@ -56,28 +56,35 @@ const [loading, setLoading] = useState(true);
           const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
   
           if (match.matchType === "LIVE") {
-            // Only check date and time for LIVE matches
+            // No blur for LIVE matches within the valid date and time range
             if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
-              return { ...match, blurred: false }; // No blurring for LIVE matches
+              return { ...match, blurred: false };
             }
           } else if (match.matchType === "SHADOW") {
-            // Find the affiliate by affiliateId for SHADOW matches
             const affiliate = affiliates.find(a => a._id === match.affiliateId);
             if (affiliate) {
               const usersJoinedIds = affiliate.usersJoined.map(user => user.userId);
   
               // Filter users who meet token requirement
               const eligibleUsers = users.filter(user => usersJoinedIds.includes(user._id) && parseInt(user.tokens, 10) >= match.matchTokens);
-              console.log(eligibleUsers.length);
+              
+              // Check if any user has submitted predictions for this match
+              const predictionUsers = match.userPredictions
+                .filter(prediction => prediction.predictionStatus === "submitted")
+                .map(prediction => prediction.userId);
+  
+              // Include users who have submitted predictions
+              const allEligibleUsers = [...new Set([...eligibleUsers.map(user => user._id), ...predictionUsers])];
+              console.log(allEligibleUsers.length);
   
               // Calculate the required number of users
               const requiredUsers = match.pot / match.matchTokens;
   
-              // If eligible users are fewer than required, blur the match
-              const isBlurred = eligibleUsers.length < requiredUsers;
+              // If eligible users (including those who submitted predictions) are fewer than required, blur the match
+              const isBlurred = allEligibleUsers.length < requiredUsers;
   
               if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
-                return { ...match, blurred: isBlurred }; // Add blur condition for SHADOW matches
+                return { ...match, blurred: isBlurred };
               }
             }
           }

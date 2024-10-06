@@ -53,6 +53,8 @@ import AffiliateAllPromos from './Components/Affiliates/AffiliateAllPromos';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TransactionList from './Components/CreateAccount/TransactionList';
+import AdminRecords from './Components/Admin/AdminRecords';
+import Leagues from './Components/Dashboard/Leagues';
 
 function AppContent() {
   const location = useLocation();
@@ -106,6 +108,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />
+        <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />
         <Route path="/leaderboard" element={<GlobalLeaderboard />} />
         <Route path="/YourFights" element={<YourFights />} />
         <Route path="/PlayForFree" element={<PlayForFree />} />
@@ -136,6 +139,8 @@ function AppContent() {
         <Route path="/administration/YoutubeArchive" element={<PrivateRouteAdmin element={<YoutubeArchive />} />} />
         <Route path="/affiliate/:affiliateName" element={<AffiliateAllPromos />} />
       
+<Route path="/administration/adminRecords" element={<PrivateRouteAdmin element={<AdminRecords />} />} />
+       
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
         <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />

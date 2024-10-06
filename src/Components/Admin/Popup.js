@@ -1,7 +1,7 @@
 import React from 'react';
 import "./popup.css";
 
-const Popup = ({ winnerDetails, onClose, onReward , matchTokens}) => {
+const Popup = ({ winnerDetails, onClose, onReward, matchTokens, affiliateTokens }) => {
     
     return (
         <div className="popupwrapped">
@@ -11,6 +11,7 @@ const Popup = ({ winnerDetails, onClose, onReward , matchTokens}) => {
                 <p><strong>Winner Name:</strong> {winnerDetails.firstName} {winnerDetails.lastName}</p>
                 <p><strong>Total Points:</strong> {winnerDetails.totalPoints}</p>
                 <p>Match Tokens: <strong>{matchTokens}</strong> will be added to {winnerDetails.firstName}'s wallet</p>
+                <p><strong>Affiliate Reward:</strong> {affiliateTokens > 0 ? `${affiliateTokens} tokens will be awarded to the affiliate.` : `No tokens for affiliate.`}</p>
                 <p><strong>Match ID:</strong> {winnerDetails.matchId}</p>
                 <button onClick={onClose} className='cancel'>Cancel</button>
                 <button onClick={onReward}>Reward Tokens</button>

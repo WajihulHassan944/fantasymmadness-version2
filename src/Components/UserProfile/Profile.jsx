@@ -201,6 +201,13 @@ const [membershipGo, setMembershipGo] = useState(null);
   const handleAddTokenClick = async () => {
     setShowPredictions(true);
   };
+  
+
+  
+  const handleleaguesClick = () => {
+    navigate('/myLeagueRecords');
+  };
+
 
   const handlepaymentDetailsClick = async () => {
     setMembershipGo(true);
@@ -347,7 +354,8 @@ const [membershipGo, setMembershipGo] = useState(null);
                 </form>
                 
                 <div className='divTwoProfile' >
-                  {/*       <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}}>Delete My Account</button> */}
+                      <button type="submit" className='btn-grad profile-btn' onClick={() => handleleaguesClick()} style={{width:'40%'}}>My Leagues</button>
+                
                   <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handlepaymentDetailsClick()}>My Payment Details</button>
                    <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handleAddTokenClick()}>Add tokens to Wallet</button>
                   <div className='pairOfHtags'>

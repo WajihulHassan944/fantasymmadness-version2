@@ -103,7 +103,6 @@ const AffiliateDashboard = () => {
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Email</th>
             <th>Joined At</th>
           </tr>
         </thead>
@@ -112,7 +111,6 @@ const AffiliateDashboard = () => {
             <tr key={index}>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
-              <td>{user.email}</td>
               <td>{new Date(user.joinedAt).toLocaleDateString()}</td> {/* Format the joinedAt date */}
             </tr>
           ))}

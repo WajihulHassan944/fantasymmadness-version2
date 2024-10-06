@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-import Popup from './Popup'; // Create this component for displaying winner details
+import Popup from './Popup';
 import { getWinnerDetails } from '../../CustomFunctions/winnerUtils';
 
 const PreviousMatches = () => {
@@ -10,46 +10,102 @@ const PreviousMatches = () => {
     const [filter, setFilter] = useState('All');
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [winnerDetails, setWinnerDetails] = useState(null);
-    const [matchTokens, setMatchTokens] = useState(0); // State to hold match tokens
+    const [affiliateTokens, setAffiliateTokens] = useState(0);
+    const [matchTokens, setMatchTokens] = useState(0);
+
     useEffect(() => {
         dispatch(fetchMatches());
     }, [dispatch]);
 
     const handleMatchClick = async (matchId) => {
-      const winner = await getWinnerDetails(matchId);
-      setWinnerDetails(winner);
-      setMatchTokens(matches.find(m => m._id === matchId).pot);
-      setSelectedMatch(matchId);
-  };
+        const winner = await getWinnerDetails(matchId);
+        setWinnerDetails(winner);
+        const match = matches.find(m => m._id === matchId);
+        setMatchTokens(match.pot);
+
+        // Calculate profit for the affiliate
+        const totalUsers = match.userPredictions.filter(u => u.predictionStatus === 'submitted').length;
+        const requiredUsers = match.pot / match.matchTokens;
+        const totalTokens = totalUsers * match.matchTokens;
+        const profit = totalTokens - match.pot;
+        const halfProfit = profit > 0 ? profit / 2 : 0;
+
+        setAffiliateTokens(halfProfit);
+        setSelectedMatch(matchId);
+    };
+
     const handleClosePopup = () => {
         setSelectedMatch(null);
         setWinnerDetails(null);
         setMatchTokens(null);
+        setAffiliateTokens(0);
     };
 
     const handleRewardTokens = async () => {
         if (winnerDetails) {
             try {
+                // Reward the winner tokens
                 const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/reward-tokens/${winnerDetails.userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        tokens: matches.find(m => m._id === selectedMatch).pot,
+                        tokens: matchTokens,
                         matchId: selectedMatch,
                     }),
                 });
-
+    
                 const data = await response.json();
+    
                 if (data.success) {
-                    alert('Tokens rewarded successfully!');
-                    // Reset selectedMatch and winnerDetails
-                    setSelectedMatch(null);
-                    setWinnerDetails(null);
-                    window.location.reload();
+                    // Now reward the affiliate half the profit
+                    const affiliateId = matches.find(m => m._id === selectedMatch).affiliateId;
+                    
+                    // Handling the rounding: if half is decimal, one half gets rounded down, other half gets rounded up
+                    const halfProfit = affiliateTokens;
+                    const affiliateTokenReward = Math.floor(halfProfit); // Round down for affiliate
+                    const adminTokenReward = Math.ceil(halfProfit); // Round up for admin
+    
+                    const affiliateResponse = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/reward-tokens-to-affiliate/${affiliateId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            matchId: selectedMatch,
+                            tokens: affiliateTokenReward, // Send rounded down tokens to affiliate
+                        }),
+                    });
+    
+                    const affiliateData = await affiliateResponse.json();
+    
+                    // Now reward admin with the remaining half of the profit
+                    const adminResponse = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/reward-tokens-to-admin`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            matchId: selectedMatch,
+                            matchName: matches.find(m => m._id === selectedMatch).matchFighterA + ' VS ' + matches.find(m => m._id === selectedMatch).matchFighterB,
+                            tokens: adminTokenReward, // Send rounded up tokens to admin
+                            affiliateRewarded: affiliateTokenReward,
+                        }),
+                    });
+    
+                    const adminData = await adminResponse.json();
+    
+                    if (affiliateData.success && adminData.success) {
+                        alert(`Tokens rewarded successfully! Affiliate was rewarded ${affiliateTokenReward} tokens, and Admin was rewarded ${adminTokenReward} tokens.`);
+                        setSelectedMatch(null);
+                        setWinnerDetails(null);
+                        window.location.reload();
+                    } else {
+                        alert('Failed to reward affiliate or admin tokens.');
+                    }
                 } else {
-                    alert('Failed to reward tokens.');
+                    alert('Failed to reward winner tokens.');
                 }
             } catch (error) {
                 console.error('Error rewarding tokens:', error);
@@ -58,22 +114,22 @@ const PreviousMatches = () => {
             }
         }
     };
-
+    
     const filteredMatches = matches.filter((match) => {
         const matchDate = new Date(match.matchDate);
         const tenDaysAgo = new Date();
         tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
-    
+
         if (match.matchStatus === 'Finished' && matchDate < tenDaysAgo) {
-            return false; // Don't include matches older than 10 days with "Finished" status
+            return false;
         }
-    
+
         if (filter === 'All') return match.matchStatus === 'Finished';
         if (filter === 'Rewarded') return match.matchReward === 'Rewarded' && match.matchStatus === 'Finished';
         if (filter === 'NotRewarded') return match.matchReward === 'NotRewarded' && match.matchStatus === 'Finished';
         return false;
     });
-    
+
     return (
         <div className='prevMatches'>
             <div className='adminWrapper'>
@@ -95,9 +151,7 @@ const PreviousMatches = () => {
                                     onClick={match.matchReward === 'NotRewarded' 
                   ? () => handleMatchClick(match._id) 
                   : () => alert('Rewards already given')
-                }
-                
-                                >
+                }>
                                     <div className='fightersImages'>
                                         <div className='fighterOne'>
                                             <img src={match.fighterAImage} alt={match.matchFighterA} />
@@ -145,6 +199,7 @@ const PreviousMatches = () => {
                     onClose={handleClosePopup} 
                     onReward={handleRewardTokens} 
                     matchTokens={matchTokens}
+                    affiliateTokens={affiliateTokens} // Added to display affiliate reward
                 />
             )}
         </div>

@@ -187,7 +187,7 @@ const AffiliateProfile = () => {
           <img src={affiliate.profileUrl} alt="Profile" />
         </div>
         <h3><span className='toRemove'>Affiliate Name - </span>{affiliate.firstName} {affiliate.lastName}</h3>
-        <h3>Balance: -</h3>
+        <h3>Balance: {affiliate.tokens}</h3>
       </div>
 
       <div className='createAccount' style={{ background: 'transparent', marginTop: '-100px' }}>

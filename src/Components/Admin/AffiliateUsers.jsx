@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./AffiliateUsers.css";
 import UserDetails from './UserDetails';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AffiliateUsers = () => {
   const [affiliateUsers, setAffiliateUsers] = useState([]);
@@ -11,6 +12,9 @@ const AffiliateUsers = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
 const [deleteText, setDeleteText] = useState("Delete");
+const navigate = useNavigate();
+
+
   useEffect(() => {
     // Fetch data from the API
     const fetchData = async () => {
@@ -39,6 +43,11 @@ const [deleteText, setDeleteText] = useState("Delete");
     setFilteredUsers(filtered);
   }, [searchQuery, filterStatus, affiliateUsers]);
 
+  const handleNavigation = () => {
+    navigate('/administration/adminRecords');
+  };
+
+  
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -110,12 +119,18 @@ const [deleteText, setDeleteText] = useState("Delete");
           >
             Approved
           </h1>
+         
           <h1
             onClick={() => handleFilter('Pending')}
             className={filterStatus === 'Pending' ? 'activeFilter' : ''}
           >
             Pending
           </h1>
+
+          
+          <h1 onClick={handleNavigation} style={{ cursor: 'pointer' }}>
+      Admin Records
+    </h1>
         </div>
       </div>
 
