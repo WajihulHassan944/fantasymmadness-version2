@@ -51,6 +51,7 @@
     max-width: 350px;
     color: #fff;
     font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
   }
   
   /* Custom Colors for Each Box */
