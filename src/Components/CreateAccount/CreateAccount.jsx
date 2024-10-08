@@ -4,9 +4,11 @@ import backgroundImg from "../../Assets/new-bg.png";
 import Thankyou from './Thankyou';  // Import Thankyou component
 import UploadAvatar from './UploadAvatar';  // Import UploadAvatar component
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
-import AffiliateCreateAccount from '../Affiliates/AffiliateCreateAccount';
+import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
+    const navigate = useNavigate();
+  
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -143,7 +145,7 @@ const CreateAccount = () => {
         return <UploadAvatar email={formData.email} />;  // Pass email as prop to UploadAvatar
     }
     if (affiliate) {
-        return <AffiliateCreateAccount />;  // Pass email as prop to UploadAvatar
+        navigate('/AffiliateCreateAccount');  // Pass email as prop to UploadAvatar
     }
 
     if (isRegistered || pollingTimedOut) {

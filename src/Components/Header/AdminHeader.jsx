@@ -34,7 +34,7 @@ const AdminHeader = () => {
           <div>
             <center>
               <div className='logoimg'>
-                <NavLink to="/">
+                <NavLink to="/administration">
                   <img src={Logo} alt="Logo" />
                 </NavLink>
               </div>

@@ -55,6 +55,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import TransactionList from './Components/CreateAccount/TransactionList';
 import AdminRecords from './Components/Admin/AdminRecords';
 import Leagues from './Components/Dashboard/Leagues';
+import AffiliateCreateAccount from './Components/Affiliates/AffiliateCreateAccount';
 
 function AppContent() {
   const location = useLocation();
@@ -105,6 +106,8 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/HowToPlay" element={<HowToPlay />} />
         <Route path="/CreateAccount" element={<Registration />} />
+        <Route path="/AffiliateCreateAccount" element={<AffiliateCreateAccount />} />
+      
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />
