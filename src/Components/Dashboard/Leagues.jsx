@@ -79,7 +79,7 @@ border:'2px solid #ccc', overflow:'hidden' }}>
 </div>
 
                     <div className={`transformed-div`}>
-                      <h1 style={{ marginLeft: '26%', fontSize: '20px', fontFamily:'monospace', color: '#fff' }}>
+                      <h1 style={{ marginLeft: '36%', fontSize: '20px', fontFamily:'monospace', color: '#fff' }}>
                         {affiliate.firstName} {affiliate.lastName}
                       </h1>
                     </div>
@@ -118,7 +118,7 @@ border:'2px solid #ccc', overflow:'hidden' }}>
 </div>
 
                     <div className={`transformed-div`}>
-                      <h1 style={{ marginLeft: '26%', fontSize: '20px', fontFamily:'monospace', color: '#fff' }}>
+                      <h1 style={{ marginLeft: '36%', fontSize: '20px', fontFamily:'monospace', color: '#fff' }}>
                         {affiliate.firstName} {affiliate.lastName}
                       </h1>
                     </div>

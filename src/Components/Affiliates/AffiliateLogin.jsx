@@ -16,7 +16,8 @@ const AffiliateLogin = () => {
     const [recaptchaToken, setRecaptchaToken] = useState('');  // State for reCAPTCHA token
     const [usersLogin, setUsersLogin] = useState(false);
     const [alertShown, setAlertShown] = useState(false); // State to control alert display
-  
+    const [showPassword, setShowPassword] = useState(false);
+
     
 
     
@@ -96,6 +97,10 @@ const AffiliateLogin = () => {
     };
 
    
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
     
 
 
@@ -127,13 +132,33 @@ const AffiliateLogin = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <input
-              type='password'
-              placeholder='Please enter your password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        
+        <div style={{ position: 'relative', marginBottom: '20px' }}>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          placeholder='Please enter your password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{ paddingRight: '40px' }} // Add padding to make space for the icon
+        />
+        <span 
+          onClick={togglePasswordVisibility} 
+          style={{
+            position: 'absolute',
+            top: '20.5px',
+            right: '15px',
+            transform: 'translateY(-50%)',
+            cursor: 'pointer',
+            
+          }}
+        >
+          <i className={`fa ${showPassword ? 'fa-eye' : 'fa-eye-slash'}`} aria-hidden="true" style={{fontWeight:'700'}}></i>
+        </span>
+      </div>
+
+        
+        
          <div className='toFlexDiv'>  
     <div className='recaptcha-container'>
       <ReCAPTCHA
