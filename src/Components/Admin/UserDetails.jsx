@@ -7,6 +7,29 @@ const UserDetails = ({ user }) => {
     const [message, setMessage] = useState(`Dear ${user.firstName} ${user.lastName},\n\nWe are pleased to inform you that your request to become a Fantasy mmadness Affiliate User has been successfully confirmed. You can now enjoy the full benefits of our affiliate program.\n\nThank you for your continued support.\n\nBest regards,\nFantasy mmadness Team`);
     const [buttonText, setButtonText] = useState("Send Email");
     const [isVerified, setIsVerified] = useState(user.verified);
+    const [userDetails, setUserDetails] = useState([]);
+  
+    
+  useEffect(() => {
+      // Fetch users from the API
+      fetch("https://fantasymmadness-game-server-three.vercel.app/users")
+        .then((response) => response.json())
+        .then((data) => {
+          const matchedUsers = user.usersJoined.map((affiliateUser) => {
+            const matchedUser = data.find(
+              (user) => user._id === affiliateUser.userId
+            );
+            return {
+              ...matchedUser,
+              joinedAt: affiliateUser.joinedAt,
+            };
+          });
+          setUserDetails(matchedUsers);
+        })
+        .catch((error) => console.error("Error fetching users:", error));
+    
+  }, [user]);
+    
 
     useEffect(() => {
         if (isVerified) {
@@ -89,7 +112,31 @@ const UserDetails = ({ user }) => {
                     )}
                 </div>
             </div>
-
+            <div className="popupUsersJoinedCustom">
+    <div className="popup-content-custom">
+      <h3>{user.firstName}'s League Members ({userDetails.length})</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Joined At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {userDetails.map((usered, index) => (
+            <tr key={index}>
+              <td>{usered.firstName}</td>
+              <td>{usered.lastName}</td>
+              <td>{usered.email}</td>
+              <td>{new Date(usered.joinedAt).toLocaleDateString()}</td> {/* Format the joinedAt date */}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
             {showEmailTemplate && (
                 <div className='emailTemplateParent'>
                     <div className='emailTemplateWrapper'>
