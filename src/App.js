@@ -56,6 +56,7 @@ import TransactionList from './Components/CreateAccount/TransactionList';
 import AdminRecords from './Components/Admin/AdminRecords';
 import Leagues from './Components/Dashboard/Leagues';
 import AffiliateCreateAccount from './Components/Affiliates/AffiliateCreateAccount';
+import DynamicPromoImage from './Components/Affiliates/DynamicPromoImage';
 
 function AppContent() {
   const location = useLocation();
@@ -107,6 +108,7 @@ function AppContent() {
         <Route path="/HowToPlay" element={<HowToPlay />} />
         <Route path="/CreateAccount" element={<Registration />} />
         <Route path="/AffiliateCreateAccount" element={<AffiliateCreateAccount />} />
+        <Route path="/dynamopromoimg" element={<DynamicPromoImage />} />
       
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
