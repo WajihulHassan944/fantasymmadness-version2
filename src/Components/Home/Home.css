@@ -191,13 +191,6 @@
       color:#fff;
       font-size: 18px;
     }
-    .member-header-image{
-      z-index: 99999;
-    }
-    
-    .member-header-image img{
-      z-index: 99999;
-    }
     .transformed-div-four {
         height: 46px;
         width: 200px;
@@ -555,7 +548,6 @@
     position: absolute;
     top:-4px;
     left:-8px;
-    z-index: 1;
     display: flex;
     gap:2px;
 }

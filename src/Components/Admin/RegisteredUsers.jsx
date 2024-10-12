@@ -58,7 +58,7 @@ const handleDelete = async (id) => {
 
   return (
     <div className='adminWrapper'>
-      <div className='homeThird' style={{ background: 'transparent' }}>
+      <div className='homeThird mobileItemOne' style={{ background: 'transparent' }}>
         <h1 className='thirdHeadingOne'>Registered Users</h1>
         <div className='leaderboardItemsWrap'>
           {users.map((user) => (

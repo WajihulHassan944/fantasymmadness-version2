@@ -1,0 +1,12 @@
+.imgWrapLeague{
+    z-index: 1 !important;
+}
+.fightsWrap{
+    z-index: 0 !important;
+}
+.fightItem{
+    z-index: 0 !important;
+}
+.admin-header{
+    z-index: 99999 !important;
+}

@@ -126,7 +126,7 @@ const ShadowFightsLibrary = () => {
         <div className='shadowLibrary'>
             <div className='adminWrapper '>
                 <div className='homeSecond' style={{ background: 'transparent' }}>
-                    <h1 className='second-main-heading'>Shadow Fights Library</h1>
+                    <h1 className='second-main-heading'>Shadow <span className='toRemove'> Fights</span> Library</h1>
                     <div className="fightswrap">
                         {matches.length > 0 ? (
                             matches.map((match) => (
@@ -145,7 +145,7 @@ const ShadowFightsLibrary = () => {
                                         </div>
                                         <div className="transformed-div-two">
                                             <div className='transformed-div-two-partOne'>
-                                                <h1>Affiliates Promoting this fight</h1>
+                                                <h1>Affiliates Promoting<span className='toRemove'> this fight</span></h1>
                                             </div>
                                             <div className='transformed-div-two-partTwo'>
                                                 <h1>{match.AffiliateIds.length}</h1>

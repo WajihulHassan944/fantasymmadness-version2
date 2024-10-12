@@ -39,3 +39,45 @@
     margin-right: 10px;
   }
   
+
+
+   
+@media (max-width: 767px){
+  .usersListWrapper {
+    width: 90%;
+    overflow: auto;
+   }
+  
+   .userListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .usersTable {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+  }
+  
+  .usersTable th, .usersTable td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .usersTable th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+  
+  .userRow:hover {
+    background-color: #f0f8ff;
+  }
+  
+  .usersTable input {
+    margin-right: 10px;
+  }
+  
+}
