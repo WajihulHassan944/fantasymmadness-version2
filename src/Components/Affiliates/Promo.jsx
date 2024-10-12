@@ -5,6 +5,7 @@ import { fetchMatches } from '../../Redux/matchSlice';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 
 const Promo = () => {
+
   const dispatch = useDispatch();
   const { matchName, fullName } = useParams();
   const navigate = useNavigate();
@@ -97,6 +98,8 @@ const Promo = () => {
       } else {
         const data = await response.json();
         alert(`${data.message}`);
+        navigate('/UserDashboard');
+
       }
     } catch (error) {
       console.error('Error joining league:', error);
