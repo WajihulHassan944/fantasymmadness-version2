@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Leagues = () => {
   const user = useSelector((state) => state.user); // Access user details from Redux store
   const [affiliates, setAffiliates] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch affiliates from the API
   useEffect(() => {
@@ -70,7 +72,7 @@ const Leagues = () => {
 
             if (userInLeague) {
               return (
-                <div key={affiliate._id} className="fightItem">
+                <div key={affiliate._id} className="fightItem" onClick={() => navigate('/UserDashboard')}>
                   <div className='fightItemOne' style={{position:'relative'}}>
 
 <div className='imgWrapLeague' style={{position:"absolute" , top:'-6px' , left:'-11px' , width:'60px' , height:'60px' , borderRadius:'50%',zIndex:'99999',
