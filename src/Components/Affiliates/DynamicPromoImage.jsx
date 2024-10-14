@@ -1,75 +1,101 @@
 import React, { useEffect, useRef } from 'react';
-import BackgroundImg from "../../Assets/boxing-victory.png"; // Adjust the path as needed
+import BackgroundImg from "../../Assets/imgone.png"; // Adjust the path as needed
 
 const DynamicPromoImage = () => {
   const canvasRef = useRef(null);
 
-  // Hardcoded data including the external image URLs
   const imageData = {
     matchFighterA: "Michael Venom Page",
     matchFighterB: "Mike Perry",
     matchDate: "2024-09-17T00:00:00.000Z",
     matchTime: "10:35",
     maxRounds: 5,
-    affiliateName: "Wajih uuul Hassan",
+    affiliateName: "Wajih ul Hassan",
     usersInLeague: 500,
     fighterAImage: "https://i.ibb.co/mb8ZH7L/f2b08a202923.jpg",
-    fighterBImage: "https://i.ibb.co/6D7QNHw/758447972263.jpg"
+    fighterBImage: "https://i.ibb.co/6D7QNHw/758447972263.jpg",
+    logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    // Create and load the background image
     const backgroundImage = new Image();
-    backgroundImage.src = BackgroundImg; // Use the imported background image
+    backgroundImage.src = BackgroundImg;
 
-    // Set crossOrigin attribute to handle CORS for external images
     const fighterOneImage = new Image();
-    fighterOneImage.crossOrigin = "anonymous"; // Enable cross-origin for fighter A image
-    fighterOneImage.src = imageData.fighterAImage; // Use the URL for fighter A image
+    fighterOneImage.crossOrigin = "anonymous";
+    fighterOneImage.src = imageData.fighterAImage;
 
     const fighterTwoImage = new Image();
-    fighterTwoImage.crossOrigin = "anonymous"; // Enable cross-origin for fighter B image
-    fighterTwoImage.src = imageData.fighterBImage; // Use the URL for fighter B image
+    fighterTwoImage.crossOrigin = "anonymous";
+    fighterTwoImage.src = imageData.fighterBImage;
 
-    // Ensure both images are loaded before rendering
+    const logoImage = new Image();
+    logoImage.crossOrigin = "anonymous";
+    logoImage.src = imageData.logoImage;
+
     let imagesLoaded = 0;
     const handleImageLoad = () => {
       imagesLoaded += 1;
-      if (imagesLoaded === 3) {
-        // Draw background and other details once all images are loaded
+      if (imagesLoaded === 4) {
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw affiliate details
-        ctx.font = '20px Arial';
-        ctx.fillStyle = '#FFFFFF'; // Set text color to white
-        ctx.fillText(`Affiliate: ${imageData.affiliateName}`, 20, 30); // Affiliate name
-        ctx.fillText(`Users in League: ${imageData.usersInLeague}`, 20, 60); // Users in league
+        ctx.drawImage(logoImage, 10, 10, 60, 60);
 
-        // Add match details
-        ctx.font = '25px sans-serif'; // Change font size for match details
-        ctx.fillText(`${imageData.matchFighterA} vs ${imageData.matchFighterB}`, 150, 100); // Fighters
-        ctx.fillText(`Date: ${new Date(imageData.matchDate).toLocaleDateString()}`, 150, 400); // Match date
-        ctx.fillText(`Time: ${imageData.matchTime}`, 150, 430); // Match time
-        ctx.fillText(`Max Rounds: ${imageData.maxRounds}`, 150, 460); // Max rounds
+        // Updated text position and order
+        ctx.font = 'bold 18px UFCSans, Arial, sans-serif';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'center';
 
-        // Draw fighter images
-        ctx.drawImage(fighterOneImage, 50, 150, 100, 150); // Fighter 1 position (x, y, width, height)
-        ctx.drawImage(fighterTwoImage, 450, 150, 100, 150); // Fighter 2 position (x, y, width, height)
+        ctx.fillText(`Promotor: ${imageData.affiliateName}`, canvas.width / 2, 40); // Moved up
+
+        // Change date and time color to match box shadow color
+        ctx.fillStyle = '#FF4500'; 
+        ctx.fillText(`${new Date(imageData.matchDate).toLocaleDateString()} ${imageData.matchTime}`, canvas.width / 2, 65); // Date and time below promoter name
+        const drawImageWithShadow = (image, x, y, name) => {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(x, y, 35, 0, Math.PI * 2); // Maintain circular shape (35 radius)
+          ctx.closePath();
+          ctx.clip();
+        
+          // Light box shadow effect
+          ctx.shadowColor = 'rgba(255, 69, 0, 0.3)'; // Lighter shadow color with transparency
+          ctx.shadowBlur = 10; // Reduced blur for a subtle effect
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 0;
+        
+          // Draw the image
+          ctx.drawImage(image, x - 35, y - 35, 70, 70); // Position image (70x70)
+          ctx.restore();
+        
+          // Render fighter name below image with gap
+          ctx.font = 'bold 16px UFCSans, Arial, sans-serif';
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillText(name, x, y + 60); // Increased gap between image and name
+        };
+        
+        drawImageWithShadow(fighterOneImage, 140, 140, imageData.matchFighterA); // Adjusted
+        drawImageWithShadow(fighterTwoImage, 350, 140, imageData.matchFighterB); // Adjusted
+
+        // URL at bottom
+        ctx.fillText('https://fantasymmadness.com', canvas.width / 2, 270); 
       }
     };
 
-    // Listen for images to load
     backgroundImage.onload = handleImageLoad;
     fighterOneImage.onload = handleImageLoad;
     fighterTwoImage.onload = handleImageLoad;
-  }, []); // No dependencies needed since we are using hardcoded data directly
+    logoImage.onload = handleImageLoad;
+  }, []);
 
   const downloadImage = () => {
     const canvas = canvasRef.current;
-    const image = canvas.toDataURL('image/png'); // Export the canvas as a PNG image
+    const image = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = image;
     link.download = 'promotional-image.png';
@@ -78,8 +104,8 @@ const DynamicPromoImage = () => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={600} height={500} style={{ border: '1px solid #000', marginTop:'100px' }}></canvas>
-      <button onClick={downloadImage} style={{ marginTop: '20px' }}>Download Image</button>
+      <canvas ref={canvasRef} width={500} height={300} style={{ border: '1px solid #000', marginTop: '100px' }}></canvas>
+      <button onClick={downloadImage} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Download Image</button>
     </div>
   );
 };
