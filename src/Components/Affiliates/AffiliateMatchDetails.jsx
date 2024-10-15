@@ -4,6 +4,8 @@ import { useEffect, useState, useRef }  from 'react';
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
+import QRCode from 'qrcode'; 
+import AffiliateMatchDetailsCss from "./AffiliateMatchDetailsCss.css";
 import BackgroundImg from "../../Assets/imgone.png";
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const canvasRef = useRef(null);
@@ -13,7 +15,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const matchStatus = useSelector((state) => state.matches.status);
   const match = matches.find((m) => m.shadowFightId === matchId && m.affiliateId === affiliateId);
   const [navigateDashboard, setNavigateToDash] = useState(null);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const imageData = {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
@@ -26,26 +28,26 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
 
   useEffect(() => {
     if (!match) return; // Exit if match is not available yet
-
+  
     const canvas = canvasRef.current;
     if (!canvas) return; // Check if canvas is available
     const ctx = canvas.getContext('2d');
-
+  
     const backgroundImage = new Image();
     backgroundImage.src = BackgroundImg;
-
+  
     const fighterOneImage = new Image();
     fighterOneImage.crossOrigin = "anonymous";
     fighterOneImage.src = match.fighterAImage;
-
+  
     const fighterTwoImage = new Image();
     fighterTwoImage.crossOrigin = "anonymous";
     fighterTwoImage.src = match.fighterBImage;
-
+  
     const logoImage = new Image();
     logoImage.crossOrigin = "anonymous";
     logoImage.src = imageData.logoImage;
-
+  
     let imagesLoaded = 0;
     const handleImageLoad = () => {
       imagesLoaded += 1;
@@ -53,16 +55,16 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+  
         ctx.drawImage(logoImage, 10, 10, 60, 60);
-
+  
         // Updated text position and order
         ctx.font = 'bold 18px UFCSans, Arial, sans-serif';
         ctx.fillStyle = '#FFFFFF';
         ctx.textAlign = 'center';
-
-        ctx.fillText(`${match.matchName}`, canvas.width / 2, 40); // Moved up
-
+  
+        ctx.fillText(`fantasymmadness.com`, canvas.width / 2, 40); // Moved up
+  
         // Change date and time color to match box shadow color
         ctx.fillStyle = '#FF4500'; 
         ctx.fillText(`${new Date(match.matchDate).toLocaleDateString()} ${match.matchTime}`, canvas.width / 2, 65); // Date and time below promoter name
@@ -102,18 +104,33 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         drawImageWithShadow(fighterOneImage, 140, 140, match.matchFighterA);
         drawImageWithShadow(fighterTwoImage, 350, 140, match.matchFighterB);
                 
-        // URL at bottom
-        ctx.fillText('https://fantasymmadness.com', canvas.width / 2, 270); 
+        // Generate the QR code for the match URL and draw it on the canvas
+        const fullName = `${affiliate.firstName} ${affiliate.lastName}`;
+        const encodedMatchName = encodeURIComponent(match.matchName);
+        const encodedFullName = encodeURIComponent(fullName);
+        const url = `https://fantasymmadness.com/shadow/${encodedMatchName}/${encodedFullName}`;
+  
+        // Generate and draw QR code below the URL with a smaller size
+        QRCode.toDataURL(url, { width: 60, margin: 2 }, (err, qrImageUrl) => {
+          if (!err) {
+            const qrImage = new Image();
+            qrImage.src = qrImageUrl;
+            qrImage.onload = () => {
+              // Draw QR code below the URL with a 5px gap
+              ctx.drawImage(qrImage, (canvas.width / 2) - 30, 225, 60, 60); // Centered below URL
+            };
+          }
+        });
       }
     };
-
+  
     backgroundImage.onload = handleImageLoad;
     fighterOneImage.onload = handleImageLoad;
     fighterTwoImage.onload = handleImageLoad;
     logoImage.onload = handleImageLoad;
-
-  }, [match]); // Add match to dependencies to rerun when it changes
-
+  
+  }, [match, affiliate]);
+  
   if (!match) {
     return <p>Loading...</p>;
   }
@@ -163,6 +180,16 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
           console.error("Failed to copy: ", err);
         });
     }
+  };
+
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const downloadImage = () => {
@@ -227,9 +254,42 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
           <button className='btn-grad promobtn' onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>
         </div>
 
-        <canvas ref={canvasRef} width={500} height={300} style={{ border: '1px solid #000', marginTop: '100px' }}></canvas>
+        <canvas 
+  ref={canvasRef} 
+  width={500} 
+  height={300} 
+  style={{ 
+    border: '1px solid #000', 
+    marginTop: '70px', 
+    width: '100%', // Make the width responsive
+    maxWidth: '500px', // Set the maximum width to avoid stretching too much
+    height: 'auto' // Maintain aspect ratio
+  }}
+></canvas>
+
+<div style={{display:'flex',gap:'10px'}}>
         <button onClick={downloadImage} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Download Image</button>
-      </div>
+        <button  onClick={openModal} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>View Instructions</button>
+        </div>  
+        
+        {isModalOpen && (
+  <div className="modal-overlay-instructions">
+    <div className="modal-content">
+      <h2>Event Instructions</h2>
+      <p>Follow these steps to maximize your promotion:</p>
+      <ul className="instruction-list">
+        <li>🌟 <strong>Step 1:</strong> Download the promotional image.</li>
+        <li>🌐 <strong>Step 2:</strong> Share it on your social networks.</li>
+        <li>📱 <strong>Step 3:</strong> Let users scan the QR code to access the promotion.</li>
+        <li>🎉 <strong>Step 4:</strong> Enjoy welcoming new members!</li>
+      </ul>
+      <button className="close-btn" onClick={closeModal}>Close</button>
+    </div>
+  </div>
+)}
+
+        
+         </div>
     </div>
   );
 };

@@ -8,7 +8,8 @@ import { toast } from 'react-toastify';
 
 const AffiliateProfile = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [payoutAmount, setPayoutAmount] = useState();
   const [firstName, setFirstName] = useState(affiliate?.firstName || '');
   const [lastName, setLastName] = useState(affiliate?.lastName || '');
   const [playerName, setPlayerName] = useState(affiliate?.playerName || '');
@@ -180,6 +181,60 @@ const AffiliateProfile = () => {
     return <div>Loading...</div>;
   }
 
+
+
+
+  const handleRequestPayout = () => {
+    setIsModalOpen(true); // Open the modal
+  };
+  
+ 
+  
+  const handleConfirmPayout = async () => {
+    if (payoutAmount > affiliate.tokens) {
+      toast.error("Amount exceeds your current balance!");
+      return;
+    }
+  
+    setLoading(true); // Show loading spinner while processing
+  
+    try {
+      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/${affiliate._id}/payout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: payoutAmount,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        toast.error(`Error: ${data.message}`);
+      } else {
+        toast.success(`Payout request created successfully!`);
+        setIsModalOpen(false); // Close the modal
+        setPayoutAmount(0); // Reset the amount input
+        
+      }
+    } catch (error) {
+      toast.error('Failed to create payout request.');
+    } finally {
+      setLoading(false); // Hide loading spinner
+    }
+  };
+  
+
+
+
+
+
+
+
+
+
   return (
     <div className='myprofile'>
       <div className='member-header'>
@@ -239,6 +294,7 @@ const AffiliateProfile = () => {
         </form>
 
         <div className='divTwoProfile' style={{ marginTop: '1px' }}>
+              
   <h1>Preferred payment method - choose 1</h1>
 
   {/* Venmo */}
@@ -329,6 +385,32 @@ const AffiliateProfile = () => {
   <button type="submit" className='btn-grad' style={{ width: '40%' }} onClick={handleSubmittingDetails}>
     {loading ? 'Saving!' : 'Save Settings'}
   </button>
+  <button
+  type="button"
+  className='btn-grad profile-btn'
+  style={{ width: '40%', background: '#0d8c17' }}
+  onClick={handleRequestPayout}
+>
+  {loading ? 'Requesting...' : 'Request a payout'}
+</button>
+
+{isModalOpen && (
+        <div className='modalPayout show'>
+          <div className='modal-content'>
+            <span className='close' onClick={() => setIsModalOpen(false)}>&times;</span>
+            <h2>Request a Payout</h2>
+            <input 
+              type="number" 
+              value={payoutAmount} 
+              onChange={(e) => setPayoutAmount(Number(e.target.value))} 
+              placeholder="Enter amount" 
+            />
+            <p>Your current balance is: ${affiliate.tokens}</p>
+            <button onClick={handleConfirmPayout}>Confirm</button>
+          </div>
+        </div>
+      )}
+
 </div>
 
       </div>

@@ -131,6 +131,11 @@ const navigate = useNavigate();
           <h1 onClick={handleNavigation} style={{ cursor: 'pointer' }}>
       Admin Records
     </h1>
+    
+    <h1 onClick={() => navigate('/administration/payouts')} style={{ cursor: 'pointer' }}>
+      Payouts
+    </h1>
+    
         </div>
       </div>
 

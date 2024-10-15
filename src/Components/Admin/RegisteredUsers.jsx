@@ -7,21 +7,55 @@ import { toast } from 'react-toastify';
 const RegisteredUsers = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [tokensToGive, setTokensToGive] = useState('');
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/users');
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
 
   useEffect(() => {
     // Fetch the data from the API when the component mounts
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/users');
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
+  
     fetchData();
   }, []);
+  const handleGiveTokens = async (userId) => {
+    if (!tokensToGive || isNaN(tokensToGive) || tokensToGive <= 0) {
+        return alert('Please enter a valid token amount.');
+    }
+
+    try {
+        const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/api/reward-tokens-only-forcibly/${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tokens: tokensToGive,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to reward tokens.');
+        }
+
+        // Clear the token input after successful submission
+        setTokensToGive('');
+        alert('Tokens rewarded successfully!');
+        window.location.reload();
+    } catch (error) {
+        console.error('Error rewarding tokens:', error);
+        alert('Error rewarding tokens. Please try again.');
+    }
+};
 
 
 const handleDelete = async (id) => {
@@ -74,21 +108,40 @@ const handleDelete = async (id) => {
           ))}
         </div>
       </div>
-
       {selectedUser && (
-        <div className='userDetails'>
-          <img src={selectedUser.profileUrl || FighterOne} alt={`${selectedUser.firstName} ${selectedUser.lastName}`} />
-          <p><strong>Name:</strong> {`${selectedUser.firstName} ${selectedUser.lastName}`}</p>
-          <p><strong>Email:</strong> {selectedUser.email}</p>
-          <p><strong>Phone:</strong> {selectedUser.phone}</p>
-          <p><strong>Current Plan:</strong> {selectedUser.currentPlan}</p>
-          <p><strong>Zip Code:</strong> {selectedUser.zipCode}</p>
-          <p><strong>Verified:</strong> {selectedUser.verified ? 'Yes' : 'No'}</p>
-          <p><strong>Preferred Payment method:</strong> {selectedUser.preferredPaymentMethod}</p>
-          <p><strong>Payment Id:</strong> {selectedUser.preferredPaymentMethodValue}</p>
-          <button onClick={() => setSelectedUser(null)} className='closeButton'>Close</button>
-        </div>
-      )}
+    <div className='userDetails'>
+        <img src={selectedUser.profileUrl || FighterOne} alt={`${selectedUser.firstName} ${selectedUser.lastName}`} />
+        <p><strong>Name:</strong> {`${selectedUser.firstName} ${selectedUser.lastName}`}</p>
+        <p><strong>Email:</strong> {selectedUser.email}</p>
+        <p><strong>Phone:</strong> {selectedUser.phone}</p>
+        <p><strong>Current Plan:</strong> {selectedUser.currentPlan}</p>
+        <p><strong>Zip Code:</strong> {selectedUser.zipCode}</p>
+        <p><strong>Verified:</strong> {selectedUser.verified ? 'Yes' : 'No'}</p>
+        <p><strong>Preferred Payment method:</strong> {selectedUser.preferredPaymentMethod}</p>
+        <p><strong>Payment Id:</strong> {selectedUser.preferredPaymentMethodValue}</p>
+        <p><strong>Tokens:</strong> {selectedUser.tokens}</p>
+
+        {/* Input field to give tokens */}
+        <div className='giveTokens'>
+    <input
+        type='text'
+        value={tokensToGive}
+        onChange={(e) => setTokensToGive(e.target.value)}
+        placeholder='Enter token amount'
+        className='giveTokensInput' // Apply the updated class
+    />
+    <button onClick={() => handleGiveTokens(selectedUser._id)} className='submitTokensButton'> {/* Apply the updated class */}
+        Submit
+    </button>
+</div>
+
+
+        <button onClick={() => setSelectedUser(null)} className='closeButton'>Close</button>
+    </div>
+)}
+
+
+
     </div>
   );
 }

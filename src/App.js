@@ -57,6 +57,8 @@ import AdminRecords from './Components/Admin/AdminRecords';
 import Leagues from './Components/Dashboard/Leagues';
 import AffiliateCreateAccount from './Components/Affiliates/AffiliateCreateAccount';
 import DynamicPromoImage from './Components/Affiliates/DynamicPromoImage';
+import AffiliatesPayouts from './Components/Admin/AffiliatesPayouts';
+import ResetPassword from './Components/Affiliates/ResetPassword';
 
 function AppContent() {
   const location = useLocation();
@@ -131,7 +133,7 @@ function AppContent() {
         <Route path="/HowItWorks" element={<HowItWorks />} />
         <Route path="/AffiliateProfile" element={<AffiliateProfile />} />
         <Route path="/AffiliatePromotion" element={<AffiliateAllFightPromotion />} />
-
+        <Route path="/resetPassword/:token" element={<ResetPassword />} />
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
         <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
         <Route path="/administration/AddNewMatch" element={<PrivateRouteAdmin element={<AddNewMatch />} />} />
@@ -144,7 +146,8 @@ function AppContent() {
         <Route path="/administration/YoutubeArchive" element={<PrivateRouteAdmin element={<YoutubeArchive />} />} />
         <Route path="/affiliate/:affiliateName" element={<AffiliateAllPromos />} />
       
-<Route path="/administration/adminRecords" element={<PrivateRouteAdmin element={<AdminRecords />} />} />
+<Route path="/administration/adminRecords" element={<PrivateRouteAdmin element={<AdminRecords />} />} />     
+<Route path="/administration/payouts" element={<PrivateRouteAdmin element={<AffiliatesPayouts />} />} />
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />

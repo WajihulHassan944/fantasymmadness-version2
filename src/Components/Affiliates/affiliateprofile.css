@@ -129,3 +129,90 @@
     
      
     }
+
+    .modalPayout {
+      position: fixed;
+      z-index: 1000; /* Increased to sit on top of other content */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Darker backdrop for emphasis */
+      display: none;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Disable scroll while modal is open */
+  }
+  
+  .modalPayout.show {
+      display: flex; /* Flexbox to center modal */
+  }
+  
+  .modal-content {
+      background-color: #fff;
+      border-radius: 10px; /* Rounded corners */
+      padding: 30px;
+      width: 90%; /* Adjust modal width */
+      max-width: 500px; /* Max width to prevent it from stretching too much */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+      position: relative; /* For positioning the close button */
+      text-align: center; /* Centered text */
+      animation: fadeIn 0.4s ease; /* Add a smooth fade-in animation */
+  }
+  
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+  
+  .close {
+      color: #aaa;
+      font-size: 24px;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+  
+  .close:hover {
+      color: #333; /* Darker on hover */
+  }
+  
+  .modal-content h2 {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 20px;
+  }
+  
+  .modal-content input[type="number"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 1rem;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+  }
+  
+  .modal-content p {
+      font-size: 1rem;
+      color: #555;
+  }
+  
+  .modal-content button {
+      background-color: #0d8c17;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      margin-top:20px;
+  }
+  
+  .modal-content button:hover {
+      background-color: #0b6f12;
+  }
+  
+  
