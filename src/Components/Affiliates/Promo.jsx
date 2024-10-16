@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
+import { format, toDate, toZonedTime } from 'date-fns-tz';
 
 const Promo = () => {
 
@@ -18,7 +19,8 @@ const Promo = () => {
   const matchStatus = useSelector((state) => state.matches.status);
   const user = useSelector((state) => state.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
+  const US_TIMEZONE = 'America/New_York';
+ 
   
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -119,6 +121,11 @@ const Promo = () => {
     console.log("Affiliate not found or still loading...");
     return <div>Loading...</div>;
   }
+
+// Parse the match date
+const matchDateTime = new Date(match.matchDate);
+const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
+const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
 
   return (
     <div className='fightDetails'>

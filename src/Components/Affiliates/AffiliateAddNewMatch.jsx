@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { format, toZonedTime  } from 'date-fns-tz';
+
 
 const AffiliateAddNewMatch = ({ matchId }) => {
 
@@ -93,7 +95,18 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       alert('Match not found!');
       return;
     }
-    console.log(matchDetails);
+    
+
+    // Parse local date and time from form data (assuming it's in your time zone)
+    const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
+
+    // Convert the local date and time to UTC
+    const matchDateTimeUTC = new Date(localDateTime.getTime() - (localDateTime.getTimezoneOffset() * 60000));
+
+    // Extract the UTC date and time
+    const matchDateUTC = matchDateTimeUTC.toISOString().split('T')[0]; // Date part in UTC
+    const matchTimeUTC = matchDateTimeUTC.toISOString().split('T')[1].substring(0, 5); // Time part in UTC
+
 
     const data = new FormData();
     data.append('matchTokens', formData.matchTokens);
@@ -102,8 +115,8 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('pot', formData.pot);
     data.append('profit', formData.profit);
     data.append('amountOverPotBudget', formData.amountOverPotBudget);
-    data.append('matchDate', formData.matchDate);
-    data.append('matchTime', formData.matchTime);
+    data.append('matchDate', matchDateUTC);  // Store date in UTC
+  data.append('matchTime', matchTimeUTC); 
 
     // Append image URLs directly if available
     data.append('fighterAImageUrl', matchDetails.fighterAImage);

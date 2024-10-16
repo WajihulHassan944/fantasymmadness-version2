@@ -5,6 +5,7 @@ import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 import QRCode from 'qrcode'; 
+import { format, toDate, toZonedTime } from 'date-fns-tz';
 import AffiliateMatchDetailsCss from "./AffiliateMatchDetailsCss.css";
 import BackgroundImg from "../../Assets/imgone.png";
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
@@ -16,6 +17,8 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const match = matches.find((m) => m.shadowFightId === matchId && m.affiliateId === affiliateId);
   const [navigateDashboard, setNavigateToDash] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+ 
+  const US_TIMEZONE = 'America/New_York';
   const imageData = {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
@@ -67,7 +70,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   
         // Change date and time color to match box shadow color
         ctx.fillStyle = '#FF4500'; 
-        ctx.fillText(`${new Date(match.matchDate).toLocaleDateString()} ${match.matchTime}`, canvas.width / 2, 65); // Date and time below promoter name
+        ctx.fillText(`${formattedDate} ${match.matchTime}`, canvas.width / 2, 65); // Date and time below promoter name
         
         const drawImageWithShadow = (image, x, y, name) => {
           const radius = 35; // Circle radius
@@ -201,6 +204,11 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     link.click();
   };
 
+// Parse the match date
+const matchDateTime = new Date(match.matchDate);
+const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
+const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
+
   return (
     <div className='fightDetails' style={{ paddingBottom: '50px' }}>
       <div className='member-header' style={{ marginBottom: '30px' }}>
@@ -238,8 +246,8 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         </div>
 
         <div className='beiginningTimeFight'>
-          <h1 style={{ fontSize: '21.5px' }}>{new Date(match.matchDate).toLocaleDateString()} - </h1>
-          <p style={{ color: "#38b90c" }}>{match.matchTime}</p>
+        <h1 style={{ fontSize: '21.5px' }}>{formattedDate} - </h1>
+        <p style={{ color: "#38b90c" }}>{match.matchTime}</p>
         </div>
 
         <div className='fightDetailsPot'>
