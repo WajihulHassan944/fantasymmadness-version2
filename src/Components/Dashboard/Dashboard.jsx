@@ -16,11 +16,39 @@ const Dashboard = () => {
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
-  
+  const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
+
   const [upcomingMatches, setUpcomingMatches] = useState([]);
 const [loading, setLoading] = useState(true);
 
   const [time, setTime] = useState(new Date()); // State to trigger re-render every minute
+  const [removedMatches, setRemovedMatches] = useState([]);
+
+
+  const user = useSelector((state) => state.user); // Access user details from Redux store
+
+
+  useEffect(() => {
+    const fetchRemovedMatches = async () => {
+      try {
+        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/users/removed-matches');
+        const data = await response.json();
+        
+        // Filter the data for the current user's userId
+        const userMatches = data.filter(item => item.userId === user._id);
+        
+        // Assuming you want to store the removedMatchesIds array for the matched user
+        if (userMatches.length > 0) {
+          setRemovedMatches(userMatches[0].removedMatchesIds);
+        }
+      } catch (error) {
+        console.error('Error fetching removed matches:', error);
+      }
+    };
+
+    fetchRemovedMatches();
+  }, [user._id]); // Run the effect when user._id changes
+
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
@@ -104,16 +132,12 @@ const [loading, setLoading] = useState(true);
   }, [matches]);
   
     
-
-  
-
-  const user = useSelector((state) => state.user); // Access user details from Redux store
-
   // Check if the user data is available before rendering
   if (!user || !user.firstName) {
     return <div>Loading...</div>;
   }
 
+  
   const handleMatchClick = (matchId) => {
     setSelectedMatchId(matchId); // Set the selected match ID
   };
@@ -183,7 +207,32 @@ const [loading, setLoading] = useState(true);
     return hasSubmittedPrediction;
   });
   
-
+  const handleRemoveMatch = async (matchId) => {
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/remove-match-from-my-dashboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user._id, // Assuming user._id is available
+          matchId,
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert('Match removed from dashboard successfully');
+        window.location.reload();
+        // Optionally, refresh or update the UI
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
   return (
     <div className='userdashboard'>
       <div className='member-header'>
@@ -202,143 +251,162 @@ const [loading, setLoading] = useState(true);
       </div>
 
       <div className='fightsWrap'>
-        <div className='upcomingFights fightscontainer' >
-          <h1 className='fightsheadingone'>UPCOMING / ACTIVE FIGHTS</h1>
-          {upcomingMatches.length > 0 ? (
-            upcomingMatches.map((match) => (
-              <div  className='fightItem'
-              key={match._id} >
-                <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
-                  <div className='fighterOne'>
-                    <img src={match.fighterAImage} alt={match.matchFighterA} />
-                  </div>
-                  <div className='fighterTwo'>
-                    <img src={match.fighterBImage} alt={match.matchFighterB} />
-                  </div>
-                </div>
-                <div className='fightItemOne'>
-                  <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
-                    <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-                  </div>
-                  <div className="transformed-div-two">
-                    <div className='transformed-div-two-partOne'>
-                    <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
-                      <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
-                    </div>
-                    <div className='transformed-div-two-partTwo'>
-                      <p>{new Date(match.matchDate).toLocaleDateString()}</p>
-                      <h1>{match.matchType}</h1>
-                     
-                    </div>
-                  </div>
-                </div>
-                <div className='fightItemTwo'>
-                  <div className="transformed-div-three">
-                    <p>{match.matchDescription}</p>
-                  </div>
-                  <div className="transformed-div-four">
-                    <h1>Players</h1>
-                    <p>{match.userPredictions.length}</p>
-                  </div>
-                </div>    
+      <div className='upcomingFights fightscontainer'>
+  <h1 className='fightsheadingone'>UPCOMING / ACTIVE FIGHTS</h1>
+  {upcomingMatches.length > 0 ? (
+    // Filter the matches to exclude removed matches
+    upcomingMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
+      upcomingMatches.map((match) => (
+        !removedMatches.includes(match._id) && ( // Check if match._id is NOT in removedMatches
+          <div className='fightItem' key={match._id} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
+            {hoveredMatch === match._id && (
+              <button className="removeButton" onClick={() => handleRemoveMatch(match._id)}>
+                Remove from dashboard
+              </button>
+            )}
+            <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
+              <div className='fighterOne'>
+                <img src={match.fighterAImage} alt={match.matchFighterA} />
               </div>
-            ))
-          ) : (
-            <p className='noMatch'>No upcoming matches</p>
-          )}
-        </div>
+              <div className='fighterTwo'>
+                <img src={match.fighterBImage} alt={match.matchFighterB} />
+              </div>
+            </div>
+            <div className='fightItemOne'>
+              <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
+                <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+              </div>
+              <div className="transformed-div-two">
+                <div className='transformed-div-two-partOne'>
+                  <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
+                  <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
+                </div>
+                <div className='transformed-div-two-partTwo'>
+                  <p>{new Date(match.matchDate).toLocaleDateString()}</p>
+                  <h1>{match.matchType}</h1>
+                </div>
+              </div>
+            </div>
+            <div className='fightItemTwo'>
+              <div className="transformed-div-three">
+                <p>{match.matchDescription}</p>
+              </div>
+              <div className="transformed-div-four">
+                <h1>Players</h1>
+                <p>{match.userPredictions.length}</p>
+              </div>
+            </div>    
+          </div>
+        )
+      ))
+    ) : (
+      <p className='noMatch'>No fights</p> // Message when no fights are available
+    )
+  ) : (
+    <p className='noMatch'>No upcoming matches</p>
+  )}
+</div>
 
 
-
-        <div className='completedFights fightscontainer'>
+<div className='completedFights fightscontainer'>
   <h1 className='fightsheadingtwo'>YOUR COMPLETED FIGHTS</h1>
 
   {completedMatches.length > 0 ? (
-    completedMatches.map((match) => {
-      const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+    completedMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
+      completedMatches.map((match) => {
+        if (!removedMatches.includes(match._id)) { // Check if match._id is NOT in removedMatches
+          const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
-      return (
-        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)}   >
-          <div className='fightersImages'>
-            <div className='fighterOne'>
-              <img src={match.fighterAImage} alt="Fighter One" />
-            </div>
-            <div className='fighterTwo'>
-              <img src={match.fighterBImage} alt="Fighter Two" />
-            </div>
-          </div>
-          <div className='fightItemOne'>
-            <div className="transformed-div">
-              <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-            </div>
-            <div className="transformed-div-two">
-              <div className='transformed-div-two-partOne'>
-                <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
+          return (
+            <div className="fightItem" key={match._id} onClick={() => handleCompletedMatchClick(match._id)} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
+              {hoveredMatch === match._id && (
+                <button className="removeButton" onClick={(e) => {
+                  e.stopPropagation(); // Prevent the parent div's onClick from firing
+                  handleRemoveMatch(match._id);
+                }}>
+                  Remove from dashboard
+                </button>
+              )}
+              <div className='fightersImages'>
+                <div className='fighterOne'>
+                  <img src={match.fighterAImage} alt="Fighter One" />
+                </div>
+                <div className='fighterTwo'>
+                  <img src={match.fighterBImage} alt="Fighter Two" />
+                </div>
               </div>
-              <div className='transformed-div-two-partTwo'>
-                <p style={{marginLeft:'-15px'}}>
-                  {hasStarted
-                    ? "Fight has started"
-                    : `Begins in ${diffHrs} hours ${diffMins} mins`}
-                </p>
+              <div className='fightItemOne'>
+                <div className="transformed-div">
+                  <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                </div>
+                <div className="transformed-div-two">
+                  <div className='transformed-div-two-partOne'>
+                    <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
+                  </div>
+                  <div className='transformed-div-two-partTwo'>
+                    <p style={{marginLeft:'-15px'}}>
+                      {hasStarted
+                        ? "Fight has started"
+                        : `Begins in ${diffHrs} hours ${diffMins} mins`}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className='fightItemTwo'>
-  <div className="transformed-three">
-    {
-      match.matchCategory === "boxing" ? (
-        <>
-          <div className='transformedDivBox'>HP</div>
-          <div className='transformedDivBox'>BP</div>
-          <div className='transformedDivBox'>TP</div>
-          <div className='transformedDivBox'>RW</div>
-          <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
-        </>
-      ) : (
-        <>
-          <div className='transformedDivBox'>ST</div>
-          <div className='transformedDivBox'>KI</div>
-          <div className='transformedDivBox'>KN</div>
-          <div className='transformedDivBox'>RW</div>
-          <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
-        </>
-      )
-    }
-  </div>
-  <div className="transformed-div-four">
-    <h1>Players</h1>
-    <p>{match.userPredictions.length}</p>
-  </div>
-</div>
+              <div className='fightItemTwo'>
+                <div className="transformed-three">
+                  {match.matchCategory === "boxing" ? (
+                    <>
+                      <div className='transformedDivBox'>HP</div>
+                      <div className='transformedDivBox'>BP</div>
+                      <div className='transformedDivBox'>TP</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className='transformedDivBox'>ST</div>
+                      <div className='transformedDivBox'>KI</div>
+                      <div className='transformedDivBox'>KN</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                    </>
+                  )}
+                </div>
+                <div className="transformed-div-four">
+                  <h1>Players</h1>
+                  <p>{match.userPredictions.length}</p>
+                </div>
+              </div>
 
-<div className="transformed-five">
-  {
-    match.matchCategory === "boxing" ? (
-      <>
-        <div className='transformedDivBox'>HP</div>
-        <div className='transformedDivBox'>BP</div>
-        <div className='transformedDivBox'>TP</div>
-        <div className='transformedDivBox'>RW</div>
-        <div className='transformedDivBox'>KO</div>
-      </>
+              <div className="transformed-five">
+                {match.matchCategory === "boxing" ? (
+                  <>
+                    <div className='transformedDivBox'>HP</div>
+                    <div className='transformedDivBox'>BP</div>
+                    <div className='transformedDivBox'>TP</div>
+                    <div className='transformedDivBox'>RW</div>
+                    <div className='transformedDivBox'>KO</div>
+                  </>
+                ) : (
+                  <>
+                    <div className='transformedDivBox'>ST</div>
+                    <div className='transformedDivBox'>KI</div>
+                    <div className='transformedDivBox'>KN</div>
+                    <div className='transformedDivBox'>RW</div>
+                    <div className='transformedDivBox'>KO</div>
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        }
+        return null; // If the match is removed, do not render it
+      })
     ) : (
-      <>
-        <div className='transformedDivBox'>ST</div>
-        <div className='transformedDivBox'>KI</div>
-        <div className='transformedDivBox'>KN</div>
-        <div className='transformedDivBox'>RW</div>
-        <div className='transformedDivBox'>KO</div>
-      </>
+      <p className='noMatch'>No fights</p> // Message when no completed fights are available
     )
-  }
-</div>
-
-        </div>
-      );
-    })
   ) : (
     <p className='noMatch'>No completed matches</p>
   )}
@@ -347,43 +415,52 @@ const [loading, setLoading] = useState(true);
 
 <div className='pendingFights fightscontainer'>
   <h1 className='fightsheadingthree'>Your Pending Fights</h1>
-  
-  
 
   {upcomingMatches.length > 0 ? (
-    // Filter matches where user predictions are not submitted
+    // Filter matches where user predictions are not submitted and not removed
     upcomingMatches
-      .filter((match) =>
+      .filter(match =>
         match.userPredictions &&
         !match.userPredictions.some(prediction =>
           prediction.userId === user._id && prediction.predictionStatus === 'submitted'
-        )
+        ) &&
+        !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
       )
       .length > 0 ? (
         // Map over filtered matches
         upcomingMatches
-          .filter((match) =>
+          .filter(match =>
             match.userPredictions &&
             !match.userPredictions.some(prediction =>
               prediction.userId === user._id && prediction.predictionStatus === 'submitted'
-            )
+            ) &&
+            !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
           )
           .map((match) => {
             const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
             return (
               <div
-             className='fightItem'
-              key={match._id}
-              onClick={() => {
-                if (match.matchType === "SHADOW" && match.blurred) {
-                  alert("Affiliate criteria has not been met for this SHADOW match.");
-                } else {
-                  handleMatchClick(match._id);
-                }
-              }}
-             
-            >   <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
+                className='fightItem'
+                key={match._id}
+                onClick={() => {
+                  if (match.matchType === "SHADOW" && match.blurred) {
+                    alert("Affiliate criteria has not been met for this SHADOW match.");
+                  } else {
+                    handleMatchClick(match._id);
+                  }
+                }}
+                onMouseEnter={() => setHoveredMatch(match._id)} 
+                onMouseLeave={() => setHoveredMatch(null)}>
+                {hoveredMatch === match._id && (
+                  <button className="removeButton" onClick={(e) => {
+                    e.stopPropagation(); // Prevent the parent div's onClick from firing
+                    handleRemoveMatch(match._id);
+                  }}>
+                    Remove from dashboard
+                  </button>
+                )}
+                <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
                   </div>
@@ -409,56 +486,52 @@ const [loading, setLoading] = useState(true);
                   </div>
                 </div>
                 <div className='fightItemTwo'>
-  <div className="transformed-three">
-    {
-      match.matchCategory === "boxing" ? (
-        <>
-          <div className='transformedDivBox'>HP</div>
-          <div className='transformedDivBox'>BP</div>
-          <div className='transformedDivBox'>TP</div>
-          <div className='transformedDivBox'>RW</div>
-          <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
-        </>
-      ) : (
-        <>
-          <div className='transformedDivBox'>ST</div>
-          <div className='transformedDivBox'>KI</div>
-          <div className='transformedDivBox'>KN</div>
-          <div className='transformedDivBox'>RW</div>
-          <div className='transformedDivBox'>KO</div>
-          <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
-        </>
-      )
-    }
-  </div>
-  <div className="transformed-div-four">
-    <h1>Players</h1>
-    <p>{match.userPredictions.length}</p>
-  </div>
-</div>
+                  <div className="transformed-three">
+                    {match.matchCategory === "boxing" ? (
+                      <>
+                        <div className='transformedDivBox'>HP</div>
+                        <div className='transformedDivBox'>BP</div>
+                        <div className='transformedDivBox'>TP</div>
+                        <div className='transformedDivBox'>RW</div>
+                        <div className='transformedDivBox'>KO</div>
+                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                      </>
+                    ) : (
+                      <>
+                        <div className='transformedDivBox'>ST</div>
+                        <div className='transformedDivBox'>KI</div>
+                        <div className='transformedDivBox'>KN</div>
+                        <div className='transformedDivBox'>RW</div>
+                        <div className='transformedDivBox'>KO</div>
+                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                      </>
+                    )}
+                  </div>
+                  <div className="transformed-div-four">
+                    <h1>Players</h1>
+                    <p>{match.userPredictions.length}</p>
+                  </div>
+                </div>
 
-<div className="transformed-five">
-  {
-    match.matchCategory === "boxing" ? (
-      <>
-        <div className='transformedDivBox'>HP</div>
-        <div className='transformedDivBox'>BP</div>
-        <div className='transformedDivBox'>TP</div>
-        <div className='transformedDivBox'>RW</div>
-        <div className='transformedDivBox'>KO</div>
-      </>
-    ) : (
-      <>
-        <div className='transformedDivBox'>ST</div>
-        <div className='transformedDivBox'>KI</div>
-        <div className='transformedDivBox'>KN</div>
-        <div className='transformedDivBox'>RW</div>
-        <div className='transformedDivBox'>KO</div>
-      </>
-    )
-  }
-</div>
+                <div className="transformed-five">
+                  {match.matchCategory === "boxing" ? (
+                    <>
+                      <div className='transformedDivBox'>HP</div>
+                      <div className='transformedDivBox'>BP</div>
+                      <div className='transformedDivBox'>TP</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className='transformedDivBox'>ST</div>
+                      <div className='transformedDivBox'>KI</div>
+                      <div className='transformedDivBox'>KN</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                    </>
+                  )}
+                </div>
 
               </div>
             );
@@ -469,8 +542,8 @@ const [loading, setLoading] = useState(true);
   ) : (
     <p className='noMatch'>No pending matches</p>
   )}
-
 </div>
+
 
       </div>
     </div>

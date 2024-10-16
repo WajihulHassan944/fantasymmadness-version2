@@ -16,7 +16,9 @@ const YourFights = () => {
   const [time, setTime] = useState(new Date());
   const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
+  const [removedMatches, setRemovedMatches] = useState([]);
+
   const user = useSelector((state) => state.user); // Access user details from Redux store
 
   // Use your custom hook to get leaderboard data
@@ -36,6 +38,28 @@ const YourFights = () => {
     return () => clearInterval(timer);
   }, []);
 
+
+
+  useEffect(() => {
+    const fetchRemovedMatches = async () => {
+      try {
+        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/users/removed-matches');
+        const data = await response.json();
+        
+        // Filter the data for the current user's userId
+        const userMatches = data.filter(item => item.userId === user._id);
+        
+        // Assuming you want to store the removedMatchesIds array for the matched user
+        if (userMatches.length > 0) {
+          setRemovedMatches(userMatches[0].removedMatchesIds);
+        }
+      } catch (error) {
+        console.error('Error fetching removed matches:', error);
+      }
+    };
+
+    fetchRemovedMatches();
+  }, [user._id]); // Run the effect when user._id changes
 
 
   useEffect(() => {
@@ -149,6 +173,35 @@ if (completedMatchId) {
   const currentUserData = leaderboard.find(player => player._id === user._id);
   const totalPoints = currentUserData ? currentUserData.totalPoints : 0;
 
+
+
+  const handleRemoveMatch = async (matchId) => {
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/remove-match-from-my-dashboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user._id, // Assuming user._id is available
+          matchId,
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert('Match removed from dashboard successfully');
+        // Optionally, refresh or update the UI
+        window.location.reload();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+
   return (
     <div className='userdashboard yourFightsWrapper'>
       <div className='member-header'>
@@ -188,102 +241,153 @@ if (completedMatchId) {
   <h1 className='fightsheadingtwo'>YOUR COMPLETED FIGHTS</h1>
 
   {completedMatches.length > 0 ? (
-    completedMatches.map((match) => {
-      const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+    completedMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
+      completedMatches.map((match) => {
+        if (!removedMatches.includes(match._id)) { // Check if match._id is NOT in removedMatches
+          const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
-      return (
-        <div className="fightItem" key={match._id}  onClick={() => handleCompletedMatchClick(match._id)} >
-          <div className='fightersImages'>
-            <div className='fighterOne'>
-              <img src={match.fighterAImage} alt="Fighter One" />
-            </div>
-            <div className='fighterTwo'>
-              <img src={match.fighterBImage} alt="Fighter Two" />
-            </div>
-          </div>
-          <div className='fightItemOne'>
-            <div className="transformed-div">
-              <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-            </div>
-            <div className="transformed-div-two">
-              <div className='transformed-div-two-partOne'>
-                <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
+          return (
+            <div className="fightItem" key={match._id} onClick={() => handleCompletedMatchClick(match._id)} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
+              {hoveredMatch === match._id && (
+                <button className="removeButton" onClick={(e) => {
+                  e.stopPropagation(); // Prevent the parent div's onClick from firing
+                  handleRemoveMatch(match._id);
+                }}>
+                  Remove from dashboard
+                </button>
+              )}
+              <div className='fightersImages'>
+                <div className='fighterOne'>
+                  <img src={match.fighterAImage} alt="Fighter One" />
+                </div>
+                <div className='fighterTwo'>
+                  <img src={match.fighterBImage} alt="Fighter Two" />
+                </div>
               </div>
-              <div className='transformed-div-two-partTwo'>
-                <p style={{marginLeft:'-15px'}}>
-                  {hasStarted
-                    ? "Fight has started"
-                    : `Begins in ${diffHrs} hours ${diffMins} mins`}
-                </p>
+              <div className='fightItemOne'>
+                <div className="transformed-div">
+                  <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                </div>
+                <div className="transformed-div-two">
+                  <div className='transformed-div-two-partOne'>
+                    <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
+                  </div>
+                  <div className='transformed-div-two-partTwo'>
+                    <p style={{marginLeft:'-15px'}}>
+                      {hasStarted
+                        ? "Fight has started"
+                        : `Begins in ${diffHrs} hours ${diffMins} mins`}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className='fightItemTwo'>
+                <div className="transformed-three">
+                  {match.matchCategory === "boxing" ? (
+                    <>
+                      <div className='transformedDivBox'>HP</div>
+                      <div className='transformedDivBox'>BP</div>
+                      <div className='transformedDivBox'>TP</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className='transformedDivBox'>ST</div>
+                      <div className='transformedDivBox'>KI</div>
+                      <div className='transformedDivBox'>KN</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                    </>
+                  )}
+                </div>
+                <div className="transformed-div-four">
+                  <h1>Players</h1>
+                  <p>{match.userPredictions.length}</p>
+                </div>
+              </div>
+
+              <div className="transformed-five">
+                {match.matchCategory === "boxing" ? (
+                  <>
+                    <div className='transformedDivBox'>HP</div>
+                    <div className='transformedDivBox'>BP</div>
+                    <div className='transformedDivBox'>TP</div>
+                    <div className='transformedDivBox'>RW</div>
+                    <div className='transformedDivBox'>KO</div>
+                  </>
+                ) : (
+                  <>
+                    <div className='transformedDivBox'>ST</div>
+                    <div className='transformedDivBox'>KI</div>
+                    <div className='transformedDivBox'>KN</div>
+                    <div className='transformedDivBox'>RW</div>
+                    <div className='transformedDivBox'>KO</div>
+                  </>
+                )}
               </div>
             </div>
-          </div>
-          <div className='fightItemTwo'>
-            <div className="transformed-three">
-              <div className='transformedDivBox'>HP</div>
-              <div className='transformedDivBox'>BP</div>
-              <div className='transformedDivBox'>TP</div>
-              <div className='transformedDivBox'>RW</div>
-              <div className='transformedDivBox'>KO</div>
-              <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}  {match.matchStatus} </div>
-            </div>
-            <div className="transformed-div-four">
-              <h1>Players</h1>
-              <p>{match.userPredictions.length}</p>
-            </div>
-          </div>
-          <div className="transformed-five">
-            <div className='transformedDivBox'>HP</div>
-            <div className='transformedDivBox'>BP</div>
-            <div className='transformedDivBox'>TP</div>
-            <div className='transformedDivBox'>RW</div>
-            <div className='transformedDivBox'>KO</div>
-          </div>
-        </div>
-      );
-    })
+          );
+        }
+        return null; // If the match is removed, do not render it
+      })
+    ) : (
+      <p className='noMatch'>No fights</p> // Message when no completed fights are available
+    )
   ) : (
     <p className='noMatch'>No completed matches</p>
   )}
 </div>
 
-
-
-
 <div className='pendingFights fightscontainer'>
   <h1 className='fightsheadingthree'>Your Pending Fights</h1>
 
   {upcomingMatches.length > 0 ? (
-    // Filter matches where user predictions are not submitted
+    // Filter matches where user predictions are not submitted and not removed
     upcomingMatches
-      .filter((match) =>
+      .filter(match =>
         match.userPredictions &&
         !match.userPredictions.some(prediction =>
           prediction.userId === user._id && prediction.predictionStatus === 'submitted'
-        )
+        ) &&
+        !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
       )
       .length > 0 ? (
         // Map over filtered matches
         upcomingMatches
-          .filter((match) =>
+          .filter(match =>
             match.userPredictions &&
             !match.userPredictions.some(prediction =>
               prediction.userId === user._id && prediction.predictionStatus === 'submitted'
-            )
+            ) &&
+            !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
           )
           .map((match) => {
             const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
 
             return (
-              <div className='fightItem'
-              key={match._id}
-              onClick={() => {
-                if (match.matchType === "SHADOW" && match.blurred) {
-                  alert("User criteria has not been met for this SHADOW match.");
-                } else {
-                  handleMatchClick(match._id);
-                }
-              }} >
+              <div
+                className='fightItem'
+                key={match._id}
+                onClick={() => {
+                  if (match.matchType === "SHADOW" && match.blurred) {
+                    alert("Affiliate criteria has not been met for this SHADOW match.");
+                  } else {
+                    handleMatchClick(match._id);
+                  }
+                }}
+                onMouseEnter={() => setHoveredMatch(match._id)} 
+                onMouseLeave={() => setHoveredMatch(null)}>
+                {hoveredMatch === match._id && (
+                  <button className="removeButton" onClick={(e) => {
+                    e.stopPropagation(); // Prevent the parent div's onClick from firing
+                    handleRemoveMatch(match._id);
+                  }}>
+                    Remove from dashboard
+                  </button>
+                )}
                 <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt="Fighter One" />
@@ -311,25 +415,52 @@ if (completedMatchId) {
                 </div>
                 <div className='fightItemTwo'>
                   <div className="transformed-three">
-                    <div className='transformedDivBox'>HP</div>
-                    <div className='transformedDivBox'>BP</div>
-                    <div className='transformedDivBox'>TP</div>
-                    <div className='transformedDivBox'>RW</div>
-                    <div className='transformedDivBox'>KO</div>
-                    <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus} </div>
+                    {match.matchCategory === "boxing" ? (
+                      <>
+                        <div className='transformedDivBox'>HP</div>
+                        <div className='transformedDivBox'>BP</div>
+                        <div className='transformedDivBox'>TP</div>
+                        <div className='transformedDivBox'>RW</div>
+                        <div className='transformedDivBox'>KO</div>
+                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                      </>
+                    ) : (
+                      <>
+                        <div className='transformedDivBox'>ST</div>
+                        <div className='transformedDivBox'>KI</div>
+                        <div className='transformedDivBox'>KN</div>
+                        <div className='transformedDivBox'>RW</div>
+                        <div className='transformedDivBox'>KO</div>
+                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                      </>
+                    )}
                   </div>
                   <div className="transformed-div-four">
                     <h1>Players</h1>
                     <p>{match.userPredictions.length}</p>
                   </div>
                 </div>
+
                 <div className="transformed-five">
-                  <div className='transformedDivBox'>HP</div>
-                  <div className='transformedDivBox'>BP</div>
-                  <div className='transformedDivBox'>TP</div>
-                  <div className='transformedDivBox'>RW</div>
-                  <div className='transformedDivBox'>KO</div>
+                  {match.matchCategory === "boxing" ? (
+                    <>
+                      <div className='transformedDivBox'>HP</div>
+                      <div className='transformedDivBox'>BP</div>
+                      <div className='transformedDivBox'>TP</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className='transformedDivBox'>ST</div>
+                      <div className='transformedDivBox'>KI</div>
+                      <div className='transformedDivBox'>KN</div>
+                      <div className='transformedDivBox'>RW</div>
+                      <div className='transformedDivBox'>KO</div>
+                    </>
+                  )}
                 </div>
+
               </div>
             );
           })
