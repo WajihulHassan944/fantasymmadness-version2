@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
+import { format, toDate, toZonedTime } from 'date-fns-tz';
 
 const PromoTwo = ({matchId , affiliateId}) => {
     const dispatch = useDispatch();
@@ -97,6 +98,12 @@ console.log(matchId, affiliateId);
       return <p>Loading...</p>;
     }
   
+
+    const US_TIMEZONE = 'America/New_York';
+const matchDateTime = new Date(match.matchDate);
+const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
+const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
+
   
     return (
       <div className='fightDetails'>
@@ -133,8 +140,8 @@ console.log(matchId, affiliateId);
           </div>
   
           <div className='beiginningTimeFight'>
-            <h1 style={{ fontSize: '21.5px' }}> {new Date(match.matchDate).toLocaleDateString()} - </h1>
-            <p style={{ color: "#38b90c" }}>{match.matchTime}</p>
+            <h1 style={{ fontSize: '21.5px' }}> {formattedDate} - </h1>
+            <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
           </div>
   
           <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>

@@ -59,6 +59,7 @@ import AffiliateCreateAccount from './Components/Affiliates/AffiliateCreateAccou
 import DynamicPromoImage from './Components/Affiliates/DynamicPromoImage';
 import AffiliatesPayouts from './Components/Admin/AffiliatesPayouts';
 import ResetPassword from './Components/Affiliates/ResetPassword';
+import NonRegisteredUsers from './Components/Admin/NonRegisteredUsers';
 
 function AppContent() {
   const location = useLocation();
@@ -148,6 +149,7 @@ function AppContent() {
       
 <Route path="/administration/adminRecords" element={<PrivateRouteAdmin element={<AdminRecords />} />} />     
 <Route path="/administration/payouts" element={<PrivateRouteAdmin element={<AffiliatesPayouts />} />} />
+<Route path="/administration/non-registered-users" element={<PrivateRouteAdmin element={<NonRegisteredUsers />} />} />
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />

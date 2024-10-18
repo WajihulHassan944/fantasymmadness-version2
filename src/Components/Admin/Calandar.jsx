@@ -113,7 +113,8 @@ const Calandar = () => {
             <h3>{currentMatch.matchName}</h3>
             <p>{currentMatch.matchDescription}</p>
             <p><strong>Date:</strong> {new Date(currentMatch.matchDate).toLocaleDateString()}</p>
-            <p><strong>Time:</strong> {currentMatch.matchTime}</p>
+            <p><strong>Time:</strong> {new Date(`1970-01-01T${currentMatch.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+</p>
             <p><strong>Venue:</strong> {currentMatch.venue}</p>
             <div className="match-images">
                 <img src={currentMatch.fighterAImage} alt={currentMatch.matchFighterA} />

@@ -70,7 +70,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   
         // Change date and time color to match box shadow color
         ctx.fillStyle = '#FF4500'; 
-        ctx.fillText(`${formattedDate} ${match.matchTime}`, canvas.width / 2, 65); // Date and time below promoter name
+        ctx.fillText(`${formattedDate} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`, canvas.width / 2, 65); // Date and time below promoter name
         
         const drawImageWithShadow = (image, x, y, name) => {
           const radius = 35; // Circle radius
@@ -247,8 +247,10 @@ const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE })
 
         <div className='beiginningTimeFight'>
         <h1 style={{ fontSize: '21.5px' }}>{formattedDate} - </h1>
-        <p style={{ color: "#38b90c" }}>{match.matchTime}</p>
-        </div>
+        <p style={{ color: "#38b90c" }}>
+  {new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+</p>
+ </div>
 
         <div className='fightDetailsPot'>
           <h1 style={{ fontSize: '21.5px' }}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>

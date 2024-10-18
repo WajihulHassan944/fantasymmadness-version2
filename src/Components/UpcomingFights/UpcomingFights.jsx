@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import './UpcomingFightsUser.css';
 import { useNavigate } from 'react-router-dom';
+import { format, toDate, toZonedTime } from 'date-fns-tz';
 
 const UpcomingFights = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const UpcomingFights = () => {
   const matchStatus = useSelector((state) => state.matches.status);
   const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const US_TIMEZONE = 'America/New_York';
   
   const navigate = useNavigate();
 
@@ -91,44 +93,49 @@ const UpcomingFights = () => {
         <h1 className='second-main-heading'>Upcoming fights <span className='toRemove'>/ Active fights</span></h1>
         <div className="fightswrap" data-aos="zoom-out">
           {upcomingMatches.length > 0 ? (
-            upcomingMatches.map((match) => (
-              <div  className='fightItem' key={match._id} onClick={handleFightClick} >
-                <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
-                  <div className='fighterOne'>
-                    <img src={match.fighterAImage} alt={match.matchFighterA} />
-                  </div>
-                  <div className='fighterTwo'>
-                    <img src={match.fighterBImage} alt={match.matchFighterB} />
-                  </div>
-                </div>
-                <div className='fightItemOne'>
-                  <div  className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
-                    <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-                  </div>
-                  <div className="transformed-div-two">
-                    <div className='transformed-div-two-partOne'>
-                    <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
-
-                      <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
+            upcomingMatches.map((match) => {
+              const matchDateTime = new Date(match.matchDate); // Create a date object from the match date
+              const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE); // Convert to the specified timezone
+              const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE }); // Format the date
+              
+              return (
+                <div className='fightItem' key={match._id} onClick={handleFightClick}>
+                  <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
+                    <div className='fighterOne'>
+                      <img src={match.fighterAImage} alt={match.matchFighterA} />
                     </div>
-                    <div className='transformed-div-two-partTwo'>
-                      <p>{new Date(match.matchDate).toLocaleDateString()}</p>
-                      <h1>{match.matchType}</h1>
-                      <h1>pot ${match.pot}</h1>
+                    <div className='fighterTwo'>
+                      <img src={match.fighterBImage} alt={match.matchFighterB} />
                     </div>
                   </div>
+                  <div className='fightItemOne'>
+                    <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
+                      <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                    </div>
+                    <div className="transformed-div-two">
+                      <div className='transformed-div-two-partOne'>
+                        <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
+                        <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
+                      </div>
+                      <div className='transformed-div-two-partTwo'>
+                        <p>{formattedDate}</p> {/* Use the formatted date here */}
+                        <h1>{match.matchType}</h1>
+                        <h1>pot ${match.pot}</h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='fightItemTwo'>
+                    <div className="transformed-div-three">
+                      <p>{match.matchDescription}</p>
+                    </div>
+                    <div className="transformed-div-four">
+                      <h1>Players</h1>
+                      <p>{match.userPredictions.length}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className='fightItemTwo'>
-                  <div className="transformed-div-three">
-                    <p>{match.matchDescription}</p>
-                  </div>
-                  <div className="transformed-div-four">
-                    <h1>Players</h1>
-                    <p>{match.userPredictions.length}</p>
-                  </div>
-                </div>    
-              </div>
-            ))
+              );
+            })
           ) : (
             <p className='noMatch'>No upcoming matches</p>
           )}

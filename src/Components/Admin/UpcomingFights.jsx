@@ -131,7 +131,7 @@ const [filter, setFilter] = useState('All');
                     <div className='transformed-div-two-partOne'>
                       <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
                       {filter !== 'Shadow Templates' && (
-                        <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
+                        <h1>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                       )}
                     </div>
                     <div className='transformed-div-two-partTwo'>

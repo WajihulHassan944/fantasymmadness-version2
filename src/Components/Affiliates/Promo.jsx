@@ -121,12 +121,11 @@ const Promo = () => {
     console.log("Affiliate not found or still loading...");
     return <div>Loading...</div>;
   }
-
-// Parse the match date
-const matchDateTime = new Date(match.matchDate);
-const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
-const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
-
+  
+  const matchDateTime = new Date(match.matchDate);
+  const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
+  const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
+  
   return (
     <div className='fightDetails'>
       <div className='member-header' style={{ marginBottom: '30px' }}>
@@ -162,8 +161,8 @@ const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE })
         </div>
 
         <div className='beiginningTimeFight'>
-          <h1 style={{ fontSize: '21.5px' }}> {new Date(match.matchDate).toLocaleDateString()} - </h1>
-          <p style={{ color: "#38b90c" }}>{match.matchTime}</p>
+          <h1 style={{ fontSize: '21.5px' }}> {formattedDate} - </h1>
+          <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
         </div>
 
         <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>

@@ -7,7 +7,7 @@ import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserBoard';
-
+import { format, toDate, toZonedTime } from 'date-fns-tz';
 const Dashboard = () => {
 
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Dashboard = () => {
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
-
+  const US_TIMEZONE = 'America/New_York';
   const [upcomingMatches, setUpcomingMatches] = useState([]);
 const [loading, setLoading] = useState(true);
 
@@ -254,57 +254,73 @@ const [loading, setLoading] = useState(true);
       <div className='upcomingFights fightscontainer'>
   <h1 className='fightsheadingone'>UPCOMING / ACTIVE FIGHTS</h1>
   {upcomingMatches.length > 0 ? (
-    // Filter the matches to exclude removed matches
-    upcomingMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
-      upcomingMatches.map((match) => (
-        !removedMatches.includes(match._id) && ( // Check if match._id is NOT in removedMatches
-          <div className='fightItem' key={match._id} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
-            {hoveredMatch === match._id && (
-              <button className="removeButton" onClick={() => handleRemoveMatch(match._id)}>
-                Remove from dashboard
-              </button>
-            )}
-            <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
-              <div className='fighterOne'>
-                <img src={match.fighterAImage} alt={match.matchFighterA} />
-              </div>
-              <div className='fighterTwo'>
-                <img src={match.fighterBImage} alt={match.matchFighterB} />
-              </div>
-            </div>
-            <div className='fightItemOne'>
-              <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
-                <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-              </div>
-              <div className="transformed-div-two">
-                <div className='transformed-div-two-partOne'>
-                  <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
-                  <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
+          // Filter the matches to exclude removed matches
+          upcomingMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
+            upcomingMatches.map((match) => (
+              !removedMatches.includes(match._id) && ( // Check if match._id is NOT in removedMatches
+                <div className='fightItem' key={match._id} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
+                  {hoveredMatch === match._id && (
+                    <button className="removeButton" onClick={() => handleRemoveMatch(match._id)}>
+                      Remove from dashboard
+                    </button>
+                  )}
+                  
+                  {/* Handle timezone conversion for match date and time */}
+                  <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
+                    <div className='fighterOne'>
+                      <img src={match.fighterAImage} alt={match.matchFighterA} />
+                    </div>
+                    <div className='fighterTwo'>
+                      <img src={match.fighterBImage} alt={match.matchFighterB} />
+                    </div>
+                  </div>
+                  
+                  <div className='fightItemOne'>
+                    <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
+                      <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                    </div>
+                    <div className="transformed-div-two">
+                      <div className='transformed-div-two-partOne'>
+                        <h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
+                        {/* Convert match time to US timezone */}
+                        <h1>
+                          {new Date(
+                            `1970-01-01T${match.matchTime}:00`
+                          ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        </h1>
+                      </div>
+                      <div className='transformed-div-two-partTwo'>
+                        {/* Convert match date to US timezone */}
+                        <p>
+                          {format(
+                            toZonedTime(new Date(match.matchDate), US_TIMEZONE),
+                            'MM/dd/yyyy',
+                            { timeZone: US_TIMEZONE }
+                          )}
+                        </p>
+                        <h1>{match.matchType}</h1>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className='fightItemTwo'>
+                    <div className="transformed-div-three">
+                      <p>{match.matchDescription}</p>
+                    </div>
+                    <div className="transformed-div-four">
+                      <h1>Players</h1>
+                      <p>{match.userPredictions.length}</p>
+                    </div>
+                  </div>    
                 </div>
-                <div className='transformed-div-two-partTwo'>
-                  <p>{new Date(match.matchDate).toLocaleDateString()}</p>
-                  <h1>{match.matchType}</h1>
-                </div>
-              </div>
-            </div>
-            <div className='fightItemTwo'>
-              <div className="transformed-div-three">
-                <p>{match.matchDescription}</p>
-              </div>
-              <div className="transformed-div-four">
-                <h1>Players</h1>
-                <p>{match.userPredictions.length}</p>
-              </div>
-            </div>    
-          </div>
-        )
-      ))
-    ) : (
-      <p className='noMatch'>No fights</p> // Message when no fights are available
-    )
-  ) : (
-    <p className='noMatch'>No upcoming matches</p>
-  )}
+              )
+            ))
+          ) : (
+            <p className='noMatch'>No fights</p> // Message when no fights are available
+          )
+        ) : (
+          <p className='noMatch'>No upcoming matches</p>
+        )}
 </div>
 
 
