@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { GoogleLogin } from '@react-oauth/google';
@@ -12,7 +12,7 @@ import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";
 import AffiliateLogin from '../Affiliates/AffiliateLogin';
 
-const Login = () => {
+const Login = ({ redirectTo }) => {
   const dispatch = useDispatch();
   const { isAuthenticated, loading, error, user } = useSelector((state) => state.auth);
   const [email, setEmail] = useState('');
@@ -22,6 +22,7 @@ const Login = () => {
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [affiliatesLogin, setAffiliatesLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // Use navigate for redirection after login
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -60,7 +61,6 @@ const Login = () => {
       }
     });
   
-    // Use toast.promise to handle pending, success, and error states
     toast.promise(loginPromise, {
       pending: 'Logging in...',
       success: 'Login successful 👌',
@@ -70,8 +70,19 @@ const Login = () => {
         }
       }
     });
+
+    // After successful login, navigate based on the previous action
+    loginPromise.then(() => {
+      if (redirectTo) {
+        if (redirectTo.type === 'view-thread') {
+          navigate(`/threads/${redirectTo.threadId}`);
+        } else if (redirectTo.type === 'create-thread') {
+          navigate('/create-thread');
+        }
+      }
+    });
   };
-  
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

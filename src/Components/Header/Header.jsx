@@ -80,6 +80,7 @@ const Header = () => {
             <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Leaderboard</NavLink>
             <NavLink to="/myLeagueRecords" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Leagues</NavLink>
             <NavLink to="/profile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
+            <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
           </div>
 
           <div className='sideLinkswrap'>
@@ -104,7 +105,7 @@ const Header = () => {
 
           <div className='anchorLinksWrapper'>
             <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
-            <NavLink to="/HowToPlay" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How to play</NavLink>
+            <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
             <NavLink to="/upcomingfights" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Upcoming Fights</NavLink>
             <NavLink to="/CreateAccount" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Create account</NavLink>
           </div>
@@ -148,7 +149,8 @@ const Header = () => {
               <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Leaderboard</NavLink>
               <NavLink to="/myLeagueRecords" className='anchorlinks' onClick={closeMenu}>Leagues</NavLink>
               <NavLink to="/profile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
-              <NavLink to="/UserDashboard" className='anchorlinks' onClick={closeMenu}>Dashboard</NavLink>
+              <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
+                 <NavLink to="/UserDashboard" className='anchorlinks' onClick={closeMenu}>Dashboard</NavLink>
               <button onClick={() => { handleLogout(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </button>
@@ -156,7 +158,7 @@ const Header = () => {
           ) : (
             <>
               <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
-              <NavLink to="/HowToPlay" className='anchorlinks' onClick={closeMenu}>How to play</NavLink>
+              <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
               <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
               <NavLink to="/CreateAccount" className='anchorlinks' onClick={closeMenu}>Create account</NavLink>
               <NavLink to="/login" className='anchorlinks' onClick={closeMenu}>

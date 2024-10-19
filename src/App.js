@@ -60,6 +60,9 @@ import DynamicPromoImage from './Components/Affiliates/DynamicPromoImage';
 import AffiliatesPayouts from './Components/Admin/AffiliatesPayouts';
 import ResetPassword from './Components/Affiliates/ResetPassword';
 import NonRegisteredUsers from './Components/Admin/NonRegisteredUsers';
+import ThreadList from './Components/Forum/ThreadList';
+import ThreadDetails from './Components/Forum/ThreadDetails';
+import CreateThread from './Components/Forum/CreateThread';
 
 function AppContent() {
   const location = useLocation();
@@ -112,7 +115,10 @@ function AppContent() {
         <Route path="/CreateAccount" element={<Registration />} />
         <Route path="/AffiliateCreateAccount" element={<AffiliateCreateAccount />} />
         <Route path="/dynamopromoimg" element={<DynamicPromoImage />} />
-      
+        <Route path="/community-forum" element={<ThreadList />} />
+        <Route path="/threads/:threadId" element={<ThreadDetails />} />
+        <Route path="/create-thread" element={<CreateThread />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />

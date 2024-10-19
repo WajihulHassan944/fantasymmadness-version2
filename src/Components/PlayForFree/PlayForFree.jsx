@@ -47,6 +47,9 @@ const PlayForFree = () => {
         <button className='btn-grad' onClick={handlePlayNowClick}>
           Play now for free
         </button>
+        <button className='btn-grad' onClick={()=> navigate('/HowToPlay')}>
+          How to play
+        </button>
       </div>
     </div>
   );
