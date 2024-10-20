@@ -128,3 +128,13 @@
     font-family: 'UfcSansRegular', Arial, sans-serif;
   }
   
+
+  .adminSideThreadsContainer{ 
+  width: calc(100% - 230px);
+margin-left: 230px;    
+    
+  }
+
+  .no-posts-message{
+    color:#fff;
+  }

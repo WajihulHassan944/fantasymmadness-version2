@@ -41,7 +41,7 @@ const AdminHeader = () => {
             </center>
 
             <div className='anchorLinksWrapperAdmin'>
-              <h1 className='matchHeading'>Matches</h1>
+              <h1 className='matchHeading' >Matches</h1>
               <NavLink exact to="/administration/upcomingFights" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Submit/View Scores</NavLink>
               <NavLink to="/administration/AddNewMatch" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Create a Match</NavLink>
               <NavLink to="/administration/PreviousMatches" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>All / prev Matches</NavLink>
@@ -49,8 +49,9 @@ const AdminHeader = () => {
               <NavLink to="/administration/Calendar" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Calandar of matches</NavLink>
               <NavLink to="/administration/ShadowFightsLibrary" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Shadow Fights Library</NavLink>
               <NavLink to="/administration/YoutubeArchive" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Youtube Archive</NavLink>
+              <NavLink to="/administration/Community" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Community Forum</NavLink>
              
-              <h1 className='matchHeading'>Users</h1>
+              <h1 className='matchHeading' style={{marginTop:'-3px'}}>Users</h1>
               <NavLink to="/administration/RegisteredUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Registered Users</NavLink>
              {/* <NavLink to="/administration/SubscribedUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Subscribed Users</NavLink>
              */} <NavLink to="/administration/AffiliateUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Affiliate Users</NavLink>

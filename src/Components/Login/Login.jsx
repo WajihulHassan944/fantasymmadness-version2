@@ -125,19 +125,29 @@ const Login = ({ redirectTo }) => {
       }
     });
   
-    // Use toast.promise to handle pending, success, and error states
-    toast.promise(googleLoginPromise, {
-      pending: 'Logging in with Google...',
-      success: 'Google login successful! 👌',
-      error: {
-        render({ data }) {
-          return data.message || 'Google login failed';
-        }
+  
+  // Use toast.promise to handle pending, success, and error states
+  toast.promise(googleLoginPromise, {
+    pending: 'Logging in with Google...',
+    success: 'Google login successful! 👌',
+    error: {
+      render({ data }) {
+        return data.message || 'Google login failed';
       }
-    });
-  };
-  
-  
+    }
+  });
+
+  // After successful login, navigate based on the previous action
+  googleLoginPromise.then(() => {
+    if (redirectTo) {
+      if (redirectTo.type === 'view-thread') {
+        navigate(`/threads/${redirectTo.threadId}`);
+      } else if (redirectTo.type === 'create-thread') {
+        navigate('/create-thread');
+      }
+    }
+  });
+};
 
   const handleGoogleError = () => {
     console.error('Google Login Failed');

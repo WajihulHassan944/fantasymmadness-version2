@@ -355,9 +355,11 @@ const [membershipGo, setMembershipGo] = useState(null);
                 
                 <div className='divTwoProfile' >
                       <button type="submit" className='btn-grad profile-btn' onClick={() => handleleaguesClick()} style={{width:'40%', background:'#0d8c17'}}>My Leagues</button>
-                
+                      <button type="submit" className='btn-grad profile-btn' onClick={() => navigate('/trashed-fights')} style={{width:'40%', background:'crimson'}}>My Trashed Fights</button>
+                   
                   <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handlepaymentDetailsClick()}>My Payment Details</button>
                    <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handleAddTokenClick()}>Add tokens to Wallet</button>
+             
                   <div className='pairOfHtags'>
                    <h1>Your Public player profile link:</h1>
                    <h1>fantasymmadness.com/{user._id}</h1>

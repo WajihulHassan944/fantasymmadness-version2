@@ -63,6 +63,9 @@ import NonRegisteredUsers from './Components/Admin/NonRegisteredUsers';
 import ThreadList from './Components/Forum/ThreadList';
 import ThreadDetails from './Components/Forum/ThreadDetails';
 import CreateThread from './Components/Forum/CreateThread';
+import AdminForumList from './Components/Admin/AdminForumList';
+import AdminForumThreadDetails from './Components/Admin/AdminForumThreadDetails';
+import TrashedFights from './Components/YourFights/TrashedFights';
 
 function AppContent() {
   const location = useLocation();
@@ -122,6 +125,9 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />
+        <Route path="/trashed-fights" element={<PrivateRoute element={<TrashedFights />} />} />
+       
+        
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />
         <Route path="/leaderboard" element={<GlobalLeaderboard />} />
         <Route path="/YourFights" element={<YourFights />} />
@@ -156,6 +162,9 @@ function AppContent() {
 <Route path="/administration/adminRecords" element={<PrivateRouteAdmin element={<AdminRecords />} />} />     
 <Route path="/administration/payouts" element={<PrivateRouteAdmin element={<AffiliatesPayouts />} />} />
 <Route path="/administration/non-registered-users" element={<PrivateRouteAdmin element={<NonRegisteredUsers />} />} />
+<Route path="/administration/Community" element={<PrivateRouteAdmin element={<AdminForumList />} />} />
+<Route path="/administration/threads/:threadId" element={<PrivateRouteAdmin element={<AdminForumThreadDetails />} />} />
+
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
