@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import FighterOne from "../../Assets/fighterOne.png";
 import "./RegisteredUsers.css";
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegisteredUsers = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [tokensToGive, setTokensToGive] = useState('');
-
+const navigate = useNavigate();
   const fetchData = async () => {
     try {
       const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/users');
@@ -90,9 +91,37 @@ const handleDelete = async (id) => {
     setSelectedUser(user);
   };
 
+  const handleSuspendAccount = async () => {
+    // Logic to suspend the account
+    try {
+        const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/redusers`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: selectedUser.email, profileUrl: selectedUser.profileUrl }), // or any other required data
+        });
+
+        if (response.ok) {
+            alert('User suspended successfully!');
+            // Optionally, refresh the user list or perform any other actions
+            window.location.reload();
+        } else {
+            alert('Failed to suspend the user. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error suspending user:', error);
+        alert('Error suspending user. Please try again later.');
+    }
+};
+
+
+
   return (
     <div className='adminWrapper'>
+  
       <div className='homeThird mobileItemOne' style={{ background: 'transparent' }}>
+      <button className='suspendedAccountsBtn' onClick={()=>navigate('/administration/suspended-accounts')}>Suspended Accounts</button>
         <h1 className='thirdHeadingOne'>Registered Users</h1>
         <div className='leaderboardItemsWrap'>
           {users.map((user) => (
@@ -135,7 +164,7 @@ const handleDelete = async (id) => {
     </button>
 </div>
 
-
+<button className='closeButton' style={{background:'#ffc000', marginRight:'10px', fontWeight:'500'}} onClick={handleSuspendAccount}>Suspend Account</button>
         <button onClick={() => setSelectedUser(null)} className='closeButton'>Close</button>
     </div>
 )}

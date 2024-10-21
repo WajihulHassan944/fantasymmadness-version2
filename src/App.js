@@ -66,6 +66,7 @@ import CreateThread from './Components/Forum/CreateThread';
 import AdminForumList from './Components/Admin/AdminForumList';
 import AdminForumThreadDetails from './Components/Admin/AdminForumThreadDetails';
 import TrashedFights from './Components/YourFights/TrashedFights';
+import SuspendedAccounts from './Components/Admin/SuspendedAccounts';
 
 function AppContent() {
   const location = useLocation();
@@ -164,6 +165,7 @@ function AppContent() {
 <Route path="/administration/non-registered-users" element={<PrivateRouteAdmin element={<NonRegisteredUsers />} />} />
 <Route path="/administration/Community" element={<PrivateRouteAdmin element={<AdminForumList />} />} />
 <Route path="/administration/threads/:threadId" element={<PrivateRouteAdmin element={<AdminForumThreadDetails />} />} />
+<Route path="/administration/suspended-accounts" element={<PrivateRouteAdmin element={<SuspendedAccounts />} />} />
 
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />
