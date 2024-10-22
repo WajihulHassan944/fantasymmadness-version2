@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import AdminPredictions from './AdminPredictions';
 import ShowScores from './ShowScores';
+import { useNavigate } from 'react-router-dom';
 
 const UpcomingFights = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const UpcomingFights = () => {
 const [finishedShadow, setFinishedShadow] = useState({ id: null, filter: null });
 const [filter, setFilter] = useState('All');
   const [shadowTemplates, setShadowTemplates] = useState([]);
-
+const navigate = useNavigate();
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
@@ -61,22 +62,63 @@ const [filter, setFilter] = useState('All');
       if (filterProp === 'normal') {
         const matchDateTime = new Date(`${selectedMatch.matchDate.split('T')[0]}T${selectedMatch.matchTime}:00`);
         if (currentTime >= matchDateTime) {
-          return <AdminPredictions matchId={selectedMatchId} filter={filterProp} />;
+          return (
+            <>
+              <i
+                className="fa fa-arrow-circle-left"
+                aria-hidden="true"
+                onClick={() => setSelectedMatchId(null)} // Go back to the previous component
+                style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+              ></i>
+              <AdminPredictions matchId={selectedMatchId} filter={filterProp} />
+            </>
+          );
         } else {
           alert('The match time has not been reached yet.');
         }
       } else {
-        return <AdminPredictions matchId={selectedMatchId} filter={filterProp} />;
+        return (
+          <>
+            <i
+              className="fa fa-arrow-circle-left"
+              aria-hidden="true"
+              onClick={() => setSelectedMatchId(null)} // Go back to the previous component
+              style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+            ></i>
+            <AdminPredictions matchId={selectedMatchId} filter={filterProp} />
+          </>
+        );
       }
     }
   }
   
+
   if (finishedMatch.id) {
-    return <ShowScores matchId={finishedMatch.id} filter={finishedMatch.filter} />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setFinishedMatch({ id: null, filter: null })} // Go back to the previous component
+          style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <ShowScores matchId={finishedMatch.id} filter={finishedMatch.filter} />
+      </>
+    );
   }
   
   if (finishedShadow.id) {
-    return <ShowScores matchId={finishedShadow.id} filter={finishedShadow.filter} />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setFinishedShadow({ id: null, filter: null })} // Go back to the previous component
+          style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <ShowScores matchId={finishedShadow.id} filter={finishedShadow.filter} />
+      </>
+    );
   }
   
 
@@ -87,6 +129,13 @@ const [filter, setFilter] = useState('All');
 
   return (
     <div className='adminWrapper'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
       <div className='homeSecond' style={{ background: 'transparent' }}>
         <h1 className='second-main-heading'>
           <span className='toRemove'>Upcoming fights /</span> Active fights

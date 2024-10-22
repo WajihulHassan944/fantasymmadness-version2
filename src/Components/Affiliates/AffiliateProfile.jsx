@@ -5,9 +5,11 @@ import venmo from "../../Assets/venmo.png";
 import paypal from "../../Assets/paypal.png";
 import "./affiliateprofile.css";
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AffiliateProfile = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [payoutAmount, setPayoutAmount] = useState();
   const [firstName, setFirstName] = useState(affiliate?.firstName || '');
@@ -237,6 +239,13 @@ const AffiliateProfile = () => {
 
   return (
     <div className='myprofile'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'fixed', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={affiliate.profileUrl} alt="Profile" />

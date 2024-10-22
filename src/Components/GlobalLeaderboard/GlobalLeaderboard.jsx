@@ -4,12 +4,13 @@ import "./GlobalLeaderboard.css";
 import FighterOne from "../../Assets/fighterOne.png";
 import Logoimage from "../../Assets/myimg.jpg";
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData';
+import { useNavigate } from 'react-router-dom';
 
 const GlobalLeaderboard = () => {
   
   const matches = useSelector((state) => state.matches.data);
   const { leaderboard, playerCount } = useLeaderboardData(matches);
-
+const navigate = useNavigate();
   const userLoggedIn = useSelector((state) => state.user); // Access user details from Redux store
 
   
@@ -36,6 +37,14 @@ const GlobalLeaderboard = () => {
   
   return (
     <div className='fightDetails global-leaderboard'>
+    
+    <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={userLoggedIn.profileUrl} alt="Logo" data-aos="zoom-in" />

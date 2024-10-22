@@ -4,6 +4,7 @@ import { fetchMatches } from '../../Redux/matchSlice';
 import "./shadowLibrary.css";
 import EditMatch from './EditMatch';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ShadowFightsLibrary = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const ShadowFightsLibrary = () => {
     const [showAffiliatesPopup, setShowAffiliatesPopup] = useState(false);
     const [affiliates, setAffiliates] = useState([]);
     const [editAffiliates, setEditAffiliates] = useState(null);
-    
+    const navigate = useNavigate();
 
     // Function to fetch matches
     const fetchMatchesData = async () => {
@@ -119,11 +120,29 @@ const ShadowFightsLibrary = () => {
         : [];
 
 
-        if(editAffiliates){
-            return <EditMatch matchId={selectedMatch._id} isShadow={true}  />
-        }
+        if (editAffiliates) {
+            return (
+              <>
+                <i
+                  className="fa fa-arrow-circle-left"
+                  aria-hidden="true"
+                  onClick={() => setEditAffiliates(false)} // Go back to the previous component
+                  style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+                ></i>
+                <EditMatch matchId={selectedMatch._id} isShadow={true} />
+              </>
+            );
+          }
+          
     return (
         <div className='shadowLibrary'>
+        <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
             <div className='adminWrapper '>
                 <div className='homeSecond' style={{ background: 'transparent' }}>
                     <h1 className='second-main-heading'>Shadow <span className='toRemove'> Fights</span> Library</h1>

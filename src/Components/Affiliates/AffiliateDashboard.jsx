@@ -65,24 +65,41 @@ const AffiliateDashboard = () => {
   const handleShadowMatchClick = (matchId) => {
     setShadowMatchId(matchId); // Set the selected match ID
   };
-
   if (shadowMatchId) {
-    return <AffiliateAddNewMatch matchId={shadowMatchId} />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setShadowMatchId(null)} // Go back to the previous component
+          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <AffiliateAddNewMatch matchId={shadowMatchId} />
+      </>
+    );
   }
-
+  
   const handlePromoMatchClick = (matchId, affiliateId, isBlurred) => {
     setPromoMatchDetails({ matchId, affiliateId }); // Set the selected match ID, affiliate ID, and isBlurred status
   };
   
   if (promoMatchDetails.matchId) {
     return (
-      <AffiliateMatchDetails
-        matchId={promoMatchDetails.matchId}
-        affiliateId={promoMatchDetails.affiliateId}
-      />
+      <>
+        <i
+          className="fa fa-arrow-circle-left affiliateDashboardIconArrow"
+          aria-hidden="true"
+          onClick={() => setPromoMatchDetails({})} // Go back to the previous component
+          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <AffiliateMatchDetails
+          matchId={promoMatchDetails.matchId}
+          affiliateId={promoMatchDetails.affiliateId}
+        />
+      </>
     );
   }
-
+  
 
   return (
     <div className='userdashboard yourFightsWrapper'>

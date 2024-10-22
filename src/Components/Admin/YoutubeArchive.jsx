@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import "./youtubeLibrary.css";
+import { useNavigate } from 'react-router-dom';
 
 const YoutubeArchive = () => {
   const [videoUrl, setVideoUrl] = useState('');
   const [videos, setVideos] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const navigate = useNavigate();
   // Fetch videos from the API
   const fetchVideos = async () => {
     try {
@@ -88,6 +89,13 @@ const YoutubeArchive = () => {
 
   return (
     <div className='adminWrapper youtubeLibrary'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
       <h1>YouTube Videos Library</h1>
       <form onSubmit={handleSubmit}>
         <input

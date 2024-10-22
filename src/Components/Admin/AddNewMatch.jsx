@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import "./AddNewMatch.css";
 import AdminPredictions from './AdminPredictions';
+import { useNavigate } from 'react-router-dom';
 
 const AddNewMatch = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     matchCategory: 'boxing',
     matchName: '',
@@ -141,6 +143,13 @@ const AddNewMatch = () => {
   
   return (
     <div className='addNewMatch'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
       <div className='registerCard'>
         <h1>Add New Match</h1>
 

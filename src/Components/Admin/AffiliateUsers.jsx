@@ -60,11 +60,20 @@ const navigate = useNavigate();
     setSelectedUser(user);
     setDetailsOpen(true);
   };
-
   if (detailsOpen && selectedUser) {
-    console.log(selectedUser);
-    return <UserDetails user={selectedUser} />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setDetailsOpen(false)} // Go back to the previous component
+          style={{ position: 'absolute', top: '16px', left: '17%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <UserDetails user={selectedUser} />
+      </>
+    );
   }
+  
 
   const handleDeleteUser = async (id) => {
     const deleteUserPromise = new Promise(async (resolve, reject) => {
@@ -103,6 +112,13 @@ const navigate = useNavigate();
 
   return (
     <div className='affiliateUsersWrapper'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '16px', left: '17%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
       <h1 className='thirdHeadingOne'>Affiliate Users</h1>
 
       <div className='searcDivAffiliate'> 

@@ -54,6 +54,13 @@ const Leagues = () => {
 
   return (
     <div className='userdashboard yourFightsWrapper'>
+        <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+    
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />

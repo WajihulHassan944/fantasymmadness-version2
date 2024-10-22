@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./YourFights.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
+import { useNavigate } from 'react-router-dom';
 
 const TrashedFights = () => {
     const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const TrashedFights = () => {
   const [loading, setLoading] = useState(true);
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [removedMatches, setRemovedMatches] = useState([]);
-
+const navigate = useNavigate();
   const user = useSelector((state) => state.user); // Access user details from Redux store
 
 
@@ -105,6 +106,12 @@ const TrashedFights = () => {
 
   return (
     <div className='userdashboard yourFightsWrapper'>
+    <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />

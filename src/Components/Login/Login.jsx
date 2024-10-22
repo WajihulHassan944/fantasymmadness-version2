@@ -165,13 +165,29 @@ const Login = ({ redirectTo }) => {
   const handleAffiliateLogin = () => {
     setAffiliatesLogin(true);
   };
-
   if (affiliatesLogin) {
-    return <AffiliateLogin />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setAffiliatesLogin(false)} // Go back to the previous component
+          style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <AffiliateLogin />
+      </>
+    );
   }
-
+  
   return (
     <div className='login-wrapper'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <div className='loginCard' data-aos="zoom-in">
         <img src={logoimage} alt="Logo" />
         <h1>Please Login Below</h1>

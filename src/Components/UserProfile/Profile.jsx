@@ -213,18 +213,42 @@ const [membershipGo, setMembershipGo] = useState(null);
     setMembershipGo(true);
   };
 
-  
   if (showPredictions) {
-    return  <AddTokensToWallet userId={user._id} />
-    
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setShowPredictions(false)} // Go back to FightCosting
+          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <AddTokensToWallet userId={user._id} />
+      </>
+    );
   }
-
+  
   if (membershipGo) {
-    return  <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl}  />
-    
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setMembershipGo(false)} // Go back to previous component
+          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl} />
+      </>
+    );
   }
+  
     return (
         <div className='myprofile'>
+        <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
             <div className='member-header'>
                 <div className='member-header-image'>
                     <img src={user.profileUrl} alt="Profile" />

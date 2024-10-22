@@ -79,6 +79,14 @@ const EmailTemplate = () => {
 
   return (
     <div className="adminWrapper" style={{flexDirection:'column'}}>
+ <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
+
       {/* Separate User List Section */}
       <button className='nonregistereduserslist' onClick={()=> navigate('/administration/non-registered-users')}>Non-registered Users</button>
       <div className="usersListWrapper">

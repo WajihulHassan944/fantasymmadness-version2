@@ -49,6 +49,24 @@ const MakePredictions = ({ matchId }) => {
 
   const [buttonText, setButtonText] = useState('Submit Predictions');
 
+  
+  useEffect(() => {
+    // Hide the back arrow from the dashboard
+    const dashboardArrow = document.querySelector('.dashboard-back-arrow');
+    if (dashboardArrow) {
+      dashboardArrow.style.display = 'none';
+    }
+  
+    // Cleanup function to restore the arrow when FightCosting unmounts
+    return () => {
+      if (dashboardArrow) {
+        dashboardArrow.style.display = 'block';
+      }
+    };
+  }, []);
+  
+
+  
   useEffect(() => {
     if (!match) return;
 

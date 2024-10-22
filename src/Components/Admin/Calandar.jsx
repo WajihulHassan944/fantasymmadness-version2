@@ -5,6 +5,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { formatISO, isSameDay, parseISO } from 'date-fns';
 import './calendar.css'; // Make sure to include your styles here
+import { useNavigate } from 'react-router-dom';
 
 const Calandar = () => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Calandar = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [currentMatch, setCurrentMatch] = useState(null);
     const [dateModalVisible, setDateModalVisible] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() => {
         if (matchStatus === 'idle') {
             dispatch(fetchMatches());
@@ -70,6 +71,13 @@ const Calandar = () => {
 
     return (
         <div className='adminWrapper'>
+         <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
             <Calendar
                 onChange={handleDateChange}
                 value={date}

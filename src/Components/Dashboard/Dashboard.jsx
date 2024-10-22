@@ -8,6 +8,7 @@ import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import { format, toDate, toZonedTime } from 'date-fns-tz';
+import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
 
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Dashboard = () => {
   const US_TIMEZONE = 'America/New_York';
   const [upcomingMatches, setUpcomingMatches] = useState([]);
 const [loading, setLoading] = useState(true);
-
+const navigate = useNavigate();
   const [time, setTime] = useState(new Date()); // State to trigger re-render every minute
   const [removedMatches, setRemovedMatches] = useState([]);
 
@@ -147,27 +148,69 @@ const [loading, setLoading] = useState(true);
     setCompletedMatchId(matchId); // Set the selected match ID
   };
 
-
   if (selectedMatchId) {
-  const selectedMatch = matches.find(match => match._id === selectedMatchId);
-    if (selectedMatch && user.tokens >= selectedMatch.matchTokens) {
-      return <FightCosting matchId={selectedMatchId} />;
-    } else {
-      return <PurchaseTokensIntimation matchId={selectedMatchId} />;
+    const selectedMatch = matches.find((match) => match._id === selectedMatchId);
+    if (!selectedMatch) {
+      return (
+        <>
+          <button onClick={() => setSelectedMatchId(null)}>← Back</button>
+          <div>Selected match not found.</div>
+        </>
+      );
     }
-}
-
   
-  // Check the match status and render the appropriate component
-  if (completedMatchId) {
-    const matchCom = matches.find(match => match._id === completedMatchId);
-    if (matchCom && matchCom.matchStatus === "Ongoing") {
-      return <FightLeaderboard matchId={completedMatchId} />;
+    if (selectedMatch && user.tokens >= selectedMatch.matchTokens) {
+      return (
+        <>
+         <i className="fa fa-arrow-circle-left dashboard-back-arrow" aria-hidden="true" onClick={() => setSelectedMatchId(null)}
+  style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
+
+   <FightCosting matchId={selectedMatchId} />
+        </>
+      );
     } else {
-      return <FinishedFightUserBoard matchId={completedMatchId} />;
+      return (
+        <>
+           <i className="fa fa-arrow-circle-left" aria-hidden="true" onClick={() => setSelectedMatchId(null)}
+  style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
+
+ <PurchaseTokensIntimation matchId={selectedMatchId} />
+        </>
+      );
     }
   }
+ 
+  if (completedMatchId) {
+    const matchCom = matches.find((match) => match._id === completedMatchId);
+    if (!matchCom) {
+      return (
+        <>
+          <button onClick={() => setCompletedMatchId(null)}>← Back</button>
+          <div>Completed match not found.</div>
+        </>
+      );
+    }
+  
+    if (matchCom && matchCom.matchStatus === "Ongoing") {
+      return (
+        <>
+           <i className="fa fa-arrow-circle-left" aria-hidden="true" onClick={() => setCompletedMatchId(null)}
+        style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
+         <FightLeaderboard matchId={completedMatchId} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <i className="fa fa-arrow-circle-left" aria-hidden="true" onClick={() => setCompletedMatchId(null)}
+        style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
 
+      <FinishedFightUserBoard matchId={completedMatchId} />
+        </>
+      );
+    }
+  }
+  
 
 
 
@@ -235,6 +278,13 @@ const [loading, setLoading] = useState(true);
   
   return (
     <div className='userdashboard'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl} alt={user.firstName} data-aos="zoom-in" />

@@ -5,12 +5,13 @@ import EditMatch from './EditMatch'; // Import your EditMatch component
 import "./deleteFights.css";
 import { toast } from 'react-toastify';
 import { format, toDate, toZonedTime } from 'date-fns-tz';
+import { useNavigate } from 'react-router-dom';
 
 const DeleteFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
-
+const navigate = useNavigate();
   const [selectedMatchId, setSelectedMatchId] = useState(null);
   const [selectedAffiliateId, setSelectedAffiliateId] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -88,14 +89,31 @@ const DeleteFights = () => {
     setSelectedMatchId(null);
     setSelectedAffiliateId(null);
   };
-
   if (isEditing && selectedMatchId) {
-    return <EditMatch matchId={selectedMatchId} isShadow={false} />; // Render EditMatch with matchId as a prop
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setIsEditing(false)} // Go back to the previous component
+          style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <EditMatch matchId={selectedMatchId} isShadow={false} />
+      </>
+    );
   }
+  
   const US_TIMEZONE = 'America/New_York';
   return (
     <div>
       <div className='adminWrapper'>
+      <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
         <div className='homeSecond' style={{ background: 'transparent' }}>
           <h1 className='second-main-heading'>Delete / Update Fights</h1>
           <div className="fightswrap">

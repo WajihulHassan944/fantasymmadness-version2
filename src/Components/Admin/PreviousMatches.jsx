@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import Popup from './Popup';
 import { getWinnerDetails } from '../../CustomFunctions/winnerUtils';
+import { useNavigate } from 'react-router-dom';
 
 const PreviousMatches = () => {
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const PreviousMatches = () => {
     const [winnerDetails, setWinnerDetails] = useState(null);
     const [affiliateTokens, setAffiliateTokens] = useState(0);
     const [matchTokens, setMatchTokens] = useState(0);
-
+const navigate = useNavigate();
     useEffect(() => {
         dispatch(fetchMatches());
     }, [dispatch]);
@@ -132,6 +133,13 @@ const PreviousMatches = () => {
 
     return (
         <div className='prevMatches'>
+         <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
             <div className='adminWrapper'>
                 <div className='homeSecond' style={{ background: 'transparent' }}>
                     <h1 className='second-main-heading'>All fights <span className='toRemove'>/ Previous Fights</span></h1>

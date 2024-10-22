@@ -6,6 +6,7 @@ import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import FightCosting from '../Dashboard/FightCosting';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData'; // Import your custom hook
 import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
+import { useNavigate } from 'react-router-dom';
 
 const YourFights = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const YourFights = () => {
   const [loading, setLoading] = useState(true);
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [removedMatches, setRemovedMatches] = useState([]);
-
+const navigate = useNavigate();
   const user = useSelector((state) => state.user); // Access user details from Redux store
 
   // Use your custom hook to get leaderboard data
@@ -136,13 +137,28 @@ const YourFights = () => {
   };
 
   if (selectedMatchId) {
-    return <FightCosting matchId={selectedMatchId} />;
-  }
+      return (
+        <>
+         <i className="fa fa-arrow-circle-left dashboard-back-arrow" aria-hidden="true" onClick={() => setSelectedMatchId(null)}
+  style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
 
-// Check the match status and render the appropriate component
-if (completedMatchId) {
-    return <FightLeaderboard matchId={completedMatchId} />;
- }
+   <FightCosting matchId={selectedMatchId} />
+        </>
+      );
+    }
+  
+ 
+  if (completedMatchId) {
+    
+      return (
+        <>
+           <i className="fa fa-arrow-circle-left" aria-hidden="true" onClick={() => setCompletedMatchId(null)}
+        style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
+         <FightLeaderboard matchId={completedMatchId} />
+        </>
+      );
+    } 
+  
 
   const getRemainingTime = (matchDate, matchTime) => {
     const [year, month, day] = matchDate.split('T')[0].split('-');
@@ -204,6 +220,12 @@ if (completedMatchId) {
 
   return (
     <div className='userdashboard yourFightsWrapper'>
+    <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />

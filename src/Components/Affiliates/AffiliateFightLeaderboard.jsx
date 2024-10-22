@@ -10,7 +10,21 @@ const AffiliateFightLeaderboard = ({ matchId }) => {
     const match = matches.find((m) => m._id === matchId);
 
     const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
-
+    useEffect(() => {
+      // Hide the back arrow from the dashboard
+      const dashboardArrow = document.querySelector('.affiliateDashboardIconArrow');
+      if (dashboardArrow) {
+        dashboardArrow.style.display = 'none';
+      }
+    
+      // Cleanup function to restore the arrow when FightCosting unmounts
+      return () => {
+        if (dashboardArrow) {
+          dashboardArrow.style.display = 'block';
+        }
+      };
+    }, []);
+    
     
     useEffect(() => {
       fetch('https://fantasymmadness-game-server-three.vercel.app/api/scores')

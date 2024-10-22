@@ -92,6 +92,13 @@ const AffiliatesPayouts = () => {
 
     return (
         <div className='affiliateUsersWrapper'>
+         <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '16px', left: '17%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
             <h1 className='thirdHeadingOne'>Affiliate Payouts</h1>
             <div className='searcDivAffiliate'>
                 <input

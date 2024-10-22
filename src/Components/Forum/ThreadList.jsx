@@ -36,18 +36,43 @@ const ThreadList = () => {
       setCreateThreadVar(true);
     }
   };
-
   if (redirectToLogin) {
-    return <Login redirectTo={prevAction} />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setRedirectToLogin(false)} // Go back to previous component
+          style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <Login redirectTo={prevAction} />
+      </>
+    );
   }
-
+  
   if (createThreadVar) {
-    return <CreateThread />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setCreateThreadVar(false)} // Go back to previous component
+          style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <CreateThread />
+      </>
+    );
   }
-
+  
   
   return (
     <div className="thread-list-container">
+    <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
       <h1 className="forum-heading">Discussion Forum</h1>
       <button className="create-thread-btn" onClick={createThread}>Have a question?</button>
       {threads.length === 0 ? (

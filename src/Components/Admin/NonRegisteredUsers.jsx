@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NonRegisteredUsers = () => {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   // Function to fetch non-registered users from the API
   const fetchUsers = async () => {
     try {
@@ -73,6 +74,13 @@ const NonRegisteredUsers = () => {
 
   return (
     <div className="adminWrapper nonRegisteredUsers" style={{flexDirection:'column'}}>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '26px', left: '17%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
       <h1>List of Non-Registered Users</h1>
       
       <form onSubmit={handleSubmit} className="user-form">

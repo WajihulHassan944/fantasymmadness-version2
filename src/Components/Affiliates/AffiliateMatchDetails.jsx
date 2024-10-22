@@ -162,10 +162,20 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const handleDashboardOpening = (id) => {
     setNavigateToDash(id);
   };
-
   if (navigateDashboard) {
-    return <AffiliateFightLeaderboard matchId={navigateDashboard} />;
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left"
+          aria-hidden="true"
+          onClick={() => setNavigateToDash(null)} // Go back to the previous component
+          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        ></i>
+        <AffiliateFightLeaderboard matchId={navigateDashboard} />
+      </>
+    );
   }
+  
 
   const copyToClipboard = () => {
     if (match && affiliate) {

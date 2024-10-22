@@ -61,10 +61,21 @@ const PurchaseTokensIntimation = ({ matchId }) => {
   };
 
 
-  if (showPredictions) {
-    return  <AddTokensToWallet matchId={matchId} />
-    
-  }
+  // Add back arrow for AddTokensToWallet component
+if (showPredictions) {
+  return (
+    <>
+      <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => setShowPredictions(false)} // Go back to FightCosting
+        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+      <AddTokensToWallet matchId={matchId} />
+    </>
+  );
+}
+
 
   return (
     <div className='fightCosting'>

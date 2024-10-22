@@ -4,6 +4,7 @@ import imgtwo from "../../Assets/Picture2.png";
 import imgthree from "../../Assets/Picture3.png";
 import imgfour from "../../Assets/Picture4.png";
 import imgfive from "../../Assets/Picture5.png";
+import { useNavigate } from 'react-router-dom';
 
 const HowItWorks = () => {
     const imageStyle = {
@@ -12,9 +13,16 @@ const HowItWorks = () => {
         display: 'block', 
         margin: '50px auto'  // Centers the images horizontally
     };
-
+const navigate = useNavigate();
     return (
         <div>
+         <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'fixed', top: '100px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
             <div className='howtoplay-wrapper'>
                 <h1>How it works</h1>
                 <p>

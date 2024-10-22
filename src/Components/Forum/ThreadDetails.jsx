@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import "./ThreadDetails.css";
 const ThreadDetails = () => {
@@ -7,7 +7,7 @@ const ThreadDetails = () => {
   const [thread, setThread] = useState(null);
   const [replyBody, setReplyBody] = useState('');
   const user = useSelector((state) => state.user); // Access user details from Redux store
-
+const navigate = useNavigate();
   useEffect(() => {
     // Increment view count when the thread details are fetched
     fetch(`https://fantasymmadness-game-server-three.vercel.app/threads/${threadId}/views`, {
@@ -61,6 +61,12 @@ const ThreadDetails = () => {
   return (
     thread ? (
       <div className='threadDetailsContainer'>
+        <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
         <h2>{thread.title}</h2>
       <div>  <p>{thread.body}</p>
       <div style={{padding:'0', display:'flex', justifyContent:'space-between', background:'transparent'}}>  <p>Posted by {thread.author.username} on {new Date(thread.createdDate).toLocaleString()}</p>

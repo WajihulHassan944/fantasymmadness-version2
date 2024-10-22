@@ -1,8 +1,17 @@
 import React from 'react'
 import "./HowToPlay.css";
+import { useNavigate } from 'react-router-dom';
 const HowToPlay = () => {
+      const navigate = useNavigate();
   return (
     <div className='howtoplay-wrapper' >
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <h1 data-aos="zoom-out">How to play</h1>
       <p>Hello, fight enthusiasts! Get ready to test your combat knowledge and win fantastic prizes by joining our prediction game, where you can become the ultimate fight predictor.
       </p>

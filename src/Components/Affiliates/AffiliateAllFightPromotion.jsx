@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import "./affiliateprofile.css";
+import { useNavigate } from 'react-router-dom';
 
 const AffiliateAllFightPromotion = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
-
+const navigate = useNavigate();
   if (!affiliate) {
     return <div>Loading...</div>;
   }
@@ -24,6 +25,13 @@ const AffiliateAllFightPromotion = () => {
 
   return (
     <div className='myprofile allpromotion'>
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'fixed', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={affiliate.profileUrl} alt="Profile" />

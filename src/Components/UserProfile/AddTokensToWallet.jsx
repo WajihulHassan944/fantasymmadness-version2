@@ -10,6 +10,22 @@ const AddTokensToWallet = () => {
     const [isCustomPopupVisible, setCustomPopupVisible] = useState(false);
   
 
+    useEffect(() => {
+        // Hide the back arrow from the dashboard
+        const dashboardArrow = document.querySelector('.dashboard-back-arrow');
+        if (dashboardArrow) {
+          dashboardArrow.style.display = 'none';
+        }
+      
+        // Cleanup function to restore the arrow when FightCosting unmounts
+        return () => {
+          if (dashboardArrow) {
+            dashboardArrow.style.display = 'block';
+          }
+        };
+      }, []);
+  
+      
     if (!user.billing) {
         return <MembershipCheckout userId={user._id} />;
       }

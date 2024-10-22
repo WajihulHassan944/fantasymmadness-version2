@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AdminRecords = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
-
+  const navigate = useNavigate();
   const [adminTokens, setAdminTokens] = useState([]);
   const [affiliates, setAffiliates] = useState([]);
 
@@ -50,6 +51,13 @@ const AdminRecords = () => {
 
   return (
     <div className="prevMatches">
+     <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+  
       <div className="adminWrapper">
         <div className="homeSecond" style={{ background: 'transparent' }}>
           <h1 className="second-main-heading">Your Profit Records</h1>

@@ -119,7 +119,13 @@ const handleDelete = async (id) => {
 
   return (
     <div className='adminWrapper'>
-  
+   <i
+        className="fa fa-arrow-circle-left"
+        aria-hidden="true"
+        onClick={() => navigate(-1)} // Go back to the previous page
+        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+      ></i>
+   
       <div className='homeThird mobileItemOne' style={{ background: 'transparent' }}>
       <button className='suspendedAccountsBtn' onClick={()=>navigate('/administration/suspended-accounts')}>Suspended Accounts</button>
         <h1 className='thirdHeadingOne'>Registered Users</h1>
