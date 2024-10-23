@@ -1,160 +1,197 @@
-import React, { useState, useRef } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
-import { toast } from 'react-toastify'; // Make sure to import toast if you're using it for notifications
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
-const Videos = () => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [videoBlob, setVideoBlob] = useState(null);
-  const videoRef = useRef(null);
-  const [token, setToken] = useState(null); // State to temporarily store the token
+const CLIENT_ID = '261076841125-1n3ps24u5fco1js6o1u212nac7agp9dg.apps.googleusercontent.com';
+const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
+const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
 
-  // Google Login Handler
-  const handleGoogleSuccess = async (response) => {
-    const { credential } = response;
+const YouTubeChannelData = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [channelInput, setChannelInput] = useState('');
+  const [channelData, setChannelData] = useState(null);
+  const [videoItems, setVideoItems] = useState([]);
+  const defaultChannel = 'techguyweb';
 
-    try {
-      // Send the Google token to your backend API for verification and user handling
-      const res = await fetch('https://fantasymmadness-game-server-three.vercel.app/google-login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: credential, // Send the token here
-        }),
+  useEffect(() => {
+    const loadGapiScript = () => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://apis.google.com/js/api.js';
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error('Google API script failed to load.'));
+        document.body.appendChild(script);
       });
+    };
 
-      if (!res.ok) {
-        throw new Error('Google login failed'); // Throw an error if response is not ok
-      }
-
-      const data = await res.json();
-      console.log('Google login response:', data);
-
-      // Only set the token in state if the response is valid
-      if (data.token) {
-        setToken(data.token); // Set the token state
-        toast.success('Google login successful! 👌');
-      } else {
-        toast.error('No token returned from Google login.');
-      }
-    } catch (error) {
-      console.error('Error during Google login:', error);
-      toast.error('Error during Google login.');
-    }
-  };
-
-  const handleGoogleError = () => {
-    console.error('Google Login Failed');
-    toast.error('Google Login Failed');
-  };
-
-  // Video Recording
-  const startRecording = () => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then(stream => {
-        const mediaRecorder = new MediaRecorder(stream);
-        setMediaRecorder(mediaRecorder);
-
-        const chunks = [];
-        mediaRecorder.ondataavailable = (event) => chunks.push(event.data);
-
-        mediaRecorder.onstop = () => {
-          const blob = new Blob(chunks, { type: 'video/webm' });
-          const videoUrl = URL.createObjectURL(blob);
-          setVideoBlob(blob);
-
-          // Preview the recorded video
-          videoRef.current.src = videoUrl;
-          videoRef.current.controls = true;
-        };
-
-        mediaRecorder.start();
-        setIsRecording(true);
+    loadGapiScript()
+      .then(() => {
+        window.gapi.load('client:auth2', initClient);
       })
-      .catch(error => console.error('Error accessing media devices:', error));
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-      setIsRecording(false);
-    }
-  };
-
-  // YouTube Upload
-  const uploadToYouTube = async () => {
-    if (!token) {
-      console.error('No access token available for upload');
-      return;
-    }
-
-    try {
-      const metadata = {
-        snippet: {
-          title: 'My Podcast Episode',
-          description: 'This is a video podcast',
-          tags: ['podcast', 'video', 'discussion'],
-          categoryId: '22', // People & Blogs category
-        },
-        status: {
-          privacyStatus: 'public', // Change to 'private' if needed
-        },
-      };
-
-      const formData = new FormData();
-      formData.append('video', videoBlob);
-      formData.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-
-      const response = await fetch('https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
+      .catch((error) => {
+        console.error(error);
+        toast.error('Failed to load Google API script');
       });
+  }, []);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+  const initClient = () => {
+    window.gapi.client
+      .init({
+        discoveryDocs: DISCOVERY_DOCS,
+        clientId: CLIENT_ID,
+        scope: SCOPES,
+      })
+      .then(() => {
+        window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+      })
+      .catch(err => {
+        console.error('Error during Google API client initialization:', err);
+        toast.error(`Failed to initialize Google API client: ${err.message || err}`);
+      });
+  };
 
-      const data = await response.json();
-      console.log('Video uploaded successfully:', data);
-      alert(`Video uploaded successfully: https://www.youtube.com/watch?v=${data.id}`);
-    } catch (error) {
-      console.error('Error uploading video:', error);
-      toast.error('Error uploading video.');
+  const updateSigninStatus = (status) => {
+    setIsSignedIn(status);
+    if (status) {
+      getChannel(defaultChannel);
     }
+  };
+
+  const handleAuthClick = () => {
+    window.gapi.auth2.getAuthInstance().signIn();
+  };
+
+  const handleSignoutClick = () => {
+    window.gapi.auth2.getAuthInstance().signOut();
+  };
+
+  const getChannel = (channel) => {
+    window.gapi.client.youtube.channels
+      .list({
+        part: 'snippet,contentDetails,statistics',
+        forUsername: channel,
+      })
+      .then(response => {
+        const channelInfo = response.result.items[0];
+        if (channelInfo) {
+          setChannelData(channelInfo);
+          requestVideoPlaylist(channelInfo.contentDetails.relatedPlaylists.uploads);
+        } else {
+          toast.error('No Channel By That Name');
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching channel data:', err);
+        toast.error('Error fetching channel data');
+      });
+  };
+
+  const requestVideoPlaylist = (playlistId) => {
+    window.gapi.client.youtube.playlistItems
+      .list({
+        playlistId: playlistId,
+        part: 'snippet',
+        maxResults: 10,
+      })
+      .then(response => {
+        const playListItems = response.result.items;
+        setVideoItems(playListItems || []);
+      })
+      .catch(err => {
+        console.error('Error fetching videos:', err);
+        toast.error('Error fetching videos');
+      });
+  };
+
+  const handleChannelChange = (e) => {
+    e.preventDefault();
+    getChannel(channelInput);
   };
 
   return (
     <div>
-      <h1>Record and Upload Podcast to YouTube</h1>
-
-      {/* Google Login Component */}
-      <GoogleLogin 
-        onSuccess={handleGoogleSuccess} 
-        onError={handleGoogleError}
-      />
-
-      <div>
-        <video ref={videoRef} style={{ width: '400px', height: '300px' }} />
-        <br />
-        {!isRecording ? (
-          <button onClick={startRecording}>Start Recording</button>
-        ) : (
-          <button onClick={stopRecording}>Stop Recording</button>
-        )}
-      </div>
-
-      {videoBlob && (
-        <div>
-          <button onClick={uploadToYouTube}>Upload to YouTube</button>
+      <nav className="black">
+        <div className="nav-wrapper">
+          <div className="container">
+            <a href="#!" className="brand-logo">YouTube Channel Data</a>
+          </div>
         </div>
-      )}
+      </nav>
+      <br />
+      <section>
+        <div className="container">
+          <p>Log In With Google</p>
+          {isSignedIn ? (
+            <button className="btn red" onClick={handleSignoutClick}>Log Out</button>
+          ) : (
+            <button className="btn red" onClick={handleAuthClick} style={{marginTop:'100px'}}>Log In</button>
+          )}
+          <br />
+          {isSignedIn && (
+            <div id="content">
+              <form id="channel-form" onSubmit={handleChannelChange}>
+                <div className="input-field col s6">
+                  <input 
+                    type="text" 
+                    placeholder="Enter Channel Name" 
+                    id="channel-input" 
+                    value={channelInput} 
+                    onChange={(e) => setChannelInput(e.target.value)} 
+                  />
+                  <input type="submit" value="Get Channel Data" className="btn grey" />
+                </div>
+              </form>
+              <div id="channel-data">
+                {channelData && (
+                  <ul className="collection">
+                    <li className="collection-item">Title: {channelData.snippet.title}</li>
+                    <li className="collection-item">ID: {channelData.id}</li>
+                    <li className="collection-item">Subscribers: {numberWithCommas(channelData.statistics.subscriberCount)}</li>
+                    <li className="collection-item">Views: {numberWithCommas(channelData.statistics.viewCount)}</li>
+                    <li className="collection-item">Videos: {numberWithCommas(channelData.statistics.videoCount)}</li>
+                  </ul>
+                )}
+                {channelData && (
+                  <p>{channelData.snippet.description}</p>
+                )}
+                {channelData && (
+                  <hr />
+                )}
+                {channelData && (
+                  <a className="btn grey darken-2" target="_blank" rel="noopener noreferrer" href={`https://youtube.com/${channelData.snippet.customUrl}`}>
+                    Visit Channel
+                  </a>
+                )}
+              </div>
+              <div className="row" id="video-container">
+                {videoItems.length > 0 ? (
+                  videoItems.map(item => (
+                    <div className="col s3" key={item.id}>
+                      <iframe
+                        width="100%"
+                        height="auto"
+                        src={`https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`}
+                        frameBorder="0"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  ))
+                ) : (
+                  <p>No Uploaded Videos</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 };
 
-export default Videos;
+// Helper function to format numbers with commas
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!))/g, ',');
+};
+
+export default YouTubeChannelData;
