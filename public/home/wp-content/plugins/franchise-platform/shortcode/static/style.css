@@ -1,0 +1,220 @@
+#location_search_form .loader {
+    display: none;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
+.loader::after,
+.loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid #F26443;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+}
+
+.loader::after {
+    animation-delay: 1s;
+}
+
+@keyframes animloader {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+button.btn.search-btn {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-locator {
+    max-width: 100% !important;
+}
+
+.page-title-wrapper {
+    padding: 1em;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+}
+
+.store-search-form {
+    padding: 1em;
+}
+
+.shop-locator .wrapper-shop-locator {
+    width: 100%;
+    display: flex;
+    height: 773px;
+}
+
+.shop-locator .wrapper-shop-locator .store {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.store li:first-child {
+    border-top: 2px solid #c1bdbf;
+}
+
+.store form {
+    position: relative;
+}
+
+/* .wrapper-shop-locator form span {
+    position: absolute;
+    top: 28px;
+    right: 3px;
+} */
+
+.shop-locator .wrapper-shop-locator .map {
+    width: 80%;
+    height: 100%;
+}
+
+.shop-locator .wrapper-shop-locator .map>div {
+    width: 100%;
+    height: 100%;
+}
+
+.store li {
+    border: 0;
+    border-bottom: 2px solid #c1bdbf;
+    padding: 15px 0;
+}
+
+.shop-locator .store h1 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 28px;
+    color: #655B5F;
+}
+
+.shop-locator .wrapper-list-block>div {
+    width: 100%;
+    float: left;
+    cursor: pointer;
+    color: #62585c;
+}
+
+.shop-locator .store li.location-list-item {
+    border: 0;
+    border-top-width: 0px;
+    border-top-style: none;
+    border-top-color: currentcolor;
+    list-style: none;
+    border-top: 1px solid #c1bdbf;
+    padding: 1em;
+}
+
+.shop-locator .wrapper-list-block h5 {
+    font-weight: 600;
+    padding-top: 4px;
+    letter-spacing: 1px;
+    color: #62585c;
+    font-size: 15px;
+}
+
+.shop-locator .store form input:focus {
+    outline: none;
+}
+
+.shop-locator .list-head {
+    margin-bottom: 20px;
+    color: #62585C;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.shop-locator .wrapper-list-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.shop-locator .wrapper-list-block h5 {
+    font-weight: 600;
+    padding-top: 4px;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.shop-locator ul {
+    padding: 0;
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+.shop-locator ul::-webkit-scrollbar {
+    display: none;
+}
+
+.shop-locator h4 {
+    font-size: 1rem;
+}
+
+.wrapper-list-block h5 {
+    position: relative;
+}
+
+.wrapper-list-block div:first-child {
+    width: 60%;
+}
+
+.wrapper-list-block div:last-child {
+    width: 37%;
+}
+
+@media only screen and (max-width: 600px) {
+    .shop-locator .wrapper-shop-locator {
+        display: block;
+    }
+    .shop-locator .wrapper-shop-locator .map,
+    .shop-locator .wrapper-shop-locator .store {
+        width: 100%;
+    }
+    .wrapper-list-block div:last-child {
+        width: 28%;
+    }
+    .shop-locator .wrapper-shop-locator .map {
+        padding-left: 0;
+    }
+    .wrapper-list-block h5:after {
+        right: 48%;
+    }
+}
+
+.btn.search-btn {
+    width: 100%;
+    background-color: #333;
+    color: #FFF;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+}
+
+.btn.search-btn:hover {
+    color: #333;
+    background-color: #fff;
+}
