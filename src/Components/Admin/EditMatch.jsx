@@ -107,26 +107,29 @@ const EditMatch = ({ matchId, isShadow }) => {
         [name]: files ? files[0] : value,
       });
     }
-  };const handleSubmit = async (e) => {
+  };
+  
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
     const url = isShadow
       ? 'https://fantasymmadness-game-server-three.vercel.app/editShadow'
       : 'https://fantasymmadness-game-server-three.vercel.app/editMatch';
   
-    // Parse local date and time from form data (assuming it's in the user's time zone)
+    // Parse local date and time from form data (this should be in the user's local timezone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
   
-    // Convert the local date and time to UTC
-    const matchDateTimeUTC = new Date(localDateTime.getTime() - (localDateTime.getTimezoneOffset() * 60000));
+    // Ensure localDateTime is in the user's local timezone (Eastern Time)
+    const matchDateEST = localDateTime.toISOString().split('T')[0]; // Date part in ISO
+    const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
   
-    // Convert UTC date and time to EST (Eastern Standard Time)
-    const estOffset = -5 * 60; // EST offset in minutes (UTC-5)
-    const matchDateTimeEST = new Date(matchDateTimeUTC.getTime() + estOffset * 60000);
-  
-    // Extract the EST date and time
-    const matchDateEST = matchDateTimeEST.toISOString().split('T')[0]; // Date part in EST
-    const matchTimeEST = matchDateTimeEST.toISOString().split('T')[1].substring(0, 5); // Time part in EST
+    // Create a new date object in the user's local timezone to avoid shifting issues
+    const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+    
+    // Format the adjusted date to ISO string
+    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // This should now be the correct date
   
     const data = new FormData();
     data.append('matchId', matchId);
@@ -141,8 +144,8 @@ const EditMatch = ({ matchId, isShadow }) => {
     data.append('maxRounds', formData.maxRounds);
   
     if (!isShadow) {
-      data.append('matchDate', matchDateEST);  // Use EST date
-      data.append('matchTime', matchTimeEST);  // Use EST time
+      data.append('matchDate', matchDateAdjusted);  // Use adjusted date
+      data.append('matchTime', matchTimeEST);  // Use local time
       data.append('matchTokens', formData.matchTokens);
       data.append('pot', formData.pot);
     }
@@ -170,7 +173,7 @@ const EditMatch = ({ matchId, isShadow }) => {
       setButtonText('Edit Match');
     }
   };
-  
+    
 
   return (
     <div className='addNewMatch'>
