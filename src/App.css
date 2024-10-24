@@ -37,7 +37,15 @@
     font-size: 24px;
      color: #007bff;   
 }
+
+    .fightItemOne .transformed-div h1{
+      padding-right: 10px ;
+      font-size: 18px !important ;
+     
+     }
+   
 @media (max-width: 767px){
+    
     .home-arrow-circle{
         top: 107px;
      }

@@ -342,11 +342,7 @@ const navigate = useNavigate();
                       <div className='transformed-div-two-partTwo'>
                         {/* Convert match date to US timezone */}
                         <p>
-                          {format(
-                            toZonedTime(new Date(match.matchDate), US_TIMEZONE),
-                            'MM/dd/yyyy',
-                            { timeZone: US_TIMEZONE }
-                          )}
+                        {match.matchDate.split('T')[0]}
                         </p>
                         <h1>{match.matchType}</h1>
                       </div>

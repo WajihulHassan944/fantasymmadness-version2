@@ -11,13 +11,7 @@
     font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
     font-weight: 500;
     font-style: normal;
-}
-.fightItemOne .transformed-div h1{
-    padding-right: 10px !important;
-    font-size: 14px !important;
-   
-   }
-   
+}  
 
 /* Popup styling */
 .popupUsersJoined {
@@ -87,7 +81,6 @@
   }
   
 @media (max-width: 767px){
-
     .yourFightsWrapper .fightwalletWrap{
         justify-content: center;
         align-items: center;

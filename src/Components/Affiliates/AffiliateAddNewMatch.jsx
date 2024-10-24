@@ -83,7 +83,6 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       }
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -95,16 +94,18 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       return;
     }
   
-    // Parse local date and time from form data (assuming it's in your time zone)
+    // Parse local date and time from form data (assuming it's in the user's local timezone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
   
-    // Convert the local date and time to EST
-    const estOffset = -5 * 60; // EST offset in minutes (UTC-5)
-    const matchDateTimeEST = new Date(localDateTime.getTime() + estOffset * 60000);
+    // Ensure localDateTime is in the user's local timezone (Eastern Time)
+    const matchDateEST = localDateTime.toISOString().split('T')[0]; // Date part in ISO
+    const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
   
-    // Extract the EST date and time
-    const matchDateEST = matchDateTimeEST.toISOString().split('T')[0]; // Date part in EST
-    const matchTimeEST = matchDateTimeEST.toISOString().split('T')[1].substring(0, 5); // Time part in EST
+    // Create a new date object in the user's local timezone to avoid shifting issues
+    const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+  
+    // Format the adjusted date to ISO string
+    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // This should now be the correct date
   
     const data = new FormData();
     data.append('matchTokens', formData.matchTokens);
@@ -113,8 +114,8 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('pot', formData.pot);
     data.append('profit', formData.profit);
     data.append('amountOverPotBudget', formData.amountOverPotBudget);
-    data.append('matchDate', matchDateEST);  // Store date in EST
-    data.append('matchTime', matchTimeEST);  // Store time in EST
+    data.append('matchDate', matchDateAdjusted);  // Store adjusted date
+    data.append('matchTime', matchTimeEST);  // Store local time
   
     // Append image URLs directly if available
     data.append('fighterAImageUrl', matchDetails.fighterAImage);

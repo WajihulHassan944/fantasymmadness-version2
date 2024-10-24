@@ -18,7 +18,6 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const [navigateDashboard, setNavigateToDash] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
  
-  const US_TIMEZONE = 'America/New_York';
   const imageData = {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
@@ -70,7 +69,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   
         // Change date and time color to match box shadow color
         ctx.fillStyle = '#FF4500'; 
-        ctx.fillText(`${formattedDate} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`, canvas.width / 2, 65); // Date and time below promoter name
+        ctx.fillText(`${match.matchDate.split('T')[0]} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`, canvas.width / 2, 65); // Date and time below promoter name
         
         const drawImageWithShadow = (image, x, y, name) => {
           const radius = 35; // Circle radius
@@ -214,11 +213,6 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     link.click();
   };
 
-// Parse the match date
-const matchDateTime = new Date(match.matchDate);
-const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
-const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
-
   return (
     <div className='fightDetails' style={{ paddingBottom: '50px' }}>
       <div className='member-header' style={{ marginBottom: '30px' }}>
@@ -256,7 +250,7 @@ const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE })
         </div>
 
         <div className='beiginningTimeFight'>
-        <h1 style={{ fontSize: '21.5px' }}>{formattedDate} - </h1>
+        <h1 style={{ fontSize: '21.5px' }}>{match.matchDate.split('T')[0]} - </h1>
         <p style={{ color: "#38b90c" }}>
   {new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
 </p>

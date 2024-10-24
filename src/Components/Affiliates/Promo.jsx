@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
-import { format, toDate, toZonedTime } from 'date-fns-tz';
 
 const Promo = () => {
 
@@ -121,11 +120,7 @@ const Promo = () => {
     console.log("Affiliate not found or still loading...");
     return <div>Loading...</div>;
   }
-  
-  const matchDateTime = new Date(match.matchDate);
-  const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE);
-  const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE });
-  
+   
   return (
     <div className='fightDetails'>
       <div className='member-header' style={{ marginBottom: '30px' }}>
@@ -161,7 +156,7 @@ const Promo = () => {
         </div>
 
         <div className='beiginningTimeFight'>
-          <h1 style={{ fontSize: '21.5px' }}> {formattedDate} - </h1>
+          <h1 style={{ fontSize: '21.5px' }}> {match.matchDate.split('T')[0]} - </h1>
           <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
         </div>
 

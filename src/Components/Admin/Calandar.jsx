@@ -27,7 +27,7 @@ const Calandar = () => {
     useEffect(() => {
         if (matches) {
             const matchDates = matches.map(match => {
-                const matchDate = new Date(match.matchDate);
+                const matchDate = new Date(match.matchDate.split('T')[0]);
                 // Convert match date to YYYY-MM-DD format
                 return formatISO(matchDate, { representation: 'date' });
             });
@@ -120,7 +120,7 @@ const Calandar = () => {
             <span className="close" onClick={closeMatchModal}>&times;</span>
             <h3>{currentMatch.matchName}</h3>
             <p>{currentMatch.matchDescription}</p>
-            <p><strong>Date:</strong> {new Date(currentMatch.matchDate).toLocaleDateString()}</p>
+            <p><strong>Date:</strong>{currentMatch.matchDate.split('T')[0]} </p>
             <p><strong>Time:</strong> {new Date(`1970-01-01T${currentMatch.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
 </p>
             <p><strong>Venue:</strong> {currentMatch.venue}</p>

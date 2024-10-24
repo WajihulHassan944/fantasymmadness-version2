@@ -100,9 +100,6 @@ const UpcomingFights = () => {
         <div className="fightswrap" data-aos="zoom-out">
           {upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => {
-              const matchDateTime = new Date(match.matchDate); // Create a date object from the match date
-              const zonedDate = toZonedTime(matchDateTime, US_TIMEZONE); // Convert to the specified timezone
-              const formattedDate = format(zonedDate, 'MM/dd/yyyy', { timeZone: US_TIMEZONE }); // Format the date
               
               return (
                 <div className='fightItem' key={match._id} onClick={handleFightClick}>
@@ -124,7 +121,7 @@ const UpcomingFights = () => {
                         <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                       </div>
                       <div className='transformed-div-two-partTwo'>
-                        <p>{formattedDate}</p> {/* Use the formatted date here */}
+                        <p>{match.matchDate.split('T')[0]}</p> {/* Use the formatted date here */}
                         <h1>{match.matchType}</h1>
                         <h1>pot ${match.pot}</h1>
                       </div>

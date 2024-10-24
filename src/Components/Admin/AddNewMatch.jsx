@@ -66,18 +66,18 @@ const AddNewMatch = () => {
         ? 'https://fantasymmadness-game-server-three.vercel.app/addMatch'
         : 'https://fantasymmadness-game-server-three.vercel.app/addShadow';
   
-    // Parse local date and time from form data (assuming it's in the user's time zone)
+    // Parse local date and time from form data (assuming it's in the user's local timezone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
   
-    // Convert the local date and time to UTC
-    const matchDateTimeUTC = new Date(localDateTime.getTime() - (localDateTime.getTimezoneOffset() * 60000));
+    // Ensure localDateTime is in the user's local timezone (Eastern Time)
+    const matchDateEST = localDateTime.toISOString().split('T')[0]; // Date part in ISO
+    const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
   
-    // Convert UTC date and time to EST (Eastern Standard Time)
-    const matchDateTimeEST = new Date(matchDateTimeUTC.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    // Create a new date object in the user's local timezone to avoid shifting issues
+    const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
   
-    // Extract the EST date and time
-    const matchDateEST = matchDateTimeEST.toISOString().split('T')[0]; // Date part in EST
-    const matchTimeUTC = matchDateTimeUTC.toISOString().split('T')[1].substring(0, 5); // Time part remains in UTC
+    // Format the adjusted date to ISO string
+    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // This should now be the correct date
   
     const data = new FormData();
     data.append('matchCategory', formData.matchCategory);
@@ -90,25 +90,25 @@ const AddNewMatch = () => {
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-    data.append('matchDate', matchDateEST);  // Store date in EST
-    data.append('matchTime', matchTimeUTC);  // Time remains in UTC
+    data.append('matchDate', matchDateAdjusted);  // Store adjusted date
+    data.append('matchTime', matchTimeEST);  // Store local time
     data.append('matchType', formData.matchType);
     data.append('matchTokens', formData.matchTokens);
     data.append('pot', formData.pot);
-
+  
     setButtonText('Saving, please wait...');  // Update button text
-
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: data,
       });
-
+  
       if (response.ok) {
         const result = await response.json();  // Parse the JSON response
         console.log('Response received:', result);  // Log the full response
         alert('Match added successfully!');
-
+  
         if (formData.matchType === 'SHADOW') {
           setMatchId(result.matchId); // Store the matchId
           setShowPopup(true); // Show the popup
@@ -125,7 +125,7 @@ const AddNewMatch = () => {
       setButtonText('Add Match');  // Revert button text
     }
   };
-
+  
   
   const handlePopupResponse = (response) => {
     setShowPopup(false); // Hide the popup
