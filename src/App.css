@@ -10,3 +10,48 @@
 .admin-header{
     z-index: 99999 !important;
 }
+
+.home-arrow-circle{
+    position: absolute;
+    top: 127px;
+    left: 70px;
+    cursor: pointer;
+    font-size: 24px;
+     color: #007bff;
+}
+
+.homeup-arrow-circle{
+    position: absolute;
+    top: 127px;
+    left: 70px;
+    cursor: pointer;
+    font-size: 24px;
+     color: #007bff;
+}
+.homecreateacc-arrow-circle{
+ 
+    position: absolute;
+    top: 97px;
+    left: 70px;
+    cursor: pointer;
+    font-size: 24px;
+     color: #007bff;   
+}
+@media (max-width: 767px){
+    .home-arrow-circle{
+        top: 107px;
+     }
+     .homeup-arrow-circle{
+        top: 90px;
+     }
+     
+.homecreateacc-arrow-circle{
+ 
+    top: 37px;
+    left: 20px;
+    font-size: 20px;
+  }
+  .loginbackarrow{
+    top:100px;
+  }
+}

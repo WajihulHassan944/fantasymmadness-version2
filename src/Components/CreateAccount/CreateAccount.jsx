@@ -155,11 +155,10 @@ const CreateAccount = () => {
     return (
         <div className='createAccount'>
          <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left homecreateacc-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'fixed', top: '100px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
-      ></i>
+       ></i>
    
         <p className='affiliateLinkppp'  >Fighters Only!</p>
         

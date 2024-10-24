@@ -40,11 +40,10 @@ const ThreadList = () => {
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left home-arrow-circle"
           aria-hidden="true"
           onClick={() => setRedirectToLogin(false)} // Go back to previous component
-          style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
-        ></i>
+         ></i>
         <Login redirectTo={prevAction} />
       </>
     );
@@ -54,7 +53,7 @@ const ThreadList = () => {
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left "
           aria-hidden="true"
           onClick={() => setCreateThreadVar(false)} // Go back to previous component
           style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
@@ -67,13 +66,13 @@ const ThreadList = () => {
   
   return (
     <div className="thread-list-container">
-    <i
-        className="fa fa-arrow-circle-left"
+     <i
+        className="fa fa-arrow-circle-left home-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        
       ></i>
-      <h1 className="forum-heading">Discussion Forum</h1>
+     <h1 className="forum-heading">Discussion Forum</h1>
       <button className="create-thread-btn" onClick={createThread}>Have a question?</button>
       {threads.length === 0 ? (
         <p className="no-posts-message">No posts yet.</p>

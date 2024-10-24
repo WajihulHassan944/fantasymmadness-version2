@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-const CLIENT_ID = '261076841125-1n3ps24u5fco1js6o1u212nac7agp9dg.apps.googleusercontent.com';
+const CLIENT_ID = '';
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
 const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
 

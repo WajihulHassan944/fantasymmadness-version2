@@ -90,10 +90,9 @@ const UpcomingFights = () => {
   return (
     <div className='upcomingFightsUser'>
      <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left homeup-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
    
       <div className='homeSecond' style={{ background: 'transparent' }}>

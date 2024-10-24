@@ -84,30 +84,28 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     }
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const url = 'https://fantasymmadness-game-server-three.vercel.app/addMatch';
-
+  
     const matchDetails = promoMatches.find((m) => m._id === matchId);
     if (!matchDetails) {
       alert('Match not found!');
       return;
     }
-    
-
+  
     // Parse local date and time from form data (assuming it's in your time zone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
-
-    // Convert the local date and time to UTC
-    const matchDateTimeUTC = new Date(localDateTime.getTime() - (localDateTime.getTimezoneOffset() * 60000));
-
-    // Extract the UTC date and time
-    const matchDateUTC = matchDateTimeUTC.toISOString().split('T')[0]; // Date part in UTC
-    const matchTimeUTC = matchDateTimeUTC.toISOString().split('T')[1].substring(0, 5); // Time part in UTC
-
-
+  
+    // Convert the local date and time to EST
+    const estOffset = -5 * 60; // EST offset in minutes (UTC-5)
+    const matchDateTimeEST = new Date(localDateTime.getTime() + estOffset * 60000);
+  
+    // Extract the EST date and time
+    const matchDateEST = matchDateTimeEST.toISOString().split('T')[0]; // Date part in EST
+    const matchTimeEST = matchDateTimeEST.toISOString().split('T')[1].substring(0, 5); // Time part in EST
+  
     const data = new FormData();
     data.append('matchTokens', formData.matchTokens);
     data.append('shadowFightId', matchDetails._id);
@@ -115,13 +113,13 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('pot', formData.pot);
     data.append('profit', formData.profit);
     data.append('amountOverPotBudget', formData.amountOverPotBudget);
-    data.append('matchDate', matchDateUTC);  // Store date in UTC
-  data.append('matchTime', matchTimeUTC); 
-
+    data.append('matchDate', matchDateEST);  // Store date in EST
+    data.append('matchTime', matchTimeEST);  // Store time in EST
+  
     // Append image URLs directly if available
     data.append('fighterAImageUrl', matchDetails.fighterAImage);
     data.append('fighterBImageUrl', matchDetails.fighterBImage);
-
+  
     // Append other match details
     data.append('matchStatus', matchDetails.matchStatus);
     data.append('matchCategory', matchDetails.matchCategory);
@@ -133,19 +131,19 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('matchVideoUrl', matchDetails.matchVideoUrl);
     data.append('matchType', 'SHADOW');
     data.append('maxRounds', matchDetails.maxRounds);
-
-  // Append BoxingMatch and MMAMatch stats
-  data.append('BoxingMatch', JSON.stringify(matchDetails.BoxingMatch));
-  data.append('MMAMatch', JSON.stringify(matchDetails.MMAMatch));
+  
+    // Append BoxingMatch and MMAMatch stats
+    data.append('BoxingMatch', JSON.stringify(matchDetails.BoxingMatch));
+    data.append('MMAMatch', JSON.stringify(matchDetails.MMAMatch));
   
     setButtonText('Saving, please wait...');
-
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: data,
       });
-
+  
       if (response.ok) {
         const responseData = await response.json();
         alert('Match added successfully!');
@@ -161,7 +159,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       setButtonText('Add Match');
     }
   };
-
+  
   return (
     <div className='addNewMatch' style={{ marginLeft: '0', width: '100%', flexDirection: 'column' }}>
       <div className='member-header' style={{ marginBottom: '20px' }}>

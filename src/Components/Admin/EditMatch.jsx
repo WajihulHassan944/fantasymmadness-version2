@@ -107,15 +107,27 @@ const EditMatch = ({ matchId, isShadow }) => {
         [name]: files ? files[0] : value,
       });
     }
-  };
-
-  const handleSubmit = async (e) => {
+  };const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const url = isShadow
       ? 'https://fantasymmadness-game-server-three.vercel.app/editShadow'
       : 'https://fantasymmadness-game-server-three.vercel.app/editMatch';
-
+  
+    // Parse local date and time from form data (assuming it's in the user's time zone)
+    const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
+  
+    // Convert the local date and time to UTC
+    const matchDateTimeUTC = new Date(localDateTime.getTime() - (localDateTime.getTimezoneOffset() * 60000));
+  
+    // Convert UTC date and time to EST (Eastern Standard Time)
+    const estOffset = -5 * 60; // EST offset in minutes (UTC-5)
+    const matchDateTimeEST = new Date(matchDateTimeUTC.getTime() + estOffset * 60000);
+  
+    // Extract the EST date and time
+    const matchDateEST = matchDateTimeEST.toISOString().split('T')[0]; // Date part in EST
+    const matchTimeEST = matchDateTimeEST.toISOString().split('T')[1].substring(0, 5); // Time part in EST
+  
     const data = new FormData();
     data.append('matchId', matchId);
     data.append('matchCategory', formData.matchCategory);
@@ -127,22 +139,22 @@ const EditMatch = ({ matchId, isShadow }) => {
     data.append('fighterAImage', formData.fighterAImage ? formData.fighterAImage : match?.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage ? formData.fighterBImage : match?.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-
+  
     if (!isShadow) {
-      data.append('matchDate', formData.matchDate);
-      data.append('matchTime', formData.matchTime);
+      data.append('matchDate', matchDateEST);  // Use EST date
+      data.append('matchTime', matchTimeEST);  // Use EST time
       data.append('matchTokens', formData.matchTokens);
       data.append('pot', formData.pot);
     }
-
+  
     setButtonText('Updating, please wait...');
-
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: data,
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         console.log('Response received:', result);
@@ -158,6 +170,7 @@ const EditMatch = ({ matchId, isShadow }) => {
       setButtonText('Edit Match');
     }
   };
+  
 
   return (
     <div className='addNewMatch'>

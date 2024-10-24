@@ -58,28 +58,27 @@ const AddNewMatch = () => {
       });
     }
   };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const url =
       formData.matchType === 'LIVE'
         ? 'https://fantasymmadness-game-server-three.vercel.app/addMatch'
         : 'https://fantasymmadness-game-server-three.vercel.app/addShadow';
-
- 
-
-    // Parse local date and time from form data (assuming it's in your time zone)
+  
+    // Parse local date and time from form data (assuming it's in the user's time zone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
-
+  
     // Convert the local date and time to UTC
     const matchDateTimeUTC = new Date(localDateTime.getTime() - (localDateTime.getTimezoneOffset() * 60000));
-
-    // Extract the UTC date and time
-    const matchDateUTC = matchDateTimeUTC.toISOString().split('T')[0]; // Date part in UTC
-    const matchTimeUTC = matchDateTimeUTC.toISOString().split('T')[1].substring(0, 5); // Time part in UTC
-
+  
+    // Convert UTC date and time to EST (Eastern Standard Time)
+    const matchDateTimeEST = new Date(matchDateTimeUTC.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  
+    // Extract the EST date and time
+    const matchDateEST = matchDateTimeEST.toISOString().split('T')[0]; // Date part in EST
+    const matchTimeUTC = matchDateTimeUTC.toISOString().split('T')[1].substring(0, 5); // Time part remains in UTC
+  
     const data = new FormData();
     data.append('matchCategory', formData.matchCategory);
     data.append('matchCategoryTwo', formData.matchCategoryTwo);
@@ -91,9 +90,9 @@ const AddNewMatch = () => {
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-    data.append('matchDate', matchDateUTC);  // Store date in UTC
-    data.append('matchTime', matchTimeUTC); 
-      data.append('matchType', formData.matchType);
+    data.append('matchDate', matchDateEST);  // Store date in EST
+    data.append('matchTime', matchTimeUTC);  // Time remains in UTC
+    data.append('matchType', formData.matchType);
     data.append('matchTokens', formData.matchTokens);
     data.append('pot', formData.pot);
 

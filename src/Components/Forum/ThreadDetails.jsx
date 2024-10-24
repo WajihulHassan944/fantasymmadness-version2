@@ -62,12 +62,12 @@ const navigate = useNavigate();
     thread ? (
       <div className='threadDetailsContainer'>
         <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left home-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        
       ></i>
-        <h2>{thread.title}</h2>
+     <h2>{thread.title}</h2>
       <div>  <p>{thread.body}</p>
       <div style={{padding:'0', display:'flex', justifyContent:'space-between', background:'transparent'}}>  <p>Posted by {thread.author.username} on {new Date(thread.createdDate).toLocaleString()}</p>
         <p style={{color:'rgb(255, 193, 7)'}}>{thread.views} views</p> </div></div>

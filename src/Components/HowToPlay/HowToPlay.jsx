@@ -6,10 +6,10 @@ const HowToPlay = () => {
   return (
     <div className='howtoplay-wrapper' >
      <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left home-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '127px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        
       ></i>
    
       <h1 data-aos="zoom-out">How to play</h1>
