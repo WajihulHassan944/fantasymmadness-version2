@@ -809,11 +809,7 @@ background-color: #fff;
 
 
 
-
-    .blurred {
-        filter: blur(4px);
-        }
-      
+ 
 
 
     @media (max-width: 767px){
