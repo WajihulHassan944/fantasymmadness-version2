@@ -297,7 +297,7 @@ const navigate = useNavigate();
                     <p style={{marginLeft:'-15px'}}>
                       {hasStarted
                         ? "Fight has started"
-                        : `Begins in ${diffHrs} hours ${diffMins} mins`}
+                        : `Begins in ${diffHrs} H ${diffMins} M`}
                     </p>
                   </div>
                 </div>
@@ -429,7 +429,7 @@ const navigate = useNavigate();
                       <p style={{ marginLeft: '-15px' }}>
                         {hasStarted
                           ? "Fight has started"
-                          : `Begins in ${diffHrs} hours ${diffMins} mins`}
+                          : `Begins in ${diffHrs} H ${diffMins} M`}
                       </p>
                     </div>
                   </div>
