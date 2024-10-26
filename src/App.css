@@ -92,22 +92,24 @@
 }
 /* Portrait orientation */
 @media only screen and (device-width: 414px) and (device-height: 896px) and (orientation: portrait) {
-    .upcomingFights .transformed-div-two-partOne h1 {
+    .upcomingFights .transformed-div-two-partOne h1 , .pendingFights .transformed-div-two-partOne
+    , .completedFights .transformed-div-two-partOne {
       margin-top: -3px;
     }
     
-    .upcomingFights .transformed-div-two-partTwo {
+    .upcomingFights .transformed-div-two-partTwo,  .pendingFights .transformed-div-two-partTwo 
+    ,  .completedFights .transformed-div-two-partTwo  {
       margin-top: -8px;
     }
   }
   
   /* Landscape orientation */
   @media only screen and (device-width: 896px) and (device-height: 414px) and (orientation: landscape) {
-    .upcomingFights .transformed-div-two-partOne h1 {
+    .upcomingFights .transformed-div-two-partOne h1 , .pendingFights .transformed-div-two-partOne{
       margin-top: -3px;
     }
     
-    .upcomingFights .transformed-div-two-partTwo {
+    .upcomingFights .transformed-div-two-partTwo,  .pendingFights .transformed-div-two-partTwo {
       margin-top: -3px;
     }
   }
