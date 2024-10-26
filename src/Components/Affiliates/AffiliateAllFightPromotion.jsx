@@ -26,10 +26,9 @@ const navigate = useNavigate();
   return (
     <div className='myprofile allpromotion'>
      <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'fixed', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
    
       <div className='member-header'>

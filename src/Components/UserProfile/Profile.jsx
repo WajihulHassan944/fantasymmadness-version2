@@ -217,10 +217,9 @@ const [membershipGo, setMembershipGo] = useState(null);
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left dashboard-arrow-circle"
           aria-hidden="true"
           onClick={() => setShowPredictions(false)} // Go back to FightCosting
-          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <AddTokensToWallet userId={user._id} />
       </>
@@ -231,10 +230,9 @@ const [membershipGo, setMembershipGo] = useState(null);
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left dashboard-arrow-circle"
           aria-hidden="true"
           onClick={() => setMembershipGo(false)} // Go back to previous component
-          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <MembershipCheckout userId={user._id} email={user.email} name={user.firstName + ' ' + user.lastName} avatar={user.profileUrl} />
       </>
@@ -244,10 +242,9 @@ const [membershipGo, setMembershipGo] = useState(null);
     return (
         <div className='myprofile'>
         <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
             <div className='member-header'>
                 <div className='member-header-image'>

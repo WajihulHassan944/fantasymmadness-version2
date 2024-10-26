@@ -20,7 +20,7 @@ const navigate = useNavigate();
         className="fa fa-arrow-circle-left"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'fixed', top: '100px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+        style={{ position: 'fixed', top: '100px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff'}}
       ></i>
    
             <div className='howtoplay-wrapper'>

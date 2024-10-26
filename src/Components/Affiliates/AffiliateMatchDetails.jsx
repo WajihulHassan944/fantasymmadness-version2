@@ -72,39 +72,42 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         ctx.fillText(`${match.matchDate.split('T')[0]} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`, canvas.width / 2, 65); // Date and time below promoter name
         
         const drawImageWithShadow = (image, x, y, name) => {
-          const radius = 35; // Circle radius
-          
+          const radius = 45; // Increased circle radius for wider images
+        
           // Save current state
           ctx.save();
-          
+        
           // Begin circular clipping path
           ctx.beginPath();
-          ctx.arc(x, y, radius, 0, Math.PI * 2); // Maintain circular shape (35 radius)
+          ctx.arc(x, y, radius, 0, Math.PI * 2); // Adjusted radius for increased width
           ctx.closePath();
           ctx.clip();
+        
           
-          // Light box shadow effect
-          ctx.shadowColor = 'rgba(255, 69, 0, 0.3)'; // Lighter shadow color with transparency
-          ctx.shadowBlur = 10; // Reduced blur for a subtle effect
-          ctx.shadowOffsetX = 0;
-          ctx.shadowOffsetY = 0;
-          
-          // Set the image to fill 100% of the circle (stretched)
+  // Box shadow effect with no blur
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.8)'; // Darker shadow color with transparency
+  ctx.shadowBlur = 0; // No blur for the shadow
+  ctx.shadowOffsetX = 0; // Horizontal offset
+  ctx.shadowOffsetY = 0; // Vertical offset
+
+          // Set the image to fill the increased circle diameter (wider appearance)
           const circleDiameter = radius * 2;
-          ctx.drawImage(image, x - radius, y - radius, circleDiameter, circleDiameter);
-          
-          // Restore previous state
+          ctx.drawImage(image, x - radius, y - radius, circleDiameter * 1.2, circleDiameter); // Increased width by 1.2x
+        
+          // Restore previous state to draw the border without shadow
           ctx.restore();
-          
+        
+      
           // Render fighter name below image with gap
           ctx.font = 'bold 16px UFCSans, Arial, sans-serif';
           ctx.fillStyle = '#FFFFFF';
           ctx.fillText(name, x, y + radius + 25); // Position name below the image
         };
         
+        
         // Call function for fighter images
-        drawImageWithShadow(fighterOneImage, 140, 140, match.matchFighterA);
-        drawImageWithShadow(fighterTwoImage, 350, 140, match.matchFighterB);
+        drawImageWithShadow(fighterOneImage, 110, 140, match.matchFighterA);
+        drawImageWithShadow(fighterTwoImage, 380, 140, match.matchFighterB);
                 
         // Generate the QR code for the match URL and draw it on the canvas
         const fullName = `${affiliate.firstName} ${affiliate.lastName}`;
@@ -165,10 +168,9 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left dashboard-arrow-circle"
           aria-hidden="true"
           onClick={() => setNavigateToDash(null)} // Go back to the previous component
-          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <AffiliateFightLeaderboard matchId={navigateDashboard} />
       </>

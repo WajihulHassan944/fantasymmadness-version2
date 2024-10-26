@@ -91,10 +91,9 @@ const FightCosting = ({ matchId }) => {
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left dashboard-arrow-circle"
           aria-hidden="true"
           onClick={() => setShowPredictions(false)} // Go back to FightCosting
-          style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999' }}
         ></i>
         <MakePredictions matchId={matchId} />
       </>

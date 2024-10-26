@@ -69,10 +69,9 @@ const AffiliateDashboard = () => {
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left"
+          className="fa fa-arrow-circle-left dashboard-arrow-circle"
           aria-hidden="true"
           onClick={() => setShadowMatchId(null)} // Go back to the previous component
-          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <AffiliateAddNewMatch matchId={shadowMatchId} />
       </>
@@ -87,10 +86,9 @@ const AffiliateDashboard = () => {
     return (
       <>
         <i
-          className="fa fa-arrow-circle-left affiliateDashboardIconArrow"
+          className="fa fa-arrow-circle-left dashboard-arrow-circle"
           aria-hidden="true"
           onClick={() => setPromoMatchDetails({})} // Go back to the previous component
-          style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <AffiliateMatchDetails
           matchId={promoMatchDetails.matchId}
@@ -158,7 +156,7 @@ const AffiliateDashboard = () => {
                 </div>
                 <div className='fightItemOne'>
                   <div className={`transformed-div`}>
-                    <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                    <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
                   <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
@@ -193,7 +191,7 @@ const AffiliateDashboard = () => {
                 </div>
                 <div className='fightItemOne'>
                   <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
-                    <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                    <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
                   <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>

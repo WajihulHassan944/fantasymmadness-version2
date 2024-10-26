@@ -139,8 +139,8 @@ const navigate = useNavigate();
   if (selectedMatchId) {
       return (
         <>
-         <i className="fa fa-arrow-circle-left dashboard-back-arrow" aria-hidden="true" onClick={() => setSelectedMatchId(null)}
-  style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
+         <i className="fa fa-arrow-circle-left dashboard-back-arrow dashboard-arrow-circle" aria-hidden="true" onClick={() => setSelectedMatchId(null)}
+ ></i>
 
    <FightCosting matchId={selectedMatchId} />
         </>
@@ -152,8 +152,8 @@ const navigate = useNavigate();
     
       return (
         <>
-           <i className="fa fa-arrow-circle-left" aria-hidden="true" onClick={() => setCompletedMatchId(null)}
-        style={{ position: 'absolute', top: '127px',left:'35px', cursor: 'pointer', fontSize: '24px' , color:'#007bff', zIndex:'99999'}}></i>
+           <i className="fa fa-arrow-circle-left dashboard-arrow-circle" aria-hidden="true" onClick={() => setCompletedMatchId(null)}
+      ></i>
          <FightLeaderboard matchId={completedMatchId} />
         </>
       );
@@ -221,10 +221,9 @@ const navigate = useNavigate();
   return (
     <div className='userdashboard yourFightsWrapper'>
     <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '127px', left: '35px', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
       <div className='member-header'>
         <div className='member-header-image'>
@@ -288,7 +287,7 @@ const navigate = useNavigate();
               </div>
               <div className='fightItemOne'>
                 <div className="transformed-div">
-                  <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                  <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                 </div>
                 <div className="transformed-div-two">
                   <div className='transformed-div-two-partOne'>
@@ -312,7 +311,7 @@ const navigate = useNavigate();
                       <div className='transformedDivBox'>TP</div>
                       <div className='transformedDivBox'>RW</div>
                       <div className='transformedDivBox'>KO</div>
-                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} </div>
                     </>
                   ) : (
                     <>
@@ -321,7 +320,7 @@ const navigate = useNavigate();
                       <div className='transformedDivBox'>KN</div>
                       <div className='transformedDivBox'>RW</div>
                       <div className='transformedDivBox'>KO</div>
-                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                      <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} </div>
                     </>
                   )}
                 </div>
@@ -420,7 +419,7 @@ const navigate = useNavigate();
                 </div>
                 <div className='fightItemOne'>
                   <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
-                    <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                    <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
                   <div className="transformed-div-two">
                     <div className='transformed-div-two-partOne'>
@@ -444,7 +443,7 @@ const navigate = useNavigate();
                         <div className='transformedDivBox'>TP</div>
                         <div className='transformedDivBox'>RW</div>
                         <div className='transformedDivBox'>KO</div>
-                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</div>
                       </>
                     ) : (
                       <>
@@ -453,7 +452,7 @@ const navigate = useNavigate();
                         <div className='transformedDivBox'>KN</div>
                         <div className='transformedDivBox'>RW</div>
                         <div className='transformedDivBox'>KO</div>
-                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} {match.matchStatus}</div>
+                        <div className='transformedDivBox'>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} </div>
                       </>
                     )}
                   </div>

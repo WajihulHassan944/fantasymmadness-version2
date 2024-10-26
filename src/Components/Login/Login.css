@@ -77,7 +77,7 @@
 }
 .loginCard form{
     width:100%;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 .loginCard form input{
     width:100%;
@@ -188,6 +188,12 @@ flex-basis: 30%;
   
 }
 
-
+.loginCard form{
+  margin-bottom: 10px;
+}
+.toFlexDiv{
+  margin-top:-20px;
+  margin-bottom: 10px;
+}
 }
 
