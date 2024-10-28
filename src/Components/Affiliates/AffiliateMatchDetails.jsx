@@ -292,6 +292,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
       .catch((error) => console.error('Error saving video URL:', error));
   };
   
+  console.log("Access Key:", process.env.AWS_ACCESS_KEY_ID); // For debugging only
 
 
   return (
