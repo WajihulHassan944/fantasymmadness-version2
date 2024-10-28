@@ -122,7 +122,7 @@ const Promo = () => {
   }
    
   return (
-    <div className='fightDetails'>
+    <div className='fightDetails' style={{paddingBottom:'50px'}}>
       <div className='member-header' style={{ marginBottom: '30px' }}>
         <div className='member-header-image'>
           <img src={affiliate.profileUrl} alt="Affiliate" />
@@ -159,6 +159,17 @@ const Promo = () => {
           <h1 style={{ fontSize: '21.5px' }}> {match.matchDate.split('T')[0]} - </h1>
           <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
         </div>
+       
+        {match.matchPromotionalVideoUrl && (
+  <div className="videoContainer">
+    <video className="responsiveVideo" controls>
+      <source src={match.matchPromotionalVideoUrl} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+)}
+
+
 
         <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
           <button className='btn-grad promobtn'  onClick={handleJoinLeague}>Join my league</button>

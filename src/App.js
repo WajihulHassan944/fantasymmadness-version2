@@ -67,7 +67,7 @@ import AdminForumList from './Components/Admin/AdminForumList';
 import AdminForumThreadDetails from './Components/Admin/AdminForumThreadDetails';
 import TrashedFights from './Components/YourFights/TrashedFights';
 import SuspendedAccounts from './Components/Admin/SuspendedAccounts';
-import Videos from './Components/Affiliates/Videos';
+import AffiliatePodcasts from './Components/Admin/AffiliatePodcasts';
 
 function AppContent() {
   const location = useLocation();
@@ -123,8 +123,7 @@ function AppContent() {
         <Route path="/community-forum" element={<ThreadList />} />
         <Route path="/threads/:threadId" element={<ThreadDetails />} />
         <Route path="/create-thread" element={<CreateThread />} />
-        <Route path="/videos" element={<Videos />} />
-
+        
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />
@@ -168,6 +167,7 @@ function AppContent() {
 <Route path="/administration/Community" element={<PrivateRouteAdmin element={<AdminForumList />} />} />
 <Route path="/administration/threads/:threadId" element={<PrivateRouteAdmin element={<AdminForumThreadDetails />} />} />
 <Route path="/administration/suspended-accounts" element={<PrivateRouteAdmin element={<SuspendedAccounts />} />} />
+<Route path="/administration/podcasts" element={<PrivateRouteAdmin element={<AffiliatePodcasts />} />} />
 
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />

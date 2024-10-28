@@ -8,6 +8,10 @@ import QRCode from 'qrcode';
 import { format, toDate, toZonedTime } from 'date-fns-tz';
 import AffiliateMatchDetailsCss from "./AffiliateMatchDetailsCss.css";
 import BackgroundImg from "../../Assets/imgone.png";
+import { ReactMediaRecorder } from 'react-media-recorder';
+import s3 from "../Config/s3Config"; // Importing the configured S3 instance
+import { toast } from 'react-toastify';
+
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
@@ -17,7 +21,8 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const match = matches.find((m) => m.shadowFightId === matchId && m.affiliateId === affiliateId);
   const [navigateDashboard, setNavigateToDash] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
- 
+ const [isOpenPodcast, setOpenPodcast] = useState(false);
+ const [isRecording, setIsRecording] = useState(false);
   const imageData = {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
@@ -201,6 +206,12 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     setIsModalOpen(true);
   };
 
+  
+  const openPodcastRecorder = () => {
+    setOpenPodcast(true);
+  };
+  
+
   // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -214,6 +225,74 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     link.download = 'promotional-image.png';
     link.click();
   };
+
+  const handleSave = async (blobUrl) => {
+    const fileName = `${Date.now()}.mp4`;
+  
+    // Create a promise for the upload process
+    const uploadPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Fetch the blob data from blobUrl
+        const response = await fetch(blobUrl);
+        const blob = await response.blob();
+  
+        const params = {
+          Bucket: 'promotionsvideos',
+          Key: fileName,
+          Body: blob,
+          ContentType: 'video/mp4'
+        };
+  
+        // Upload video to S3
+        s3.upload(params, (err, data) => {
+          if (err) {
+            console.error('Upload Error', err);
+            reject(new Error('Upload failed. Please try again.'));
+          } else {
+            saveVideoUrlToDatabase(data.Location);
+            resolve(); // Resolve on successful upload
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching blob:', error);
+        reject(new Error('Failed to fetch video data.'));
+      }
+    });
+  
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(uploadPromise, {
+      pending: 'Uploading video...',
+      success: 'Upload successful! 🎉',
+      error: {
+        render({ data }) {
+          return data.message || 'Upload failed. Please try again.';
+        }
+      }
+    });
+  };
+  
+  
+  const saveVideoUrlToDatabase = (videoUrl) => {
+    fetch(`https://fantasymmadness-game-server-three.vercel.app/api/matches/${match._id}/promotional-video`, {
+      method: 'POST', // Change to POST
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ promotionalVideoUrl: videoUrl }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log('Video URL saved:', data);
+          window.location.reload();
+        } else {
+          alert('Failed to update video URL');
+        }
+      })
+      .catch((error) => console.error('Error saving video URL:', error));
+  };
+  
+
 
   return (
     <div className='fightDetails' style={{ paddingBottom: '50px' }}>
@@ -286,7 +365,10 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
 <div style={{display:'flex',gap:'10px'}}>
         <button onClick={downloadImage} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Download Image</button>
         <button  onClick={openModal} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>View Instructions</button>
-        </div>  
+     
+     {!match.matchPromotionalVideoUrl && (
+        <button  onClick={openPodcastRecorder} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Record a podcast</button>
+      )}   </div>  
         
         {isModalOpen && (
   <div className="modal-overlay-instructions">
@@ -303,8 +385,79 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     </div>
   </div>
 )}
-
+{isOpenPodcast && (
+  <ReactMediaRecorder
+    video
+    render={({ status, startRecording, stopRecording, mediaBlobUrl, previewStream }) => (
+      <div className="videoRecorderContainer">
+        <p className="statusText">Status: {status}</p>
         
+        {/* Live preview video element */}
+        <video 
+          className="liveVideo" 
+          ref={(video) => {
+            if (video && previewStream) {
+              video.srcObject = previewStream; // Correctly setting srcObject for the live preview
+            }
+          }} 
+          autoPlay 
+          muted 
+          playsInline
+        />
+        
+        {/* Video element to show recorded video after stopping */}
+        {mediaBlobUrl && (
+          <video className="recordedVideo" src={mediaBlobUrl} controls />
+        )}
+        
+        <div className="buttonContainer">
+        
+<button
+  className="recordButton"
+  onClick={() => {
+    setIsRecording(true); // Disable Start button
+    startRecording();
+  }}
+  disabled={isRecording} // Disable Start button after clicking
+  style={{ pointerEvents: isRecording ? 'none' : 'auto' }}
+>
+  Start Recording
+</button>
+
+<button
+  className="stopButton"
+  onClick={() => {
+    setIsRecording(false); // Re-enable Start button
+    stopRecording();
+  }}
+  disabled={!isRecording} // Initially disabled, enabled when recording
+>
+  Stop Recording
+</button>
+
+<button
+  className="saveButton"
+  onClick={() => handleSave(mediaBlobUrl)}
+  disabled={!mediaBlobUrl} // Enable only if mediaBlobUrl exists
+>
+  Save Video
+</button></div>
+      </div>
+    )}
+  />
+)}
+
+
+{match.matchPromotionalVideoUrl && (
+  <div className="videoContainer">
+    <video className="responsiveVideo" controls>
+      <source src={match.matchPromotionalVideoUrl} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+)}
+
+
          </div>
     </div>
   );

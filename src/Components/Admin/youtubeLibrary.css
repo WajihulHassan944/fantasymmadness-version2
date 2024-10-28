@@ -102,3 +102,25 @@
     background-color: #e53935; /* Darker red */
   }
   
+
+  .videoActionsPodcast{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .videoActionsPodcast p{
+    color:#fff;
+  }
+  .responsiveVideoPodcast{
+    width:100%;
+    max-width: 450px;
+    
+  }
+  .videoItemPodcast{
+    padding:15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .55);
+    
+    
+  }

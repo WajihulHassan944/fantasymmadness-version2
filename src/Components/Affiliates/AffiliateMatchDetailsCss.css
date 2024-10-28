@@ -107,3 +107,67 @@
     padding: 8px 16px;
   }
 }
+
+
+
+
+.videoRecorderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.statusText {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.recordedVideo {
+  width: 100%;
+  max-width: 600px; /* Maximum width for larger screens */
+  height: auto;
+  border: 2px solid #38b90c; /* Green border to enhance visibility */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  gap:20px;
+}
+
+.recordButton,
+.stopButton,
+.saveButton {
+  background-color: #38b90c; /* Attractive green color */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding for buttons */
+  margin: 5px 0; /* Space between buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.recordButton:hover {
+  background-color: #32a80a; /* Darker green on hover */
+}
+
+.stopButton {
+  background-color: #d9534f; /* Attractive red color for stop */
+}
+
+.stopButton:hover {
+  background-color: #c9302c; /* Darker red on hover */
+}
+
+.saveButton {
+  background-color: #5bc0de; /* Attractive blue color for save */
+}
+
+.saveButton:hover {
+  background-color: #31b0d5; /* Darker blue on hover */
+}

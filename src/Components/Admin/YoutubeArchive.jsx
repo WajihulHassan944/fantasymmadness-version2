@@ -95,6 +95,8 @@ const YoutubeArchive = () => {
         onClick={() => navigate(-1)} // Go back to the previous page
         style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
+         <button className='nonregistereduserslist' onClick={()=> navigate('/administration/podcasts')}>Affiliate Podcasts</button>
+   
   
       <h1>YouTube Videos Library</h1>
       <form onSubmit={handleSubmit}>
@@ -130,7 +132,6 @@ const YoutubeArchive = () => {
             </div>
           ) : (
             <div key={video._id} className='videoItem'>
-              <p>Invalid video URL</p>
             </div>
           );
         })}
