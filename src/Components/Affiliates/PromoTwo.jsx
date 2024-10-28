@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
-import { format, toDate, toZonedTime } from 'date-fns-tz';
 
 const PromoTwo = ({matchId , affiliateId}) => {
     const dispatch = useDispatch();

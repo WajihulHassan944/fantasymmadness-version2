@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import './UpcomingFightsUser.css';
 import { useNavigate } from 'react-router-dom';
-import { format, toDate, toZonedTime } from 'date-fns-tz';
 
 const UpcomingFights = () => {
   const dispatch = useDispatch();

@@ -4,7 +4,6 @@ import { fetchMatches } from '../../Redux/matchSlice';
 import EditMatch from './EditMatch'; // Import your EditMatch component
 import "./deleteFights.css";
 import { toast } from 'react-toastify';
-import { format, toDate, toZonedTime } from 'date-fns-tz';
 import { useNavigate } from 'react-router-dom';
 
 const DeleteFights = () => {

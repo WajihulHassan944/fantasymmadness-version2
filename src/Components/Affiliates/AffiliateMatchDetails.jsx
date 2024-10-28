@@ -5,7 +5,6 @@ import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 import QRCode from 'qrcode'; 
-import { format, toDate, toZonedTime } from 'date-fns-tz';
 import AffiliateMatchDetailsCss from "./AffiliateMatchDetailsCss.css";
 import BackgroundImg from "../../Assets/imgone.png";
 import { ReactMediaRecorder } from 'react-media-recorder';

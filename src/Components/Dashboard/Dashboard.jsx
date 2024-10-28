@@ -7,7 +7,6 @@ import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserBoard';
-import { format, toDate, toZonedTime } from 'date-fns-tz';
 import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
 

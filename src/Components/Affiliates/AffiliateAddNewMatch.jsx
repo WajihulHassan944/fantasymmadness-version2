@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { format, toZonedTime  } from 'date-fns-tz';
 
 
 const AffiliateAddNewMatch = ({ matchId }) => {

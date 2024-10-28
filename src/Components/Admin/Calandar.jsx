@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { formatISO, isSameDay, parseISO } from 'date-fns';
 import './calendar.css'; // Make sure to include your styles here
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ const Calandar = () => {
     const [currentMatch, setCurrentMatch] = useState(null);
     const [dateModalVisible, setDateModalVisible] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
         if (matchStatus === 'idle') {
             dispatch(fetchMatches());
@@ -27,9 +27,9 @@ const Calandar = () => {
     useEffect(() => {
         if (matches) {
             const matchDates = matches.map(match => {
-                const matchDate = new Date(match.matchDate.split('T')[0]);
-                // Convert match date to YYYY-MM-DD format
-                return formatISO(matchDate, { representation: 'date' });
+                const matchDate = new Date(match.matchDate);
+                // Format match date to YYYY-MM-DD
+                return matchDate.toISOString().split('T')[0];
             });
             console.log('Match Dates:', matchDates); // Debugging
             setHighlightedDates(matchDates);
@@ -39,11 +39,11 @@ const Calandar = () => {
     const handleDateChange = (date) => {
         setDate(date);
 
-        const selectedDate = formatISO(date, { representation: 'date' });
+        const selectedDate = date.toISOString().split('T')[0];
         console.log('Selected Date:', selectedDate); // Debugging
         const filteredMatches = matches.filter(match => {
-            const matchDate = new Date(match.matchDate);
-            return formatISO(matchDate, { representation: 'date' }) === selectedDate;
+            const matchDate = new Date(match.matchDate).toISOString().split('T')[0];
+            return matchDate === selectedDate;
         });
         console.log('Filtered Matches:', filteredMatches); // Debugging
         setSelectedMatches(filteredMatches);
@@ -71,18 +71,18 @@ const Calandar = () => {
 
     return (
         <div className='adminWrapper'>
-         <i
-        className="fa fa-arrow-circle-left"
-        aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
-      ></i>
-  
+            <i
+                className="fa fa-arrow-circle-left"
+                aria-hidden="true"
+                onClick={() => navigate(-1)} // Go back to the previous page
+                style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+            ></i>
+
             <Calendar
                 onChange={handleDateChange}
                 value={date}
                 tileClassName={({ date, view }) => {
-                    if (view === 'month' && highlightedDates.some(highlightedDate => isSameDay(date, parseISO(highlightedDate)))) {
+                    if (view === 'month' && highlightedDates.includes(date.toISOString().split('T')[0])) {
                         return 'highlighted-date';
                     }
                 }}
@@ -113,25 +113,22 @@ const Calandar = () => {
             )}
 
             {/* Match Modal */}
-           
             {modalVisible && currentMatch && (
-    <div className="modal">
-        <div className="modal-content">
-            <span className="close" onClick={closeMatchModal}>&times;</span>
-            <h3>{currentMatch.matchName}</h3>
-            <p>{currentMatch.matchDescription}</p>
-            <p><strong>Date:</strong>{currentMatch.matchDate.split('T')[0]} </p>
-            <p><strong>Time:</strong> {new Date(`1970-01-01T${currentMatch.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-</p>
-            <p><strong>Venue:</strong> {currentMatch.venue}</p>
-            <div className="match-images">
-                <img src={currentMatch.fighterAImage} alt={currentMatch.matchFighterA} />
-                <img src={currentMatch.fighterBImage} alt={currentMatch.matchFighterB} />
-            </div>
-        </div>
-    </div>
-)}
-
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeMatchModal}>&times;</span>
+                        <h3>{currentMatch.matchName}</h3>
+                        <p>{currentMatch.matchDescription}</p>
+                        <p><strong>Date:</strong> {currentMatch.matchDate.split('T')[0]}</p>
+                        <p><strong>Time:</strong> {new Date(`1970-01-01T${currentMatch.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+                        <p><strong>Venue:</strong> {currentMatch.venue}</p>
+                        <div className="match-images">
+                            <img src={currentMatch.fighterAImage} alt={currentMatch.matchFighterA} />
+                            <img src={currentMatch.fighterBImage} alt={currentMatch.matchFighterB} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
