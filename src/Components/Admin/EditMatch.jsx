@@ -22,6 +22,7 @@ const EditMatch = ({ matchId, isShadow }) => {
     pot: '',
     fighterAImage: null,
     fighterBImage: null,
+    promotionBackground: null,
     maxRounds: '',
     matchCategoryTwo: '',
   });
@@ -48,6 +49,7 @@ const EditMatch = ({ matchId, isShadow }) => {
               matchDescription: specificMatch.matchDescription || '',
               fighterAImage: specificMatch.fighterAImage || null,
               fighterBImage: specificMatch.fighterBImage || null,
+              promotionBackground:specificMatch.promotionBackground || null ,
               maxRounds: specificMatch.maxRounds || '',
               matchCategoryTwo: specificMatch.matchCategoryTwo || '',
             });
@@ -68,6 +70,7 @@ const EditMatch = ({ matchId, isShadow }) => {
         matchDescription: match.matchDescription || '',
         matchVideoUrl: match.matchVideoUrl || '',
         matchDate: match.matchDate ? new Date(match.matchDate).toISOString().split('T')[0] : '',
+        promotionBackground: match.promotionBackground || null ,
         matchTime: match.matchTime || '',
         matchTokens: match.matchTokens || '',
         pot: match.pot || '',
@@ -142,6 +145,7 @@ const EditMatch = ({ matchId, isShadow }) => {
     data.append('fighterAImage', formData.fighterAImage ? formData.fighterAImage : match?.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage ? formData.fighterBImage : match?.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
+    data.append('promotionBackground', formData.promotionBackground);
   
     if (!isShadow) {
       data.append('matchDate', matchDateAdjusted);  // Use adjusted date
@@ -149,7 +153,7 @@ const EditMatch = ({ matchId, isShadow }) => {
       data.append('matchTokens', formData.matchTokens);
       data.append('pot', formData.pot);
     }
-  
+    
     setButtonText('Updating, please wait...');
   
     try {
@@ -261,6 +265,23 @@ const EditMatch = ({ matchId, isShadow }) => {
               <input type='file' name='fighterBImage' onChange={handleChange} />
             </div>
           </div>
+
+          {isShadow && (
+            
+
+             <div className='input-group' style={{display:'flex', flexDirection:'column'}}>
+              <label>Promotion Background </label>
+              {formData.promotionBackground instanceof File
+                ? <img src={URL.createObjectURL(formData.promotionBackground)} alt="promotionBackground" style={{ width: '70%', objectFit: 'cover', height: 'auto', margin:'auto' }} />
+                : <img src={formData.promotionBackground} alt="promotionBackground" style={{ width: '70%', objectFit: 'cover',  height: 'auto', margin:'auto' }} />
+              }
+              <input type='file' name='promotionBackground' onChange={handleChange} />
+            </div>
+
+        )}
+
+
+
 
           <div className='input-wrap-one'>
           <div className='input-group'>

@@ -19,6 +19,7 @@ const AddNewMatch = () => {
     pot: '',
     fighterAImage: null,
     fighterBImage: null,
+    promotionBackground: null,
     maxRounds: '',
     matchCategoryTwo: '',
   });
@@ -85,7 +86,7 @@ const AddNewMatch = () => {
     data.append('matchFighterB', formData.matchFighterB);
     data.append('matchDescription', formData.matchDescription);
     data.append('matchVideoUrl', formData.matchVideoUrl);
-    data.append('fighterAImage', formData.fighterAImage);
+    data.append('fighterAImage', formData.fighterAImage);  
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
     data.append('matchDate', matchDateAdjusted);  // Store adjusted date
@@ -93,6 +94,7 @@ const AddNewMatch = () => {
     data.append('matchType', formData.matchType);
     data.append('matchTokens', formData.matchTokens);
     data.append('pot', formData.pot);
+    data.append('promotionBackground', formData.promotionBackground);
   
     setButtonText('Saving, please wait...');  // Update button text
   
@@ -212,6 +214,10 @@ const AddNewMatch = () => {
             </>
           )}
 
+
+
+
+         
           <div className='input-wrap-one'>
             <div className='input-group'>
               <label>Fighter 1 Image <span>*</span></label>
@@ -222,6 +228,19 @@ const AddNewMatch = () => {
               <input type='file' name='fighterBImage' onChange={handleChange} />
             </div>
           </div>
+
+          {formData.matchType === 'SHADOW' && (
+            
+            <div className='input-wrap-one'>
+            <div className='input-group'>
+              <label>Promotion Background <span>*</span></label>
+              <input type='file' name='promotionBackground' onChange={handleChange} />
+            </div>
+             </div>
+
+        )}
+
+
 
           <div className='input-wrap-one'>
             <div className='input-group'>

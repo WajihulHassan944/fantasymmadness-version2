@@ -10,6 +10,12 @@ import { ReactMediaRecorder } from 'react-media-recorder';
 import s3 from "../Config/s3Config"; // Importing the configured S3 instance
 import { toast } from 'react-toastify';
 import "../Dashboard/FightDetails.css"
+
+import { stopMusic, playMusic } from '../../Redux/musicSlice';
+
+
+
+
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
@@ -25,119 +31,127 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
 
+
+
+
+  useEffect(() => {
+    dispatch(stopMusic());
+   
+    return () => dispatch(playMusic());
+}, [matchId,  dispatch]);
+
+
+
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
-
   useEffect(() => {
     if (!match) return; // Exit if match is not available yet
-  
+
     const canvas = canvasRef.current;
     if (!canvas) return; // Check if canvas is available
     const ctx = canvas.getContext('2d');
-  
+
+    // Initialize images with crossOrigin set for external images
     const backgroundImage = new Image();
-    backgroundImage.src = BackgroundImg;
-  
+    backgroundImage.crossOrigin = "anonymous"; // Enable crossOrigin for background image
+    backgroundImage.src = match.promotionBackground ? match.promotionBackground : BackgroundImg;
+
     const fighterOneImage = new Image();
     fighterOneImage.crossOrigin = "anonymous";
     fighterOneImage.src = match.fighterAImage;
-  
+
     const fighterTwoImage = new Image();
     fighterTwoImage.crossOrigin = "anonymous";
     fighterTwoImage.src = match.fighterBImage;
-  
+
     const logoImage = new Image();
     logoImage.crossOrigin = "anonymous";
     logoImage.src = imageData.logoImage;
-  
+
     let imagesLoaded = 0;
     const handleImageLoad = () => {
-      imagesLoaded += 1;
-      if (imagesLoaded === 4) {
-        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-        ctx.drawImage(logoImage, 10, 10, 60, 60);
-  
-        // Updated text position and order
-        ctx.font = 'bold 18px UFCSans, Arial, sans-serif';
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textAlign = 'center';
-  
-        ctx.fillText(`fantasymmadness.com`, canvas.width / 2, 40); // Moved up
-  
-        // Change date and time color to match box shadow color
-        ctx.fillStyle = '#FF4500'; 
-        ctx.fillText(`${match.matchDate.split('T')[0]} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`, canvas.width / 2, 65); // Date and time below promoter name
-        
-        const drawImageWithShadow = (image, x, y, name) => {
-          const radius = 45; // Increased circle radius for wider images
-        
-          // Save current state
-          ctx.save();
-        
-          // Begin circular clipping path
-          ctx.beginPath();
-          ctx.arc(x, y, radius, 0, Math.PI * 2); // Adjusted radius for increased width
-          ctx.closePath();
-          ctx.clip();
-        
-          
-  // Box shadow effect with no blur
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.8)'; // Darker shadow color with transparency
-  ctx.shadowBlur = 0; // No blur for the shadow
-  ctx.shadowOffsetX = 0; // Horizontal offset
-  ctx.shadowOffsetY = 0; // Vertical offset
+        imagesLoaded += 1;
+        if (imagesLoaded === 4) {
+            // Draw background image
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-          // Set the image to fill the increased circle diameter (wider appearance)
-          const circleDiameter = radius * 2;
-          ctx.drawImage(image, x - radius, y - radius, circleDiameter * 1.2, circleDiameter); // Increased width by 1.2x
-        
-          // Restore previous state to draw the border without shadow
-          ctx.restore();
-        
-      
-          // Render fighter name below image with gap
-          ctx.font = 'bold 16px UFCSans, Arial, sans-serif';
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillText(name, x, y + radius + 25); // Position name below the image
-        };
-        
-        
-        // Call function for fighter images
-        drawImageWithShadow(fighterOneImage, 110, 140, match.matchFighterA);
-        drawImageWithShadow(fighterTwoImage, 380, 140, match.matchFighterB);
-                
-        // Generate the QR code for the match URL and draw it on the canvas
-        const fullName = `${affiliate.firstName} ${affiliate.lastName}`;
-        const encodedMatchName = encodeURIComponent(match.matchName);
-        const encodedFullName = encodeURIComponent(fullName);
-        const url = `https://fantasymmadness.com/shadow/${encodedMatchName}/${encodedFullName}`;
-  
-        // Generate and draw QR code below the URL with a smaller size
-        QRCode.toDataURL(url, { width: 60, margin: 2 }, (err, qrImageUrl) => {
-          if (!err) {
-            const qrImage = new Image();
-            qrImage.src = qrImageUrl;
-            qrImage.onload = () => {
-              // Draw QR code below the URL with a 5px gap
-              ctx.drawImage(qrImage, (canvas.width / 2) - 30, 225, 60, 60); // Centered below URL
+            // Draw logo image
+            ctx.drawImage(logoImage, 10, 10, 60, 60);
+
+            // Draw the text for website URL
+            ctx.font = 'bold 18px UFCSans, Arial, sans-serif';
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'center';
+            ctx.fillText(`fantasymmadness.com`, canvas.width / 2, 40);
+
+            // Draw date and time in a different color
+            ctx.fillStyle = '#FF4500';
+            ctx.fillText(
+                `${match.matchDate.split('T')[0]} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`,
+                canvas.width / 2, 65
+            );
+
+            // Function to draw fighter images with circular shadow effect
+            const drawImageWithShadow = (image, x, y, name) => {
+                const radius = 45;
+
+                ctx.save(); // Save current state
+                ctx.beginPath(); // Begin circular clipping path
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.clip();
+
+                // Set shadow effect
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+
+                const circleDiameter = radius * 2;
+                ctx.drawImage(image, x - radius, y - radius, circleDiameter * 1.2, circleDiameter); // Adjusted width
+
+                ctx.restore(); // Restore state to remove shadow
+
+                // Draw fighter name below image
+                ctx.font = 'bold 16px UFCSans, Arial, sans-serif';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText(name, x, y + radius + 25);
             };
-          }
-        });
-      }
+
+            // Draw fighter images with shadow effect
+            drawImageWithShadow(fighterOneImage, 110, 140, match.matchFighterA);
+            drawImageWithShadow(fighterTwoImage, 380, 140, match.matchFighterB);
+
+            // Generate QR code and add it to the canvas
+            const fullName = `${affiliate.firstName} ${affiliate.lastName}`;
+            const encodedMatchName = encodeURIComponent(match.matchName);
+            const encodedFullName = encodeURIComponent(fullName);
+            const url = `https://fantasymmadness.com/shadow/${encodedMatchName}/${encodedFullName}`;
+
+            QRCode.toDataURL(url, { width: 60, margin: 2 }, (err, qrImageUrl) => {
+                if (!err) {
+                    const qrImage = new Image();
+                    qrImage.src = qrImageUrl;
+                    qrImage.onload = () => {
+                        ctx.drawImage(qrImage, (canvas.width / 2) - 30, 225, 60, 60); // Center QR code below URL
+                    };
+                }
+            });
+        }
     };
-  
+
+    // Attach onload events to handle each image load
     backgroundImage.onload = handleImageLoad;
     fighterOneImage.onload = handleImageLoad;
     fighterTwoImage.onload = handleImageLoad;
     logoImage.onload = handleImageLoad;
-  
-  }, [match, affiliate]);
+
+}, [match, affiliate]);
   
   if (!match) {
     return <p>Loading...</p>;

@@ -117,7 +117,10 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     // Append image URLs directly if available
     data.append('fighterAImageUrl', matchDetails.fighterAImage);
     data.append('fighterBImageUrl', matchDetails.fighterBImage);
+    data.append('promotionBackground', matchDetails.promotionBackground);
+    data.append('promotionBackgroundDeleteUrl', matchDetails.promotionBackgroundDeleteUrl);
   
+   
     // Append other match details
     data.append('matchStatus', matchDetails.matchStatus);
     data.append('matchCategory', matchDetails.matchCategory);
