@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import FighterOne from "../../Assets/fighterOne.png";
 import "./FinishedFightUserBoard.css";
 import { useSelector } from 'react-redux';
 import { getWinnerDetails } from '../../CustomFunctions/winnerUtils';

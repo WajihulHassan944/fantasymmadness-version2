@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './MakePredictions.css';
 import { useSelector } from 'react-redux';
 import PunchHand from '../../Assets/hand-removebg-preview.png';
-import { useNavigate } from 'react-router-dom';
 
 const MakePredictions = ({ matchId }) => {
   const user = useSelector((state) => state.user);
   const matches = useSelector((state) => state.matches.data);
 
   const match = matches.find((m) => m._id === matchId);
-  const navigate = useNavigate();
-
+ 
   const isBoxing = match?.matchCategory === 'boxing';
 
   const [rounds, setRounds] = useState(
@@ -231,7 +229,7 @@ const MakePredictions = ({ matchId }) => {
 
           <div className='flexColumn'>
             <div className='imgWrapFights'>
-              <img src={match.fighterBImage} style={{border:'3px solid red'}} />
+              <img src={match.fighterBImage} style={{border:'3px solid red'}} alt='logo'/>
             </div>
             <h1 className='fightTypeInFightDetails'>{match.matchFighterB}</h1>
           </div>

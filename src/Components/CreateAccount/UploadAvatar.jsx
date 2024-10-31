@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import "./UploadAvatar.css";
 import Image from "../../Assets/logo.png";
 import Membership from './Membership'; // Import the Membership component
@@ -8,8 +7,7 @@ const UploadAvatar = ({ email }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [buttonText, setButtonText] = useState('Browse');
   const [uploadSuccess, setUploadSuccess] = useState(false); // State to track upload success
-  const navigate = useNavigate();
-
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {

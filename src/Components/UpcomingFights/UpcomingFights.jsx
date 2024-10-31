@@ -9,8 +9,6 @@ const UpcomingFights = () => {
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [upcomingMatches, setUpcomingMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const US_TIMEZONE = 'America/New_York';
   
   const navigate = useNavigate();
 
@@ -70,9 +68,7 @@ const UpcomingFights = () => {
         setUpcomingMatches(filteredMatches);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
   
     fetchUpcomingMatches();

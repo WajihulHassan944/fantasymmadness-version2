@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import FighterOne from "../../Assets/fighterOne.png";
-import Logoimage from "../../Assets/myimg.jpg";
 import { useSelector } from 'react-redux';
 
 const AffiliateFightLeaderboard = ({ matchId }) => {

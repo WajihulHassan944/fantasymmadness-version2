@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./MembershipCheckout.css";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cards from "../../Assets/visa-mastercard-amex_0.png";
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 const MembershipCheckout = (userId) => {
   const reduxUser = useSelector((state) => state.user); // Access user details from Redux store
@@ -74,8 +73,6 @@ const MembershipCheckout = (userId) => {
     }
   }, [userId, user]);
 
-  const navigate = useNavigate();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setBillingInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
@@ -112,7 +109,6 @@ const MembershipCheckout = (userId) => {
         throw new Error(errorData.message || 'Error tokenizing card');
       }
   
-      const data = await response.json();
       alert('Payment saved successfully!');
       window.location.reload();
     } catch (error) {

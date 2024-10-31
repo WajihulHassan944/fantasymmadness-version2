@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
-import FightCosting from '../Dashboard/FightCosting';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData'; // Import your custom hook
-import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import { useParams } from 'react-router-dom'; // Import useParams to access URL parameters
 import "./publicProfile.css";
 import PublicFightLeaderboard from './PublicFightLeaderboard';
@@ -14,7 +11,6 @@ const PublicProfile = () => {
     const matches = useSelector((state) => state.matches.data);
     const matchStatus = useSelector((state) => state.matches.status);
     const [completedMatchId, setCompletedMatchId] = useState(null);
-    const [time, setTime] = useState(new Date());
   
     const [user, setUser] = useState({}); // Access user details from Redux store
   
@@ -47,14 +43,6 @@ const PublicProfile = () => {
         dispatch(fetchMatches());
       }
     }, [matchStatus, dispatch]);
-  
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setTime(new Date());
-      }, 60000);
-  
-      return () => clearInterval(timer);
-    }, []);
   
     if (!user || !user.firstName) {
       return <div>Loading...</div>;

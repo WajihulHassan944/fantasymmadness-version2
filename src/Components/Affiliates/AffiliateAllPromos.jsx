@@ -1,7 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMatches } from '../../Redux/matchSlice';
 import { useParams } from 'react-router-dom';
 
 import "../YourFights/YourFights.css";
@@ -104,7 +102,7 @@ if(promoMatchDetails.matchId){
     {promoMatches && promoMatches
       .filter(match => 
       match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
-    )   .map((match, index) => (
+    ).map((match, index) => (
         <div className="fightItem" key={index} onClick={() => handlePromoMatchClick(match._id, affiliate._id)}>
           <div className='fightersImages'>
             <div className='fighterOne'>

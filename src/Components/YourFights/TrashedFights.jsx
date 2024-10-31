@@ -8,8 +8,6 @@ const TrashedFights = () => {
     const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
-  const [time, setTime] = useState(new Date());
-  const [loading, setLoading] = useState(true);
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [removedMatches, setRemovedMatches] = useState([]);
 const navigate = useNavigate();
@@ -21,14 +19,6 @@ const navigate = useNavigate();
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000);
-
-    return () => clearInterval(timer);
-  }, []);
 
 
 

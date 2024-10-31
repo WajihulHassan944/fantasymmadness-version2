@@ -4,7 +4,6 @@ import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from "jwt-decode";
 import { loginUser, fetchUser } from '../../Redux/authSlice';
 import Membership from '../CreateAccount/Membership';
 import "./Login.css";
@@ -14,11 +13,9 @@ import AffiliateLogin from '../Affiliates/AffiliateLogin';
 
 const Login = ({ redirectTo }) => {
   const dispatch = useDispatch();
-  const { isAuthenticated, loading, error, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, loading, user } = useSelector((state) => state.auth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [planSelected, setPlanSelected] = useState(false);
-  const [alertShown, setAlertShown] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [affiliatesLogin, setAffiliatesLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);

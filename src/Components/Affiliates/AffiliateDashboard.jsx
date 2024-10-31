@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {  useSelector } from 'react-redux';
-import { fetchMatches } from '../../Redux/matchSlice';
 import "../YourFights/YourFights.css";
 import AffiliateAddNewMatch from './AffiliateAddNewMatch';
 import AffiliateMatchDetails from './AffiliateMatchDetails';

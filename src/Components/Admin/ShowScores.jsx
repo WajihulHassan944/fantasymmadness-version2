@@ -120,7 +120,7 @@ const ShowScores = ({ matchId, filter }) => {
 
                     <div className='flexColumn'>
                         <div className='imgWrapFights'>
-                            <img src={match.fighterBImage} style={{border:'3px solid red'}} />
+                            <img src={match.fighterBImage} style={{border:'3px solid red'}} alt='logo' />
                         </div>
                         <h1 className='fightTypeInFightDetails'>{match.matchFighterB}</h1>
                     </div>

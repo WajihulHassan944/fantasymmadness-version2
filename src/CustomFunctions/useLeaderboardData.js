@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 
 const useLeaderboardData = (matches) => {
-  const [users, setUsers] = useState([]);
-  const [scores, setScores] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
   const [playerCount, setPlayerCount] = useState(0);
 
@@ -16,9 +14,6 @@ const useLeaderboardData = (matches) => {
 
         const usersData = await usersResponse.json();
         const scoresData = await scoresResponse.json();
-
-        setUsers(usersData);
-        setScores(scoresData);
 
         const matchResponse = await fetch('https://fantasymmadness-game-server-three.vercel.app/match');
         const matchesData = await matchResponse.json();

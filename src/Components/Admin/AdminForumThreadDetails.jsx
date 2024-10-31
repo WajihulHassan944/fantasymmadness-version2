@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 const AdminForumThreadDetails = () => {
     const { threadId } = useParams(); // Extract threadId from the URL
     const [thread, setThread] = useState(null);
-    const [replyBody, setReplyBody] = useState('');
-    const user = useSelector((state) => state.user); // Access user details from Redux store
     const navigate = useNavigate();
     useEffect(() => {
       // Increment view count when the thread details are fetched

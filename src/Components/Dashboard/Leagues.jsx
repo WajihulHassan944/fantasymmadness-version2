@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Leagues = () => {
@@ -83,7 +83,7 @@ const Leagues = () => {
 
 <div className='imgWrapLeague' style={{position:"absolute" , top:'-6px' , left:'-11px' , width:'60px' , height:'60px' , borderRadius:'50%',zIndex:'99999',
 border:'2px solid #ccc', overflow:'hidden' }}>
-    <img src={affiliate.profileUrl} style={{width:'100%' , height:'100%' , objectFit:'cover' , zIndex:'99999'}} />
+    <img src={affiliate.profileUrl} style={{width:'100%' , height:'100%' , objectFit:'cover' , zIndex:'99999'}} alt="Logo" />
 </div>
 
                     <div className={`transformed-div`}>
@@ -122,7 +122,7 @@ border:'2px solid #ccc', overflow:'hidden' }}>
 
 <div className='imgWrapLeague' style={{position:"absolute" , top:'-6px' , left:'-11px' , width:'60px' , height:'60px' , borderRadius:'50%',zIndex:'99999',
 border:'2px solid #ccc', overflow:'hidden' }}>
-    <img src={affiliate.profileUrl} style={{width:'100%' , height:'100%' , objectFit:'cover' , zIndex:'99999'}} />
+    <img src={affiliate.profileUrl} style={{width:'100%' , height:'100%' , objectFit:'cover' , zIndex:'99999'}} alt="Logo" />
 </div>
 
                     <div className={`transformed-div`}>

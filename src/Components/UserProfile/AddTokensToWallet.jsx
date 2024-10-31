@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import "./AddTokensToWallet.css";
 import { useSelector } from 'react-redux';
 import MembershipCheckout from '../CreateAccount/MembershipCheckout';
-import { toast } from 'react-toastify';
 
 const AddTokensToWallet = () => {
     const user = useSelector((state) => state.user);

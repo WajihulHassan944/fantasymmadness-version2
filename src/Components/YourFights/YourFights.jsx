@@ -5,7 +5,6 @@ import { fetchMatches } from '../../Redux/matchSlice';
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import FightCosting from '../Dashboard/FightCosting';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData'; // Import your custom hook
-import FinishedFight from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import { useNavigate } from 'react-router-dom';
 
 const YourFights = () => {
@@ -14,9 +13,7 @@ const YourFights = () => {
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null);
   const [completedMatchId, setCompletedMatchId] = useState(null);
-  const [time, setTime] = useState(new Date());
   const [upcomingMatches, setUpcomingMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [removedMatches, setRemovedMatches] = useState([]);
 const navigate = useNavigate();
@@ -30,14 +27,6 @@ const navigate = useNavigate();
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000);
-
-    return () => clearInterval(timer);
-  }, []);
 
 
 
@@ -114,8 +103,6 @@ const navigate = useNavigate();
         setUpcomingMatches(filteredMatches);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
       }
     };
   

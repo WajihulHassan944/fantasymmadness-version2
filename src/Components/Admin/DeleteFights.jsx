@@ -41,7 +41,6 @@ const navigate = useNavigate();
           }
   
           const response = await fetch(url, { method: 'DELETE' });
-          const responseData = await response.json();
   
           if (response.ok) {
             dispatch(fetchMatches());  // Refresh match data
@@ -102,7 +101,6 @@ const navigate = useNavigate();
     );
   }
   
-  const US_TIMEZONE = 'America/New_York';
   return (
     <div>
       <div className='adminWrapper'>

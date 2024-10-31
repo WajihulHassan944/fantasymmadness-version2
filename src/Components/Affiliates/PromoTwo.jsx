@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
 
 const PromoTwo = ({matchId , affiliateId}) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-console.log(matchId, affiliateId);    
-    const [affiliate, setAffiliate] = useState(null);
+      const [affiliate, setAffiliate] = useState(null);
    
     const matches = useSelector((state) => state.matches.data);
     const match = matches.find((m) => m.shadowFightId === matchId && m.affiliateId === affiliateId);

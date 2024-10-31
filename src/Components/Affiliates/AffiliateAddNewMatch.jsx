@@ -96,8 +96,6 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     // Parse local date and time from form data (assuming it's in the user's local timezone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
   
-    // Ensure localDateTime is in the user's local timezone (Eastern Time)
-    const matchDateEST = localDateTime.toISOString().split('T')[0]; // Date part in ISO
     const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
   
     // Create a new date object in the user's local timezone to avoid shifting issues

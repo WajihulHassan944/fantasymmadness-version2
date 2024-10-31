@@ -9,7 +9,7 @@ import Login from '../Login/Login';
 
 const AffiliateLogin = () => {
     const dispatch = useDispatch();
-    const { isAuthenticatedAffiliate, loading, error, userAffiliate } = useSelector((state) => state.affiliateAuth);
+    const { isAuthenticatedAffiliate, loading,  userAffiliate } = useSelector((state) => state.affiliateAuth);
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

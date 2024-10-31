@@ -1,11 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useRef }  from 'react';
-import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 import QRCode from 'qrcode'; 
-import AffiliateMatchDetailsCss from "./AffiliateMatchDetailsCss.css";
+import "./AffiliateMatchDetailsCss.css";
 import BackgroundImg from "../../Assets/imgone.png";
 import { ReactMediaRecorder } from 'react-media-recorder';
 import s3 from "../Config/s3Config"; // Importing the configured S3 instance

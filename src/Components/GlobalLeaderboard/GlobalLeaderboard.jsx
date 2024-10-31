@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import "./GlobalLeaderboard.css";
 import FighterOne from "../../Assets/fighterOne.png";
-import Logoimage from "../../Assets/myimg.jpg";
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData';
 import { useNavigate } from 'react-router-dom';
 

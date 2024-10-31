@@ -17,11 +17,8 @@ const Dashboard = () => {
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
-  const US_TIMEZONE = 'America/New_York';
   const [upcomingMatches, setUpcomingMatches] = useState([]);
-const [loading, setLoading] = useState(true);
 const navigate = useNavigate();
-  const [time, setTime] = useState(new Date()); // State to trigger re-render every minute
   const [removedMatches, setRemovedMatches] = useState([]);
 
 
@@ -55,14 +52,6 @@ const navigate = useNavigate();
     }
   }, [matchStatus, dispatch]);
   
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000); // Update time every minute
-
-    return () => clearInterval(timer); // Clear interval on unmount
-  }, []);
-
 
 
   useEffect(() => {
@@ -123,9 +112,7 @@ const navigate = useNavigate();
         setUpcomingMatches(filteredMatches);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
   
     fetchUpcomingMatches();
