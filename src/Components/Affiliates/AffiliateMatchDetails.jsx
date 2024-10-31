@@ -5,7 +5,6 @@ import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 import QRCode from 'qrcode'; 
 import "./AffiliateMatchDetailsCss.css";
-import BackgroundImg from "../../Assets/imgone.png";
 import { ReactMediaRecorder } from 'react-media-recorder';
 import s3 from "../Config/s3Config"; // Importing the configured S3 instance
 import { toast } from 'react-toastify';
@@ -30,8 +29,14 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const imageData = {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
-
-
+  const [backgroundImgVar, setBackgroundImgVar] = useState("https://i.ibb.co/sWZ5QFh/imgone.png");
+  
+  useEffect(() => {
+    // Update background image state based on match data
+    if (match && match.promotionBackground) {
+        setBackgroundImgVar(match.promotionBackground);
+       } 
+}, [match]);
 
 
   useEffect(() => {
@@ -41,15 +46,16 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
 }, [matchId,  dispatch]);
 
 
-
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
     }
   }, [matchStatus, dispatch]);
+
+
   useEffect(() => {
     if (!match) return; // Exit if match is not available yet
-
+   
     const canvas = canvasRef.current;
     if (!canvas) return; // Check if canvas is available
     const ctx = canvas.getContext('2d');
@@ -57,8 +63,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     // Initialize images with crossOrigin set for external images
     const backgroundImage = new Image();
     backgroundImage.crossOrigin = "anonymous"; // Enable crossOrigin for background image
-    backgroundImage.src = match.promotionBackground ? match.promotionBackground : BackgroundImg;
-
+    backgroundImage.src = backgroundImgVar;
     const fighterOneImage = new Image();
     fighterOneImage.crossOrigin = "anonymous";
     fighterOneImage.src = match.fighterAImage;
@@ -151,7 +156,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     fighterTwoImage.onload = handleImageLoad;
     logoImage.onload = handleImageLoad;
 
-}, [match, affiliate]);
+}, [match, affiliate, backgroundImgVar]);
   
   if (!match) {
     return <p>Loading...</p>;
