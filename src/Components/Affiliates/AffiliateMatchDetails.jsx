@@ -363,9 +363,10 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         <button onClick={downloadImage} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Download Image</button>
         <button  onClick={openModal} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>View Instructions</button>
      
+        {!match.matchPromotionalVideoUrl && (
         <button  onClick={openPodcastRecorder} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Record a podcast</button>
-      </div>  
-        
+      )}   </div>  
+       
         {isModalOpen && (
   <div className="modal-overlay-instructions">
     <div className="modal-content">
