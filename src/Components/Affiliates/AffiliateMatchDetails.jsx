@@ -9,7 +9,7 @@ import BackgroundImg from "../../Assets/imgone.png";
 import { ReactMediaRecorder } from 'react-media-recorder';
 import s3 from "../Config/s3Config"; // Importing the configured S3 instance
 import { toast } from 'react-toastify';
-
+import "../Dashboard/FightDetails.css"
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
@@ -290,8 +290,6 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
       .catch((error) => console.error('Error saving video URL:', error));
   };
   
-  console.log("Access Key:", process.env.AWS_ACCESS_KEY_ID); // For debugging only
-
 
   return (
     <div className='fightDetails' style={{ paddingBottom: '50px' }}>
@@ -365,9 +363,8 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         <button onClick={downloadImage} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Download Image</button>
         <button  onClick={openModal} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>View Instructions</button>
      
-     {!match.matchPromotionalVideoUrl && (
         <button  onClick={openPodcastRecorder} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Record a podcast</button>
-      )}   </div>  
+      </div>  
         
         {isModalOpen && (
   <div className="modal-overlay-instructions">
