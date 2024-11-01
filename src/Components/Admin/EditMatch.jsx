@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-
+import promoBackground from "../../Assets/imgone.png";
 const EditMatch = ({ matchId, isShadow }) => {
     
   const dispatch = useDispatch();
@@ -271,11 +271,40 @@ const EditMatch = ({ matchId, isShadow }) => {
 
              <div className='input-group' style={{display:'flex', flexDirection:'column'}}>
               <label>Promotion Background </label>
-              {formData.promotionBackground instanceof File
-                ? <img src={URL.createObjectURL(formData.promotionBackground)} alt="promotionBackground" style={{ width: '70%', objectFit: 'cover', height: 'auto', margin:'auto' }} />
-                : <img src={formData.promotionBackground} alt="promotionBackground" style={{ width: '70%', objectFit: 'cover',  height: 'auto', margin:'auto' }} />
-              }
-              <input type='file' name='promotionBackground' onChange={handleChange} />
+              {formData.promotionBackground instanceof File ? (
+  // If promotionBackground is a File instance, display the selected file
+  <img
+    src={URL.createObjectURL(formData.promotionBackground)}
+    alt="promotionBackground"
+    style={{ width: '70%', objectFit: 'cover', height: 'auto', margin: 'auto' }}
+  />
+) : formData.promotionBackground ? (
+  // If promotionBackground is not a File but contains a URL, display the URL
+  <img
+    src={formData.promotionBackground}
+    alt="promotionBackground"
+    style={{ width: '70%', objectFit: 'cover', height: 'auto', margin: 'auto' }}
+  />
+) : (
+  // If neither condition is met, display the default promoBackground
+  <img
+    src={promoBackground}
+    alt="promotionBackground"
+    style={{ width: '70%', objectFit: 'cover', height: 'auto', margin: 'auto' }}
+  />
+)}
+
+
+  <input
+    type="file"
+    name="promotionBackground"
+    id="promotionBackground"
+    onChange={handleChange}
+    style={{ display: 'none' }} // Hide the default input
+  />
+  <label htmlFor="promotionBackground" className="custom-file-label" style={{marginTop:"10px"}}>
+    Choose File
+  </label>
             </div>
 
         )}

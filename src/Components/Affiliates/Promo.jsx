@@ -18,9 +18,7 @@ const Promo = () => {
   const matchStatus = useSelector((state) => state.matches.status);
   const user = useSelector((state) => state.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const US_TIMEZONE = 'America/New_York';
- 
-  
+
   useEffect(() => {
     if (matchStatus === 'idle') {
       console.log("Fetching matches...");
@@ -71,6 +69,28 @@ const Promo = () => {
       console.log("Waiting for affiliate data...");
     }
   }, [affiliate, matches, matchName]);
+
+
+  
+  // Increment totalViews on component load
+  useEffect(() => {
+    
+    const incrementViews = async () => {
+      try {
+        await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/${affiliate._id}/incrementViews`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (error) {
+        console.error('Error incrementing view count:', error);
+      }
+    };
+  
+    if (affiliate) {
+      incrementViews();
+    }
+  }, [affiliate]);
+  
 
   // Handle join league action
   const handleJoinLeague = async () => {

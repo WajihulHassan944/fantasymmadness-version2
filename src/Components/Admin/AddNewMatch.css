@@ -112,3 +112,25 @@
     margin-right: 15px; /* Spacing between buttons */
   }
   
+
+
+.custom-file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #e60000; /* Professional red background */
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-label:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
+  
+  .custom-file-label:active {
+    background-color: #b30000; /* Even darker red on click */
+  }

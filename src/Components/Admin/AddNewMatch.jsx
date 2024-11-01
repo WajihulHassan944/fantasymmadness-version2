@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import "./AddNewMatch.css";
 import AdminPredictions from './AdminPredictions';
 import { useNavigate } from 'react-router-dom';
-
+import promoBackground from "../../Assets/imgone.png";
 const AddNewMatch = () => {
   const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     matchCategory: 'boxing',
     matchName: '',
@@ -231,12 +232,25 @@ const AddNewMatch = () => {
 
           {formData.matchType === 'SHADOW' && (
             
-            <div className='input-wrap-one'>
-            <div className='input-group'>
-              <label>Promotion Background <span>*</span></label>
-              <input type='file' name='promotionBackground' onChange={handleChange} />
-            </div>
-             </div>
+            <div className='input-wrap-one' style={{flexDirection:'column'}}>
+            {formData.promotionBackground instanceof File
+                ? <img src={URL.createObjectURL(formData.promotionBackground)} alt="promotionBackground" style={{ width: '70%', objectFit: 'cover', height: 'auto', margin:'auto' }} />
+                : <img src={promoBackground} alt="promotionBackground" style={{ width: '70%', objectFit: 'cover',  height: 'auto', margin:'auto' }} />
+              }
+            <div className="input-group">
+  <label>Promotion Background <span>*</span></label>
+  <input
+    type="file"
+    name="promotionBackground"
+    id="promotionBackground"
+    onChange={handleChange}
+    style={{ display: 'none' }} // Hide the default input
+  />
+  <label htmlFor="promotionBackground" className="custom-file-label">
+    Choose File
+  </label>
+</div>
+ </div>
 
         )}
 
