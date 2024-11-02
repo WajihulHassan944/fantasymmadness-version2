@@ -4,17 +4,21 @@ import { fetchMatches } from '../../Redux/matchSlice';
 import AdminPredictions from './AdminPredictions';
 import ShowScores from './ShowScores';
 import { useNavigate } from 'react-router-dom';
-
+import "./upcomingFightsPopup.css";
 const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null);
   const [finishedMatch, setFinishedMatch] = useState({ id: null, filter: null });
-const [finishedShadow, setFinishedShadow] = useState({ id: null, filter: null });
-const [filter, setFilter] = useState('All');
+  const [finishedShadow, setFinishedShadow] = useState({ id: null, filter: null });
+  const [filter, setFilter] = useState('All');
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMatch, setPopupMatch] = useState(null);
+
   const [shadowTemplates, setShadowTemplates] = useState([]);
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (matchStatus === 'idle') {
       dispatch(fetchMatches());
@@ -22,7 +26,6 @@ const navigate = useNavigate();
   }, [matchStatus, dispatch]);
 
   useEffect(() => {
-    // Fetch Shadow Template data only when the filter is set to "Shadow Templates"
     if (filter === 'Shadow Templates') {
       fetch('https://fantasymmadness-game-server-three.vercel.app/shadow')
         .then((response) => response.json())
@@ -32,32 +35,48 @@ const navigate = useNavigate();
   }, [filter]);
 
   const handleMatchClick = (matchId) => {
-    setSelectedMatchId(matchId); 
+    setSelectedMatchId(matchId);
   };
+
   const handleFinishedMatchClick = (matchId, filter) => {
-    setFinishedMatch({ id: matchId, filter });
-    // Additional logic if needed
+    setPopupMatch({ id: matchId, filter });
+    setShowPopup(true);
   };
-  
+
   const handleFinishedShadowClick = (matchId, filter) => {
-    setFinishedShadow({ id: matchId, filter });
-    // Additional logic if needed
+    setPopupMatch({ id: matchId, filter });
+    setShowPopup(true);
   };
-  
-  const handleShadowTemplateClick = (matchId) => {
-    setSelectedMatchId(matchId); // Directly set match ID for Shadow Templates, no date/time check
+
+  const handleEditScores = () => {
+    setSelectedMatchId(popupMatch.id);
+    setFilter(popupMatch.filter);
+    setShowPopup(false);
+  };
+
+  const handleViewScores = () => {
+    if (popupMatch.filter === 'shadowTemplate') {
+      setFinishedShadow(popupMatch);
+    } else {
+      setFinishedMatch(popupMatch);
+    }
+    setShowPopup(false);
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setPopupMatch(null);
   };
 
   const currentTime = new Date();
 
   if (selectedMatchId) {
-    const selectedMatch = filter === 'Shadow Templates'
+    const selectedMatch = filter === 'Shadow Templates' || filter === 'shadowTemplate'
       ? shadowTemplates.find(match => match._id === selectedMatchId)
       : matches.find(match => match._id === selectedMatchId);
-  
+    
     if (selectedMatch) {
-      // Pass 'shadowTemplate' if filter is 'Shadow Templates', else pass 'normal'
-      const filterProp = filter === 'Shadow Templates' ? 'shadowTemplate' : 'normal';
+      const filterProp = filter === 'Shadow Templates' || filter === 'shadowTemplate' ? 'shadowTemplate' : 'normal';
   
       if (filterProp === 'normal') {
         const matchDateTime = new Date(`${selectedMatch.matchDate.split('T')[0]}T${selectedMatch.matchTime}:00`);
@@ -67,7 +86,7 @@ const navigate = useNavigate();
               <i
                 className="fa fa-arrow-circle-left"
                 aria-hidden="true"
-                onClick={() => setSelectedMatchId(null)} // Go back to the previous component
+                onClick={() => setSelectedMatchId(null)}
                 style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
               ></i>
               <AdminPredictions matchId={selectedMatchId} filter={filterProp} />
@@ -82,7 +101,7 @@ const navigate = useNavigate();
             <i
               className="fa fa-arrow-circle-left"
               aria-hidden="true"
-              onClick={() => setSelectedMatchId(null)} // Go back to the previous component
+              onClick={() => setSelectedMatchId(null)}
               style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
             ></i>
             <AdminPredictions matchId={selectedMatchId} filter={filterProp} />
@@ -92,14 +111,13 @@ const navigate = useNavigate();
     }
   }
   
-
   if (finishedMatch.id) {
     return (
       <>
         <i
           className="fa fa-arrow-circle-left"
           aria-hidden="true"
-          onClick={() => setFinishedMatch({ id: null, filter: null })} // Go back to the previous component
+          onClick={() => setFinishedMatch({ id: null, filter: null })}
           style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <ShowScores matchId={finishedMatch.id} filter={finishedMatch.filter} />
@@ -113,15 +131,17 @@ const navigate = useNavigate();
         <i
           className="fa fa-arrow-circle-left"
           aria-hidden="true"
-          onClick={() => setFinishedShadow({ id: null, filter: null })} // Go back to the previous component
+          onClick={() => setFinishedShadow({ id: null, filter: null })}
           style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
         ></i>
         <ShowScores matchId={finishedShadow.id} filter={finishedShadow.filter} />
       </>
     );
   }
-  
 
+  const handleShadowTemplateClick = (matchId) => {
+    setSelectedMatchId(matchId); // Directly set match ID for Shadow Templates, no date/time check
+  };
   const filteredMatches = filter === 'Shadow Templates' ? shadowTemplates : matches.filter((match) => {
     if (filter === 'All') return true;
     return match.matchStatus === filter;
@@ -135,7 +155,16 @@ const navigate = useNavigate();
         onClick={() => navigate(-1)} // Go back to the previous page
         style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
-  
+    {showPopup && (
+      <div className="popup">
+        <div className="popup-content">
+          <p>Select an action:</p>
+          <button onClick={handleViewScores}>View Scores</button>
+          <button onClick={handleEditScores}>Edit Scores</button>
+          <button onClick={handlePopupClose}>Close</button>
+        </div>
+      </div>
+    )}
       <div className='homeSecond' style={{ background: 'transparent' }}>
         <h1 className='second-main-heading'>
           <span className='toRemove'>Upcoming fights /</span> Active fights

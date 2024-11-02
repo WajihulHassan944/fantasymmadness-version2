@@ -104,6 +104,9 @@ const Header = () => {
           </div>
 
           <div className='anchorLinksWrapper'>
+          
+          <a href="/home/" className='anchorlinks'>Home</a>
+           
             <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
             <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
             <NavLink to="/upcomingfights" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Upcoming Fights</NavLink>
@@ -157,7 +160,9 @@ const Header = () => {
             </>
           ) : (
             <>
-              <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
+            
+          <a href="/home/" className='anchorlinks'>Home</a>
+             <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
               <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
               <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
               <NavLink to="/CreateAccount" className='anchorlinks' onClick={closeMenu}>Create account</NavLink>

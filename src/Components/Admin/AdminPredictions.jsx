@@ -393,26 +393,35 @@ const handleVideoUrlSubmit = async (e) => {
   if(!match){
     return <p>loading.</p>;
   }
+  const handlePopupClose = () => {
+    setShowVideoUrlPopup(false);
+  };
+
+  
 
   return (
     <div className='adminPredictions'>
-
 {showVideoUrlPopup && (
-        <div className="popupPredictions">
-          <h3>Please add the match video URL</h3>
-          <form onSubmit={handleVideoUrlSubmit}>
-            <input
-              type="text"
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              placeholder="Enter match video URL"
-              required
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-      )}
-
+  <div className="popupPredictions">
+    <button 
+      onClick={handlePopupClose} 
+      style={{ position: 'absolute', top: '15px', right: '15px', cursor: 'pointer', fontSize: '23px', color: '#007bff', background: 'none', border: 'none' }}
+    >
+      &times;
+    </button>
+    <h3>Please add the match video URL</h3>
+    <form onSubmit={handleVideoUrlSubmit}>
+      <input
+        type="text"
+        value={videoUrl}
+        onChange={(e) => setVideoUrl(e.target.value)}
+        placeholder="Enter match video URL"
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+)}
 
 
       <h1>{match.matchType} &nbsp; &nbsp; &nbsp;{match.matchName} &nbsp; - &nbsp; {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} &nbsp;&nbsp;&nbsp; Round {round}</h1>
