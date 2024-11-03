@@ -215,6 +215,16 @@
 }
 
 
+/* Styles for header when on AffiliateDashboard */
+.user-header {
+  transition: background 0.3s ease, z-index 0.3s ease;
+}
+
+/* Additional styles for when AffiliateDashboard is active */
+body[data-url="/AffiliateDashboard"] .user-header {
+  z-index: 99999;
+  background: black;
+}
 
 @media (max-width: 767px){
 .activeAdmin{

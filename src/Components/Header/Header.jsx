@@ -44,7 +44,7 @@ const Header = () => {
     <>
 
       {isAuthenticatedAffiliate ? (
-        <div className='header user-header'>
+        <div className='header user-header' >
           <div className='logoimg'>
             <NavLink to="/">
               <img src={Logo} alt="Logo" />

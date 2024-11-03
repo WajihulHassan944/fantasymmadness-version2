@@ -15,6 +15,9 @@ const AffiliateDashboard = () => {
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
+  useEffect(() => {
+    document.body.setAttribute('data-url', window.location.pathname);
+  }, []);
   
   useEffect(() => {
     if (showPopup) {
@@ -100,7 +103,7 @@ const AffiliateDashboard = () => {
 
   return (
     <div className='userdashboard yourFightsWrapper'>
-      <div className='member-header' style={{ marginBottom: '20px' }}>
+      <div className='member-header' style={{ position:'fixed', zIndex:'99999' }}>
         <div className='member-header-image'>
           <img src={affiliate.profileUrl} alt="Logo" />
         </div>
@@ -137,8 +140,8 @@ const AffiliateDashboard = () => {
   </div>
 
       <div className='fightsWrap myspecialpromotion'>
-        <div className='completedFights fightscontainer'>
-          <h1 className='fightsheadingtwo'>ALL SHADOW FIGHTS</h1>
+        <div className='completedFights fightscontainer fixedContainer'>
+          <h1 className='fightsheadingtwo fixedShadowHead'>ALL SHADOW FIGHTS</h1>
           {promoMatches && promoMatches
             .filter(match => 
               !match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
@@ -172,8 +175,8 @@ const AffiliateDashboard = () => {
             ))}
         </div>
 
-        <div className='pendingFights fightscontainer'>
-          <h1 className='fightsheadingthree'>Your Promotion Fights</h1>
+        <div className='pendingFights fightscontainer fixedContainer'>
+          <h1 className='fightsheadingthree fixedShadowHead'>Your Promotion Fights</h1>
           {promoMatches && promoMatches
             .filter(match => 
               match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())

@@ -137,16 +137,19 @@ const ShadowFightsLibrary = () => {
     return (
         <div className='shadowLibrary'>
         <i
-        className="fa fa-arrow-circle-left"
+        className="fa fa-arrow-circle-left shadowFightLibraryIcon"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
    
             <div className='adminWrapper '>
                 <div className='homeSecond' style={{ background: 'transparent' }}>
-                    <h1 className='second-main-heading'>Shadow <span className='toRemove'> Fights</span> Library</h1>
-                    <div className="fightswrap">
+                    
+                    <div className='fixdDivShadowLibrary' >
+                    <h1 className='second-main-heading fixDivShadowTitle' >Shadow <span className='toRemove'> Fights</span> Library</h1>
+                    </div>
+                    
+                    <div className="fightswrap" style={{paddingTop:'130px'}}>
                         {matches.length > 0 ? (
                             matches.map((match) => (
                                 <div className="fightItem" key={match._id} onClick={() => handleFightItemClick(match)}>

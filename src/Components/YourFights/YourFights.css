@@ -79,8 +79,51 @@
   .popupUsersJoined button:hover {
     background-color: #0056b3;
   }
-  
+  .fixedShadowHead{
+    position: fixed;
+    top:190px;
+    z-index: 999;
+    width: auto !important;
+    padding:10px 30px !important;
+
+  }
+.fixedContainer{
+  padding-top: 260px;
+  position: relative;
+}
+
+.fixedContainer::before {
+  content: ""; /* Creates a pseudo-element */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 260px; /* Matches the padding at the top */
+  background:black; /* Transparent background for the fixed padding area */
+  pointer-events: none; /* Allows content to scroll without interfering */
+  z-index: 99;
+  width:100%;
+}
+
 @media (max-width: 767px){
+  
+.fixedContainer::before {
+display: none;}
+
+  .fixedContainer{
+    padding-top: 0;
+  }
+  .fixedContainer:nth-of-type(1){
+    padding-top: 160px;
+  }
+  .fixedShadowHead{
+    position: relative;
+    top:auto;
+    z-index: auto;
+    width: auto ;
+    padding:aut0 !important;
+  }
+
     .yourFightsWrapper .fightwalletWrap{
         justify-content: center;
         align-items: center;
@@ -189,5 +232,10 @@
   }
   
 }
+
+
+
+
+
 
 

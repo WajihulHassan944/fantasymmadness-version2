@@ -89,8 +89,48 @@
     background-color: #0056b3;
 }
 
+
+
+.fixdDivShadowLibrary{
+    position:fixed;
+    z-index:999;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:black;
+}
+.fixDivShadowTitle{
+    width:30%;
+    margin-bottom: 0 !important;
+}
+.shadowFightLibraryIcon{
+    
+    position: fixed;
+    top: 38px;
+    left: 18%;
+    cursor: pointer;
+    font-size: 24px;
+     color: #007bff;  
+     z-index: 99999; 
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
+   
+    
+.shadowFightLibraryIcon{
+    
+    top: 145px;
+    left: 13%;
+    font-size: 24px;
+    color: red;
+   }
+
+    .fixDivShadowTitle{
+        width:100%;
+    }
     .shadowLibrary .popup-content {
         width: 100%;
         margin: 0 10px;
