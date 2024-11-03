@@ -15,6 +15,7 @@ const Profile = () => {
 const navigate = useNavigate();
     // Local state to manage form inputs
     const [firstName, setFirstName] = useState(user.firstName || '');
+    const [profileUrl, setProfileUrl] = useState(user.profileUrl || null);
    
     const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(user.isNotificationsEnabled || false);
     const [isSubscribed, setIsSubscribed] = useState(user.isSubscribed || false);
@@ -49,6 +50,7 @@ const [membershipGo, setMembershipGo] = useState(null);
           setLastName(user.lastName || '');
           setPlayerName(user.playerName || '');
           setemail(user.email || '');
+          setProfileUrl(user.profileUrl || null);
           
           setPhone(user.phone || '');
           setZipCode(user.zipCode || '');
@@ -69,58 +71,64 @@ const [membershipGo, setMembershipGo] = useState(null);
 
   
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-  
-      const updateProfilePromise = new Promise(async (resolve, reject) => {
-          try {
-              const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile/${user._id}`, {
-                  method: 'PUT',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      firstName,
-                      lastName,
-                      playerName,
-                      phone,
-                      zipCode,
-                      shortBio,
-                      isNotificationsEnabled, // Include the notifications preference
-                      isSubscribed,           // Include the subscription status
-                      isUSCitizen             // Include the citizenship status
-                  })
-              });
-  
-              if (!response.ok) {
-                  reject(new Error('Failed to update profile')); // Reject if response isn't ok
-              } else {
-                  const data = await response.json();
-                  resolve(data); // Resolve with the response data
-              }
-          } catch (error) {
-              console.error('Error updating profile:', error);
-              reject(new Error('Error updating profile')); // Reject on error
-          }
-      });
-  
-      // Use toast.promise to handle pending, success, and error states
-      toast.promise(updateProfilePromise, {
-          pending: 'Updating profile...',
-          success: {
-              render({ data }) {
-                  return `Profile updated successfully! 👌`; // Display success message
-              },
-          },
-          error: {
-              render({ data }) {
-                  return data.message || 'Failed to update profile'; // Display error message
-              }
-          }
-      }).finally(() => {
-          setLoading(false); // Reset loading state after promise settles
-      });
-  };
+    e.preventDefault();
+    setLoading(true);
+
+    const updateProfilePromise = new Promise(async (resolve, reject) => {
+        try {
+            const formData = new FormData();
+
+            // Append form fields to FormData
+            formData.append('firstName', firstName);
+            formData.append('lastName', lastName);
+            formData.append('playerName', playerName);
+            formData.append('phone', phone);
+            formData.append('zipCode', zipCode);
+            formData.append('shortBio', shortBio);
+            formData.append('isNotificationsEnabled', isNotificationsEnabled);
+            formData.append('isSubscribed', isSubscribed);
+            formData.append('isUSCitizen', isUSCitizen);
+
+            // Append the profile image file if a new file was selected
+            if (profileUrl instanceof File) {
+                formData.append('image', profileUrl);
+            }
+
+            const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile/${user._id}`, {
+                method: 'PUT',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                reject(new Error('Failed to update profile')); // Reject if response isn't ok
+            } else {
+                const data = await response.json();
+                resolve(data); // Resolve with the response data
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            reject(new Error('Error updating profile')); // Reject on error
+        }
+    });
+
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(updateProfilePromise, {
+        pending: 'Updating profile...',
+        success: {
+            render({ data }) {
+                return `Profile updated successfully! 👌`; // Display success message
+            },
+        },
+        error: {
+            render({ data }) {
+                return data.message || 'Failed to update profile'; // Display error message
+            }
+        }
+    }).finally(() => {
+        setLoading(false); // Reset loading state after promise settles
+    });
+};
+
    
 
     const handleSubmittingDetails = async (e) => {
@@ -238,6 +246,10 @@ const [membershipGo, setMembershipGo] = useState(null);
       </>
     );
   }
+
+
+  
+
   
     return (
         <div className='myprofile'>
@@ -264,6 +276,36 @@ const [membershipGo, setMembershipGo] = useState(null);
             <div className='createAccount' style={{ background: 'transparent'}}>
                 <form className='registerCard' onSubmit={handleSubmit}>
                     <h1>Edit your profile</h1>
+
+
+                    <div className='input-wrap-one'>
+  <div className='input-group'>
+    {profileUrl instanceof File
+      ? <center><img src={URL.createObjectURL(profileUrl)} alt="Fighter A" style={{ width: '100px', objectFit: 'cover', borderRadius: '50%', height: '100px' }} /></center>
+      : <center><img src={profileUrl} alt="Fighter A" style={{ width: '100px', objectFit: 'cover', borderRadius: '50%', height: '100px' }} /></center>
+    }
+
+
+    <input
+    type="file"
+    name="profileUrl"
+    id="profileUrl"
+    onChange={(e) => {
+        if (e.target.files && e.target.files[0]) {
+          setProfileUrl(e.target.files[0]);
+        }
+      }} 
+    style={{ display: 'none' }} // Hide the default input
+  />
+  <center><label htmlFor="profileUrl" className="custom-file-label" style={{marginTop:"17px", width:'50%'}}>
+    Choose File
+  </label></center>
+
+  </div>
+</div>
+
+
+
 
                     <div className='input-wrap-one'>
                         <div className='input-group'>
