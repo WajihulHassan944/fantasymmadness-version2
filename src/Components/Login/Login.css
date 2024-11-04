@@ -54,30 +54,33 @@
     
 }
 .loginCard{
-    width:500px;
+    width:420px;
     background-size: cover;
-    padding:20px 50px;
+    padding:20px 40px;
     background-image: url(../../Assets/BlackredBackground.png);
     background-repeat: no-repeat;
     border:3px solid #ccc;
     border-radius:20px;
-    margin-top:150px;
+    margin-top:100px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.9);
+    z-index: 0;
+    padding-bottom: 30px;
 }
 .loginCard img{
-    width:180px;
-    margin-top:25px;
+    width:110px;
+    margin-top:20px;
 }
 .login-wrapper .loginCard h1{
     font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
     font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
     font-style:normal; /* Condensed style */
- font-size: 27px;
+ font-size: 23px;
  color:#fff;
  margin:15px 0;
 }
 .loginCard form{
     width:100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .loginCard form input{
     width:100%;
@@ -93,15 +96,16 @@
     font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
     font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
     font-style:normal; /* Condensed style */
- font-size: 27px;
+ font-size: 25px;
  color:#fff;
+ margin-bottom: 10px;
    
 }
 .loginCard .loginNavLink{
     font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
     font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
     font-style:normal; /* Condensed style */
- font-size: 27px;
+ font-size: 23px;
  color:#fff;
  text-decoration: none;
 }
@@ -115,24 +119,65 @@
 
 .toFlexDiv .recaptcha-container {
 flex-basis: 40%;
-  transform: scale(0.80); /* Adjust the scale to reduce height */
+  transform: scale(0.70); /* Adjust the scale to reduce height */
   transform-origin: left; /* Ensure scaling is from the left */
    /* Optional: Add some space between the ReCAPTCHA and the button */
    margin-left: 4px;
 }
 
-.toFlexDiv .btn-grad {
+.toMakeColumn{
   flex-basis: 60%;
-  width: 100% !important;
-  margin-left: -40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:7px;
+}
+
+.toMakeColumn .btn-grad {
+  margin-left: -120px;
+  width:100px;
+  height:36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+}
+.toMakeColumn p{
+  color: #fff;
+  text-align: center;
+  width:200px;
+  margin-left: -125px;
+  font-family: Bahnschrift Condensed;
+  font-size: 16px;
+}
+
+.custom-google-button {
+  font-size: 16px;
+  color: #fff;
+  background-color: #4285f4;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-google-button:hover {
+  background-color: #357ae8;
+}
+
+.custom-google-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 
 
-
-
 .google-login-wrapper {
-  width: 100%;  /* Makes the Google button full width */
+  width: 200px;  /* Makes the Google button full width */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,11 +193,17 @@ flex-basis: 40%;
 
 
 @media (max-width: 767px){
-
+  .google-login-wrapper {
+    width: 120px;  /* Makes the Google button full width */
+    margin-bottom: 20px;
+   }
+  .login-wrapper{
+    overflow-x: hidden;
+  }
   .loginCard{
     width:340px;
     padding:20px 20px;
-    margin-top:100px;
+    margin-top:50px;
 }
 .loginCard img{
     width:120px;
@@ -176,17 +227,10 @@ flex-basis: 40%;
 
 .toFlexDiv .recaptcha-container {
 flex-basis: 30%;
-  transform: scale(0.65); /* Adjust the scale to reduce height */
+  transform: scale(0.60); /* Adjust the scale to reduce height */
    margin-left: 4px;
 }
 
-.toFlexDiv .btn-grad {
-  flex-basis: 70%;
-  width: 100% !important;
-  margin-left: -96px;
-  margin-top:-1px;
-  
-}
 
 .loginCard form{
   margin-bottom: 10px;
@@ -194,6 +238,32 @@ flex-basis: 30%;
 .toFlexDiv{
   margin-top:-20px;
   margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+.toMakeColumn{
+  flex-basis: 60%;
+  gap:7px;
+}
+
+.toMakeColumn .btn-grad {
+  margin-left: -150px;
+  width:90px;
+  height:32px;
+  font-size: 16px;
+}
+.toMakeColumn p{
+  color: #fff;
+  text-align: center;
+  width:200px;
+  margin-left: -160px;
+  font-family: Bahnschrift Condensed;
+  font-size: 14px;
 }
 }
 

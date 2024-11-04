@@ -198,7 +198,7 @@ const AffiliateLogin = () => {
               required
             />
         
-        <div style={{ position: 'relative', marginBottom: '20px' }}>
+        <div style={{ position: 'relative' }}>
         <input
           type={showPassword ? 'text' : 'password'}
           placeholder='Please enter your password'
@@ -224,26 +224,25 @@ const AffiliateLogin = () => {
 
         
         
-         <div className='toFlexDiv'>  
-    <div className='recaptcha-container'>
-      <ReCAPTCHA
-        sitekey="6LeLErwpAAAAAD3s3QWddvNAWULeDdLGUu3_-5lK"
-        onChange={handleRecaptchaChange}
-      />
-    </div>
-    
-    <button className='btn-grad' type="submit" disabled={loading} >
-      {loading ? '...' : 'Login'}
-    </button>
-    </div>
-  
+      <div className='toFlexDiv'>
+            <div className='recaptcha-container'>
+              <ReCAPTCHA
+                sitekey="6LeLErwpAAAAAD3s3QWddvNAWULeDdLGUu3_-5lK"
+                onChange={handleRecaptchaChange}
+              />
+            </div>
+            
+           <div className='toMakeColumn'>
+            <button className='btn-grad' type="submit" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+            
+<p onClick={() => setForgotPassword(true)}>Forgot password?</p>
+            </div>
+          </div>
+       
           </form>
-          <p
-            style={{ marginTop: '-20px', color: '#fff', marginBottom: '20px', cursor: 'pointer' }}
-            onClick={() => setForgotPassword(true)}
-          >
-            Forgot your password? Click here
-          </p>  <h2>- OR -</h2>
+           <h2>- OR -</h2>
           <NavLink onClick={handleUserLogin} className="loginNavLink">Public User? Click here</NavLink>
         </div>
       </div>

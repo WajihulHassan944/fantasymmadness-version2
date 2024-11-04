@@ -258,7 +258,7 @@ const Login = ({ redirectTo }) => {
             required
           />
          
-         <div style={{ position: 'relative', marginBottom: '20px' }}>
+         <div style={{ position: 'relative' }}>
         <input
           type={showPassword ? 'text' : 'password'}
           placeholder='Please enter your password'
@@ -291,9 +291,13 @@ const Login = ({ redirectTo }) => {
               />
             </div>
             
+           <div className='toMakeColumn'>
             <button className='btn-grad' type="submit" disabled={loading}>
               {loading ? 'Logging in...' : 'Login'}
             </button>
+            
+<p onClick={() => setForgotPassword(true)}>Forgot password?</p>
+            </div>
           </div>
         </form>
         <div className="google-login-wrapper">
@@ -303,12 +307,7 @@ const Login = ({ redirectTo }) => {
   />
 </div>
 
-<p
-            style={{ marginTop: '-20px', color: '#fff', marginBottom: '20px', cursor: 'pointer' }}
-            onClick={() => setForgotPassword(true)}
-          >
-            Forgot your password? Click here
-          </p>    <h2>- OR -</h2>
+                <h2>- OR -</h2>
 
        
         <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affiliate? Click here</NavLink>
