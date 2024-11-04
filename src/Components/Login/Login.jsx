@@ -20,7 +20,9 @@ const Login = ({ redirectTo }) => {
   const [affiliatesLogin, setAffiliatesLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); // Use navigate for redirection after login
-
+  const [forgotPassword, setForgotPassword] = useState(false);  // New state for forgot password
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token && !isAuthenticated) {
@@ -175,6 +177,64 @@ const Login = ({ redirectTo }) => {
     );
   }
   
+
+
+
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (!forgotPasswordEmail) {
+      toast.error('Please enter your email');
+      return;
+    }
+    try {
+      // Call the forgot password API
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/forgotPassword-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: forgotPasswordEmail }),
+      });
+
+      if (response.ok) {
+        toast.success('Password reset email sent');
+      } else {
+        toast.error('Email not found');
+      }
+    } catch (error) {
+      console.error('Error sending reset email', error);
+      toast.error('Server error');
+    }
+  };
+
+  if (forgotPassword) {
+    return (
+      <div className='login-wrapper'>
+        <div className='loginCard'>
+          <img src={logoimage} alt="Logo" />
+          <h1>Forgot Password</h1>
+          <form onSubmit={handleForgotPasswordSubmit}>
+            <input
+              type='email'
+              placeholder="Enter your email to reset password"
+              value={forgotPasswordEmail}
+              onChange={(e) => setForgotPasswordEmail(e.target.value)}
+              required
+            />
+            <button className='btn-grad' type="submit">
+              Send Reset Link
+            </button>
+          </form>
+          <NavLink onClick={() => setForgotPassword(false)} className="loginNavLink">
+            Back to Login
+          </NavLink>
+        </div>
+      </div>
+    );
+  }
+
+
+
   return (
     <div className='login-wrapper'>
      <i
@@ -243,7 +303,12 @@ const Login = ({ redirectTo }) => {
   />
 </div>
 
-        <h2>- OR -</h2>
+<p
+            style={{ marginTop: '-20px', color: '#fff', marginBottom: '20px', cursor: 'pointer' }}
+            onClick={() => setForgotPassword(true)}
+          >
+            Forgot your password? Click here
+          </p>    <h2>- OR -</h2>
 
        
         <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affiliate? Click here</NavLink>

@@ -21,8 +21,12 @@ const ResetPassword = () => {
 
         try {
             setLoading(true);
-            const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/resetPassword/${token}`, {
-                method: 'POST',
+            const endpoint = window.location.pathname.includes('/resetPassword-user')
+            ? `https://fantasymmadness-game-server-three.vercel.app/resetPassword-user/${token}`
+            : `https://fantasymmadness-game-server-three.vercel.app/resetPassword/${token}`;
+
+        const response = await fetch(endpoint, {
+             method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },

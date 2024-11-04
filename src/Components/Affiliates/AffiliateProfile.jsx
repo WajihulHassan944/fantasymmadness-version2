@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const AffiliateProfile = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const navigate = useNavigate();
+  const [profileUrl, setProfileUrl] = useState(affiliate?.profileUrl || null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [payoutAmount, setPayoutAmount] = useState();
   const [firstName, setFirstName] = useState(affiliate?.firstName || '');
@@ -42,6 +43,7 @@ const AffiliateProfile = () => {
       setPhone(affiliate.phone || '');
       setZipCode(affiliate.zipCode || '');
       setShortBio(affiliate.shortBio || '');
+      setProfileUrl(affiliate.profileUrl || null);
       setSelectedPaymentMethod(affiliate.preferredPaymentMethod || '');
       const paymentValue = affiliate.preferredPaymentMethodValue || '';
       if (affiliate.preferredPaymentMethod === 'Venmo') setVenmoId(paymentValue);
@@ -56,19 +58,22 @@ const AffiliateProfile = () => {
   
       const updateAffiliateProfilePromise = new Promise(async (resolve, reject) => {
           try {
+
+            const formDatatwo = new FormData();
+            formDatatwo.append('firstName', firstName);
+            formDatatwo.append('lastName', lastName);
+            formDatatwo.append('playerName', playerName);
+            formDatatwo.append('phone', phone);
+            formDatatwo.append('zipCode', zipCode);
+            formDatatwo.append('shortBio', shortBio);
+              // Append the profile image file if a new file was selected
+              if (profileUrl instanceof File) {
+                formDatatwo.append('image', profileUrl);
+            }
+
               const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-profile-affiliate/${affiliate._id}`, {
-                  method: 'PUT',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                      firstName,
-                      lastName,
-                      playerName,
-                      phone,
-                      zipCode,
-                      shortBio,
-                  }),
+                method: 'PUT',
+                body: formDatatwo,
               });
   
               if (!response.ok) {
@@ -256,6 +261,34 @@ const AffiliateProfile = () => {
       <div className='createAccount' style={{ background: 'transparent', marginTop: '-100px' }}>
         <form className='registerCard' onSubmit={handleSubmit}>
           <h1>Edit your profile</h1>
+
+          <div className='input-wrap-one'>
+  <div className='input-group'>
+    {profileUrl instanceof File
+      ? <center><img src={URL.createObjectURL(profileUrl)} alt="Fighter A" style={{ width: '100px', objectFit: 'cover', borderRadius: '50%', height: '100px' }} /></center>
+      : <center><img src={profileUrl} alt="Fighter A" style={{ width: '100px', objectFit: 'cover', borderRadius: '50%', height: '100px' }} /></center>
+    }
+
+
+    <input
+    type="file"
+    name="profileUrl"
+    id="profileUrl"
+    onChange={(e) => {
+        if (e.target.files && e.target.files[0]) {
+          setProfileUrl(e.target.files[0]);
+        }
+      }} 
+    style={{ display: 'none' }} // Hide the default input
+  />
+  <center><label htmlFor="profileUrl" className="custom-file-label" style={{marginTop:"17px", width:'50%'}}>
+    Choose File
+  </label></center>
+
+  </div>
+</div>
+
+
 
           <div className='input-wrap-one'>
             <div className='input-group'>

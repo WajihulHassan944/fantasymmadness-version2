@@ -149,6 +149,8 @@ function AppContent() {
         <Route path="/AffiliateProfile" element={<AffiliateProfile />} />
         <Route path="/AffiliatePromotion" element={<AffiliateAllFightPromotion />} />
         <Route path="/resetPassword/:token" element={<ResetPassword />} />
+        <Route path="/resetPassword-user/:token" element={<ResetPassword />} />
+        
         <Route path="/administration/upcomingFights" element={<PrivateRouteAdmin element={<UpcomingFights />} />} />
         <Route path="/administration/predictions" element={<PrivateRouteAdmin element={<AdminPredictions />} />} />
         <Route path="/administration/AddNewMatch" element={<PrivateRouteAdmin element={<AddNewMatch />} />} />
