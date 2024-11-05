@@ -5,51 +5,61 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <div className='footer'>
-      <div className='footerDivOne'>
-        <img src={Logo} alt="Logo" />
-      </div>
+    <footer class="footer-distributed">
 
-      <div className="socialIcons">
-        <a href="https://www.facebook.com/share/2pzYV9XdQpAU7n6p/?mibextid=LQQJ4d" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           className="iconWrap">
-          <i className="fa fa-facebook"></i>
-        </a>
-        <a href="https://x.com/davis_kell51697" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           className="iconWrap">
-          <i className="fa fa-twitter"></i>
-        </a>
-        <a href="https://www.instagram.com/fantasymmadness" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           className="iconWrap">
-          <i className="fa fa-instagram"></i>
-        </a>
-      </div>
+    <div class="footer-left">
 
-      <div className="footerLastDiv">
-        <p>
-          <span>Fantasy Mmadness</span>
-          <span style={{ fontStyle: 'normal', color: '#fff' }}> © </span>2024
-        </p>
-      <div>  <Link to="/privacy-policy" className="footerlink">Privacy policy</Link>
-        <Link to="/terms-of-service" className="footerlink">Terms of service</Link>
-        </div> <Link to="/contact" className="footerlink">Contact</Link>
+    <img src={Logo} alt="Logo" style={{width:'70px'}} />
+     
+
+      <p class="footer-links">
+      <Link to="/" className="footerlink">Home</Link>
        
-        {/* Placeholder for Authorize.net link
-        <Link to="#" className="footerlink">Authorize.net</Link> */}
+        <Link to="/privacy-policy" className="footerlink">Privacy policy</Link>
+        <Link to="/terms-of-service" className="footerlink">Terms of service</Link>
+        <Link to="/contact" className="footerlink">Contact</Link>
+       
+       </p>
+
+      <p class="footer-company-name">Fantasy Mmadness © 2024</p>
+    </div>
+
+    <div class="footer-center">
+
+      <div>
+        <i class="fa fa-map-marker"></i>
+        <p><span>2350 Beaver Ruin Rd,</span> Norcross Georgia 30071</p>
       </div>
 
-      <div className="footerLastDiv">
-        <p style={{ fontStyle: 'normal', letterSpacing: '1px' }} className='speciallastp'>
-          <span>2350 Beaver Ruin Rd, Norcross Georgia 30071</span>
-        </p>
+      <div>
+        <i class="fa fa-phone"></i>
+        <p>+1.555.555.5555</p>
       </div>
+
+      <div>
+        <i class="fa fa-envelope"></i>
+        <p><a href="mailto:Contact@fantasymmadness.com">Contact@fantasymmadness.com</a></p>
+      </div>
+
     </div>
+
+    <div class="footer-right">
+
+      <p class="footer-company-about">
+        <span>About Fantasy Mmadness LLC</span>
+        Fantasy Mmadness LLC is a company dedicated to creating engaging fantasy sports experiences for fans.</p>
+
+      <div class="footer-icons">
+
+        <a href="https://www.facebook.com/share/2pzYV9XdQpAU7n6p/?mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a>
+        <a href="https://x.com/davis_kell51697"><i class="fa fa-twitter"></i></a>
+        <a href="https://www.instagram.com/fantasymmadness"><i class="fa fa-instagram"></i></a>
+
+      </div>
+
+    </div>
+
+  </footer>
   );
 };
 

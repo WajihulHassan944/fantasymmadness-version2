@@ -17,6 +17,7 @@ const CreateThread = () => {
       body: JSON.stringify({
         title,
         body,
+        profileUrl:user.profileUrl,
         author: {
           userId: user._id,
           username: user.firstName + ' ' + user.lastName

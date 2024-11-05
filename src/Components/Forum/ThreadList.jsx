@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; // Import useLocation to check the route
 import CreateThread from './CreateThread';
 import Login from '../Login/Login';
 import "./threads.css";
@@ -11,6 +11,7 @@ const ThreadList = () => {
   const [redirectToLogin, setRedirectToLogin] = useState(false); // Track if login is needed
   const [prevAction, setPrevAction] = useState(null); // Track previous action (view thread or create post)
   const navigate = useNavigate(); // Use useNavigate to handle navigation
+
 
   useEffect(() => {
     fetch('https://fantasymmadness-game-server-three.vercel.app/threads')
@@ -65,28 +66,37 @@ const ThreadList = () => {
   
   
   return (
-    <div className="thread-list-container">
+    <div className="thread-list-container-updated">
      <i
-        className="fa fa-arrow-circle-left home-arrow-circle"
+        className="fa fa-arrow-circle-left home-arrow-circle home-arrow-circle-forum"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
         
       ></i>
-     <h1 className="forum-heading">Discussion Forum</h1>
-      <button className="create-thread-btn" onClick={createThread}>Have a question?</button>
-      {threads.length === 0 ? (
-        <p className="no-posts-message">No posts yet.</p>
+      <div className='toFlexHeading'>
+     <h1 className="forum-heading-updated">Discussion Forum</h1>
+      <button className="create-thread-btn-updated" onClick={createThread}>Have a question?</button>
+      </div>
+        {threads.length === 0 ? (
+        <p className="no-posts-message-updated">No posts yet.</p>
       ) : (
         threads.map(thread => (
-          <div key={thread._id} className="thread-item" onClick={() => handleThreadClick(thread._id)}>
-            <h2 className="thread-title">{thread.title}</h2>
-            <p className="thread-meta">Posted by {thread.author.username} on {new Date(thread.createdDate).toLocaleString()}</p>
-            <p className="thread-body">{thread.body}</p>
-         <div className='toFlex'>
-            <p className="thread-views">{thread.views} views</p>
-            {thread.replies.length > 0 && <p className="thread-replies">{thread.replies.length} replies</p>}
-            <p className="thread-likes">Liked by: {thread.replies.map(reply => reply.likes.length).reduce((a, b) => a + b, 0)} users</p>
+          <div key={thread._id} className="thread-item-updated" onClick={() => handleThreadClick(thread._id)}>
+           <div className='userImage'><img src={thread.profileUrl} alt='img' /></div>
+
+           <div className='threadMainContent'>
+            <p className="thread-meta-updated">Posted by {thread.author.username} on {new Date(thread.createdDate).toLocaleString()}</p>
+            <h2 className="thread-title-updated">{thread.title}</h2>
+           
+            <p className="thread-body-updated">{thread.body}</p>
+         <div className='toFlex-updated'>
+            <p className="thread-views-updated">{thread.views} views</p>
+            {thread.replies.length > 0 && <p className="thread-replies-updated">{thread.replies.length} replies</p>}
+            <p className="thread-likes-updated">Liked by: {thread.replies.map(reply => reply.likes.length).reduce((a, b) => a + b, 0)} users</p>
+           <button className='respondbtn'>Reply</button>
             </div>
+</div>
+
           </div>
         ))
       )}

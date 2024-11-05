@@ -74,6 +74,17 @@ function AppContent() {
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.music.isPlaying);
   const seekPosition = useSelector((state) => state.music.seekPosition);
+  
+  // Set header background color based on route
+  useEffect(() => {
+    const header = document.querySelector('.header');
+    if (location.pathname === '/community-forum') {
+      header.style.backgroundColor = 'rgba(0,0,0,0.2)';
+    } else {
+      header.style.backgroundColor = 'black';
+    }
+  }, [location.pathname]); // Run effect whenever the pathname changes
+
 
   useEffect(() => {
     const userToken = localStorage.getItem('authToken');

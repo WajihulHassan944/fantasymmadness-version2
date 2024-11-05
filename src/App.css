@@ -19,7 +19,10 @@
     font-size: 24px;
      color: #007bff;
 }
-
+.home-arrow-circle-forum{
+  left:30px;
+  top:147px;
+}
 .homeup-arrow-circle{
     position: absolute;
     top: 127px;
@@ -69,6 +72,11 @@
     .home-arrow-circle{
         top: 107px;
      }
+     
+.home-arrow-circle-forum{
+  left:30px;
+  top:142px;
+}
      .homeup-arrow-circle{
         top: 90px;
      }
