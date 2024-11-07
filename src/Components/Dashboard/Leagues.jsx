@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import "./leagues.css";
+import { fetchMatches } from '../../Redux/matchSlice';
 
 const Leagues = () => {
-  const user = useSelector((state) => state.user); // Access user details from Redux store
+  const user = useSelector((state) => state.user);
   const [affiliates, setAffiliates] = useState([]);
+  const [upcomingMatches, setUpcomingMatches] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const matches = useSelector((state) => state.matches.data);
+  const matchStatus = useSelector((state) => state.matches.status);
 
-  // Fetch affiliates from the API
+  useEffect(() => {
+    if (matchStatus === 'idle') {
+      dispatch(fetchMatches());
+    }
+  }, [matchStatus, dispatch]);
+
   useEffect(() => {
     const fetchAffiliates = async () => {
       try {
@@ -18,15 +30,15 @@ const Leagues = () => {
         console.error('Error fetching affiliates:', error);
       }
     };
-    
     fetchAffiliates();
   }, []);
+
+  const today = new Date().toISOString().split("T")[0];
 
   // Handle join league action
   const handleJoinLeague = async (affiliate) => {
     const userId = user._id;
     const userEmail = user.email;
-
     try {
       const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/affiliate/${affiliate._id}/join`, {
         method: 'POST',
@@ -48,18 +60,64 @@ const Leagues = () => {
     }
   };
 
+  const handleImageClick = (affiliateId) => {
+    const upcoming = matches
+      .filter((match) => match.affiliateId === affiliateId && match.matchDate.split("T")[0] >= today)
+      .map((match) => match.matchName);
+    setUpcomingMatches(upcoming);
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setUpcomingMatches([]);
+  };
+
+  const renderAffiliateImage = (affiliate) => {
+    const hasUpcomingMatch = matches.some(
+      (match) => 
+        match.affiliateId === affiliate._id && 
+        match.matchDate.split("T")[0] >= today
+    );
+
+    return (
+      <div
+        className='imgWrapLeague'
+        style={{
+          position: "absolute",
+          top: '-6px',
+          left: '-11px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          zIndex: '99999',
+          border: hasUpcomingMatch ? '3px solid yellowGreen' : '2px solid #ccc',
+          overflow: 'hidden',
+          cursor: hasUpcomingMatch ? 'pointer' : 'default'
+        }}
+        onClick={() => hasUpcomingMatch && handleImageClick(affiliate._id)}
+      >
+        <img
+          src={affiliate.profileUrl}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', zIndex: '99999' }}
+          alt="Logo"
+        />
+      </div>
+    );
+  };
+
   if (!user || !user.firstName) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className='userdashboard yourFightsWrapper'>
-        <i
+    <div className='userdashboard yourFightsWrapper myleagues'>
+      <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
       ></i>
-    
+
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl} alt="Logo" data-aos="zoom-in" />
@@ -72,22 +130,16 @@ const Leagues = () => {
         <div className='completedFights fightscontainer'>
           <h1 className='fightsheadingtwo'>Joined Leagues</h1>
 
-          {/* Render leagues user has joined */}
           {affiliates.map((affiliate) => {
             const userInLeague = affiliate.usersJoined.some((joinedUser) => joinedUser.userId === user._id);
 
             if (userInLeague) {
               return (
-                <div key={affiliate._id} className="fightItem" onClick={() => navigate('/UserDashboard')}>
-                  <div className='fightItemOne' style={{position:'relative'}}>
-
-<div className='imgWrapLeague' style={{position:"absolute" , top:'-6px' , left:'-11px' , width:'60px' , height:'60px' , borderRadius:'50%',zIndex:'99999',
-border:'2px solid #ccc', overflow:'hidden' }}>
-    <img src={affiliate.profileUrl} style={{width:'100%' , height:'100%' , objectFit:'cover' , zIndex:'99999'}} alt="Logo" />
-</div>
-
+                <div key={affiliate._id} className="fightItem" >
+                  <div className='fightItemOne leagueFightItem' style={{position:'relative'}}>
+                    {renderAffiliateImage(affiliate)}
                     <div className={`transformed-div`}>
-                      <h1 style={{ marginLeft: '36%', fontSize: '20px', fontFamily:'monospace', color: '#fff' }}>
+                      <h1 style={{ marginLeft: '30%', fontSize: '20px' }}>
                         {affiliate.firstName} {affiliate.lastName}
                       </h1>
                     </div>
@@ -111,26 +163,20 @@ border:'2px solid #ccc', overflow:'hidden' }}>
         <div className='pendingFights fightscontainer'>
           <h1 className='fightsheadingthree'>Open Leagues</h1>
 
-          {/* Render open leagues user can join */}
           {affiliates.map((affiliate) => {
             const userInLeague = affiliate.usersJoined.some((joinedUser) => joinedUser.userId === user._id);
 
             if (!userInLeague) {
               return (
                 <div key={affiliate._id} className="fightItem">
-                <div className='fightItemOne' style={{position:'relative'}}>
-
-<div className='imgWrapLeague' style={{position:"absolute" , top:'-6px' , left:'-11px' , width:'60px' , height:'60px' , borderRadius:'50%',zIndex:'99999',
-border:'2px solid #ccc', overflow:'hidden' }}>
-    <img src={affiliate.profileUrl} style={{width:'100%' , height:'100%' , objectFit:'cover' , zIndex:'99999'}} alt="Logo" />
-</div>
-
+                  <div className='fightItemOne' style={{position:'relative'}}>
+                    {renderAffiliateImage(affiliate)}
                     <div className={`transformed-div`}>
-                      <h1 style={{ marginLeft: '36%', fontSize: '20px', fontFamily:'monospace', color: '#fff' }}>
+                      <h1 style={{ marginLeft: '30%', fontSize: '20px',  color: '#fff' }}>
                         {affiliate.firstName} {affiliate.lastName}
                       </h1>
                     </div>
-                         <div className="transformed-div-two">
+                    <div className="transformed-div-two">
                       <div className='transformed-div-two-partOne'>
                         <h1>Users joined: {affiliate.usersJoined.length}</h1>
                       </div>
@@ -147,6 +193,20 @@ border:'2px solid #ccc', overflow:'hidden' }}>
           })}
         </div>
       </div>
+
+      {showPopup && (
+        <div className="popup-overlay" onClick={closePopup}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Upcoming Matches</h2>
+            <ul>
+              {upcomingMatches.map((matchName, index) => (
+                <li key={index}>{matchName}</li>
+              ))}
+            </ul>
+            <button onClick={closePopup}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

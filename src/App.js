@@ -78,13 +78,34 @@ function AppContent() {
   // Set header background color based on route
   useEffect(() => {
     const header = document.querySelector('.header');
+    
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        header.style.backgroundColor = 'black';
+      } else {
+        header.style.backgroundColor = location.pathname === '/community-forum' ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.6)';
+      }
+    };
+    if(header){
+    // Set initial background color based on location
     if (location.pathname === '/community-forum') {
       header.style.backgroundColor = 'rgba(0,0,0,0.2)';
     } else {
-      header.style.backgroundColor = 'black';
+      header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     }
+    }
+    if(header){
+    // Attach scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    }
+    // Clean up event listener on component unmount
+    return () => {
+      if(header){
+      window.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, [location.pathname]); // Run effect whenever the pathname changes
-
+  
 
   useEffect(() => {
     const userToken = localStorage.getItem('authToken');

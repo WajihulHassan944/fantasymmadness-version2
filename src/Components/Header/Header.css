@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 .header {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -216,17 +216,6 @@
 }
 
 
-/* Styles for header when on AffiliateDashboard */
-.user-header {
-  transition: background 0.3s ease, z-index 0.3s ease;
-  
-}
-
-/* Additional styles for when AffiliateDashboard is active */
-body[data-url="/AffiliateDashboard"] .user-header {
-  z-index: 99999;
-  background: black;
-}
 
 
 @media (max-width: 767px){
