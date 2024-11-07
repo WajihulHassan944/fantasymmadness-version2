@@ -33,10 +33,7 @@ const Footer = () => {
         <p><span>2350 Beaver Ruin Rd,</span> Norcross Georgia 30071</p>
       </div>
 
-      <div>
-        <i class="fa fa-phone"></i>
-        <p>+1.555.555.5555</p>
-      </div>
+      
 
       <div>
         <i class="fa fa-envelope"></i>

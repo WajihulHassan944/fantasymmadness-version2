@@ -60,24 +60,34 @@ const navigate = useNavigate();
   
   return (
     thread ? (
-      <div className='threadDetailsContainer'>
+      <div className='threadDetailsContainer-updated'>
         <i
-        className="fa fa-arrow-circle-left home-arrow-circle"
+        className="fa fa-arrow-circle-left home-arrow-circle home-arrow-circle-forum"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
         
       ></i>
      <h2>{thread.title}</h2>
-      <div>  <p>{thread.body}</p>
-      <div style={{padding:'0', display:'flex', justifyContent:'space-between', background:'transparent'}}>  <p>Posted by {thread.author.username} on {new Date(thread.createdDate).toLocaleString()}</p>
-        <p style={{color:'rgb(255, 193, 7)'}}>{thread.views} views</p> </div></div>
+      
+      <div className='threadBodyWrap'>  
+      <div className='userImagedetails'><img src={thread.profileUrl} alt='img' /></div>
+      <div className='maindetailsOfthread'>
+      <p className='threaddetailbody'>{thread.body}</p>
+      <div className='tomakespacebet'>  <p className='threadDetailOneP'>Posted by {thread.author.username} on {new Date(thread.createdDate).toLocaleString()}</p>
+        <p className='threadDetailTwoP'>{thread.views} views</p> </div>
+        </div>
+      </div>
+
+
+
+
         <h3>Replies</h3>
         {thread.replies && thread.replies.length > 0 ? (
           thread.replies.map(reply => (
-            <div key={reply._id}>
-              <p className='repliesBody'>{reply.body}</p>
-           <div className='toMakeFlexDisplay'>   <p>Reply by {reply.author.username}</p>
-              <p style={{color:'rgb(255, 193, 7)'}}>Likes: {reply.likes?.length || 0}</p>
+            <div key={reply._id} className='replyItem'>
+              <p className='repliesBody-updated'>{reply.body}</p>
+           <div className='toMakeFlexDisplay-updated'>   <p>Reply by {reply.author.username}</p>
+              <p>Likes: {reply.likes?.length || 0}</p>
               <button onClick={() => likeReply(reply._id)} style={{paddingTop:'-30px', marginTop:'-7px', height:'30px'}}>Like</button>
           </div>   
             </div>
@@ -87,7 +97,7 @@ const navigate = useNavigate();
         )}
 
         <h3>Add a Reply</h3>
-        <form onSubmit={handleReplySubmit} >
+        <form onSubmit={handleReplySubmit} className='threadDetailsForm' >
           <textarea
             value={replyBody}
             onChange={(e) => setReplyBody(e.target.value)}
