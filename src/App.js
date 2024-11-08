@@ -68,6 +68,8 @@ import AdminForumThreadDetails from './Components/Admin/AdminForumThreadDetails'
 import TrashedFights from './Components/YourFights/TrashedFights';
 import SuspendedAccounts from './Components/Admin/SuspendedAccounts';
 import AffiliatePodcasts from './Components/Admin/AffiliatePodcasts';
+import Sponsors from './Components/Home/Sponsors';
+import Guide from './Components/Dashboard/Guide';
 
 function AppContent() {
   const location = useLocation();
@@ -75,37 +77,52 @@ function AppContent() {
   const isPlaying = useSelector((state) => state.music.isPlaying);
   const seekPosition = useSelector((state) => state.music.seekPosition);
   
-  // Set header background color based on route
-  useEffect(() => {
-    const header = document.querySelector('.header');
-    
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        header.style.backgroundColor = 'black';
+  // Set header background color and active link style based on route
+useEffect(() => {
+  const header = document.querySelector('.header');
+  
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      header.style.backgroundColor = 'black';
+    } else {
+      if (location.pathname === '/community-forum') {
+        header.style.backgroundColor = 'rgba(0,0,0,0.2)';
+      } else if (location.pathname === '/Sponsors') {
+        header.style.backgroundColor = '#000000';
+      } else if (location.pathname === '/guides') {
+        header.style.backgroundColor = '#000000';
       } else {
-        header.style.backgroundColor = location.pathname === '/community-forum' ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.6)';
+        header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
-    };
-    if(header){
-    // Set initial background color based on location
+    }
+  };
+ 
+  if (header) {
+    // Set initial background color and active link color based on location
     if (location.pathname === '/community-forum') {
       header.style.backgroundColor = 'rgba(0,0,0,0.2)';
+    } else if (location.pathname === '/Sponsors') {
+      header.style.backgroundColor = '#000000';
+    } else if (location.pathname === '/guides') {
+      header.style.backgroundColor = '#000000';
     } else {
       header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     }
-    }
-    if(header){
+  }
+
+  if (header) {
     // Attach scroll event listener
     window.addEventListener('scroll', handleScroll);
-    }
-    // Clean up event listener on component unmount
-    return () => {
-      if(header){
+  }
+
+  // Clean up event listener on component unmount
+  return () => {
+    if (header) {
       window.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [location.pathname]); // Run effect whenever the pathname changes
-  
+    }
+  };
+}, [location.pathname]); // Run effect whenever the pathname changes
+
 
   useEffect(() => {
     const userToken = localStorage.getItem('authToken');
@@ -149,6 +166,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/HowToPlay" element={<HowToPlay />} />
+        <Route path="/Sponsors" element={<Sponsors />} />
         <Route path="/CreateAccount" element={<Registration />} />
         <Route path="/AffiliateCreateAccount" element={<AffiliateCreateAccount />} />
         <Route path="/dynamopromoimg" element={<DynamicPromoImage />} />
@@ -160,6 +178,7 @@ function AppContent() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />
         <Route path="/trashed-fights" element={<PrivateRoute element={<TrashedFights />} />} />
+        <Route path="/guides" element={<PrivateRoute element={<Guide />} />} />
        
         
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />

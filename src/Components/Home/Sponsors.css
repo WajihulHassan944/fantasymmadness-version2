@@ -1,0 +1,131 @@
+
+@font-face {
+    font-family: 'UFCSansMedium';
+    src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  @font-face {
+    font-family: 'UFCSansCondensedBold';
+    src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+      
+
+  @font-face {
+    font-family: 'UfcSansRegular';
+    src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  
+.sponsors-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 180px;
+    padding-bottom: 70px;
+    width: 100%;
+    min-height: 100vh; /* Full-screen height */
+    background: linear-gradient(136.74deg, #e7e7e9 19.43%, #fff 89.46%);
+    box-shadow: 0 2px 7px rgba(0, 0, 0, .15);
+    position: relative;
+   }
+   .sponsors-wrap .toabsolutedesign{
+    position: absolute;
+    top:65px;
+    right:0;
+    width:120px;
+    height:120px;
+   }
+   
+   .sponsors-wrap h1{
+    color: #d20a0a;
+    font-size: 48px;
+    text-align: center;
+    font-family: 'UfcSansRegular';
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    margin-bottom: 5px;
+   }
+   .sponsors-wrap h1 img{
+    position: absolute;
+    top:-24px;
+    left:-46px;
+    width:60px;
+    height:60px;
+   }
+  
+   .sponsors-wrap h2{
+    color: #d20a0a;
+    font-size: 36px;
+    text-align: center;
+    font-family: 'UFCSansMedium';
+    text-transform: uppercase;
+color:rgba(0, 0, 0, 0.87);
+font-style: italic;
+margin-bottom: 20px;
+   }
+
+   .sponsors-main{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin-top:10px;
+   }
+   .sponsors-main .sponsorItem{
+    padding:16px;
+    padding-top: 0;
+    width:330px;
+    height:300px;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top:10px solid #eb0b0c;
+    position: relative;
+    cursor: pointer;
+   }
+   .sponsors-main .sponsorItem img{
+    width:100%;
+    height:100%;
+
+   }
+   .sponsors-main .sponsorItem::after {
+    content: ' Musclecity Barbell'; /* Replace with your desired text */
+    color: rgb(210, 10, 10);; /* Adjust text color */
+    font-family: 'UFCSansCondensedBold';
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    bottom: -40px;
+  }
+  
+
+
+  @media (max-width: 767px){
+  .sponsors-wrap .toabsolutedesign{
+    display: none;
+  }
+  .sponsors-wrap h1{
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: 2px;
+   }
+   .sponsors-wrap h1 img{
+    width:50px;
+    height:50px;
+   }
+  
+   .sponsors-wrap h2{
+    font-size: 30px;
+     }
+
+}
