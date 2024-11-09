@@ -70,6 +70,7 @@ import SuspendedAccounts from './Components/Admin/SuspendedAccounts';
 import AffiliatePodcasts from './Components/Admin/AffiliatePodcasts';
 import Sponsors from './Components/Home/Sponsors';
 import Guide from './Components/Dashboard/Guide';
+import Pastfights from './Components/UpcomingFights/Pastfights';
 
 function AppContent() {
   const location = useLocation();
@@ -173,6 +174,8 @@ useEffect(() => {
         <Route path="/community-forum" element={<ThreadList />} />
         <Route path="/threads/:threadId" element={<ThreadDetails />} />
         <Route path="/create-thread" element={<CreateThread />} />
+        <Route path="/past-fights" element={<Pastfights />} />
+
         
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />

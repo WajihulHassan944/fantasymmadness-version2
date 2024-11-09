@@ -3,6 +3,10 @@ import "./guide.css";
 import Resetpassword from "../../Assets/resetpassword.png";
 import joinleague from "../../Assets/joinleague.png";
 import FightPromotedByAffiliate from "../../Assets/fightpromotedbyaffiliate.png";
+import RemoveFightFromDashboard from "../../Assets/removedashboard.png";
+import TrashedFight from "../../Assets/trashedfight.png";
+import EditPhoto from "../../Assets/editphoto.png";
+import TokensRemaining from "../../Assets/tokensremaining.png";
 const Guide = () => {
   return (
     <div className='guide-wrapper'>
@@ -57,8 +61,59 @@ const Guide = () => {
 
 
 
+        <div className='guide-flex-row-left'>
+           
+           <h2>Remove Unwanted Fights</h2>
+           <div className='guide-flex-row-left-div'>
+           <p>
+        To remove a fight from your dashboard or the "Your Fights" tab, simply hover over the fight element. A "Remove from dashboard" button will appear. Clicking this button will move the fight to the "Trashed Fights" section, where you can retrieve it later if needed.
+    </p>
+            <img src={RemoveFightFromDashboard} alt="img" />
+          
+            </div>
+        </div>
 
 
+
+        <div className='guide-flex-row-left'>
+           
+           <h2>Retrieve Trashed Fights</h2>
+           <div className='guide-flex-row-left-div'>
+            <img src={TrashedFight} alt="img" />
+            <p>
+        To retrieve trashed fights and restore them to your dashboard, go to the "Profile" tab and click on the "My Trashed Fights" button. You will be redirected to the Trashed Fights page. Hovering over any fight element will display an option to remove it from the trash. Clicking on this option will restore the fight to your dashboard, allowing you to make predictions and take other necessary actions.
+    </p>
+
+             </div>
+        </div>
+
+
+        <div className='guide-flex-row-left'>
+           
+           <h2>Update Your Profile Photo</h2>
+           <div className='guide-flex-row-left-div'>
+           <p>
+        To update your account's profile photo, go to the "Profile" tab, where your current profile photo is displayed at the top. Click on the "Choose File" button to select your new photo, then scroll to the bottom and click "Save Settings." Your profile picture will be updated successfully.
+    </p>
+            <img src={EditPhoto} alt="img" />
+          
+            </div>
+        </div>
+
+
+
+
+        <div className='guide-flex-row-left'>
+           
+           <h2>Account Wallet</h2>
+           <div className='guide-flex-row-left-div'>
+            <img src={TokensRemaining} alt="img" />
+            <p>
+        Your Account Wallet displays the tokens available for making predictions on fights that require tokens. Keep an eye on your balance to ensure you have enough tokens to participate in upcoming events.
+    </p>
+
+             </div>
+        </div>
 
 
 

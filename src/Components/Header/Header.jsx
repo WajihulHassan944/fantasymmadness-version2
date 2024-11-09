@@ -15,7 +15,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  
+  const [submenuOpen, setSubmenuOpen] = useState(false);
+
+  const toggleSubmenu = () => {
+    setSubmenuOpen(!submenuOpen);
+  };
   const handleLogout = () => {
     // Dispatch logout action
     dispatch(logout());
@@ -110,7 +114,18 @@ const Header = () => {
            
             <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
             <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
-            <NavLink to="/upcomingfights" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Upcoming Fights</NavLink>
+            <NavLink 
+        className="anchorlinks fightsubmenu" 
+        onClick={toggleSubmenu}
+      >
+        Fights
+        <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosed'}`}>
+          <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
+          <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
+        </div>
+      </NavLink>
+ 
+           
             <NavLink to="/CreateAccount" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Create account</NavLink>
             <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Sponsors</NavLink>
           </div>
@@ -169,7 +184,8 @@ const Header = () => {
               <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
               <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
               <NavLink to="/CreateAccount" className='anchorlinks' onClick={closeMenu}>Create account</NavLink>
-              <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Sponsors</NavLink>
+              <NavLink to="/past-fights" className='anchorlinks' onClick={closeMenu}>Past Fights</NavLink>
+              <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
               <NavLink to="/login" className='anchorlinks' onClick={closeMenu}>
                 <i className="fa fa-sign-in" aria-hidden="true"></i> Login
               </NavLink>

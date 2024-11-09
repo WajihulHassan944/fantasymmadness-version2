@@ -83,7 +83,7 @@ const UpcomingFights = () => {
 
 
   return (
-    <div className='upcomingFightsUser'>
+    <div className='upcomingFightsUser' style={{backgroundRepeat:'no-repeat', backgroundSize:'cover', backgroundPosition:'center'}}>
      <i
         className="fa fa-arrow-circle-left homeup-arrow-circle"
         aria-hidden="true"
