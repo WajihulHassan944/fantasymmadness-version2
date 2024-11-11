@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./guide.css";
 import Resetpassword from "../../Assets/resetpassword.png";
 import joinleague from "../../Assets/joinleague.png";
@@ -7,10 +7,45 @@ import RemoveFightFromDashboard from "../../Assets/removedashboard.png";
 import TrashedFight from "../../Assets/trashedfight.png";
 import EditPhoto from "../../Assets/editphoto.png";
 import TokensRemaining from "../../Assets/tokensremaining.png";
+import PostAQuestion from "../../Assets/postQuestionInCommunityForum.png";
 const Guide = () => {
+    const [showArrowUp, setShowArrowUp] = useState(false);
+   
+   
+  useEffect(() => {
+    const handleScrollUp = () => {
+      if (window.scrollY > window.innerHeight * 0.3) {
+        setShowArrowUp(true);
+      } else {
+        setShowArrowUp(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollUp);
+
+    return () => window.removeEventListener('scroll', handleScrollUp);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+
+    const handleScroll = (e, targetId) => {
+        e.preventDefault();
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+      
+
   return (
     <div className='guide-wrapper'>
-       <h1>Welcome To Our<br /><span>Detailed user Guides</span></h1>
+   
+   {showArrowUp && (
+        <div className="arrowUp" onClick={scrollToTop}>
+          <i className="fa fa-arrow-up"></i>
+        </div>
+      )}
+       <h1 className='guideHeadingMain'>Welcome To Our<br /><span>Detailed user Guides</span></h1>
      
      <div className='guides-content'>
 
@@ -20,7 +55,45 @@ const Guide = () => {
             </p>
         </div>
 
-        <div className='guide-flex-row-left'>
+<center>        <div className="tableOfContents">
+      <h1 className="contentTitle">Table Of Contents</h1>
+      <a href="#resetPassword" onClick={(e) => handleScroll(e, 'resetPassword')}>
+        <h1>i. Reset Password</h1>
+        <h2>01</h2>
+      </a>
+      <a href="#joinAffiliateLeague" onClick={(e) => handleScroll(e, 'joinAffiliateLeague')}>
+        <h1>ii. Join Affiliate's League</h1>
+        <h2>02</h2>
+      </a>
+      <a href="#clickAffiliateProfile" onClick={(e) => handleScroll(e, 'clickAffiliateProfile')}>
+        <h1>iii. Clicking Affiliate Profile</h1>
+        <h2>03</h2>
+      </a>
+      <a href="#removeUnwantedFights" onClick={(e) => handleScroll(e, 'removeUnwantedFights')}>
+        <h1>iv. Remove Unwanted Fights</h1>
+        <h2>04</h2>
+      </a>
+      <a href="#retrieveTrashedFights" onClick={(e) => handleScroll(e, 'retrieveTrashedFights')}>
+        <h1>v. Retrieve Trashed Fights</h1>
+        <h2>05</h2>
+      </a>
+      <a href="#updateProfilePicture" onClick={(e) => handleScroll(e, 'updateProfilePicture')}>
+        <h1>vi. Update Your Profile Photo</h1>
+        <h2>06</h2>
+      </a>
+      <a href="#accountWallet" onClick={(e) => handleScroll(e, 'accountWallet')}>
+        <h1>vii. Account Wallet</h1>
+        <h2>07</h2>
+      </a>
+      <a href="#postInForum" onClick={(e) => handleScroll(e, 'postInForum')}>
+        <h1>viii. Post in Community Forum</h1>
+        <h2>08</h2>
+      </a>
+    </div>
+</center>
+
+
+        <div className='guide-flex-row-left' id="resetPassword">
            
            <h2>Reset Password</h2>
            <div className='guide-flex-row-left-div'>
@@ -32,7 +105,7 @@ const Guide = () => {
 
 
 
-        <div className='guide-flex-row-left'>
+        <div className='guide-flex-row-left' id="joinAffiliateLeague">
            
            <h2>Join Affiliate's League</h2>
            <div className='guide-flex-row-left-div'>
@@ -47,7 +120,7 @@ const Guide = () => {
 
 
 
-        <div className='guide-flex-row-left'>
+        <div className='guide-flex-row-left' id="clickAffiliateProfile">
            
            <h2>Clicking Affiliate Profile</h2>
            <div className='guide-flex-row-left-div'>
@@ -61,7 +134,7 @@ const Guide = () => {
 
 
 
-        <div className='guide-flex-row-left'>
+        <div className='guide-flex-row-left' id="removeUnwantedFights">
            
            <h2>Remove Unwanted Fights</h2>
            <div className='guide-flex-row-left-div'>
@@ -75,7 +148,7 @@ const Guide = () => {
 
 
 
-        <div className='guide-flex-row-left'>
+        <div className='guide-flex-row-left' id="retrieveTrashedFights">
            
            <h2>Retrieve Trashed Fights</h2>
            <div className='guide-flex-row-left-div'>
@@ -88,7 +161,7 @@ const Guide = () => {
         </div>
 
 
-        <div className='guide-flex-row-left'>
+        <div className='guide-flex-row-left' id="updateProfilePicture">
            
            <h2>Update Your Profile Photo</h2>
            <div className='guide-flex-row-left-div'>
@@ -103,7 +176,7 @@ const Guide = () => {
 
 
 
-        <div className='guide-flex-row-left'>
+        <div className='guide-flex-row-left' id="accountWallet">
            
            <h2>Account Wallet</h2>
            <div className='guide-flex-row-left-div'>
@@ -114,7 +187,21 @@ const Guide = () => {
 
              </div>
         </div>
+        
 
+
+
+        <div className='guide-flex-row-left' id="postInForum">
+           
+           <h2>Post in Community Forum</h2>
+           <div className='guide-flex-row-left-div'>
+           <p>
+        If you still encounter any issues, navigate to the "Community" tab. At the top, you'll see the "Have a Question" option. Click on it, enter the title and description of your query, and submit it. The community will respond, helping you find a solution to your problem.
+    </p>
+           <img src={PostAQuestion} alt="img" />
+          
+            </div>
+        </div>
 
 
      </div>

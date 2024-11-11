@@ -2,9 +2,9 @@ import React from 'react';
 import Logo from "../../Assets/logo.png";
 import { Link } from 'react-router-dom';
 import "./Footer.css";
-import Facebook from "../../Assets/facebook-removebg-preview.png";
-import twitter from "../../Assets/twitter-removebg-preview.png";
-import insta from "../../Assets/insta-removebg-preview.png";
+import Facebook from "../../Assets/facebook-removebg-preview-two.png";
+import twitter from "../../Assets/twitter-removebg-preview-two.png";
+import insta from "../../Assets/insta-removebg-preview-two.png";
 const Footer = () => {
   return (
     <footer class="footer-distributed">
@@ -51,9 +51,9 @@ const Footer = () => {
       <div class="footer-icons">
 
         <a href="https://www.facebook.com/share/2pzYV9XdQpAU7n6p/?mibextid=LQQJ4d" style={{background:'transparent'}}><img src={Facebook} style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:'50%'}} /></a>
-        <a href="https://x.com/davis_kell51697" style={{background:'transparent'}}><img src={twitter} style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:'50%'}} /> </a>
         <a href="https://www.instagram.com/fantasymmadness" style={{background:'transparent'}}><img src={insta} style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:'50%'}} /></a>
-
+        <a href="https://x.com/davis_kell51697" style={{background:'transparent'}}><img src={twitter} style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:'50%'}} /> </a>
+      
       </div>
 
     </div>

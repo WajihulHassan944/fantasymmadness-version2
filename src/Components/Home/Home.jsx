@@ -24,7 +24,7 @@ const Home = () => {
         <h1 data-aos="zoom-out">The thrill of combat</h1>
         <h2 data-aos="zoom-out">
           Boxing, MMA,
-          <br /> Kickboxing & BK
+           Kickboxing<br /> & Bare knuckle
         </h2>
 
         <div className="video-embed-wrapper">
