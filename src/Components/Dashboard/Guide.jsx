@@ -8,6 +8,8 @@ import TrashedFight from "../../Assets/trashedfight.png";
 import EditPhoto from "../../Assets/editphoto.png";
 import TokensRemaining from "../../Assets/tokensremaining.png";
 import PostAQuestion from "../../Assets/postQuestionInCommunityForum.png";
+import ReplyToThread from "../../Assets/replyToThread.png";
+import RepliesOfThread from "../../Assets/repliesOfThread.png";
 const Guide = () => {
     const [showArrowUp, setShowArrowUp] = useState(false);
    
@@ -88,6 +90,14 @@ const Guide = () => {
       <a href="#postInForum" onClick={(e) => handleScroll(e, 'postInForum')}>
         <h1>viii. Post in Community Forum</h1>
         <h2>08</h2>
+      </a>
+      <a href="#replyToThread" onClick={(e) => handleScroll(e, 'replyToThread')}>
+        <h1>ix. Reply To Threads</h1>
+        <h2>09</h2>
+      </a>
+      <a href="#repliesOfThread" onClick={(e) => handleScroll(e, 'repliesOfThread')}>
+        <h1>x. View All Answers of Thread</h1>
+        <h2>10</h2>
       </a>
     </div>
 </center>
@@ -196,12 +206,43 @@ const Guide = () => {
            <h2>Post in Community Forum</h2>
            <div className='guide-flex-row-left-div'>
            <p>
-        If you still encounter any issues, navigate to the "Community" tab. At the top, you'll see the "Have a Question" option. Click on it, enter the title and description of your query, and submit it. The community will respond, helping you find a solution to your problem.
+        If you encounter any issues, navigate to the "Community" tab. At the top, you'll see the "Have a Question" option. Click on it, enter the title and description of your query, and submit it. The community will respond, helping you find a solution to your problem.
     </p>
            <img src={PostAQuestion} alt="img" />
           
             </div>
         </div>
+
+
+
+
+
+        <div className='guide-flex-row-left' id="replyToThread">
+           
+           <h2>Reply To Threads</h2>
+           <div className='guide-flex-row-left-div'>
+            <img src={ReplyToThread} alt="img" />
+            <p>
+        To reply to a thread or question in the Community Forum, navigate to the "Community" tab, where you’ll see all posted questions. Click the "Reply" button on the thread you wish to respond to. This will open a window with the thread details. Scroll to the bottom, type your reply, and submit it.
+    </p>
+
+             </div>
+        </div>
+
+
+
+        <div className='guide-flex-row-left' id="repliesOfThread">
+           
+           <h2>View All Answers of Thread</h2>
+           <div className='guide-flex-row-left-div'>
+           <p>
+        To view all answers posted by other users in a thread, navigate to the "Community" tab, where you’ll see a list of questions and threads. Simply click on the thread you wish to view, and you will be directed to the thread’s details page, which displays all replies and answers.
+    </p>
+           <img src={RepliesOfThread} alt="img" />
+          
+            </div>
+        </div>
+
 
 
      </div>
