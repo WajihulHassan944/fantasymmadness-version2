@@ -71,6 +71,7 @@ import AffiliatePodcasts from './Components/Admin/AffiliatePodcasts';
 import Sponsors from './Components/Home/Sponsors';
 import Guide from './Components/Dashboard/Guide';
 import Pastfights from './Components/UpcomingFights/Pastfights';
+import Fighters from './Components/Home/Fighters';
 
 function AppContent() {
   const location = useLocation();
@@ -92,6 +93,8 @@ useEffect(() => {
         header.style.backgroundColor = '#000000';
       } else if (location.pathname === '/guides') {
         header.style.backgroundColor = '#000000';
+      }else if (location.pathname === '/our-fighters') {
+        header.style.backgroundColor = '#000000';
       } else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -105,6 +108,8 @@ useEffect(() => {
     } else if (location.pathname === '/Sponsors') {
       header.style.backgroundColor = '#000000';
     } else if (location.pathname === '/guides') {
+      header.style.backgroundColor = '#000000';
+    }else if (location.pathname === '/our-fighters') {
       header.style.backgroundColor = '#000000';
     } else {
       header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
@@ -175,6 +180,7 @@ useEffect(() => {
         <Route path="/threads/:threadId" element={<ThreadDetails />} />
         <Route path="/create-thread" element={<CreateThread />} />
         <Route path="/past-fights" element={<Pastfights />} />
+        <Route path="/our-fighters" element={<Fighters />} />
 
         
         <Route path="/login" element={<Login />} />
