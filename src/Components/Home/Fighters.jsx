@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Fighters.css";
 import { fetchMatches } from '../../Redux/matchSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ const Fighters = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
+  const [shadowFighters, setShadowFighters] = useState([]);  // State to hold data from the new API
 
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -14,33 +15,75 @@ const Fighters = () => {
     }
   }, [matchStatus, dispatch]);
 
-  // Filter unique fighters
-const uniqueFighters = [];
-matches.forEach(match => {
-  const categoryA = match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory;
-  const categoryB = match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory;
+  // Fetch data from the new API
+  useEffect(() => {
+    const fetchShadowFighters = async () => {
+      try {
+        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/shadow');
+        const data = await response.json();
+        setShadowFighters(data);
+      } catch (error) {
+        console.error('Error fetching shadow fighters:', error);
+      }
+    };
 
-  // Avoid adding duplicates for fighter A
-  if (!uniqueFighters.some(fighter => fighter.name === match.matchFighterA)) {
-    uniqueFighters.push({
-      name: match.matchFighterA,
-      category: categoryA,
-      image: match.fighterAImage,
-      description: `${match.matchFighterA} is known for his fights in ${categoryA} and has been a part of thrilling matchups like ${match.matchName}.`
-    });
-  }
+    fetchShadowFighters();
+  }, []);
 
-  // Avoid adding duplicates for fighter B
-  if (!uniqueFighters.some(fighter => fighter.name === match.matchFighterB)) {
-    uniqueFighters.push({
-      name: match.matchFighterB,
-      category: categoryB,
-      image: match.fighterBImage,
-      description: `${match.matchFighterB} is known for his fights in ${categoryB} and has been a part of thrilling matchups like ${match.matchName}.`
-    });
-  }
-});
+  // Filter unique fighters from both matches and shadowFighters
+  const uniqueFighters = [];
+  
+  // Process matches fighters
+  matches.forEach(match => {
+    const categoryA = match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory;
+    const categoryB = match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory;
 
+    // Avoid adding duplicates for fighter A
+    if (!uniqueFighters.some(fighter => fighter.name === match.matchFighterA)) {
+      uniqueFighters.push({
+        name: match.matchFighterA,
+        category: categoryA,
+        image: match.fighterAImage,
+        description: `${match.matchFighterA} is known for his fights in ${categoryA} and has been a part of thrilling matchups like ${match.matchName}.`
+      });
+    }
+
+    // Avoid adding duplicates for fighter B
+    if (!uniqueFighters.some(fighter => fighter.name === match.matchFighterB)) {
+      uniqueFighters.push({
+        name: match.matchFighterB,
+        category: categoryB,
+        image: match.fighterBImage,
+        description: `${match.matchFighterB} is known for his fights in ${categoryB} and has been a part of thrilling matchups like ${match.matchName}.`
+      });
+    }
+  });
+
+  // Process shadowFighters (same logic)
+  shadowFighters.forEach(shadow => {
+    const categoryA = shadow.matchCategoryTwo ? shadow.matchCategoryTwo : shadow.matchCategory;
+    const categoryB = shadow.matchCategoryTwo ? shadow.matchCategoryTwo : shadow.matchCategory;
+
+    // Avoid adding duplicates for fighter A
+    if (!uniqueFighters.some(fighter => fighter.name === shadow.matchFighterA)) {
+      uniqueFighters.push({
+        name: shadow.matchFighterA,
+        category: categoryA,
+        image: shadow.fighterAImage,
+        description: `${shadow.matchFighterA} is known for his fights in ${categoryA} and has been a part of thrilling matchups like ${shadow.matchName}.`
+      });
+    }
+
+    // Avoid adding duplicates for fighter B
+    if (!uniqueFighters.some(fighter => fighter.name === shadow.matchFighterB)) {
+      uniqueFighters.push({
+        name: shadow.matchFighterB,
+        category: categoryB,
+        image: shadow.fighterBImage,
+        description: `${shadow.matchFighterB} is known for his fights in ${categoryB} and has been a part of thrilling matchups like ${shadow.matchName}.`
+      });
+    }
+  });
 
   return (
     <div className='FightersContainer'>
