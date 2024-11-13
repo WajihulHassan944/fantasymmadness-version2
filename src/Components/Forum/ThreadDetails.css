@@ -266,13 +266,29 @@
     color: black;
     font-family: 'UfcSansRegular', Arial, sans-serif;
     background-color: #fff;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap:20px;
 
 }
-
+.reply-author-image{
+    width:75px;
+    height:75px;
+}
+.reply-author-image img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
 .repliesBody-updated{
     font-size: 20px;
     margin-bottom: 5px;
     font-family: sans-serif;
+}
+.reply-author-contents{
+    display: flex;
+    flex-direction: column;
 }
 .replyItem .toMakeFlexDisplay-updated{
     display: flex;

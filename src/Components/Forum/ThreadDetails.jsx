@@ -2,12 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import "./ThreadDetails.css";
+import DummyImg from "../../Assets/dummyuserimg.png";
 const ThreadDetails = () => {
   const { threadId } = useParams(); // Extract threadId from the URL
   const [thread, setThread] = useState(null);
+  const [users, setUsers] = useState([]);
   const [replyBody, setReplyBody] = useState('');
   const user = useSelector((state) => state.user); // Access user details from Redux store
 const navigate = useNavigate();
+
+
+useEffect(() => {
+  // Fetch all users once when the component mounts
+  fetch('https://fantasymmadness-game-server-three.vercel.app/users')
+    .then(response => response.json())
+    .then(data => setUsers(data))
+    .catch(error => console.error('Error fetching users:', error));
+}, []);
+
   useEffect(() => {
     // Increment view count when the thread details are fetched
     fetch(`https://fantasymmadness-game-server-three.vercel.app/threads/${threadId}/views`, {
@@ -56,8 +68,7 @@ const navigate = useNavigate();
         });
     })
     .catch(err => console.error(err));
-  };
-  
+  }; 
   return (
     thread ? (
       <div className='threadDetailsContainer-updated'>
@@ -80,21 +91,42 @@ const navigate = useNavigate();
 
 
 
-
-        <h3>Replies</h3>
-        {thread.replies && thread.replies.length > 0 ? (
-          thread.replies.map(reply => (
+      <h3>Replies</h3>
+      {thread.replies && thread.replies.length > 0 ? (
+        thread.replies.map(reply => {
+          // Find the user whose userId matches reply.author.userId
+          const user = users.find(u => u._id === reply.author.userId);
+                 
+          return (
             <div key={reply._id} className='replyItem'>
-              <p className='repliesBody-updated'>{reply.body}</p>
-           <div className='toMakeFlexDisplay-updated'>   <p>Reply by {reply.author.username}</p>
-              <p>Likes: {reply.likes?.length || 0}</p>
-              <button onClick={() => likeReply(reply._id)} style={{paddingTop:'-30px', marginTop:'-7px', height:'30px'}}>Like</button>
-          </div>   
+              <div className='reply-author-image'>
+                {/* If user is found, use their profileUrl */}
+                {user ? (
+                  <img src={user.profileUrl} alt="author" />
+                ) : (
+                  <img src={DummyImg} alt="default" />
+                )}
+              </div>
+
+              <div className='reply-author-contents'>
+                <p className='repliesBody-updated'>{reply.body}</p>
+                <div className='toMakeFlexDisplay-updated'>
+                  <p>Reply by {reply.author.username}</p>
+                  <p>Likes: {reply.likes?.length || 0}</p>
+                  <button
+                    onClick={() => likeReply(reply._id)}
+                    style={{ paddingTop: '-30px', marginTop: '-7px', height: '30px' }}
+                  >
+                    Like
+                  </button>
+                </div>
+              </div>
             </div>
-          ))
-        ) : (
-          <p>No replies yet.</p>
-        )}
+          );
+        })
+      ) : (
+        <p>No replies yet.</p>
+      )}
 
         <h3>Add a Reply</h3>
         <form onSubmit={handleReplySubmit} className='threadDetailsForm' >
