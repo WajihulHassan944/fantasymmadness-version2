@@ -21,7 +21,7 @@ const MembershipCheckout = (userId) => {
     expYear: '',
     securityCode: '',
     termsAccepted: false,
-    amount: '10',
+    amount: '5',
   });
 
   useEffect(() => {

@@ -72,6 +72,7 @@ import Sponsors from './Components/Home/Sponsors';
 import Guide from './Components/Dashboard/Guide';
 import Pastfights from './Components/UpcomingFights/Pastfights';
 import Fighters from './Components/Home/Fighters';
+import AffiliateGuide from './Components/Affiliates/AffiliateGuide';
 
 function AppContent() {
   const location = useLocation();
@@ -188,6 +189,7 @@ useEffect(() => {
         <Route path="/UserDashboard" element={<PrivateRoute element={<DashboardMain />} />} />
         <Route path="/trashed-fights" element={<PrivateRoute element={<TrashedFights />} />} />
         <Route path="/guides" element={<PrivateRoute element={<Guide />} />} />
+        <Route path="/affiliate-guides" element={<AffiliateGuide />} />
        
         
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />

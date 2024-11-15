@@ -80,6 +80,8 @@ const Header = () => {
             <NavLink to="/HowItWorks" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How it works</NavLink>
             <NavLink to="/AffiliateProfile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
             <NavLink to="/AffiliatePromotion" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Insights</NavLink>
+            <NavLink to="/affiliate-guides" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Guides</NavLink>
+        
             </div>
 
           <div className='sideLinkswrap'>
@@ -183,6 +185,8 @@ const Header = () => {
               <NavLink to="/HowItWorks" className='anchorlinks' onClick={closeMenu}>How it works</NavLink>
               <NavLink to="/AffiliateProfile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
               <NavLink to="/AffiliatePromotion" className='anchorlinks' onClick={closeMenu}>Insights</NavLink>
+              <NavLink to="/affiliate-guides" className='anchorlinks' onClick={closeMenu}>Guides</NavLink>
+        
               <button onClick={() => { handleLogoutAffiliate(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </button>
