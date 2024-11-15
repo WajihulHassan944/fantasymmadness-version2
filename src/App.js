@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
@@ -73,6 +73,9 @@ import Guide from './Components/Dashboard/Guide';
 import Pastfights from './Components/UpcomingFights/Pastfights';
 import Fighters from './Components/Home/Fighters';
 import AffiliateGuide from './Components/Affiliates/AffiliateGuide';
+import PlayImg from "./Assets/play.png";
+import PauseImg from "./Assets/pause.png";
+import { playMusic, stopMusic, togglePlay } from "./Redux/musicSlice"; // Update the path as needed
 
 function AppContent() {
   const location = useLocation();
@@ -150,26 +153,63 @@ useEffect(() => {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    if (isPlaying && howlerRef.current) {
+      console.log("Seeking to position:", seekPosition); // Debugging
+      howlerRef.current.seek(seekPosition); // Explicitly set the playback position
+    }
+  }, [isPlaying, seekPosition]);
+
+
+
   const showPublicHeader = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showAdminHeader = location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showFooter = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const isAdministrationRoute = location.pathname.startsWith('/administration');
-  
+  const howlerRef = useRef(null); 
+
+
+  const handleTogglePlayPause = () => {
+    if (isPlaying) {
+      const currentSeek = howlerRef.current?.seek() || 0; // Get current playback position
+      console.log("Stopping music. Current seek position:", currentSeek);
+      dispatch(stopMusic(currentSeek)); // Save the position and stop music
+    } else {
+      console.log("Playing music from position:", seekPosition);
+      dispatch(playMusic());
+    }
+  };
+
+
   return (
     <>
     <ToastContainer />
       {!isAdministrationRoute && isPlaying && (
         <ReactHowler
+        ref={howlerRef}
           src={mainAudio}
-          playing={isPlaying} // Controlled by Redux
+          playing={isPlaying}
           volume={0.3}
-          seek={seekPosition} // Start at the last seek position
+          onEnd={() => dispatch(stopMusic(0))} // Stop music and reset seek when audio ends
         />
       )}
-      
+
+      {!showAdminHeader && (
+          <div className='playpause'>
+          <img
+            src={isPlaying ? PauseImg : PlayImg}
+            alt={isPlaying ? "Pause" : "Play"}
+            style={{ width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer" }}
+            onClick={handleTogglePlayPause}
+          />
+           
+          </div>
+        )}
+    
+
         {showPublicHeader && <Header />}
       {showAdminHeader && <AdminHeader />}
-
+     
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/HowToPlay" element={<HowToPlay />} />

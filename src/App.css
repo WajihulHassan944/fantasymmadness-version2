@@ -61,7 +61,12 @@
 .fightItemOne .transformed-div .transformedFighterNames{
     font-size: 15px !important;
 }
-
+.playpause{
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
 
 @media (max-width: 767px){
     
