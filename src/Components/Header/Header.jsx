@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/authSlice';
@@ -10,17 +10,37 @@ import { toast } from 'react-toastify';
 const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { isAuthenticatedAffiliate } = useSelector((state) => state.affiliateAuth);
- 
+  const submenuRef = useRef(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
+
+  useEffect(() => {
+    if (submenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [submenuOpen]);
+
   const toggleSubmenu = () => {
-    setSubmenuOpen(!submenuOpen);
+    setSubmenuOpen((prev) => !prev);
   };
-  const handleLogout = () => {
+
+  const handleClickOutside = (event) => {
+    if (submenuRef.current && !submenuRef.current.contains(event.target)) {
+      setSubmenuOpen(false);
+    }
+  };
+    const handleLogout = () => {
     // Dispatch logout action
     dispatch(logout());
     
@@ -117,11 +137,15 @@ const Header = () => {
             <NavLink 
         className="anchorlinks fightsubmenu" 
         onClick={toggleSubmenu}
+        ref={submenuRef}
       >
         Fights
-        <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosed'}`}>
+        <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosedclass'}`}  style={{
+      pointerEvents: submenuOpen ? 'auto' : 'none' // Disable pointer events when closed
+    }}>
           <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
           <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
+          <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>
         </div>
       </NavLink>
  

@@ -231,7 +231,7 @@
 @keyframes fadeInDown {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-30px);
   }
   100% {
     opacity: 1;
@@ -246,7 +246,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-30px);
   }
 }
 
@@ -262,35 +262,34 @@
   position: relative;
 }
 .fightsubmenu .submenu{
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap:15px;
   position: absolute;
-  top: 62px; /* Adjust to set the submenu below "Fights" */
+  top: 61px; /* Adjust to set the submenu below "Fights" */
   left: -88%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 1);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
   padding: 15px 0;
   padding-top:20px;
   z-index: 1000;
   width: 200px;
-  border-top:3px solid red;
+  border-top:5px solid red;
   opacity: 0;
   transform: translateY(-10px);
 }
 
 /* Open submenu with animation */
 .fightsubmenu .submenuOpen {
-  display: flex;
   animation: fadeInDown 0.3s ease forwards; /* Slide and fade in */
 }
 
 /* Close submenu with animation */
-.submenuClosed {
+.fightsubmenu .submenuClosedclass {
   opacity: 0;
-  animation: fadeOutUp 0.3s ease forwards; /* Slide and fade out */
+  animation: fadeOutUp 0.3s ease; /* Slide and fade out */
 }
 .fightsubmenu .submenu .submenuLink{
     color:#fff;

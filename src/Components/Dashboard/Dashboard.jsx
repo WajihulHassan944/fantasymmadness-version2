@@ -8,6 +8,8 @@ import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserBoard';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 const Dashboard = () => {
 
   const dispatch = useDispatch();
@@ -20,7 +22,6 @@ const Dashboard = () => {
   const [upcomingMatches, setUpcomingMatches] = useState([]);
 const navigate = useNavigate();
   const [removedMatches, setRemovedMatches] = useState([]);
-
 
   const user = useSelector((state) => state.user); // Access user details from Redux store
 
@@ -483,7 +484,7 @@ const navigate = useNavigate();
                 key={match._id}
                 onClick={() => {
                   if (match.matchType === "SHADOW" && match.blurred) {
-                    alert("Affiliate criteria has not been met for this SHADOW match.");
+                    toast.error("Affiliate criteria has not been met for this SHADOW match.");
                   } else {
                     handleMatchClick(match._id);
                   }

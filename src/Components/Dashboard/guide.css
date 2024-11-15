@@ -138,7 +138,7 @@
 }
 
 .tableOfContents{
-    width: 50%;
+    width: 65%;
     min-height: 50vh;
     margin:10px 0;
     display: flex;
@@ -171,7 +171,7 @@
     margin-bottom: 10px;
     font-family: 'UfcSansRegular', Arial, sans-serif;
     letter-spacing: 0.01071em;
-    font-size: 15px;
+    font-size: 12px;
 }
 .tableOfContents a:hover{
     color: #D20A0A;
