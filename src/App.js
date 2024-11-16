@@ -75,7 +75,7 @@ import Fighters from './Components/Home/Fighters';
 import AffiliateGuide from './Components/Affiliates/AffiliateGuide';
 import PlayImg from "./Assets/play.png";
 import PauseImg from "./Assets/pause.png";
-import { playMusic, stopMusic, togglePlay } from "./Redux/musicSlice"; // Update the path as needed
+import { playMusic, stopMusic } from "./Redux/musicSlice"; // Update the path as needed
 
 function AppContent() {
   const location = useLocation();
@@ -202,6 +202,7 @@ useEffect(() => {
             style={{ width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer" }}
             onClick={handleTogglePlayPause}
           />
+          
            
           </div>
         )}

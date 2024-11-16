@@ -26,6 +26,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
  const [isOpenPodcast, setOpenPodcast] = useState(false);
  const [isRecording, setIsRecording] = useState(false);
+ 
   const imageData = {
     logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
@@ -383,8 +384,17 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
         <button  onClick={openModal} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>View Instructions</button>
      
         {!match.matchPromotionalVideoUrl && (
-        <button  onClick={openPodcastRecorder} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Record a podcast</button>
-      )}   </div>  
+  <button 
+    onClick={() => {
+      openPodcastRecorder(); 
+      window.scrollBy({ top: 400, behavior: 'smooth' });
+    }} 
+    style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}
+  >
+    Record a podcast
+  </button>
+)}
+   </div>  
        
         {isModalOpen && (
   <div className="modal-overlay-instructions">
@@ -406,7 +416,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     video
     render={({ status, startRecording, stopRecording, mediaBlobUrl, previewStream }) => (
       <div className="videoRecorderContainer">
-        <p className="statusText">Status: {status}</p>
+        <p className="statusText" style={{color:'#fff'}}>Status: {status}</p>
         
         {/* Live preview video element */}
         <video 
