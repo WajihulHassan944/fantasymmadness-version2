@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Import useLocation to check the route
+import { Link, useNavigate } from 'react-router-dom'; // Import useLocation to check the route
 import CreateThread from './CreateThread';
 import Login from '../Login/Login';
 import "./threads.css";
@@ -76,6 +76,7 @@ const ThreadList = () => {
       <div className='toFlexHeading'>
      <h1 className="forum-heading-updated">Discussion Forum</h1>
       <button className="create-thread-btn-updated" onClick={createThread}>Have a question?</button>
+      <div className='communityRulesIcon'><Link to="/forum-rules"><i className="fa fa-question-circle-o"></i></Link></div>
       </div>
         {threads.length === 0 ? (
         <p className="no-posts-message-updated">No posts yet.</p>

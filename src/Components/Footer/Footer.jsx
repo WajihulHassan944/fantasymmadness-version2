@@ -15,11 +15,10 @@ const Footer = () => {
      
 
       <p class="footer-links">
-      <Link to="/our-fighters" className="footerlink">Fighters</Link>
-       
         <Link to="/privacy-policy" className="footerlink">Privacy policy</Link>
         <Link to="/terms-of-service" className="footerlink">Terms of service</Link>
         <Link to="/contact" className="footerlink">Contact</Link>
+        <Link to="/faqs" className="footerlink">Faqs</Link>
        
        </p>
 

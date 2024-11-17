@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/authSlice';
 import {logoutAffiliate} from "../../Redux/affiliateAuthSlice";
@@ -11,7 +11,7 @@ const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { isAuthenticatedAffiliate } = useSelector((state) => state.affiliateAuth);
   const submenuRef = useRef(null);
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,6 +30,13 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [submenuOpen]);
+
+  const isFightsActive =
+  location.pathname.startsWith('/upcomingfights') ||
+  location.pathname.startsWith('/past-fights') ||
+  location.pathname.startsWith('/YourFights') ||
+  location.pathname.startsWith('/our-fighters');
+
 
   const toggleSubmenu = () => {
     setSubmenuOpen((prev) => !prev);
@@ -102,7 +109,22 @@ const Header = () => {
           </div>
 
           <div className='anchorLinksWrapper'>
-            <NavLink to="/YourFights" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Your Fights</NavLink>
+          <NavLink 
+        className={`anchorlinks fightsubmenu ${isFightsActive ? 'activeLink' : ''}`}
+        onClick={toggleSubmenu}
+        ref={submenuRef}
+      >
+        Fights
+        <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosedclass'}`}  style={{
+      pointerEvents: submenuOpen ? 'auto' : 'none' // Disable pointer events when closed
+    }}>
+          <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
+          <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
+          <NavLink to="/YourFights" className="submenuLink">Your Fights</NavLink>
+          <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>
+        </div>
+      </NavLink>
+ 
             <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Leaderboard</NavLink>
             <NavLink to="/myLeagueRecords" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Leagues</NavLink>
             <NavLink to="/profile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
@@ -137,7 +159,7 @@ const Header = () => {
             <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
             <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
             <NavLink 
-        className="anchorlinks fightsubmenu" 
+        className={`anchorlinks fightsubmenu ${isFightsActive ? 'activeLink' : ''}`}
         onClick={toggleSubmenu}
         ref={submenuRef}
       >
@@ -193,6 +215,7 @@ const Header = () => {
             </>
           ) : isAuthenticated ? (
             <>
+           
               <NavLink to="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
               <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Leaderboard</NavLink>
               <NavLink to="/myLeagueRecords" className='anchorlinks' onClick={closeMenu}>Leagues</NavLink>

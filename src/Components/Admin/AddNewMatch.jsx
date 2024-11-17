@@ -19,6 +19,7 @@ const AddNewMatch = () => {
     matchType: 'LIVE',
     pot: '',
     fighterAImage: null,
+    notify:true,
     fighterBImage: null,
     promotionBackground: null,
     maxRounds: '',
@@ -95,6 +96,7 @@ const AddNewMatch = () => {
     data.append('matchType', formData.matchType);
     data.append('matchTokens', formData.matchTokens);
     data.append('pot', formData.pot);
+    data.append('notify', formData.notify);
     data.append('promotionBackground', formData.promotionBackground);
   
     setButtonText('Saving, please wait...');  // Update button text
@@ -269,6 +271,28 @@ const AddNewMatch = () => {
               <input type='number' name='maxRounds' value={formData.maxRounds} onChange={handleChange} />
             </div>
           </div>
+          
+          
+          <div className="input-wrap-one">
+    <div className="input-group" style={{flexDirection:'row',gap:'20px', marginTop:'10px'}}>
+      <label   style={{
+        color: formData.notify ? 'rgb(0, 213, 75)' : 'white', // Dynamic color
+        transition: 'color 0.3s ease', // Add animation
+      }}>Notify Users</label>
+      <div className="toggle-switch">
+      <input
+        type="checkbox"
+        id="notify-switch"
+        checked={formData.notify}
+        onChange={() => setFormData((prevData) => ({
+      ...prevData,
+      notify: !prevData.notify,
+    }))}
+    />
+        <label htmlFor="notify-switch" className="switch"></label>
+      </div>
+    </div>
+  </div>
 
           <button type="submit" className='btn-grad' style={{ width: '50%' }}>{buttonText}</button>
         </form>
@@ -285,6 +309,9 @@ const AddNewMatch = () => {
           <button onClick={() => handlePopupResponse('no')}>Not Now</button>
         </div>
       )}
+
+      
+
     </div>
   );
 };

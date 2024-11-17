@@ -76,6 +76,8 @@ import AffiliateGuide from './Components/Affiliates/AffiliateGuide';
 import PlayImg from "./Assets/play.png";
 import PauseImg from "./Assets/pause.png";
 import { playMusic, stopMusic } from "./Redux/musicSlice"; // Update the path as needed
+import FrequentAskedQuestions from './Components/Footer/FrequentAskedQuestions';
+import CommunityRules from './Components/Forum/CommunityRules';
 
 function AppContent() {
   const location = useLocation();
@@ -99,6 +101,8 @@ useEffect(() => {
         header.style.backgroundColor = '#000000';
       }else if (location.pathname === '/our-fighters') {
         header.style.backgroundColor = '#000000';
+      }else if (location.pathname === '/faqs') {
+        header.style.backgroundColor = '#000000';
       } else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -115,7 +119,10 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }else if (location.pathname === '/our-fighters') {
       header.style.backgroundColor = '#000000';
-    } else {
+    }else if (location.pathname === '/faqs') {
+      header.style.backgroundColor = '#000000';
+    }
+     else {
       header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     }
   }
@@ -223,6 +230,8 @@ useEffect(() => {
         <Route path="/create-thread" element={<CreateThread />} />
         <Route path="/past-fights" element={<Pastfights />} />
         <Route path="/our-fighters" element={<Fighters />} />
+        <Route path="/faqs" element={<FrequentAskedQuestions />} />
+        <Route path="/forum-rules" element={<CommunityRules />} />
 
         
         <Route path="/login" element={<Login />} />

@@ -288,8 +288,44 @@ margin-left: 230px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
-/* Thread metadata (posted by, date) */
+  position: relative;
+  }
+  .toFlexHeading .communityRulesIcon {
+    position: absolute;
+    top: 70px;
+    right: 16px;
+  }
+  
+  .toFlexHeading .communityRulesIcon i {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .toFlexHeading .communityRulesIcon::after {
+    content: "Community Rules & Regulations"; /* Tooltip text */
+    display: none;
+    position: absolute;
+    bottom: -5px; /* Adjust depending on your layout */
+    right: 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .toFlexHeading .communityRulesIcon:hover::after {
+    display: block;
+  }
+  
+  
+  /* Thread metadata (posted by, date) */
 .thread-meta-updated {
   font-size: 22px;
   margin-bottom: 10px;

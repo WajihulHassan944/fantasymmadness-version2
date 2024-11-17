@@ -134,3 +134,53 @@
   .custom-file-label:active {
     background-color: #b30000; /* Even darker red on click */
   }
+
+
+
+
+
+
+
+  .addNewMatch .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+  
+  .addNewMatch .toggle-switch input {
+    display: none;
+  }
+  
+  .addNewMatch .switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 20px;
+    transition: 0.4s;
+  }
+  
+  .addNewMatch .switch::before {
+    position: absolute;
+    content: '';
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  
+  .addNewMatch input:checked + .switch {
+    background-color: #4caf50;
+  }
+  
+  .addNewMatch input:checked + .switch::before {
+    transform: translateX(20px);
+  }
+  

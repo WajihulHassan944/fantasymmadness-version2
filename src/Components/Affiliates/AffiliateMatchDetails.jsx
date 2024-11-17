@@ -9,7 +9,6 @@ import { ReactMediaRecorder } from 'react-media-recorder';
 import s3 from "../Config/s3Config"; // Importing the configured S3 instance
 import { toast } from 'react-toastify';
 import "../Dashboard/FightDetails.css"
-
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
 
 
@@ -28,7 +27,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
  const [isRecording, setIsRecording] = useState(false);
  
   const imageData = {
-    logoImage: "https://fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
+    logoImage: "https://www.fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
   const [backgroundImgVar, setBackgroundImgVar] = useState("https://i.ibb.co/sWZ5QFh/imgone.png");
   
