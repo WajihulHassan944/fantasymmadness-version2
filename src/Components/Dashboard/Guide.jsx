@@ -31,6 +31,7 @@ import PublicPlayerProfilePage from "../../Assets/publicplayerprofilepage.png";
 import PublicPlayerProfileLink from "../../Assets/publicplayerprofilellink.png";
 import PreferredPaymentMethod from "../../Assets/prefferedpayment.png";
 import GlobalLeaderboard from "../../Assets/globalleaderboard.png";
+import AddTokenToWallet from "../../Assets/addtokenstowallet.png";
 
 const Guide = () => {
     const [showArrowUp, setShowArrowUp] = useState(false);
@@ -207,6 +208,10 @@ const Guide = () => {
       <a href="#GlobalLeaderboard" onClick={(e) => handleScroll(e, 'GlobalLeaderboard')}>
         <h1>xxxi. Global Leaderboard</h1>
         <h2>31</h2>
+      </a>
+      <a href="#AddTokenToWallet" onClick={(e) => handleScroll(e, 'AddTokenToWallet')}>
+        <h1>xxxii. Add TokensTo Wallet</h1>
+        <h2>32</h2>
       </a>
     </div>
 </center>
@@ -621,6 +626,21 @@ const Guide = () => {
 </div>
  </div>
          
+
+ <div className='guide-flex-row-left' id="AddTokenToWallet">
+           
+           <h2>Add Tokens To Wallet</h2>
+<div className='guide-flex-row-left-div'>
+<p>
+        To add tokens to your fight wallet, navigate to the "Profile" tab and click on the "My Payment Details" option located in the right column. 
+        Set up your payment details and credit card information. The initial payment will be $10, and the system will save your details for future transactions. 
+        Once your payment details are set up, click on the "Add Tokens To Wallet" option in the Profile tab. You can then purchase 10 tokens, 100 tokens, or a custom amount as needed.
+    </p>
+    <img src={AddTokenToWallet} alt="Preferred Payment Method Guide" />
+</div>
+  </div>
+ 
+
 
 
      </div>

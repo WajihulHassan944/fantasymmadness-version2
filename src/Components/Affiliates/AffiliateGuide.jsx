@@ -9,6 +9,8 @@ import FightDetailsPage from "../../Assets/fightdetailsaffiliate.png";
 import PreferredPaymentMethod from "../../Assets/prefferedpayment.png";
 import ProfileContent from "../../Assets/profilecontent.png";
 import PromotionalImage from "../../Assets/promotional-image (4).png";
+import RequestPayout from "../../Assets/requestpayout.png";
+import RecordPodcast from "../../Assets/recordpodcast.png";
 const AffiliateGuide = () => {
     const [showArrowUp, setShowArrowUp] = useState(false);
    
@@ -97,6 +99,14 @@ const AffiliateGuide = () => {
       <a href="#PreferredPaymentMethod" onClick={(e) => handleScroll(e, 'PreferredPaymentMethod')}>
         <h1>ix. Preferred Payment Method</h1>
         <h2>09</h2>
+      </a>
+      <a href="#RequestPayout" onClick={(e) => handleScroll(e, 'RequestPayout')}>
+        <h1>x. Request A Payout</h1>
+        <h2>10</h2>
+      </a>
+      <a href="#RecordPodcast" onClick={(e) => handleScroll(e, 'RecordPodcast')}>
+        <h1>xi. Record A Podcast</h1>
+        <h2>11</h2>
       </a>
     </div>
 </center>
@@ -234,6 +244,33 @@ const AffiliateGuide = () => {
 </div>
 
   </div>
+
+
+
+  <div className='guide-flex-row-left' id="RequestPayout">
+              
+              <h2>Request A Payout</h2>
+   <div className='guide-flex-row-left-div'>
+       <img src={RequestPayout} alt="Request A Payout" />
+       <p>
+        To request a payout based on your account balance, navigate to the "Profile" tab. Scroll down slightly, and on the right column, you will see the option "Request a Payout." Click on it, and a popup will appear, allowing you to enter the amount you wish to request. Once your request is successfully submitted, you will receive an email notification, and the Fantasy MMAdness team will process your request promptly.
+    </p>
+   </div>
+   </div>
+
+
+   <div className='guide-flex-row-left' id="RecordPodcast">
+   <h2>Record A Podcast</h2>
+<div className='guide-flex-row-left-div'>
+<p>
+        To record a podcast, click on any promoted fight from your dashboard. Scroll down to locate the "Record a Podcast" option. Once recorded, the podcast will be displayed to your league members on the promotion page when they access your fight. 
+        To start recording, click the "Start Recording" button. When you're done, click "Stop Recording" to complete the process. Be sure to click the "Save" button afterward to ensure your recording is saved to the database.
+    </p>
+    <img src={RecordPodcast} alt="RecordPodcast" />
+</div>
+
+  </div>
+
 
 
      </div>

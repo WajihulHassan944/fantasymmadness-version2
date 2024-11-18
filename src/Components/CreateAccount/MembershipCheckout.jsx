@@ -157,6 +157,25 @@ const MembershipCheckout = (userId) => {
       </div>
 
       <div className='mermbership-cards'>
+      <div className='cardone'>
+                    <h1 className='cardHeading'>10 Tokens</h1>
+                    <div className='cardprice'>
+                        <div className="ribbon"><span>Tokens</span></div>
+                        <p>$</p>
+                        <div className='cardprice-two'><h1>10</h1></div>
+                        <p>00</p>
+                    </div>
+                    <div className='card-features'>
+                        <li>First deduction $10</li>
+                        <li>Use on POT Fights</li>
+                        <li>Tokens are added to wallet</li>
+                        <li>Share fight portfolio</li>
+                        <li>Get on the FMMA Leaderboard</li>
+                    </div>
+                    <button className='btn-grad' style={{pointerEvents:'none'}}>SELECTED</button>
+                </div>
+
+        
         <div className='billingInformation'>
           <h2>Billing Information</h2>
           <div className='input-group'>
