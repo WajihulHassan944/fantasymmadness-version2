@@ -167,7 +167,23 @@ useEffect(() => {
     }
   }, [isPlaying, seekPosition]);
 
-
+  useEffect(() => {
+    const trackClick = () => {
+      fetch('https://fantasymmadness-game-server-three.vercel.app/track-click', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).catch((err) => console.error('Error tracking click:', err));
+    };
+  
+    document.addEventListener('click', trackClick);
+  
+    return () => {
+      document.removeEventListener('click', trackClick); // Clean up on unmount
+    };
+  }, []);
+  
 
   const showPublicHeader = !location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';
   const showAdminHeader = location.pathname.startsWith('/administration') && location.pathname !== '/administration/login';

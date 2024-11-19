@@ -85,7 +85,7 @@ const AffiliateLogin = () => {
 
     useEffect(() => {
       if (userAffiliate && !userAffiliate.verified && !alertShown) {
-        alert('Please wait for your affiliate status approval from admin.');
+        console.log('Please wait for your affiliate status approval from admin.');
         setAlertShown(true); // Ensure alert is only shown once
       }
     }, [userAffiliate, alertShown ]);
@@ -104,7 +104,6 @@ const AffiliateLogin = () => {
   };
 
     
-
   const handleGoogleSuccess = async (response) => {
     const { credential } = response;
   
@@ -131,7 +130,14 @@ const AffiliateLogin = () => {
         if (data.token) {
           localStorage.setItem('affiliateAuthToken', data.token);
           dispatch(fetchAffiliate(data.token));
-          resolve(); // Resolve the promise on successful login
+  
+          if (!data.affiliate.verified) {
+            // If user is not verified, show a toast and reject the promise
+            toast.warning('Your account is pending admin approval. You are not authenticated to access the dashboard.');
+            reject(new Error('Account pending admin approval. Please be patient and wait !'));
+          } else {
+            resolve(); // Resolve the promise if verified
+          }
         } else {
           reject(new Error('No token returned from Google login.')); // Reject if no token
         }
@@ -141,19 +147,18 @@ const AffiliateLogin = () => {
       }
     });
   
+    // Use toast.promise to handle pending, success, and error states
+    toast.promise(googleLoginPromise, {
+      pending: 'Logging in with Google...',
+      success: 'Google login successful! 👌',
+      error: {
+        render({ data }) {
+          return data.message || 'Google login failed';
+        },
+      },
+    });
+  };
   
-  // Use toast.promise to handle pending, success, and error states
-  toast.promise(googleLoginPromise, {
-    pending: 'Logging in with Google...',
-    success: 'Google login successful! 👌',
-    error: {
-      render({ data }) {
-        return data.message || 'Google login failed';
-      }
-    }
-  });
-
-};
 
   const handleGoogleError = () => {
     console.error('Google Login Failed');

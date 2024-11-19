@@ -8,8 +8,10 @@ const Admin = () => {
     matchesCount: 0,
     usersCount: 0,
     shadowTemplatesCount: 0,
+    totalClicks: 0, // Add totalClicks state
   });
 
+  const [showResetPopup, setShowResetPopup] = useState(false); // State for showing/hiding popup
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch all dashboard counts from the API
@@ -27,8 +29,28 @@ const Admin = () => {
     fetchDashboardCounts();
   }, []);
 
+  // Function to reset stats
+  const handleResetStats = async () => {
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/reset-stats', {
+        method: 'POST',
+      });
+      if (response.ok) {
+        alert('Stats have been reset successfully.');
+        setDashboardCounts((prev) => ({ ...prev, totalClicks: 0 })); // Reset total clicks in the UI
+        setShowResetPopup(false); // Close the popup
+      } else {
+        console.error('Failed to reset stats');
+        alert('Failed to reset stats');
+      }
+    } catch (error) {
+      console.error('Error resetting stats:', error);
+      alert('Error resetting stats');
+    }
+  };
+
   // Destructure the counts from the state
-  const { affiliatesCount, matchesCount, usersCount, shadowTemplatesCount } = dashboardCounts;
+  const { affiliatesCount, matchesCount, usersCount, shadowTemplatesCount, totalClicks } = dashboardCounts;
 
   return (
     <div className='adminWrapper' style={{ flexDirection: 'column', gap: '50px' }}>
@@ -58,7 +80,34 @@ const Admin = () => {
           <h2>Affiliates</h2>
           <p>{affiliatesCount}</p> {/* Render affiliates count */}
         </div>
+
+        <div
+          className='boxx visitors'
+          onClick={() => setShowResetPopup(true)} // Show the popup on click
+        >
+          <i className='fa fa-eye'></i>
+          <h2>Visitors</h2>
+          <p>{totalClicks}</p> {/* Render total clicks (visitors count) */}
+        </div>
       </div>
+
+      {/* Popup for Reset Confirmation */}
+      {showResetPopup && (
+        <div className='popupOverlay'>
+          <div className='popupContent'>
+            <h3>Reset All Stats</h3>
+            <p>Are you sure you want to reset visitor stat? This action cannot be undone.</p>
+            <div className='popupActions'>
+              <button className='confirmBtn' onClick={handleResetStats}>
+                Confirm
+              </button>
+              <button className='cancelBtn' onClick={() => setShowResetPopup(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

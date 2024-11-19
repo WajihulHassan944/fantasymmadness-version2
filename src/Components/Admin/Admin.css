@@ -29,15 +29,68 @@
 .adminWrapper .controls .active{
     color:yellowgreen;
 }
+.adminWrapper .popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.adminWrapper .popupContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.adminWrapper .popupActions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.adminWrapper .confirmBtn {
+  background: #ff4d4f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.adminWrapper .confirmBtn:hover {
+  background: #d9363e;
+}
+
+.adminWrapper .cancelBtn {
+  background: #ccc;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.adminWrapper .cancelBtn:hover {
+  background: #bbb;
+}
 
 
 /* Box Container */
   .boxesContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    max-width: 1200px;
+    max-width: 900px;
   }
   
   /* Box Styles */
@@ -46,13 +99,17 @@
     border-radius: 10px;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
     text-align: center;
-    flex: 1;
-    min-width: 220px;
-    max-width: 350px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+    min-width: 230px;
+    max-width: 230px;
+    height:170px;
     color: #fff;
     font-family: 'Orbitron', sans-serif;
     cursor: pointer;
-  }
+    }
   
   /* Custom Colors for Each Box */
   .totalMatches {
@@ -71,6 +128,10 @@
     background-color: #ffca28;
   }
   
+
+.visitors {
+  background-color: #f39c12; /* Unique color for Visitors */
+}
   /* Typography for Boxy, Game-Like Feel */
   .boxx h2 {
     font-size: 20px;
