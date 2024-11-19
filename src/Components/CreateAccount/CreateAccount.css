@@ -238,7 +238,7 @@ flex-basis: 90%;
 
 
 .affiliateLink {
-  color: red;
+  color: #16B4CA;
   position: absolute;
   top: 140px;
   right: 30px;
@@ -246,10 +246,19 @@ flex-basis: 90%;
   font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
   font-size: 22px;
   cursor: pointer;
-  animation: blinkText 2s steps(1, end) infinite; /* Adjust timing as needed */
   text-align: center;
 }
 
+.affiliateLink::before {
+  position: absolute;
+  top: 1.5px;
+  left: -20px;
+  content: '→'; /* Unicode for a right arrow */
+  color: #fff; /* Set the desired color */
+  font-size: 19px; /* Adjust size as needed */
+  animation: blinkText 2s steps(1, end) infinite; /* Adjust timing as needed */
+ 
+}
 @keyframes blinkText {
   0%, 100% {
     visibility: visible;
@@ -309,5 +318,6 @@ margin-bottom: 100px;
   font-size: 22px;
   }
 
+  
 
  }
