@@ -195,7 +195,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
 
           <div className='input-wrap-one'>
             <div className='input-group' style={{ flexBasis: '100%', margin: '10px 0' }}>
-              <label style={{ color: 'yellow' }}>Note - You will need {requiredUsers > 0 ? Math.ceil(requiredUsers) : 0} players in order for this fight to start. If the budget is not reached by the start time, the fight will not start so you need to have sufficient players in your league.</label>
+              <label style={{ color: 'yellow' }}>Note - You will need {requiredUsers > 0 ? Math.ceil(requiredUsers) : ' '} players in order for this fight to start. If the budget is not reached by the start time, the fight will not start so you need to have sufficient players in your league.</label>
             </div>
           </div>
 
