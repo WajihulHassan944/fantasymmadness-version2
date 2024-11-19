@@ -6,6 +6,7 @@ import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
 import { toast } from 'react-toastify';
 import Login from '../Login/Login';
+import { GoogleLogin } from '@react-oauth/google';
 
 const AffiliateLogin = () => {
     const dispatch = useDispatch();
@@ -103,6 +104,61 @@ const AffiliateLogin = () => {
   };
 
     
+
+  const handleGoogleSuccess = async (response) => {
+    const { credential } = response;
+  
+    const googleLoginPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Send the Google token to your backend API for verification and user handling
+        const res = await fetch('https://fantasymmadness-game-server-three.vercel.app/affiliate-google-login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: credential, // Send the token here
+          }),
+        });
+  
+        if (!res.ok) {
+          throw new Error('Google login failed'); // Throw an error if response is not ok
+        }
+  
+        const data = await res.json();
+        console.log('Google login response:', data);
+  
+        if (data.token) {
+          localStorage.setItem('affiliateAuthToken', data.token);
+          dispatch(fetchAffiliate(data.token));
+          resolve(); // Resolve the promise on successful login
+        } else {
+          reject(new Error('No token returned from Google login.')); // Reject if no token
+        }
+      } catch (error) {
+        console.error('Error during Google login:', error);
+        reject(new Error('Error during Google login.')); // Reject on error
+      }
+    });
+  
+  
+  // Use toast.promise to handle pending, success, and error states
+  toast.promise(googleLoginPromise, {
+    pending: 'Logging in with Google...',
+    success: 'Google login successful! 👌',
+    error: {
+      render({ data }) {
+        return data.message || 'Google login failed';
+      }
+    }
+  });
+
+};
+
+  const handleGoogleError = () => {
+    console.error('Google Login Failed');
+  };
+
 
 
   // Check if user is authenticated and has a valid plan
@@ -242,6 +298,12 @@ const AffiliateLogin = () => {
           </div>
        
           </form>
+          <div className="google-login-wrapper">
+  <GoogleLogin 
+    onSuccess={handleGoogleSuccess} 
+    onError={handleGoogleError}
+  />
+</div>
            <h2>- OR -</h2>
           <NavLink onClick={handleUserLogin} className="loginNavLink">Public User? Click here</NavLink>
         </div>
