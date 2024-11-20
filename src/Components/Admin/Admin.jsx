@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './Admin.css';
-
+import VisitorsAnalytics from './VisitorsAnalytics'; 
 const Admin = () => {
+  const [showAnalytics, setShowAnalytics] = useState(false);
   const [dashboardCounts, setDashboardCounts] = useState({
     affiliatesCount: 0,
     matchesCount: 0,
@@ -11,7 +12,6 @@ const Admin = () => {
     totalClicks: 0, // Add totalClicks state
   });
 
-  const [showResetPopup, setShowResetPopup] = useState(false); // State for showing/hiding popup
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch all dashboard counts from the API
@@ -38,7 +38,6 @@ const Admin = () => {
       if (response.ok) {
         alert('Stats have been reset successfully.');
         setDashboardCounts((prev) => ({ ...prev, totalClicks: 0 })); // Reset total clicks in the UI
-        setShowResetPopup(false); // Close the popup
       } else {
         console.error('Failed to reset stats');
         alert('Failed to reset stats');
@@ -51,6 +50,23 @@ const Admin = () => {
 
   // Destructure the counts from the state
   const { affiliatesCount, matchesCount, usersCount, shadowTemplatesCount, totalClicks } = dashboardCounts;
+
+  if (showAnalytics) {
+    return (
+     <>
+      <i
+        className="fa fa-arrow-circle-left shadowFightLibraryIcon"
+        aria-hidden="true" onClick={() => setShowAnalytics(null)} style={{background:'#fff', overflow:'hidden', height:'21px', display:'flex',
+          justifyContent:'center', alignItems:'center', borderRadius:'50%'
+        }}></i>
+
+      <VisitorsAnalytics
+        totalClicks={dashboardCounts.totalClicks}
+        onResetStats={handleResetStats}
+      />
+    </>
+    );
+  }
 
   return (
     <div className='adminWrapper' style={{ flexDirection: 'column', gap: '50px' }}>
@@ -83,7 +99,7 @@ const Admin = () => {
 
         <div
           className='boxx visitors'
-          onClick={() => setShowResetPopup(true)} // Show the popup on click
+          onClick={() => setShowAnalytics(true)}
         >
           <i className='fa fa-eye'></i>
           <h2>Visitors</h2>
@@ -91,23 +107,6 @@ const Admin = () => {
         </div>
       </div>
 
-      {/* Popup for Reset Confirmation */}
-      {showResetPopup && (
-        <div className='popupOverlay'>
-          <div className='popupContent'>
-            <h3>Reset All Stats</h3>
-            <p>Are you sure you want to reset visitor stat? This action cannot be undone.</p>
-            <div className='popupActions'>
-              <button className='confirmBtn' onClick={handleResetStats}>
-                Confirm
-              </button>
-              <button className='cancelBtn' onClick={() => setShowResetPopup(false)}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

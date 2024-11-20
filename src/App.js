@@ -78,6 +78,7 @@ import PauseImg from "./Assets/pause.png";
 import { playMusic, stopMusic } from "./Redux/musicSlice"; // Update the path as needed
 import FrequentAskedQuestions from './Components/Footer/FrequentAskedQuestions';
 import CommunityRules from './Components/Forum/CommunityRules';
+import About from './Components/Footer/About';
 
 function AppContent() {
   const location = useLocation();
@@ -103,6 +104,8 @@ useEffect(() => {
         header.style.backgroundColor = '#000000';
       }else if (location.pathname === '/faqs') {
         header.style.backgroundColor = '#000000';
+      }else if (location.pathname === '/about') {
+        header.style.backgroundColor = '#000000';
       } else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -120,6 +123,8 @@ useEffect(() => {
     }else if (location.pathname === '/our-fighters') {
       header.style.backgroundColor = '#000000';
     }else if (location.pathname === '/faqs') {
+      header.style.backgroundColor = '#000000';
+    }else if (location.pathname === '/about') {
       header.style.backgroundColor = '#000000';
     }
      else {
@@ -248,6 +253,7 @@ useEffect(() => {
         <Route path="/our-fighters" element={<Fighters />} />
         <Route path="/faqs" element={<FrequentAskedQuestions />} />
         <Route path="/forum-rules" element={<CommunityRules />} />
+        <Route path="/about" element={<About />} />
 
         
         <Route path="/login" element={<Login />} />

@@ -130,8 +130,25 @@ margin-bottom: 20px;
     gap:20px;
   }
 
+  .myaboutcontent{
+    font-style: normal !important;
+    font-weight: 400;
+    line-height: 1.5;
+    width:60%;
+margin-top:15px;
+color:#333 !important;
+    font-family: 'UFCSansCondensedBold' !important;
+    font-size: 24px !important;
+    text-align: center;
+    letter-spacing: 0.18px;
+   
+  }
   @media (max-width: 767px){
     
+  .myaboutcontent{
+    width:90%;
+   
+  }
   .sponsor-container-parent{
    
     gap:40px;

@@ -45,7 +45,7 @@ const Footer = () => {
 
       <p class="footer-company-about">
         <span>About Fantasy Mmadness LLC</span>
-        Fantasy Mmadness LLC is a company dedicated to creating engaging fantasy sports experiences for fans.</p>
+        Fantasy Mmadness LLC is a company dedicated to creating engaging fantasy sports experiences for fans.<Link to="about" style={{textDecoration:'none'}}>view more</Link></p>
 
       <div class="footer-icons">
 
