@@ -6,6 +6,52 @@ const FrequentAskedQuestions = () => {
 
   const faqData = [
     {
+      title: "Can I watch the fight on YouTube and score it myself?",
+      body: "Yes, you can watch the fight on YouTube or any other platform where it is available. The idea is that anyone can participate by viewing the fight and scoring it. However, the fantasy element still plays a role in ensuring the game is balanced and engaging for all participants.",
+    },
+    {
+      title: "How do I score the fight?",
+      body: "You will score the fight based on the unique scoring system provided in the platform. For example, in MMA or Boxing, Kickboxing, and Bare-knuckle this could include awarding points for significant strikes, kicks, knees, etc. The exact scoring may vary depending on the rules of the platform, but you'll be able to score the fight in a structured way.",
+    },
+    {
+      title: "What happens if there is no knockout (KO)?",
+      body: "If the fight goes the full distance without a knockout, a 500-point bonus is inserted into the fight in one of the rounds added to the fighter's Red or Blue. This helps maintain excitement and rewards those who participate in fights that don't end in a KO.",
+    },
+    {
+      title: "What if there is a knockout (KO)?",
+      body: "Even if the fight ends in a knockout, the fight will still be fully scored as if it went the distance (with no KO). This ensures that the scoring remains consistent, even if the fight ends quickly, and prevents the game from feeling too skewed toward those who just happen to pick a knockout.",
+    },
+    {
+      title: "Why would anyone participate if the score is automatically adjusted for knockouts?",
+      body: "The scoring system helps level the playing field by adjusting for unpredictable outcomes like knockouts. Even if you choose a fight that ends in a KO, the scoring remains 'full' as if it went the distance, allowing for unexpected twists and keeping the competition relevant.",
+    },
+    {
+      title: "What makes the game 'fantasy' in this context?",
+      body: "The 'fantasy' element of the game lies in the point discrepancies created by the bonus and knockout. The fantasy aspect is driven by the unpredictability of the fight outcomes and the scoring system. While watching the fight on your own is possible, the scoring system and the bonus rules create an additional layer of strategy. You can’t just rely on knowing the fighters; you also have to consider the bonus points, potential discrepancies, and other factors in the scoring that make every fight a new chance to win.",
+    },
+    {
+      title: "Can I still win if I score the fight differently from others?",
+      body: "Yes, you can still win. The game isn’t purely about matching other users' scores exactly. It's about using the bonuses, fight analysis, and scoring strategy to achieve the highest possible points. Even if your score differs from others, the unique scoring bonuses (like the 500-point bonus) can still make your total competitive.",
+    },
+    {
+      title: "How do the 500-point bonuses work?",
+      body: "The 500-point bonus is added to your total if the fight does not end in a knockout only if you pick the correct round and fighter. This means that the non-knockout fights are incentivized with a larger bonus, ensuring that these outcomes are as rewarding as a KO finish. Even in the case of a knockout, the scoring remains 'full' and doesn't leave out important factors like Punching or strategy.",
+    },
+    {
+      title: "Doesthe platform provide a leaderboard showing the current top scorers?",
+      body: "Yes, the platform may provide a leaderboard showing the current top scorers based on their fight analyses. You’ll be able to track your score and compare it with others to see how your picks are performing. The fantasy game’s dynamic nature ensures there's always an element of surprise, even late in the competition.",
+    },
+    {
+      title: "Can I participate in every fight or only certain ones?",
+      body: "Typically, you'll be able to participate in any fight that is featured in the game. However, there may be specific rules or events tied to certain fights that could affect your eligibility or points. This FAQ aims to clarify how the Fantasy MMadness scoring system works, emphasizing the idea that even if you just watch the fight and score it, the fantasy element ensures the game stays exciting and fair for everyone. The discrepancies in points and bonus points keep things engaging, regardless of how the fight plays out!",
+    },
+    {
+      title: "Is there a way to see who is winning the Fantasy MMadness game?",
+      body: "Yes, you can see the person who is winning by clicking on any fight item in the 'Completed fights' section of your dashboard. you will see the respective fight leaderboard with users ranked according to their points. When the fight status is set to finished by admin team, then you will see the fight winner at the bottom of your score cards. ",
+    },
+ 
+ 
+    {
       title: "What is FantasyMMAdness?",
       body: "FantasyMMAdness is a prediction game platform for boxing, kickboxing, and bare-knuckle fight fans. Members can participate in live and shadow fight predictions, join leagues, and compete for cash prizes while showcasing their activity on public profiles.",
     },
