@@ -174,14 +174,14 @@ const Header = () => {
       </NavLink>
  
            
-            <NavLink to="/CreateAccount" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Create account</NavLink>
             <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Sponsors</NavLink>
+            <NavLink to="/faqs" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Faqs</NavLink>
+            <NavLink to="/login" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Login</NavLink>
+          
           </div>
 
           <div className='sideLinkswrap'>
-            <NavLink to="/login" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
-              <i className="fa fa-sign-in" aria-hidden="true"></i> Login
-            </NavLink>
+            <NavLink to="/CreateAccount" className='joinNowBtn'>Join Now</NavLink>
           </div>
 
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>

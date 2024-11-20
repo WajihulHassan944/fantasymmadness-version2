@@ -190,3 +190,23 @@
 		align-items: center;
 	}
 }
+
+
+.footer-left p{
+	margin:15px 0;
+	font-size: 15px;
+}
+
+.footer-left p a{
+	font-size: 15px;
+	text-decoration: none;
+	color:#ccc;
+}
+.footer-center p{
+	display: flex !important;
+	flex-direction: column !important;
+}
+.footer-center .footerlink{
+	font-size: 21px !important;
+
+}
