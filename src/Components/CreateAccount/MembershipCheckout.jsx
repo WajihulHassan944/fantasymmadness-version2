@@ -3,10 +3,12 @@ import "./MembershipCheckout.css";
 import { Link } from 'react-router-dom';
 import Cards from "../../Assets/visa-mastercard-amex_0.png";
 import { useSelector } from 'react-redux';
+import ThankyouPurchaseTokens from '../Dashboard/ThankyouPurchaseTokens';
 
 const MembershipCheckout = (userId) => {
   const reduxUser = useSelector((state) => state.user); // Access user details from Redux store
   const [user, setUser] = useState(reduxUser);
+  const [paymentSuccessful, setPaymentSuccessful] = useState(false);
 
   const [billingInfo, setBillingInfo] = useState({
     firstName: user.firstName || '',
@@ -106,16 +108,26 @@ const MembershipCheckout = (userId) => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Error tokenizing card');
+        throw new Error(errorData.message || "Error tokenizing card");
       }
-  
-      alert('Payment saved successfully!');
-      window.location.reload();
+
+      // Set the payment success flag
+      setPaymentSuccessful(true);
+
+      // Automatically hide thank-you component after 4 seconds
+      setTimeout(() => setPaymentSuccessful(false), 4000);
     } catch (error) {
-      console.error('Card error:', error);
+      console.error("Card error:", error);
       alert(`Error card: ${error.message}`);
     }
   };
+
+  if (paymentSuccessful) {
+    // Render the ThankyouPurchaseTokens component on the entire screen
+    return <ThankyouPurchaseTokens />;
+  }
+
+
     const handleSubmit = async (e) => {
     e.preventDefault();
 

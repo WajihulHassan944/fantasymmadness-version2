@@ -79,6 +79,7 @@ import { playMusic, stopMusic } from "./Redux/musicSlice"; // Update the path as
 import FrequentAskedQuestions from './Components/Footer/FrequentAskedQuestions';
 import CommunityRules from './Components/Forum/CommunityRules';
 import About from './Components/Footer/About';
+import ThankyouPurchaseTokens from './Components/Dashboard/ThankyouPurchaseTokens';
 
 function AppContent() {
   const location = useLocation();
@@ -254,6 +255,7 @@ useEffect(() => {
         <Route path="/faqs" element={<FrequentAskedQuestions />} />
         <Route path="/forum-rules" element={<CommunityRules />} />
         <Route path="/about" element={<About />} />
+        <Route path="/thank-you" element={<ThankyouPurchaseTokens />} />
 
         
         <Route path="/login" element={<Login />} />

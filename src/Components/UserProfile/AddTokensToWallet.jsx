@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import "./AddTokensToWallet.css";
 import { useSelector } from 'react-redux';
 import MembershipCheckout from '../CreateAccount/MembershipCheckout';
+import ThankyouPurchaseTokens from '../Dashboard/ThankyouPurchaseTokens';
 
 const AddTokensToWallet = () => {
     const user = useSelector((state) => state.user);
     const [customAmount, setCustomAmount] = useState(0);
     const [isCustomPopupVisible, setCustomPopupVisible] = useState(false);
-  
+    const [paymentSuccessful, setPaymentSuccessful] = useState(false);
 
     useEffect(() => {
         // Hide the back arrow from the dashboard
@@ -49,10 +50,13 @@ const AddTokensToWallet = () => {
             const data = await response.json();
            
         // Check if transaction details exist in the response
-        if (data.status === 'success' && data.transaction) {
-            alert('Payment successful! Tokens Added to your wallet');
-            window.location.reload();
-        } else {
+        if (data.status === "success" && data.transaction) {
+            // Payment is successful, show the thank-you message
+            setPaymentSuccessful(true);
+    
+            // Hide the thank-you component after 4 seconds
+            setTimeout(() => setPaymentSuccessful(false), 4000);
+          } else {
             alert('Payment successful! But no transaction details were found.');
         }
     } catch (error) {
@@ -67,6 +71,10 @@ const AddTokensToWallet = () => {
         setCustomPopupVisible(false);
     };
 
+
+  if (paymentSuccessful) {
+    return <ThankyouPurchaseTokens />;
+  }
     return (
         <div className='membership-wrapper addTokensToWallet'>
             <div className='member-header'>
