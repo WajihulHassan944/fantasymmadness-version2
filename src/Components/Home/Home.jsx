@@ -27,6 +27,12 @@ const Home = () => {
            Kickboxing<br /> & Bare knuckle
         </h2>
 
+
+        <h3 style={{display:'none'}}>The thrill of combat Fantasy Mmadness llc</h3>
+        <h4 style={{display:'none'}}>Boxing, MMA, Kickboxing<br /> & Bare knuckle Fantasy Mmadness llc</h4>
+        <h5 style={{display:'none'}}>The thrill of combat Fantasy Mmadness llc</h5>
+        <h6 style={{display:'none'}}>Boxing, MMA, Fantasy Mmadness llc Kickboxing<br /> & Bare knuckle</h6>
+
         <div className="video-embed-wrapper">
           <div className="no-hover">
             <iframe
