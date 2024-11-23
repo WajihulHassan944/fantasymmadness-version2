@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./thankyou-purchase-tokens.css";
 
-const ThankyouPurchaseTokens = () => {
+const ThankyouPurchaseTokens = ({ amount }) => {
   const [isVisible, setIsVisible] = useState(true);
+  
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-16787825610',
+        value: amount, // Pass the transaction amount
+        currency: 'USD', // Specify the currency
+      });
+    }
+  }, [amount]);
+
 
   useEffect(() => {
     // Set a timer to hide the component after 4 seconds

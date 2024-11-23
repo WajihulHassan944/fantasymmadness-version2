@@ -71,11 +71,11 @@ const AddTokensToWallet = () => {
         setCustomPopupVisible(false);
     };
 
+    if (paymentSuccessful) {
+        return <ThankyouPurchaseTokens amount={customAmount} />;
+      }
 
-  if (paymentSuccessful) {
-    return <ThankyouPurchaseTokens />;
-  }
-    return (
+      return (
         <div className='membership-wrapper addTokensToWallet'>
             <div className='member-header'>
                 <div className='member-header-image'>

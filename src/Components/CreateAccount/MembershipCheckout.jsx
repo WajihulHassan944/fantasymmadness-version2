@@ -123,9 +123,10 @@ const MembershipCheckout = (userId) => {
   };
 
   if (paymentSuccessful) {
-    // Render the ThankyouPurchaseTokens component on the entire screen
-    return <ThankyouPurchaseTokens />;
+    // Pass the amount from billingInfo to ThankyouPurchaseTokens
+    return <ThankyouPurchaseTokens amount={billingInfo.amount} />;
   }
+  
 
 
     const handleSubmit = async (e) => {
