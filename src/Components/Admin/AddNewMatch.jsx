@@ -232,7 +232,6 @@ const AddNewMatch = () => {
             </div>
           </div>
 
-          {formData.matchType === 'SHADOW' && (
             
             <div className='input-wrap-one' style={{flexDirection:'column'}}>
             {formData.promotionBackground instanceof File
@@ -253,8 +252,6 @@ const AddNewMatch = () => {
   </label>
 </div>
  </div>
-
-        )}
 
 
 

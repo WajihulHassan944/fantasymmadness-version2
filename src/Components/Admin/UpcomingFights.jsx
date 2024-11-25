@@ -5,6 +5,7 @@ import AdminPredictions from './AdminPredictions';
 import ShowScores from './ShowScores';
 import { useNavigate } from 'react-router-dom';
 import "./upcomingFightsPopup.css";
+import MatchDetailsPromotion from './MatchDetailsPromotion';
 const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
@@ -15,7 +16,8 @@ const UpcomingFights = () => {
   const [filter, setFilter] = useState('All');
   const [showPopup, setShowPopup] = useState(false);
   const [popupMatch, setPopupMatch] = useState(null);
-
+  const [showPromote, setShowPromote] = useState(false);
+  
   const [shadowTemplates, setShadowTemplates] = useState([]);
   const navigate = useNavigate();
   
@@ -33,6 +35,7 @@ const UpcomingFights = () => {
         .catch((error) => console.error('Error fetching shadow templates:', error));
     }
   }, [filter]);
+  
 
   const handleMatchClick = (matchId) => {
     setSelectedMatchId(matchId);
@@ -53,6 +56,36 @@ const UpcomingFights = () => {
     setFilter(popupMatch.filter);
     setShowPopup(false);
   };
+
+  const handlePromote = () => {
+    setShowPromote(true);
+   };
+  if(showPromote){
+    return (
+      <><i
+      className="fa fa-arrow-circle-left"
+      aria-hidden="true"
+      onClick={() => {
+        setShowPromote(false);
+        setShowPopup(false);
+      }} // Go back to the previous component
+      style={{
+        position: 'absolute',
+        top: '38px',
+        left: '18%',
+        cursor: 'pointer',
+        fontSize: '24px',
+        color: '#007bff',
+        zIndex: '99999',
+      }}
+    ></i>
+    
+       <MatchDetailsPromotion matchId={popupMatch?.id} />;
+    
+      </>
+    );
+   
+  }
 
   const handleViewScores = () => {
     if (popupMatch.filter === 'shadowTemplate') {
@@ -142,11 +175,19 @@ const UpcomingFights = () => {
   const handleShadowTemplateClick = (matchId) => {
     setSelectedMatchId(matchId); // Directly set match ID for Shadow Templates, no date/time check
   };
-  const filteredMatches = filter === 'Shadow Templates' ? shadowTemplates : matches.filter((match) => {
-    if (filter === 'All') return true;
-    return match.matchStatus === filter;
-  });
 
+  const filteredMatches = (() => {
+    if (filter === 'Shadow Templates') {
+      return shadowTemplates;
+    } else if (filter === 'Live Fights') {
+      return matches.filter((match) => match.matchType === 'LIVE');
+    } else {
+      return matches.filter((match) => {
+        if (filter === 'All') return true;
+        return match.matchStatus === filter;
+      });
+    }
+  })();
   return (
     <div className='adminWrapper'>
      <i
@@ -155,16 +196,23 @@ const UpcomingFights = () => {
         onClick={() => navigate(-1)} // Go back to the previous page
         style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
-    {showPopup && (
-      <div className="popup">
-        <div className="popup-content">
-          <p>Select an action:</p>
+   {showPopup && (
+  <div className="popup">
+    <div className="popup-content">
+      <p style={{ color: '#fff' }}>Select an action:</p>
+      {filter === 'Live Fights' ? (
+        <button onClick={handlePromote}>Promote</button>
+      ) : (
+        <>
           <button onClick={handleViewScores}>View Scores</button>
           <button onClick={handleEditScores}>Edit Scores</button>
-          <button onClick={handlePopupClose}>Close</button>
-        </div>
-      </div>
-    )}
+        </>
+      )}
+      <button onClick={handlePopupClose}>Close</button>
+    </div>
+  </div>
+)}
+
       <div className='homeSecond' style={{ background: 'transparent' }}>
         <h1 className='second-main-heading'>
           <span className='toRemove'>Upcoming fights /</span> Active fights
@@ -175,24 +223,35 @@ const UpcomingFights = () => {
           <h5 className={filter === 'Finished' ? 'active' : ''} onClick={() => setFilter('Finished')}>Finished Fights</h5>
           <h5 className={filter === 'Ongoing' ? 'active' : ''} onClick={() => setFilter('Ongoing')}>Active Fights</h5>
           <h5 className={filter === 'Shadow Templates' ? 'active' : ''} onClick={() => setFilter('Shadow Templates')}>Shadow Templates</h5>
+          <h5 className={filter === 'Live Fights' ? 'active' : ''} onClick={() => setFilter('Live Fights')}>Promote Live Fights</h5>
+       
         </div>
 
         <div className="fightswrap">
           {filteredMatches.length > 0 ? (
             filteredMatches.map((match) => (
               <div
-                className="fightItem"
-                key={match._id}
-                onClick={
-    filter === 'Shadow Templates' 
-      ? (match.matchStatus === 'Ongoing' 
-          ? () => handleShadowTemplateClick(match._id) 
-          : () => handleFinishedShadowClick(match._id, 'shadowTemplate')) 
-      : (match.matchStatus === 'Ongoing' 
-          ? () => handleMatchClick(match._id) 
-          : () => handleFinishedMatchClick(match._id, 'normal'))
-  }
-              >
+  className="fightItem"
+  key={match._id}
+  onClick={() => {
+    if (filter === 'Live Fights') {
+      // Trigger popup for live fights only
+      setPopupMatch({ id: match._id, filter: 'Live Fights' });
+      setShowPopup(true);
+    } else if (filter === 'Shadow Templates') {
+      // Handle shadow templates logic
+      match.matchStatus === 'Ongoing' 
+        ? handleShadowTemplateClick(match._id) 
+        : handleFinishedShadowClick(match._id, 'shadowTemplate');
+    } else {
+      // Handle normal match click logic
+      match.matchStatus === 'Ongoing' 
+        ? handleMatchClick(match._id) 
+        : handleFinishedMatchClick(match._id, 'normal');
+    }
+  }}
+>
+
                 <div className='fightersImages'>
                   <div className='fighterOne'>
                     <img src={match.fighterAImage} alt={match.matchFighterA} />

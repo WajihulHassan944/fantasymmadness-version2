@@ -264,7 +264,7 @@ const EditMatch = ({ matchId, isShadow }) => {
             </div>
           </div>
 
-          {isShadow && (
+          {isShadow || !isShadow && (
             
 
              <div className='input-group' style={{display:'flex', flexDirection:'column'}}>

@@ -80,6 +80,7 @@ import FrequentAskedQuestions from './Components/Footer/FrequentAskedQuestions';
 import CommunityRules from './Components/Forum/CommunityRules';
 import About from './Components/Footer/About';
 import ThankyouPurchaseTokens from './Components/Dashboard/ThankyouPurchaseTokens';
+import PromoAdminPage from './Components/Admin/PromoAdminPage';
 
 function AppContent() {
   const location = useLocation();
@@ -312,6 +313,7 @@ useEffect(() => {
         <Route path="/administration/Calendar" element={<PrivateRouteAdmin element={<Calandar />} />} />
         <Route path="/administration/Email" element={<PrivateRouteAdmin element={<EmailTemplate />} />} />
         <Route path="/shadow/:matchName/:fullName" element={<Promo />} />
+        <Route path="/live/:id" element={<PromoAdminPage />} />
        
       </Routes>
 
