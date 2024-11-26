@@ -20,6 +20,7 @@ const AddNewMatch = () => {
     pot: '',
     fighterAImage: null,
     notify:true,
+    addToShadowTemplates:false,
     fighterBImage: null,
     promotionBackground: null,
     maxRounds: '',
@@ -61,6 +62,16 @@ const AddNewMatch = () => {
       });
     }
   };
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -71,14 +82,9 @@ const AddNewMatch = () => {
   
     // Parse local date and time from form data (assuming it's in the user's local timezone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
-  
     const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
-  
-    // Create a new date object in the user's local timezone to avoid shifting issues
     const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-  
-    // Format the adjusted date to ISO string
-    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // This should now be the correct date
+    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // Adjusted date in ISO string format
   
     const data = new FormData();
     data.append('matchCategory', formData.matchCategory);
@@ -88,35 +94,68 @@ const AddNewMatch = () => {
     data.append('matchFighterB', formData.matchFighterB);
     data.append('matchDescription', formData.matchDescription);
     data.append('matchVideoUrl', formData.matchVideoUrl);
-    data.append('fighterAImage', formData.fighterAImage);  
+    data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-    data.append('matchDate', matchDateAdjusted);  // Store adjusted date
-    data.append('matchTime', matchTimeEST);  // Store local time
+    data.append('matchDate', matchDateAdjusted);
+    data.append('matchTime', matchTimeEST);
     data.append('matchType', formData.matchType);
     data.append('matchTokens', formData.matchTokens);
     data.append('pot', formData.pot);
     data.append('notify', formData.notify);
     data.append('promotionBackground', formData.promotionBackground);
   
-    setButtonText('Saving, please wait...');  // Update button text
+    setButtonText('Saving, please wait...'); // Update button text
   
     try {
+      // Send the main request
       const response = await fetch(url, {
         method: 'POST',
         body: data,
       });
   
       if (response.ok) {
-        const result = await response.json();  // Parse the JSON response
-        console.log('Response received:', result);  // Log the full response
+        const result = await response.json(); // Parse the JSON response
+        console.log('Response received:', result); // Log the full response
         alert('Match added successfully!');
+  
+        // If matchType is 'LIVE' and addToShadowTemplates is true, add the fight to shadow templates
+        if (formData.matchType === 'LIVE' && formData.addToShadowTemplates) {
+          const shadowData = new FormData();
+          shadowData.append('matchCategory', formData.matchCategory);
+          shadowData.append('matchCategoryTwo', formData.matchCategoryTwo);
+          shadowData.append('matchName', formData.matchName);
+          shadowData.append('matchFighterA', formData.matchFighterA);
+          shadowData.append('matchFighterB', formData.matchFighterB);
+          shadowData.append('matchDescription', formData.matchDescription);
+          shadowData.append('matchVideoUrl', formData.matchVideoUrl);
+          shadowData.append('fighterAImage', formData.fighterAImage);
+          shadowData.append('fighterBImage', formData.fighterBImage);
+          shadowData.append('maxRounds', formData.maxRounds);
+          shadowData.append('matchType', formData.matchType); // Force matchType to SHADOW
+          shadowData.append('notify', formData.notify);
+          shadowData.append('promotionBackground', formData.promotionBackground);
+  
+          const shadowResponse = await fetch(
+            'https://fantasymmadness-game-server-three.vercel.app/addShadow',
+            {
+              method: 'POST',
+              body: shadowData,
+            }
+          );
+  
+          if (shadowResponse.ok) {
+            alert('Fight also added to shadow templates successfully.');
+          } else {
+            console.warn('Failed to add fight to shadow templates.');
+          }
+        }
   
         if (formData.matchType === 'SHADOW') {
           setMatchId(result.matchId); // Store the matchId
           setShowPopup(true); // Show the popup
         } else {
-          window.location.reload();  // Reload for LIVE matches
+          window.location.reload(); // Reload for LIVE matches
         }
       } else {
         alert('Failed to add match.');
@@ -125,7 +164,7 @@ const AddNewMatch = () => {
       console.error('Error adding match:', error);
       alert('An error occurred while adding the match.');
     } finally {
-      setButtonText('Add Match');  // Revert button text
+      setButtonText('Add Match'); // Revert button text
     }
   };
   
@@ -142,7 +181,7 @@ const AddNewMatch = () => {
   if (showAdminPredictions && matchId) {
     return <AdminPredictions matchId={matchId} filter={'shadowTemplate'} />;
   }
-  
+ 
   return (
     <div className='addNewMatch'>
      <i
@@ -287,6 +326,34 @@ const AddNewMatch = () => {
     }))}
     />
         <label htmlFor="notify-switch" className="switch"></label>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div className="input-wrap-one">
+    <div className="input-group" style={{flexDirection:'row',gap:'20px', marginTop:'10px'}}>
+      <label   style={{
+        color: formData.addToShadowTemplates ? 'rgb(0, 213, 75)' : 'white', // Dynamic color
+        transition: 'color 0.3s ease', // Add animation
+      }}>Add To Shadow Templates</label>
+      <div className="toggle-switch">
+      <input
+        type="checkbox"
+        id="addToShadowTemplates"
+        checked={formData.addToShadowTemplates}
+        onChange={() => setFormData((prevData) => ({
+      ...prevData,
+      addToShadowTemplates: !prevData.addToShadowTemplates,
+    }))}
+    />
+        <label htmlFor="addToShadowTemplates" className="switch"></label>
       </div>
     </div>
   </div>

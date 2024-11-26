@@ -23,10 +23,11 @@ const MatchDetailsPromotion = ({matchId}) => {
     
     useEffect(() => {
       // Update background image state based on match data
-      if (match && match.promotionBackground) {
-          setBackgroundImgVar(match.promotionBackground);
-         } 
-  }, [match]);
+      if (match && match.promotionBackground && match.promotionBackground !== "null") {
+        setBackgroundImgVar(match.promotionBackground);
+      }
+    }, [match]);
+    
   
   
     useEffect(() => {
@@ -68,7 +69,7 @@ const MatchDetailsPromotion = ({matchId}) => {
               // Draw background image
               ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   
-              if (match.promotionBackground) {
+              if (match.promotionBackground && match.promotionBackground !== "null") {
                   // Apply dark overlay for custom background
                   ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
                   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -159,7 +160,7 @@ const MatchDetailsPromotion = ({matchId}) => {
       backgroundImage.onload = handleImageLoad;
       logoImage.onload = handleImageLoad;
   
-      if (!match.promotionBackground) {
+      if (!match.promotionBackground || match.promotionBackground == "null") {
           fighterOneImage.onload = handleImageLoad;
           fighterTwoImage.onload = handleImageLoad;
       }

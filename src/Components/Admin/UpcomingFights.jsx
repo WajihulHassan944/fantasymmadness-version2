@@ -113,7 +113,7 @@ const UpcomingFights = () => {
   
       if (filterProp === 'normal') {
         const matchDateTime = new Date(`${selectedMatch.matchDate.split('T')[0]}T${selectedMatch.matchTime}:00`);
-        if (currentTime >= matchDateTime) {
+        if (currentTime) {
           return (
             <>
               <i
