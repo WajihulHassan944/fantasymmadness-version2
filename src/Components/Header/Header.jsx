@@ -170,6 +170,7 @@ const Header = () => {
           <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
           <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
           <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>
+          <NavLink to="/past-fights-records" className="submenuLink">Past Fights Videos</NavLink>
         </div>
       </NavLink>
  
