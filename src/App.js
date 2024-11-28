@@ -82,6 +82,7 @@ import About from './Components/Footer/About';
 import ThankyouPurchaseTokens from './Components/Dashboard/ThankyouPurchaseTokens';
 import PromoAdminPage from './Components/Admin/PromoAdminPage';
 import PastFightVideos from './Components/Home/PastFightVideos';
+import Rewards from './Components/Home/Rewards';
 
 function AppContent() {
   const location = useLocation();
@@ -111,7 +112,9 @@ useEffect(() => {
         header.style.backgroundColor = '#000000';
       }else if (location.pathname === '/past-fights-records') {
         header.style.backgroundColor = '#000000';
-      } else {
+      } else if (location.pathname === '/fights-rewards') {
+        header.style.backgroundColor = '#000000';
+      }else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
     }
@@ -132,6 +135,8 @@ useEffect(() => {
     }else if (location.pathname === '/about') {
       header.style.backgroundColor = '#000000';
     }else if (location.pathname === '/past-fights-records') {
+      header.style.backgroundColor = '#000000';
+    }else if (location.pathname === '/fights-rewards') {
       header.style.backgroundColor = '#000000';
     }
      else {
@@ -262,6 +267,7 @@ useEffect(() => {
         <Route path="/forum-rules" element={<CommunityRules />} />
         <Route path="/about" element={<About />} />
         <Route path="/thank-you" element={<ThankyouPurchaseTokens />} />
+        <Route path="/fights-rewards" element={<Rewards />} />
 
         
         <Route path="/login" element={<Login />} />

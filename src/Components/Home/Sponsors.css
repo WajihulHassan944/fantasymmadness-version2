@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 @font-face {
     font-family: 'UFCSansMedium';
     src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
@@ -143,7 +143,116 @@ color:#333 !important;
     letter-spacing: 0.18px;
    
   }
+
+
+
+
+
+.rewards-container-parent{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  background: linear-gradient(136.74deg, #e7e7e9 19.43%, #fff 89.46%);
+    box-shadow: 0 2px 7px rgba(0, 0, 0, .15);
+    padding:50px 0;
+}
+.rewards-container-parent .reward-description{
+  margin-bottom: 50px;
+  font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: 'Roboto', sans-serif;
+  font-weight: 500; /* Medium weight */
+}
+.rewards-container-parent .reward-items-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap:50px;
+}
+.reward-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+}
+.reward-item h3{
+  color: rgb(210, 10, 10); /* Adjust color as needed */
+  font-family: 'UFCSansCondensedBold';
+  font-size: 24px;
+
+}
+
+.reward-item:nth-of-type(2) h3{
+  color: rgb(171, 142, 61);
+ 
+}
+
+.reward-item:nth-of-type(3) h3{
+  color: rgb(0, 0, 0);
+ 
+}
+.reward-item .reward-image{
+   width: 100%;
+   position: relative;
+}
+.reward-item .reward-image .rewardAbsolute{
+  position: absolute;
+  top: 0;
+  left:50%;
+  transform: translate(-50%,20%);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap:144.5px;
+}
+.reward-item .reward-image .rewardAbsolute p,.reward-item .reward-image .rewardAbsolute h2{
+  color:#fff;
+}
+.reward-item img{
+  width:330px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @media (max-width: 767px){
+    .rewards-container-parent .reward-description{
+      font-size: 20px;
+    padding: 0 15px;
+    }
     
   .myaboutcontent{
     width:90%;
