@@ -77,3 +77,15 @@
     }
   }
   
+
+  .searchbar-fights{
+    width: 100%;
+    max-width: 600px;
+    border:none;
+    border:3px solid #ffc000;
+    background:rgba(0, 0, 0, 0.87);
+    color:#ffc000;
+    outline: none;
+    box-shadow: 0 10px 20px rgba(255,255,255,0.04);
+    padding: 10px;
+  }

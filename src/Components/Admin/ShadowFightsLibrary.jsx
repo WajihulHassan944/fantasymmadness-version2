@@ -14,6 +14,9 @@ const ShadowFightsLibrary = () => {
     const [showAffiliatesPopup, setShowAffiliatesPopup] = useState(false);
     const [affiliates, setAffiliates] = useState([]);
     const [editAffiliates, setEditAffiliates] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredMatches, setFilteredMatches] = useState([]);
+
     const navigate = useNavigate();
 
     // Function to fetch matches
@@ -22,6 +25,7 @@ const ShadowFightsLibrary = () => {
             const response = await fetch("https://fantasymmadness-game-server-three.vercel.app/shadow");
             const data = await response.json();
             setMatches(data);
+            setFilteredMatches(data);
         } catch (error) {
             console.error("Error fetching matches:", error);
         }
@@ -43,6 +47,25 @@ const ShadowFightsLibrary = () => {
         fetchMatchesData();
         fetchAffiliatesData();
     }, []);
+
+    useEffect(() => {
+        // Filter matches based on the search query
+        if (searchQuery.trim() === '') {
+            setFilteredMatches(matches);
+         } else {
+          const lowerCaseQuery = searchQuery.toLowerCase();
+          const filtered = matches.filter((match) => 
+            match.matchFighterA.toLowerCase().includes(lowerCaseQuery) ||
+            match.matchFighterB.toLowerCase().includes(lowerCaseQuery) ||
+            match.matchDescription?.toLowerCase().includes(lowerCaseQuery) ||
+            match.matchCategory?.toLowerCase().includes(lowerCaseQuery) ||
+            match.matchCategoryTwo?.toLowerCase().includes(lowerCaseQuery) ||
+            match.matchStatus?.toLowerCase().includes(lowerCaseQuery)
+          );
+          setFilteredMatches(filtered);
+        }
+      }, [searchQuery, matches]);
+    
 
     const handleFightItemClick = (match) => {
         setSelectedMatch(match);
@@ -146,12 +169,20 @@ const ShadowFightsLibrary = () => {
                 <div className='homeSecond' style={{ background: 'transparent' }}>
                     
                     <div className='fixdDivShadowLibrary' >
-                    <h1 className='second-main-heading fixDivShadowTitle' >Shadow <span className='toRemove'> Fights</span> Library</h1>
+                    <h1 className='second-main-heading fixDivShadowTitle' >Shadow <span className='toRemove'> Fights</span> Library</h1>   
                     </div>
-                    
-                    <div className="fightswrap" style={{paddingTop:'130px'}}>
-                        {matches.length > 0 ? (
-                            matches.map((match) => (
+                    <input
+            type="text"
+            placeholder='Search here...'
+            className='searchbar-fights'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{marginTop:'150px'}}
+          />     
+         
+                    <div className="fightswrap" style={{paddingTop:'20px'}}>
+                        {filteredMatches.length > 0 ? (
+                            filteredMatches.map((match) => (
                                 <div className="fightItem" key={match._id} onClick={() => handleFightItemClick(match)}>
                                     <div className='fightersImages'>
                                         <div className='fighterOne'>

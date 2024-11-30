@@ -83,6 +83,7 @@ import ThankyouPurchaseTokens from './Components/Dashboard/ThankyouPurchaseToken
 import PromoAdminPage from './Components/Admin/PromoAdminPage';
 import PastFightVideos from './Components/Home/PastFightVideos';
 import Rewards from './Components/Home/Rewards';
+import AdminFaqs from './Components/Admin/AdminFaqs';
 
 function AppContent() {
   const location = useLocation();
@@ -319,6 +320,7 @@ useEffect(() => {
 <Route path="/administration/threads/:threadId" element={<PrivateRouteAdmin element={<AdminForumThreadDetails />} />} />
 <Route path="/administration/suspended-accounts" element={<PrivateRouteAdmin element={<SuspendedAccounts />} />} />
 <Route path="/administration/podcasts" element={<PrivateRouteAdmin element={<AffiliatePodcasts />} />} />
+<Route path="/administration/faqs" element={<PrivateRouteAdmin element={<AdminFaqs />} />} />
 
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />

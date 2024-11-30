@@ -13,11 +13,47 @@ const PreviousMatches = () => {
     const [winnerDetails, setWinnerDetails] = useState(null);
     const [affiliateTokens, setAffiliateTokens] = useState(0);
     const [matchTokens, setMatchTokens] = useState(0);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredMatches, setFilteredMatches] = useState([]);
+
 const navigate = useNavigate();
     useEffect(() => {
         dispatch(fetchMatches());
     }, [dispatch]);
 
+   
+    // Filter matches based on search query and filter selection
+    useEffect(() => {
+        const lowerCaseQuery = searchQuery.trim().toLowerCase();
+        const filtered = matches.filter((match) => {
+            const matchDate = new Date(match.matchDate);
+            const tenDaysAgo = new Date();
+            tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+
+            if (match.matchStatus !== 'Finished' || matchDate < tenDaysAgo) {
+                return false;
+            }
+
+            if (filter === 'Rewarded' && match.matchReward !== 'Rewarded') return false;
+            if (filter === 'NotRewarded' && match.matchReward !== 'NotRewarded') return false;
+
+            if (lowerCaseQuery) {
+                return (
+                    match.matchFighterA.toLowerCase().includes(lowerCaseQuery) ||
+                    match.matchFighterB.toLowerCase().includes(lowerCaseQuery) ||
+                    match.matchDescription?.toLowerCase().includes(lowerCaseQuery) ||
+                    match.matchCategory?.toLowerCase().includes(lowerCaseQuery) ||
+                    match.matchCategoryTwo?.toLowerCase().includes(lowerCaseQuery) ||
+                    match.matchStatus?.toLowerCase().includes(lowerCaseQuery)
+                );
+            }
+
+            return true;
+        });
+
+        setFilteredMatches(filtered);
+    }, [matches, searchQuery, filter]);
+ 
     const handleMatchClick = async (matchId) => {
         const winner = await getWinnerDetails(matchId);
         setWinnerDetails(winner);
@@ -116,21 +152,7 @@ const navigate = useNavigate();
         }
     };
     
-    const filteredMatches = matches.filter((match) => {
-        const matchDate = new Date(match.matchDate);
-        const tenDaysAgo = new Date();
-        tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
-
-        if (match.matchStatus === 'Finished' && matchDate < tenDaysAgo) {
-            return false;
-        }
-
-        if (filter === 'All') return match.matchStatus === 'Finished';
-        if (filter === 'Rewarded') return match.matchReward === 'Rewarded' && match.matchStatus === 'Finished';
-        if (filter === 'NotRewarded') return match.matchReward === 'NotRewarded' && match.matchStatus === 'Finished';
-        return false;
-    });
-
+  
     return (
         <div className='prevMatches'>
          <i
@@ -143,7 +165,14 @@ const navigate = useNavigate();
             <div className='adminWrapper'>
                 <div className='homeSecond' style={{ background: 'transparent' }}>
                     <h1 className='second-main-heading'>All fights <span className='toRemove'>/ Previous Fights</span></h1>
-
+                    <input
+            type="text"
+            placeholder='Search here...'
+            className='searchbar-fights'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+         
                     <div className='controls'>
                         <h5 className={filter === 'All' ? 'active' : ''} onClick={() => setFilter('All')}>All</h5>
                         <h5 className={filter === 'Rewarded' ? 'active' : ''} onClick={() => setFilter('Rewarded')}>Rewarded Fights</h5>
