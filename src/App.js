@@ -84,6 +84,8 @@ import PromoAdminPage from './Components/Admin/PromoAdminPage';
 import PastFightVideos from './Components/Home/PastFightVideos';
 import Rewards from './Components/Home/Rewards';
 import AdminFaqs from './Components/Admin/AdminFaqs';
+import AdminNews from './Components/Admin/AdminNews';
+import NewsFeed from './Components/Footer/NewsFeed';
 
 function AppContent() {
   const location = useLocation();
@@ -115,7 +117,11 @@ useEffect(() => {
         header.style.backgroundColor = '#000000';
       } else if (location.pathname === '/fights-rewards') {
         header.style.backgroundColor = '#000000';
-      }else {
+      }
+      
+    else if (location.pathname === '/fights-news') {
+      header.style.backgroundColor = '#dc1606';
+    }else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
     }
@@ -140,6 +146,10 @@ useEffect(() => {
     }else if (location.pathname === '/fights-rewards') {
       header.style.backgroundColor = '#000000';
     }
+    else if (location.pathname === '/fights-news') {
+      header.style.backgroundColor = '#dc1606';
+    }
+    
      else {
       header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     }
@@ -277,6 +287,7 @@ useEffect(() => {
         <Route path="/trashed-fights" element={<PrivateRoute element={<TrashedFights />} />} />
         <Route path="/guides" element={<PrivateRoute element={<Guide />} />} />
         <Route path="/affiliate-guides" element={<AffiliateGuide />} />
+        <Route path="/fights-news" element={<NewsFeed />} />
        
         
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />
@@ -321,6 +332,7 @@ useEffect(() => {
 <Route path="/administration/suspended-accounts" element={<PrivateRouteAdmin element={<SuspendedAccounts />} />} />
 <Route path="/administration/podcasts" element={<PrivateRouteAdmin element={<AffiliatePodcasts />} />} />
 <Route path="/administration/faqs" element={<PrivateRouteAdmin element={<AdminFaqs />} />} />
+<Route path="/administration/news" element={<PrivateRouteAdmin element={<AdminNews />} />} />
 
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />

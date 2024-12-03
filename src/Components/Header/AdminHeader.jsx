@@ -51,6 +51,7 @@ const AdminHeader = () => {
               <NavLink to="/administration/YoutubeArchive" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Youtube Archive</NavLink>
               <NavLink to="/administration/Community" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Community Forum</NavLink>
               <NavLink to="/administration/faqs" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Faqs</NavLink>
+              <NavLink to="/administration/news" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>News</NavLink>
              
               <h1 className='matchHeading' style={{marginTop:'13px', fontSize:'21px'}}>Users</h1>
               <NavLink to="/administration/RegisteredUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Registered Users</NavLink>
