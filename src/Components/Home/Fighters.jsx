@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./Fighters.css";
 import { fetchMatches } from '../../Redux/matchSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 const Fighters = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,11 @@ const Fighters = () => {
 
   return (
     <div className='FightersContainer'>
+     <Helmet>
+        <link rel="canonical" href="https://www.fantasymmadness.com/our-fighters" />
+        <title>Our Fighters - Fantasy Mmadness</title>
+        <meta name="description" content="Meet the professional fighters at Fantasy Mmadness. Discover their profiles, fight categories, and more!" />
+      </Helmet>
       <h1 className='FightersTitle'>Our Professional Fighters</h1>
       <div className='fightersWrapParent'>
         {uniqueFighters.map((fighter, index) => (

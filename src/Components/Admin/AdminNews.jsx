@@ -154,7 +154,7 @@ const AdminNews = () => {
                 checked={newNews.notify}
                 onChange={handleInputChange}
               />
-              <label>Notify all users</label>
+              <label style={{color:'black'}}>Notify all users</label>
             </div>
             <button className="add-btn" onClick={addNews}>
               Add
