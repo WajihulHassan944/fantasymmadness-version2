@@ -98,12 +98,8 @@ const AffiliateAddNewMatch = ({ matchId }) => {
   
     const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
   
-    // Create a new date object in the user's local timezone to avoid shifting issues
-    const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-  
-    // Format the adjusted date to ISO string
-    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // This should now be the correct date
-  
+    const matchDate = formData.matchDate.split('T')[0];
+
     const data = new FormData();
     data.append('matchTokens', formData.matchTokens);
     data.append('shadowFightId', matchDetails._id);
@@ -111,7 +107,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('pot', formData.pot);
     data.append('profit', formData.profit);
     data.append('amountOverPotBudget', formData.amountOverPotBudget);
-    data.append('matchDate', matchDateAdjusted);  // Store adjusted date
+    data.append('matchDate', matchDate);  // Store adjusted date
     data.append('matchTime', matchTimeEST);  // Store local time
   
     // Append image URLs directly if available

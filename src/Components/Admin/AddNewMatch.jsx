@@ -83,9 +83,8 @@ const AddNewMatch = () => {
     // Parse local date and time from form data (assuming it's in the user's local timezone)
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
     const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
-    const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // Adjusted date in ISO string format
-  
+    const matchDate = formData.matchDate.split('T')[0];
+
     const data = new FormData();
     data.append('matchCategory', formData.matchCategory);
     data.append('matchCategoryTwo', formData.matchCategoryTwo);
@@ -97,7 +96,7 @@ const AddNewMatch = () => {
     data.append('fighterAImage', formData.fighterAImage);
     data.append('fighterBImage', formData.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
-    data.append('matchDate', matchDateAdjusted);
+    data.append('matchDate', matchDate);
     data.append('matchTime', matchTimeEST);
     data.append('matchType', formData.matchType);
     data.append('matchTokens', formData.matchTokens);

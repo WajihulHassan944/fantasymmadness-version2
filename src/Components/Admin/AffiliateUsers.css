@@ -534,3 +534,85 @@
     
      
 }
+
+
+
+
+
+
+/* Container Styles */
+.styledPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .styledPopup .popup-content {
+    width: 400px;
+    animation: fadeIn 0.3s ease-in-out;
+    
+  }
+  
+  /* Form Styles */
+  .styledPopup form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+  
+  }
+  
+  .styledPopup .form-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+     flex-direction: column;
+    gap: 8px;
+  }
+  
+  .styledPopup label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .styledPopup input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .styledPopup input:focus {
+    border-color: #007bff;
+  }
+  
+  /* Buttons */
+  .styledPopup .form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

@@ -11,22 +11,26 @@ const AffiliateUsers = () => {
   const [filterStatus, setFilterStatus] = useState('All'); // 'All', 'Approved', 'Pending'
   const [selectedUser, setSelectedUser] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [addAffiliatePopup, setAddAffiliatePopup] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 const [deleteText, setDeleteText] = useState("Delete");
 const navigate = useNavigate();
 
 
+const fetchData = async () => {
+  try {
+    const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/affiliates');
+    const data = await response.json();
+    setAffiliateUsers(data);
+    setFilteredUsers(data); // Initially, all users are displayed
+  } catch (error) {
+    console.error('Error fetching affiliate users:', error);
+  }
+};
+
   useEffect(() => {
-    // Fetch data from the API
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/affiliates');
-        const data = await response.json();
-        setAffiliateUsers(data);
-        setFilteredUsers(data); // Initially, all users are displayed
-      } catch (error) {
-        console.error('Error fetching affiliate users:', error);
-      }
-    };
+   
 
     fetchData();
   }, []);
@@ -109,7 +113,26 @@ const navigate = useNavigate();
     });
   };
   
+  const addAffiliate = async (data) => {
+    try {
+      const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/admin/add-affiliate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+  
+      if (response.ok) {
+        return { success: true };
+      } else {
+        const errorData = await response.json();
+        return { success: false, message: errorData.message };
+      }
+    } catch (err) {
+      return { success: false, message: 'An error occurred while adding the affiliate.' };
+    }
+  };
 
+  
   return (
     <div className='affiliateUsersWrapper'>
      <i
@@ -129,6 +152,12 @@ const navigate = useNavigate();
           onChange={handleSearch}
         />
         <div className='searchDivPartTwo'>
+        <h1
+            onClick={() => setAddAffiliatePopup(true)}
+           >
+            Add
+          </h1>
+         
           <h1
             onClick={() => handleFilter('Approved')}
             className={filterStatus === 'Approved' ? 'activeFilter' : ''}
@@ -181,6 +210,70 @@ const navigate = useNavigate();
           )}
         </div>
       </div>
+
+      {addAffiliatePopup && (
+  <div className="Popup styledPopup">
+    <div className="popup-content">
+      <h1>Add New Affiliate</h1>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setLoading(true); // Set loading state to true
+          const formData = new FormData(e.target);
+          const data = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+          };
+
+          const result = await addAffiliate(data);
+
+          if (result.success) {
+            alert('Affiliate added successfully!');
+            fetchData();
+            setAddAffiliatePopup(false); // Close the popup
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+          setLoading(false); // Reset loading state
+        }}
+      >
+        <div className="form-row">
+          <label htmlFor="firstName">First Name:</label>
+          <input type="text" name="firstName" id="firstName" required />
+        </div>
+        <div className="form-row">
+          <label htmlFor="lastName">Last Name:</label>
+          <input type="text" name="lastName" id="lastName" required />
+        </div>
+        <div className="form-row">
+          <label htmlFor="email">Email:</label>
+          <input type="email" name="email" id="email" required />
+        </div>
+        <div className="form-row">
+          <label htmlFor="password">Password:</label>
+          <input type="password" name="password" id="password" required />
+        </div>
+        <div className="form-actions">
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Adding please wait...' : 'Add Affiliate'}
+          </button>
+          <button
+            type="button"
+            className="cancel-btn"
+            onClick={() => setAddAffiliatePopup(false)}
+            disabled={loading}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };

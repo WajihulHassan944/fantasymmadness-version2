@@ -125,13 +125,9 @@ const EditMatch = ({ matchId, isShadow }) => {
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
   
     const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
-  
-    // Create a new date object in the user's local timezone to avoid shifting issues
-    const adjustedDate = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-    
-    // Format the adjusted date to ISO string
-    const matchDateAdjusted = adjustedDate.toISOString().split('T')[0]; // This should now be the correct date
-  
+    const matchDate = formData.matchDate.split('T')[0];
+
+
     const data = new FormData();
     data.append('matchId', matchId);
     data.append('matchCategory', formData.matchCategory);
@@ -146,7 +142,7 @@ const EditMatch = ({ matchId, isShadow }) => {
     data.append('promotionBackground', formData.promotionBackground);
   
     if (!isShadow) {
-      data.append('matchDate', matchDateAdjusted);  // Use adjusted date
+      data.append('matchDate', matchDate);  // Use adjusted date
       data.append('matchTime', matchTimeEST);  // Use local time
       data.append('matchTokens', formData.matchTokens);
       data.append('pot', formData.pot);
