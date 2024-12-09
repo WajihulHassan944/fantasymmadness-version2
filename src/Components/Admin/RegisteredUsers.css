@@ -78,19 +78,22 @@
   }
   
   
-  
-@media (max-width: 767px){
-.mobileItemOne{
-  margin-top:-100px;
+
+.toFlexRowTitle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width:100%;
+  margin:50px 0;
+  margin-top:21px;
+  padding:0 80px;
+  padding-left: 100px;
 }
+.toFlexRowTitle div{
+  display: flex;
+  gap:20px;
 }
-
-
-
-.suspendedAccountsBtn {
-  position: absolute;
-  top: 30px;
-  right: 30px;
+.toFlexRowTitle button{
   padding: 10px 20px;
   background-color: #ff4d4f;
   color: #fff;
@@ -100,7 +103,52 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-.suspendedAccountsBtn:hover {
-  background-color: #ff7875;
+.toFlexRowTitle .addAccountsBtn{
+  background-color: #218838;
 }
+.mobileItemOne{
+  margin-top:-55px;
+}
+ 
+@media (max-width: 767px){
+.mobileItemOne{
+  margin-top:-100px;
+}
+
+
+
+
+.toFlexRowTitle{
+  justify-content: center;
+  flex-direction: column-reverse;
+  margin:50px 0;
+  margin-top:21px;
+  padding:0 80px;
+  padding-left: 100px;
+  gap:20px;
+}
+.toFlexRowTitle div{
+  display: flex;
+  gap:20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.toFlexRowTitle button{
+  padding: 10px 20px;
+  background-color: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.toFlexRowTitle .addAccountsBtn{
+  background-color: #218838;
+}
+
+
+}
+
+

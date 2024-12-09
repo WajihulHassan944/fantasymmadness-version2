@@ -9,6 +9,9 @@ const RegisteredUsers = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [tokensToGive, setTokensToGive] = useState('');
+  const [addUserPopup, setAddUserPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 const navigate = useNavigate();
   const fetchData = async () => {
     try {
@@ -115,10 +118,28 @@ const handleDelete = async (id) => {
     }
 };
 
+const addUser = async (data) => {
+  try {
+    const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/admin/add-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      return { success: true };
+    } else {
+      const errorData = await response.json();
+      return { success: false, message: errorData.message };
+    }
+  } catch (err) {
+    return { success: false, message: 'An error occurred while adding the user.' };
+  }
+};
 
 
   return (
-    <div className='adminWrapper'>
+    <div className='adminWrapper' style={{flexDirection:'column'}}>
    <i
         className="fa fa-arrow-circle-left"
         aria-hidden="true"
@@ -126,9 +147,15 @@ const handleDelete = async (id) => {
         style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
       ></i>
    
+   <div className='toFlexRowTitle'>
+      <h1 className='thirdHeadingOne'>Registered Users</h1>
+        <div>
+      <button className='suspendedAccntsBtn' onClick={()=>navigate('/administration/suspended-accounts')}>Suspended Accounts</button>
+      <button className='addAccountsBtn' onClick={() => setAddUserPopup(true)}>Add User</button>
+      </div>
+      </div>
       <div className='homeThird mobileItemOne' style={{ background: 'transparent' }}>
-      <button className='suspendedAccountsBtn' onClick={()=>navigate('/administration/suspended-accounts')}>Suspended Accounts</button>
-        <h1 className='thirdHeadingOne'>Registered Users</h1>
+      
         <div className='leaderboardItemsWrap'>
           {users.map((user) => (
             <div key={user._id} className='leaderboardItem'>
@@ -175,6 +202,68 @@ const handleDelete = async (id) => {
     </div>
 )}
 
+
+{addUserPopup && (
+  <div className="Popup styledPopup">
+    <div className="popup-content">
+      <h1>Add New User</h1>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setLoading(true); // Set loading state to true
+          const formData = new FormData(e.target);
+          const data = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+          };
+
+          const result = await addUser(data);
+
+          if (result.success) {
+            alert('User added successfully!');
+            fetchData();
+            setAddUserPopup(false); // Close the popup
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+          setLoading(false); // Reset loading state
+        }}
+      >
+        <div className="form-row">
+          <label htmlFor="firstName">First Name:</label>
+          <input type="text" name="firstName" id="firstName" required />
+        </div>
+        <div className="form-row">
+          <label htmlFor="lastName">Last Name:</label>
+          <input type="text" name="lastName" id="lastName" required />
+        </div>
+        <div className="form-row">
+          <label htmlFor="email">Email:</label>
+          <input type="email" name="email" id="email" required />
+        </div>
+        <div className="form-row">
+          <label htmlFor="password">Password:</label>
+          <input type="password" name="password" id="password" required />
+        </div>
+        <div className="form-actions">
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Adding please wait...' : 'Add Affiliate'}
+          </button>
+          <button
+            type="button"
+            className="cancel-btn"
+            onClick={() => setAddUserPopup(false)}
+            disabled={loading}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
 
 
     </div>
