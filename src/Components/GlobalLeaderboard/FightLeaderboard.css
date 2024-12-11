@@ -50,6 +50,41 @@
 }
 
 
+.control-relative{
+    position: relative;
+    
+}
+
+.control-relative .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px; /* Set this to your desired container height */
+    width: 25px; /* Set this to your desired container width */
+    position: absolute;
+    top:50%;
+    right: -100px;
+    transform: translateY(-50%);
+  }
+  
+  .spin-circle {
+    width: 25px; /* Diameter of the spinner */
+    height: 25px;
+    border: 4px solid rgba(0, 0, 0, 0); /* Outer border with a light color */
+    border-top: 4px solid #3498db; /* Top border with the spinning color */
+    border-radius: 50%; /* Make it circular */
+    animation: spin 1s linear infinite; /* Continuous spinning animation */
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
 
 @media (max-width: 767px){
     .fightLeaderboard .fightwalletWrap{
@@ -68,6 +103,10 @@
         font-size: 22px !important;
         text-align: center !important;
     }
-    
+   
+.control-relative .spinner {
+    right: -20px;
+  }
+   
 
 }

@@ -3,6 +3,7 @@ import FighterOne from "../../Assets/fighterOne.png";
 import "./FightLeaderboard.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
+import { fetchMatches } from '../../Redux/matchSlice';
 
 const FightLeaderboard = ({ matchId }) => {
   const [scores, setScores] = useState([]);
@@ -10,28 +11,67 @@ const FightLeaderboard = ({ matchId }) => {
   const user = useSelector((state) => state.user);
   const matches = useSelector((state) => state.matches.data);
   const match = matches.find((m) => m._id === matchId);
+  const [refreshed, setRefreshed] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(stopMusic());
+
+
+
+  const fetchLeaderboardData = () => {
+
+    setRefreshed(true);
 
     fetch('https://fantasymmadness-game-server-three.vercel.app/api/scores')
       .then(response => response.json())
-      .then(data => setScores(data.filter(score => score.matchId === matchId))) // Filter scores by matchId
+      .then(data => setScores(data.filter(score => score.matchId === matchId)))
       .catch(error => console.error('Error fetching scores:', error));
 
     fetch('https://fantasymmadness-game-server-three.vercel.app/users')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
+      dispatch(fetchMatches());
+      
+      setTimeout(() => setRefreshed(false), 3000);
 
-      return () => dispatch(playMusic());
-  }, [matchId, dispatch]);
+  };
+
+
+
+
+
+  const getRefreshInterval = () => {
+    const category = match.matchCategoryTwo || match.matchCategory;
+    switch (category) {
+      case 'boxing': 
+      return 180000;
+      case 'kickboxing':
+        return 180000; // 3 minutes in milliseconds
+      case 'mma':
+        return 300000; // 5 minutes in milliseconds
+      case 'bare-knuckle':
+        return 120000; // 2 minutes in milliseconds
+      default:
+        return 60000; // Default to 1 minute
+    }
+  };
 
   
+  useEffect(() => {
+    dispatch(stopMusic());
 
+    // Initial fetch
+    fetchLeaderboardData();
 
+    // Set interval for refreshing leaderboard
+    const interval = getRefreshInterval();
+    const refreshTimer = setInterval(fetchLeaderboardData, interval);
 
+    return () => {
+      clearInterval(refreshTimer);
+      dispatch(playMusic());
+    };
+  }, [matchId, dispatch]);
 
 
 
@@ -253,7 +293,11 @@ const getYouTubeEmbedUrl = (url) => {
       ></iframe>
     </div>
           <div className='leaderboardHeading'><h3>Leaderboard</h3></div>
-          <div className='controls'><h5 className='active'>All time</h5><h5>Last week</h5> <h5>Last month</h5></div>
+          <div className='controls control-relative'><h5 className='active'>All time</h5><h5>Last week</h5> <h5>Last month</h5>
+         {refreshed && (
+          <div className='spinner'><div className='spin-circle'></div></div>
+        )};
+          </div>
           
           <div className='leaderboardItemsWrap'>
             {renderLeaderboardItems()}
