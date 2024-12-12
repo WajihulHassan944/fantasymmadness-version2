@@ -1,23 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import "./GlobalLeaderboard.css";
-import FighterOne from "../../Assets/fighterOne.png";
+import './GlobalLeaderboard.css';
+import FighterOne from '../../Assets/fighterOne.png';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData';
 import { useNavigate } from 'react-router-dom';
 
 const GlobalLeaderboard = () => {
-  
+  const [refreshed, setRefreshed] = useState(false);
   const matches = useSelector((state) => state.matches.data);
   const { leaderboard, playerCount } = useLeaderboardData(matches);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const userLoggedIn = useSelector((state) => state.user); // Access user details from Redux store
 
-  
+  useEffect(() => {
+    // Function to toggle refreshed state
+    const refreshLeaderboard = () => {
+      setRefreshed(true);
+      setTimeout(() => setRefreshed(false), 3000); // Set refreshed to true for 3 seconds
+    };
+
+    // Refresh every 3 minutes
+    const interval = setInterval(() => {
+      refreshLeaderboard();
+    }, 180000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
   const renderLeaderboardItems = () => {
     if (leaderboard.length === 0) {
       return <p className='noMatch'>No leaderboard items available at the moment.</p>;
     }
-  
+
     return leaderboard.map((user, index) => (
       <div className='leaderboardItem' key={user._id} data-aos="zoom-in">
         <div className='leaderboard-item-image'>
@@ -32,17 +47,14 @@ const navigate = useNavigate();
     ));
   };
 
-
-  
   return (
     <div className='fightDetails global-leaderboard'>
-    
-    <i
+      <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
         onClick={() => navigate(-1)} // Go back to the previous page
       ></i>
-   
+
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={userLoggedIn.profileUrl} alt="Logo" data-aos="zoom-in" />
@@ -58,17 +70,22 @@ const navigate = useNavigate();
         </div>
       </div>
 
-      <div className='homeThird' >
+      <div className='homeThird'>
         <h1 className='thirdHeadingOne' data-aos="zoom-in">Global Leader Board</h1>
         <h2 data-aos="zoom-in">Players - <span>{playerCount}</span></h2>
 
         <div className='leaderboardHeading'><h3>Leaderboard</h3></div>
         <div className='controls'>
-          <h5 className='active'>All time</h5>
+          <h5 className='active control-relative'>All time</h5>
           <h5>Last week</h5>
           <h5>Last month</h5>
+          {refreshed && (
+            <div className='spinner'>
+              <div className='spin-circle'></div>
+            </div>
+          )}
         </div>
-    
+
         <div className='leaderboardItemsWrap'>
           {renderLeaderboardItems()}
         </div>
