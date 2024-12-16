@@ -86,6 +86,8 @@ import Rewards from './Components/Home/Rewards';
 import AdminFaqs from './Components/Admin/AdminFaqs';
 import AdminNews from './Components/Admin/AdminNews';
 import NewsFeed from './Components/Footer/NewsFeed';
+import AdminSponsor from './Components/Admin/AdminSponsor';
+import SponsorDashboard from './Components/Home/SponsorDashboard';
 
 function AppContent() {
   const location = useLocation();
@@ -118,6 +120,9 @@ useEffect(() => {
       } else if (location.pathname === '/fights-rewards') {
         header.style.backgroundColor = '#000000';
       }
+      else if (location.pathname === '/sponsor-dashboard') {
+        header.style.backgroundColor = '#000000';
+      }
       
     else if (location.pathname === '/fights-news') {
       header.style.backgroundColor = '#dc1606';
@@ -148,6 +153,9 @@ useEffect(() => {
     }
     else if (location.pathname === '/fights-news') {
       header.style.backgroundColor = '#dc1606';
+    }
+    else if (location.pathname === '/sponsor-dashboard') {
+      header.style.backgroundColor = '#000000';
     }
     
      else {
@@ -304,6 +312,7 @@ useEffect(() => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/transaction" element={<TransactionList />} />
         <Route path="/past-fights-records" element={<PastFightVideos />} />
+        <Route path="/sponsor-dashboard" element={<SponsorDashboard />} />
 
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
@@ -333,6 +342,7 @@ useEffect(() => {
 <Route path="/administration/podcasts" element={<PrivateRouteAdmin element={<AffiliatePodcasts />} />} />
 <Route path="/administration/faqs" element={<PrivateRouteAdmin element={<AdminFaqs />} />} />
 <Route path="/administration/news" element={<PrivateRouteAdmin element={<AdminNews />} />} />
+<Route path="/administration/sponsors" element={<PrivateRouteAdmin element={<AdminSponsor />} />} />
 
        
         <Route path="/administration/AffiliateMatches" element={<PrivateRouteAdmin element={<AffiliateMatches />} />} />

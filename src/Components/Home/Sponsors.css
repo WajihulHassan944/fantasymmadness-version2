@@ -80,6 +80,21 @@ margin-bottom: 20px;
     max-width: 1200px;
     margin-top:10px;
    }
+   .sponsors-main a{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap:20px;
+   }
+   .sponsors-main a h1{
+    color: rgb(210, 10, 10); /* Adjust color as needed */
+    font-family: 'UFCSansCondensedBold';
+    font-size: 24px;
+    letter-spacing: normal;
+   }
    .sponsors-main .sponsorItem{
     padding:16px;
     padding-top: 0;
@@ -97,29 +112,7 @@ margin-bottom: 20px;
     width:100%;
     height:100%;
 
-   }/* First Item */
-.sponsors-main:nth-of-type(1) .sponsorItem::after {
-  content: 'Musclecity Barbell'; /* Text for the second item */
-  color: rgb(210, 10, 10); /* Adjust color as needed */
-  font-family: 'UFCSansCondensedBold';
-  font-size: 24px;
-  text-align: center;
-  position: absolute;
-  bottom: -40px;
-}
-
-/* Second Item */
-.sponsors-main:nth-of-type(2) .sponsorItem::after {
-  content: '100 Percent Chiropractic'; /* Text for the second item */
-  color: rgb(210, 10, 10); /* Adjust color as needed */
-  font-family: 'UFCSansCondensedBold';
-  font-size: 24px;
-  text-align: center;
-  position: absolute;
-  bottom: -40px;
-}
-
-
+   }
 
 
   .sponsor-container-parent{

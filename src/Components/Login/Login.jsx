@@ -10,6 +10,7 @@ import "./Login.css";
 import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";
 import AffiliateLogin from '../Affiliates/AffiliateLogin';
+import SponsorLogin from './SponsorLogin';
 
 const Login = ({ redirectTo }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Login = ({ redirectTo }) => {
   const [password, setPassword] = useState('');
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [affiliatesLogin, setAffiliatesLogin] = useState(false);
+  const [sponsorLogin, setSponsorLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); // Use navigate for redirection after login
   const [forgotPassword, setForgotPassword] = useState(false);  // New state for forgot password
@@ -164,6 +166,13 @@ const Login = ({ redirectTo }) => {
   const handleAffiliateLogin = () => {
     setAffiliatesLogin(true);
   };
+  
+  const handleSponsorLogin = () => {
+    setSponsorLogin(true);
+  };
+
+  
+
   if (affiliatesLogin) {
     return (
       <>
@@ -178,6 +187,19 @@ const Login = ({ redirectTo }) => {
   }
   
 
+  if (sponsorLogin) {
+    return (
+      <>
+        <i
+          className="fa fa-arrow-circle-left homeup-arrow-circle loginbackarrow"
+          aria-hidden="true"
+          onClick={() => setSponsorLogin(false)} // Go back to the previous component
+        ></i>
+        <SponsorLogin />
+      </>
+    );
+  }
+  
 
 
   const handleForgotPasswordSubmit = async (e) => {
@@ -310,7 +332,9 @@ const Login = ({ redirectTo }) => {
                 <h2>- OR -</h2>
 
        
-        <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affiliate? Click here</NavLink>
+       <div className='login-form-footer'> <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affiliate?</NavLink>
+        <NavLink onClick={handleSponsorLogin} className="loginNavLink">Sponsor?</NavLink>
+        </div>
       </div>
     </div>
   );

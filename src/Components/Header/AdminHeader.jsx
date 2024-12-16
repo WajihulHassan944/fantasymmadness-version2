@@ -52,13 +52,17 @@ const AdminHeader = () => {
               <NavLink to="/administration/Community" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Community Forum</NavLink>
               <NavLink to="/administration/faqs" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Faqs</NavLink>
               <NavLink to="/administration/news" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>News</NavLink>
+              <NavLink to="/administration/sponsors" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Sponsors</NavLink>
              
               <h1 className='matchHeading' style={{marginTop:'13px', fontSize:'21px'}}>Users</h1>
               <NavLink to="/administration/RegisteredUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Registered Users</NavLink>
              {/* <NavLink to="/administration/SubscribedUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Subscribed Users</NavLink>
              */} <NavLink to="/administration/AffiliateUsers" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Affiliate Users</NavLink>
               <NavLink to="/administration/Email" className={({ isActive }) => (isActive ? 'anchorlinksAdmin activeLinkAdmin' : 'anchorlinksAdmin')}>Email Template</NavLink>
-              
+              <NavLink to="#" className="sideLinksAdmin" onClick={handleLogout}>
+              <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+            </NavLink>
+          
             </div>
           </div>
 

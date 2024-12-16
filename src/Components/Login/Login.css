@@ -191,7 +191,12 @@ flex-basis: 40%;
   width: 50%; 
 }
 
-
+.login-form-footer{
+  display: flex;
+  gap:10px;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 767px){
   .google-login-wrapper {
     width: 120px;  /* Makes the Google button full width */
