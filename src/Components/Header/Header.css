@@ -17,6 +17,7 @@
     position: fixed;
     z-index: 9;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .25);
+   
   }
   .logoimg {
     width: 80px;
@@ -77,6 +78,63 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
 
   }
+  /* Container styles */
+.scrolling-text-container {
+  position: fixed;
+  width: 100%;
+  background: linear-gradient(216.01deg, #d20a0a 26.18%, #9e0808 93.27%);
+  color: #fff;
+  font-family: 'UFCSans-condensedmed';
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  padding: 10px 0;
+  overflow: hidden; /* Hide anything outside the container */
+  z-index: 999;
+}
+
+/* Inner container styles */
+.scrolling-text-inner {
+  display: flex;
+  white-space: nowrap;
+  font-size: 22px;
+  font-weight: 500;
+  animation: var(--direction) var(--marquee-speed) linear infinite;
+}
+
+/* Text container styles */
+.scrolling-text {
+  display: flex;
+}
+
+/* Text item styles */
+.scrolling-text-item {
+  padding: 0 30px; /* Space between repeated text */
+}
+
+/* Keyframes for scrolling left */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Keyframes for scrolling right */
+@keyframes scroll-right {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Pause the animation when a user hovers over it */
+.scrolling-text-container:hover .scrolling-text-inner {
+  animation-play-state: paused;
+}
+
   .sideLinks {
     color: #d2d2d2;
     font-family: 'Bungee', sans-serif;

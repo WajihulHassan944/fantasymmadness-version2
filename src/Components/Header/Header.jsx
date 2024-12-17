@@ -8,6 +8,7 @@ import "./Header.css";
 import { toast } from 'react-toastify';
 
 const Header = () => {
+  
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { isAuthenticatedAffiliate } = useSelector((state) => state.affiliateAuth);
   const submenuRef = useRef(null);
@@ -77,12 +78,34 @@ const Header = () => {
     localStorage.removeItem('sponsorData');
   
   };
-
+  const shouldRenderScrollingText =
+  !isAuthenticated && !isAuthenticatedAffiliate && !location.pathname.includes('/administration') && !authStatusSponsor;
+ 
+  const headerStyles = shouldRenderScrollingText
+  ? {  top: '52px' }
+  : { top: '0' };
   return (
     <>
+ { shouldRenderScrollingText && (
+      <div className="scrolling-text-container">
+        <div className="scrolling-text-inner" style={{ '--marquee-speed': '20s', '--direction': 'scroll-left' }} role="marquee">
+          <div className="scrolling-text">
+            <div className="scrolling-text-item">
+              🤑&nbsp; Signup, Get $20 instantly &nbsp;🚀&nbsp; Join now, get 20 tokens free &nbsp;🎁&nbsp; Pay Now and Get Prizes &nbsp;🤑
+            </div>
+            <div className="scrolling-text-item">
+              🤑&nbsp; Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Pay Now and Get Prizes&nbsp; 🤑
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+ }
+
+
 
       {isAuthenticatedAffiliate ? (
-        <div className='header user-header' >
+        <div className='header user-header' style={headerStyles} >
           <div className='logoimg'>
             <NavLink to="/">
               <img src={Logo} alt="Logo" />
@@ -152,7 +175,7 @@ const Header = () => {
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
         </div>
       ) : authStatusSponsor ? (
-        <div className='header public-header'>
+        <div className='header public-header' style={headerStyles}>
           <div className='logoimg'>
             <NavLink to="/">
               <img src={Logo} alt="Logo" />
@@ -196,7 +219,7 @@ const Header = () => {
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
         </div>
       ) : (
-        <div className='header public-header'>
+        <div className='header public-header' style={headerStyles}>
           <div className='logoimg'>
             <NavLink to="/">
               <img src={Logo} alt="Logo" />
