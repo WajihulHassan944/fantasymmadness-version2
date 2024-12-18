@@ -109,14 +109,17 @@ const Header = () => {
       </div>
     )
  }
-
-{ isVisible && shouldRenderScrollingText && (
- <div className="container-promotion-absolute-center">
-  <div className="close-button" onClick={handleClose}>✖</div>
-  <NavLink to="/CreateAccount"> <button className="signup-button">Sign up Now</button> </NavLink>
-  <p>Don’t miss your shot at the ultimate prize – a massive <strong>$10,000</strong> is up for grabs! Join the action now and claim your chance to win big!
-  </p>
-</div> )}
+ {isVisible && shouldRenderScrollingText && (
+  <div className="container-promotion-absolute-center">
+    <div className="close-button" onClick={handleClose}>✖</div>
+    <NavLink to="/CreateAccount" onClick={handleClose}>
+      <button className="signup-button">Sign up Now</button>
+    </NavLink>
+    <p>
+      Don’t miss your shot at the ultimate prize – a massive <strong>$10,000</strong> is up for grabs! Join the action now and claim your chance to win big!
+    </p>
+  </div>
+)}
 
 
 
