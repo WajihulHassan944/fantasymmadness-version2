@@ -417,3 +417,110 @@
   padding:8px 20px;
   border-radius: 8px;
 }
+
+
+.container-promotion-absolute-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 550px;
+  padding: 20px;
+  height:300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 1000; /* Ensure it's above other content */
+  background-image: url(../../Assets/promotional-banner-home.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+}
+
+.container-promotion-absolute-center .close-button {
+  position: absolute;
+  top: 5px;
+  right: -70px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+.container-promotion-absolute-center .close-button:hover {
+  color: #ff4d4d;
+}
+
+.container-promotion-absolute-center .signup-button {
+  display: inline-block;
+  padding: 14px 30px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #0d0d11;
+  border: none;
+  border-radius: 20px;
+  margin-top:140px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container-promotion-absolute-center .signup-button:hover {
+  background-color: #0056b3;
+}
+.container-promotion-absolute-center p{
+  width: 80%;
+  text-align: center;
+  color: #fff;
+  margin-top:15px;
+  font-family: 'UfcSansRegular';
+   
+ 
+}
+@media (max-width: 600px) {
+  .container-promotion-absolute-center {
+    width: 95%;
+    height: auto;
+    max-width: none;
+    border-radius: 6px;
+    font-size: 14px; /* Adjust font size for better readability */
+    background-position: center;
+    background-size: contain;
+  }
+
+  .container-promotion-absolute-center .close-button {
+    top: -10px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .container-promotion-absolute-center .signup-button {
+    padding: 8px 20px;
+    font-size: 14px;
+    margin-top: 90px; /* Adjust spacing */
+  }
+
+  .container-promotion-absolute-center p {
+    width: 100%;
+    margin-top: 5px;
+    font-size: 13px;
+  }
+}

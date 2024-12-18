@@ -18,6 +18,11 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const authStatusSponsor = localStorage.getItem('isSponsorAuthenticated') === 'true';
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
   useEffect(() => {
     if (submenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -91,19 +96,27 @@ const Header = () => {
         <div className="scrolling-text-inner" style={{ '--marquee-speed': '20s', '--direction': 'scroll-left' }} role="marquee">
           <div className="scrolling-text">
             <div className="scrolling-text-item">
-              🤑&nbsp; Signup, Get $20 instantly &nbsp;🚀&nbsp; Join now, get 20 tokens free &nbsp;🎁&nbsp; Play Now and Get Prizes &nbsp;🤑
+              🤑&nbsp; Signup, Get $20 instantly &nbsp;🚀&nbsp; Join now, get 20 tokens free &nbsp;🎁&nbsp; Play Now and Win $10,000 &nbsp;🤑
             </div>
             <div className="scrolling-text-item">
-              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Get Prizes&nbsp; 🤑
+              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
             </div>
             <div className="scrolling-text-item">
-              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Get Prizes&nbsp; 🤑
+              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
             </div>
           </div>
         </div>
       </div>
     )
  }
+
+{ isVisible && shouldRenderScrollingText && (
+ <div className="container-promotion-absolute-center">
+  <div className="close-button" onClick={handleClose}>✖</div>
+  <NavLink to="/CreateAccount"> <button className="signup-button">Sign up Now</button> </NavLink>
+  <p>Don’t miss your shot at the ultimate prize – a massive <strong>$10,000</strong> is up for grabs! Join the action now and claim your chance to win big!
+  </p>
+</div> )}
 
 
 
