@@ -563,7 +563,7 @@
     border-radius: 6px;
     font-size: 14px; /* Adjust font size for better readability */
     background-position: center;
-    background-size: contain;
+    background-size: cover;
   }
 
   .container-promotion-absolute-center .close-button {
