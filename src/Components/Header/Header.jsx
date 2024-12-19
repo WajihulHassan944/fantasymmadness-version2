@@ -6,7 +6,7 @@ import {logoutAffiliate} from "../../Redux/affiliateAuthSlice";
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
 import { toast } from 'react-toastify';
-
+import WinImg from "../../Assets/promotional-banner-home-removebg-preview.png";
 const Header = () => {
   
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -112,6 +112,7 @@ const Header = () => {
  {isVisible && shouldRenderScrollingText && (
   <div className="container-promotion-absolute-center">
     <div className="close-button" onClick={handleClose}>✖</div>
+  <div className='imgpromotionContainer'> <img src={WinImg} alt="winimg" /></div>
     <NavLink to="/CreateAccount" onClick={handleClose}>
       <button className="signup-button">Sign up Now</button>
     </NavLink>

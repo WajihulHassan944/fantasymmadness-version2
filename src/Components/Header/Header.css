@@ -418,7 +418,41 @@
   border-radius: 8px;
 }
 
+/* Keyframes for animations */
+@keyframes fadeInPopup {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}@keyframes bounceIn {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
 
+
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Popup animation */
 .container-promotion-absolute-center {
   position: fixed;
   top: 50%;
@@ -427,12 +461,9 @@
   width: 100%;
   max-width: 550px;
   padding: 20px;
-  height:300px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  text-align: center;
   z-index: 1000; /* Ensure it's above other content */
-  background-image: url(../../Assets/promotional-banner-home.jpg);
+  background-image: url(../../Assets/imagesss.jpeg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -440,9 +471,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.85);
+  animation: fadeInPopup 0.8s ease-out;
 }
 
+/* Close button styles */
 .container-promotion-absolute-center .close-button {
   position: absolute;
   top: 5px;
@@ -462,38 +495,67 @@
   background: #ccc;
   border-radius: 50%;
 }
-
 .container-promotion-absolute-center .close-button:hover {
   color: #ff4d4d;
 }
 
+/* Image animation */
+.imgpromotionContainer {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  overflow-y: hidden;
+  padding-top:50px;
+}
+.container-promotion-absolute-center img {
+  max-height: 200px;
+  margin-top: 60px;
+  animation: bounceIn 1.2s ease-out infinite;
+  animation-delay: 0s; /* No initial delay */
+  animation-iteration-count: infinite; /* Loop forever */
+  animation-timing-function: ease-out; /* Smooth transition */
+  animation-fill-mode: forwards; /* Keep final state */
+  animation-duration: 2xs;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+/* Signup button animation */
 .container-promotion-absolute-center .signup-button {
-  display: inline-block;
   padding: 14px 30px;
   font-size: 22px;
   font-weight: bold;
-  color: #fff;
-  background-color: #0d0d11;
+  color: #0d0d11;
+  background-color: #fff;
   border: none;
   border-radius: 20px;
-  margin-top:140px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: fadeInText 1s ease-out 0.3s; /* Delayed fade-in */
+  z-index: 9;
 }
-
 .container-promotion-absolute-center .signup-button:hover {
   background-color: #0056b3;
+  transform: scale(1.1);
 }
-.container-promotion-absolute-center p{
+
+
+
+/* Text animation */
+.container-promotion-absolute-center p {
   width: 80%;
   text-align: center;
   color: #fff;
-  margin-top:15px;
+  margin-top: 15px;
   font-family: 'UfcSansRegular';
-   
- 
+  font-size: 20px;
+  animation: fadeInText 1s ease-out 0.5s; /* Delayed fade-in */
+  animation-fill-mode: both; /* Ensures the animation stays at the final state */
 }
-@media (max-width: 600px) {
+
+@media (max-width: 767px) {
   .container-promotion-absolute-center {
     width: 95%;
     height: auto;
@@ -512,15 +574,28 @@
     font-size: 14px;
   }
 
+  .imgpromotionContainer{
+    width: 100%;
+    height:120px;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container-promotion-absolute-center img{
+    max-height: 200px;
+    overflow: hidden;
+    margin-top:70px;
+  }
   .container-promotion-absolute-center .signup-button {
     padding: 8px 20px;
     font-size: 14px;
-    margin-top: 90px; /* Adjust spacing */
+   
   }
 
   .container-promotion-absolute-center p {
     width: 100%;
-    margin-top: 5px;
+    margin-top: 15px;
     font-size: 13px;
   }
 }

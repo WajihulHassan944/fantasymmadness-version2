@@ -48,6 +48,7 @@
     align-items: center;
     width: 100%;
 background-color: black;  
+padding-top:30px;
 
   
 }
@@ -240,7 +241,7 @@ flex-basis: 90%;
 .affiliateLink {
   color: #16B4CA;
   position: absolute;
-  top: 140px;
+  top: 180px;
   right: 30px;
   font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
   font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
@@ -276,7 +277,7 @@ flex-basis: 90%;
 .affiliateLinkppp{
   color: #fff;
   position: absolute;
-  top: 110px;
+  top: 150px;
   right: 110px;
   font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
   font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
@@ -295,7 +296,7 @@ flex-basis: 90%;
 @media (max-width: 767px){
   
 .affiliateLinkppp{
-  top: 80px;
+  top: 150px;
   right: 130px;
   font-size: 14px;
  }
@@ -303,7 +304,7 @@ flex-basis: 90%;
   flex-basis: 100%;
   padding: 20px;
   padding-left:20px;
-  margin-top: 120px;
+  margin-top: 200px;
 margin-bottom: 100px;   
 }
 
@@ -313,7 +314,7 @@ margin-bottom: 100px;
 }
 
 .affiliateLink {
-  top: 100px;
+  top: 180px;
   right: 30px;
   font-size: 22px;
   }
