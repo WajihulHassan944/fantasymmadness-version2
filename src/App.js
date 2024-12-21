@@ -88,6 +88,7 @@ import AdminNews from './Components/Admin/AdminNews';
 import NewsFeed from './Components/Footer/NewsFeed';
 import AdminSponsor from './Components/Admin/AdminSponsor';
 import SponsorDashboard from './Components/Home/SponsorDashboard';
+import HomeLeaderboard from './Components/GlobalLeaderboard/HomeLeaderboard';
 
 function AppContent() {
   const location = useLocation();
@@ -124,6 +125,9 @@ useEffect(() => {
         header.style.backgroundColor = '#000000';
       }
       
+    else if (location.pathname === '/global-leaderboard') {
+      header.style.backgroundColor = '#000000';
+    }
     else if (location.pathname === '/fights-news') {
       header.style.backgroundColor = '#dc1606';
     }else {
@@ -155,6 +159,9 @@ useEffect(() => {
       header.style.backgroundColor = '#dc1606';
     }
     else if (location.pathname === '/sponsor-dashboard') {
+      header.style.backgroundColor = '#000000';
+    }
+    else if (location.pathname === '/global-leaderboard') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -287,6 +294,7 @@ useEffect(() => {
         <Route path="/about" element={<About />} />
         <Route path="/thank-you" element={<ThankyouPurchaseTokens />} />
         <Route path="/fights-rewards" element={<Rewards />} />
+        <Route path="/global-leaderboard" element={<HomeLeaderboard />} />
 
         
         <Route path="/login" element={<Login />} />

@@ -9,11 +9,12 @@ const GlobalLeaderboard = () => {
   const [refreshed, setRefreshed] = useState(false);
   const matches = useSelector((state) => state.matches.data);
   const { leaderboard, playerCount } = useLeaderboardData(matches);
+  console.log(leaderboard);
   const navigate = useNavigate();
   const userLoggedIn = useSelector((state) => state.user); // Access user details from Redux store
 
   useEffect(() => {
-    // Function to toggle refreshed state
+    
     const refreshLeaderboard = () => {
       setRefreshed(true);
       setTimeout(() => setRefreshed(false), 3000); // Set refreshed to true for 3 seconds

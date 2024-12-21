@@ -512,9 +512,22 @@ const navigate = useNavigate();
                     <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
                   </div>
                   <div className="transformed-div-two">
-                    <div className='transformed-div-two-partOne'>
-                      <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
-                    </div>
+                  <div className="transformed-div-two-partOne">
+  <h1>
+    {new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { 
+      hour: "2-digit", 
+      minute: "2-digit", 
+      hour12: true 
+    })}{" "} 
+    est &nbsp;&nbsp;
+    {match.matchTokens === null && (
+      <span className="blink-text" style={{ color: "green" }}>
+        Free
+      </span>
+    )}
+  </h1>
+</div>
+
                     <div className='transformed-div-two-partTwo'>
                       <p style={{ marginLeft: '-15px' }}>
                         {hasStarted

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 const useLeaderboardData = (matches) => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [playerCount, setPlayerCount] = useState(0);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -11,53 +10,70 @@ const useLeaderboardData = (matches) => {
           fetch('https://fantasymmadness-game-server-three.vercel.app/users'),
           fetch('https://fantasymmadness-game-server-three.vercel.app/api/scores')
         ]);
-
+  
         const usersData = await usersResponse.json();
         const scoresData = await scoresResponse.json();
-
+  
         const matchResponse = await fetch('https://fantasymmadness-game-server-three.vercel.app/match');
         const matchesData = await matchResponse.json();
-
+  
         const userPoints = {};
         const uniquePlayers = new Set();
-
+  
+        const playerMatches = {};  // To store a single matchId
+  
         scoresData.forEach(score => {
           const match = matchesData.find(m => m._id === score.matchId);
           if (!match) return;
-
+  
           const fighterOneStats = match.matchCategory === 'boxing' ? match.BoxingMatch.fighterOneStats : match.MMAMatch.fighterOneStats;
           const fighterTwoStats = match.matchCategory === 'boxing' ? match.BoxingMatch.fighterTwoStats : match.MMAMatch.fighterTwoStats;
-
+  
           uniquePlayers.add(score.playerId);
-
-          if (!userPoints[score.playerId]) {
-            userPoints[score.playerId] = 0;
+  
+          // Calculate points for the match
+          const pointsEarned = calculatePoints(score.predictions, fighterOneStats, fighterTwoStats, match.matchCategory);
+          if (pointsEarned > 0) {
+            if (!userPoints[score.playerId]) {
+              userPoints[score.playerId] = 0;
+              playerMatches[score.playerId] = null; // Initialize as null
+            }
+  
+            userPoints[score.playerId] += pointsEarned;
+  
+            // Store only the matchId of the match where points were earned
+            playerMatches[score.playerId] = match._id;
           }
-
-          userPoints[score.playerId] += calculatePoints(score.predictions, fighterOneStats, fighterTwoStats, match.matchCategory);
         });
-
-        setPlayerCount(uniquePlayers.size);
-
-        const leaderboardItems = Object.keys(userPoints).map(playerId => {
-          const user = usersData.find(u => u._id === playerId);
-          return {
-            ...user,
-            totalPoints: userPoints[playerId]
-          };
-        });
-
+  
+        // Filter users who have earned at least one point
+        const leaderboardItems = Object.keys(userPoints)
+          .filter(playerId => userPoints[playerId] > 0)  // Only include users with points > 0
+          .map(playerId => {
+            const user = usersData.find(u => u._id === playerId);
+            return {
+              ...user,
+              totalPoints: userPoints[playerId],
+              matchId: playerMatches[playerId] // Only one matchId per player
+            };
+          });
+  
         leaderboardItems.sort((a, b) => b.totalPoints - a.totalPoints);
-
+  
         setLeaderboard(leaderboardItems);
+  
+        // Set the player count to the number of players who earned points
+        setPlayerCount(leaderboardItems.length);
+  
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, [matches]);
-
+  
+  
   const calculatePoints = (userPrediction, fighterOneStats, fighterTwoStats, matchCategory) => {
     let totalScore = 0;
 
@@ -155,6 +171,7 @@ const useLeaderboardData = (matches) => {
   };
 
   return { leaderboard, playerCount };
+  
 };
 
 export default useLeaderboardData;

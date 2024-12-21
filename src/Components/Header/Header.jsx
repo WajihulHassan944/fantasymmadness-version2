@@ -267,7 +267,8 @@ const Header = () => {
           <NavLink to="/past-fights-records" className="submenuLink">Past Fights Videos</NavLink>
           <NavLink to="/fights-rewards" className="submenuLink">Fight Rewards</NavLink>
           <NavLink to="/fights-news" className="submenuLink">Fight News</NavLink>
-        </div>
+          <NavLink to="/global-leaderboard" className="submenuLink">Fighters Leaderboard</NavLink>
+          </div>
       </NavLink>
  
            
