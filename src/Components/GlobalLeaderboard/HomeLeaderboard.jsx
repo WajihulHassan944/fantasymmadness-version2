@@ -82,7 +82,17 @@ const dispatch = useDispatch();
 
   return (
     <div className='homeLeaderboard'>
-    
+    <div className='background-video'>
+  <iframe
+    src="https://www.youtube.com/embed/0WDWDKATpTA?autoplay=1&loop=1&playlist=0WDWDKATpTA&controls=0&modestbranding=1&rel=0&fs=0&mute=1"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="autoplay; encrypted-media; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+       <div className='globalss'>
         <h1 className='home-leaderboard-heading'>Global Leader Board</h1>
         <h2 className='home-leaderboard-subheading'>Players - <span>{playerCount}</span></h2>
 
@@ -93,6 +103,7 @@ const dispatch = useDispatch();
 
         <div className='homeLeaderboardItemsWrap'>
           {renderLeaderboardItems()}
+        </div>
         </div>
       </div>
   );
