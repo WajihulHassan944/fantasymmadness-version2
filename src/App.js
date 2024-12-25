@@ -89,6 +89,7 @@ import NewsFeed from './Components/Footer/NewsFeed';
 import AdminSponsor from './Components/Admin/AdminSponsor';
 import SponsorDashboard from './Components/Home/SponsorDashboard';
 import HomeLeaderboard from './Components/GlobalLeaderboard/HomeLeaderboard';
+import Testimonials from './Components/Home/Testimonials';
 
 function AppContent() {
   const location = useLocation();
@@ -128,6 +129,9 @@ useEffect(() => {
     else if (location.pathname === '/global-leaderboard') {
       header.style.backgroundColor = '#000000';
     }
+    else if (location.pathname === '/testimonials') {
+      header.style.backgroundColor = '#000000';
+    }
     else if (location.pathname === '/fights-news') {
       header.style.backgroundColor = '#dc1606';
     }else {
@@ -162,6 +166,10 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }
     else if (location.pathname === '/global-leaderboard') {
+      header.style.backgroundColor = '#000000';
+    }
+    
+    else if (location.pathname === '/testimonials') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -295,6 +303,7 @@ useEffect(() => {
         <Route path="/thank-you" element={<ThankyouPurchaseTokens />} />
         <Route path="/fights-rewards" element={<Rewards />} />
         <Route path="/global-leaderboard" element={<HomeLeaderboard />} />
+        <Route path="/testimonials" element={<Testimonials />} />
 
         
         <Route path="/login" element={<Login />} />

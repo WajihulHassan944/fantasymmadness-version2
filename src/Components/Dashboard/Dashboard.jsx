@@ -13,7 +13,9 @@ import { toast } from 'react-toastify';
 const Dashboard = () => {
 
   const dispatch = useDispatch();
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const [description, setDescription] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [selectedMatchId, setSelectedMatchId] = useState(null); // State to store the selected match ID
@@ -256,6 +258,51 @@ const navigate = useNavigate();
       }
     } catch (error) {
       console.error('Error:', error);
+    }
+  };
+  
+  const openPopup = () => setIsOpen(true);
+  const closePopup = () => {
+    setIsOpen(false);
+    setDescription("");
+  };
+  const handleSubmit = async () => {
+    if (!description.trim()) {
+      alert("Description cannot be empty!");
+      return;
+    }
+  
+    setIsSubmitting(true);
+  
+    const testimonialData = {
+      author: user.firstName,
+      description,
+    };
+  
+    const userId = user._id;
+  
+    try {
+      const response = await fetch("https://fantasymmadness-game-server-three.vercel.app/testimonials", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, ...testimonialData }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit testimonial");
+      }
+  
+      alert("Testimonial submitted successfully!");
+      closePopup();
+      window.location.reload();
+    } catch (error) {
+      console.error(error.message);
+      alert("Failed to submit testimonial.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
   
@@ -598,6 +645,29 @@ const navigate = useNavigate();
 
 
       </div>
+
+      {isOpen && (
+        <div className="popup-overlay-dashboard">
+          <div className="popup-dashboard">
+            <h2>Submit Your Testimonial</h2>
+            <textarea
+              placeholder="Enter your testimonial..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+            <div className="popup-actions-dashboard">
+              <button onClick={handleSubmit} disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </button>
+              <button onClick={closePopup}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+  {(!user.hasSubmittedTestimonial &&     <div className='shareYourExperience' onClick={openPopup}>
+        <i className="fa fa-star"></i>
+        <h1>Share your experience</h1>
+      </div> )}
     </div>
   )
 }
