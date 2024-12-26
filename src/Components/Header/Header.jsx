@@ -5,6 +5,7 @@ import { logout } from '../../Redux/authSlice';
 import {logoutAffiliate} from "../../Redux/affiliateAuthSlice";
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import WinImg from "../../Assets/promotional-banner-home-removebg-preview.png";
 const Header = () => {
@@ -19,10 +20,20 @@ const Header = () => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const authStatusSponsor = localStorage.getItem('isSponsorAuthenticated') === 'true';
   const [isVisible, setIsVisible] = useState(true);
+  const [showPromotion, setShowPromotion] = useState(false);
 
   const handleClose = () => {
     setIsVisible(false);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPromotion(true);
+    }, 5000); // 5 seconds delay
+
+    return () => clearTimeout(timer); // Cleanup the timer when the component unmounts
+  }, []);
+  
   useEffect(() => {
     if (submenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -92,24 +103,26 @@ const Header = () => {
   return (
     <>
  { shouldRenderScrollingText && (
+  <Link to="/CreateAccount" style={{ textDecoration: 'none' }}>
       <div className="scrolling-text-container">
         <div className="scrolling-text-inner" style={{ '--marquee-speed': '20s', '--direction': 'scroll-left' }} role="marquee">
           <div className="scrolling-text">
             <div className="scrolling-text-item">
-              🤑&nbsp; Signup, Get $20 instantly &nbsp;🚀&nbsp; Join now, get 20 tokens free &nbsp;🎁&nbsp; Play Now and Win $10,000 &nbsp;🤑
+              🤑&nbsp; Signup, Get $20 instantly &nbsp;🚀&nbsp; Sign up now, get 20 tokens free &nbsp;🎁&nbsp; Play Now and Win $10,000 &nbsp;🤑
             </div>
             <div className="scrolling-text-item">
-              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
+              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Sign up now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
             </div>
             <div className="scrolling-text-item">
-              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Join now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
+              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Sign up now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
             </div>
           </div>
         </div>
       </div>
+      </Link>
     )
  }
- {isVisible && shouldRenderScrollingText && (
+ {showPromotion && isVisible && shouldRenderScrollingText && (
   <div className="container-promotion-absolute-center">
     <div className="close-button" onClick={handleClose}>✖</div>
   <div className='imgpromotionContainer'> <img src={WinImg} alt="winimg" /></div>
@@ -279,7 +292,7 @@ const Header = () => {
           </div>
 
           <div className='sideLinkswrap'>
-            <NavLink to="/CreateAccount" className='joinNowBtn'>Join Now</NavLink>
+            <NavLink to="/CreateAccount" className='joinNowBtn'>Sign Up Now</NavLink>
           </div>
 
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>

@@ -71,7 +71,7 @@ const dispatch = useDispatch();
   
           <div className='home-leaderboard-buttons'>
             <Link to="/login" ><button>Login</button></Link>
-            <Link to="/CreateAccount" ><button>Join Now!</button></Link>
+            <Link to="/CreateAccount" ><button>Sign Up Now!</button></Link>
             
           </div>
         </div>
