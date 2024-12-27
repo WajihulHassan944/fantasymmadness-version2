@@ -29,7 +29,7 @@ const Header = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowPromotion(true);
-    }, 5000); // 5 seconds delay
+    }, 1000); // 5 seconds delay
 
     return () => clearTimeout(timer); // Cleanup the timer when the component unmounts
   }, []);
