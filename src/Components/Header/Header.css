@@ -109,11 +109,6 @@
 .scrolling-text-item {
   padding: 0 5px; /* Space between repeated text */
 }
-.scrolling-text-item span{
-  padding:7px 10px;
-  background:#6a8c35;
-  color:#fff;
-}
 /* Keyframes for scrolling left */
 @keyframes scroll-left {
   0% {
@@ -526,23 +521,40 @@
   z-index: 1;
   margin-bottom: 20px;
 }
-/* Signup button animation */
+/* Signup button with WhatsApp gradient background */
 .container-promotion-absolute-center .signup-button {
   padding: 14px 30px;
   font-size: 22px;
   font-weight: bold;
-  color: #0d0d11;
-  background-color: #fff;
+  color: #fff; /* White text */
+  background: linear-gradient(45deg, #128C7E, #075E54, #25D366, #34B7F1); /* WhatsApp gradient */
+  background-size: 300% 300%; /* Ensures smooth gradient transitions */
   border: none;
-  border-radius: 20px;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  animation: fadeInText 1s ease-out 0.3s; /* Delayed fade-in */
+  transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  animation: gradientAnimation 5s ease infinite; /* Gradient animation */
   z-index: 9;
 }
+
+/* Hover effect */
 .container-promotion-absolute-center .signup-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+}
+
+/* Focus effect for accessibility */
+.container-promotion-absolute-center .signup-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(18, 140, 126, 0.4); /* Focus ring matching teal green */
+}
+
+/* Gradient animation */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 
