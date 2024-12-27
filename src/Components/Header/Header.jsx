@@ -108,13 +108,13 @@ const Header = () => {
         <div className="scrolling-text-inner" style={{ '--marquee-speed': '20s', '--direction': 'scroll-left' }} role="marquee">
           <div className="scrolling-text">
             <div className="scrolling-text-item">
-              🤑&nbsp; Signup, Get $20 instantly &nbsp;🚀&nbsp; Sign up now, get 20 tokens free &nbsp;🎁&nbsp; Play Now and Win $10,000 &nbsp;🤑
+              🤑&nbsp; <span>Signup</span> Get $20 instantly &nbsp;🚀&nbsp; Sign up now, get 20 tokens free &nbsp;🎁&nbsp; Play Now and Win $10,000 &nbsp;🤑
             </div>
             <div className="scrolling-text-item">
-              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Sign up now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
+            <span>Signup</span> Get $20 instantly&nbsp; 🚀&nbsp; Sign up now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
             </div>
             <div className="scrolling-text-item">
-              Signup, Get $20 instantly&nbsp; 🚀&nbsp; Sign up now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
+            <span>Signup</span> Get $20 instantly&nbsp; 🚀&nbsp; Sign up now, get 20 tokens free&nbsp; 🎁&nbsp; Play Now and Win $10,000&nbsp; 🤑
             </div>
           </div>
         </div>

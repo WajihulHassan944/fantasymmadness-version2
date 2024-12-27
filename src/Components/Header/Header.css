@@ -109,7 +109,11 @@
 .scrolling-text-item {
   padding: 0 5px; /* Space between repeated text */
 }
-
+.scrolling-text-item span{
+  padding:7px 10px;
+  background:#6a8c35;
+  color:#fff;
+}
 /* Keyframes for scrolling left */
 @keyframes scroll-left {
   0% {
