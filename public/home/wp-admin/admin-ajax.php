@@ -1,1 +1,0 @@
-{"success":false,"data":{"message":"We couldn't find any clubs near your location. Please use the form to find a location or <a href='locations\/'>view map<\/a>."}}
