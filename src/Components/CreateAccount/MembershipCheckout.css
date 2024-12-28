@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+
+
+@font-face {
+  font-family: 'UfcSansRegular';
+  src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UFCSans';
+  src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+  font-weight: normal;
+  font-style: oblique;
+}
+
+
+.membership-chackout-wrapper{
+    min-height: 100vh;
+    display: flex;
+
+    background-image: url('../../Assets/RING1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    
+}
+
+.cardCoupon{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size:22px;  
+text-align: left;
+color: #eee;
+margin-top:15px;   
+}
+.membership-chackout-wrapper .mermbership-cards{
+    width:100%;
+    display: flex;
+    
+    align-items: flex-start;
+    margin-top:70px;
+    gap:50px;
+    padding-bottom: 100px;
+}
+
+
+.billingInformation{
+    width:300px;
+    
+}
+.billingInformation h2{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+ font-size:24px;
+ margin-bottom: 10px;  
+text-align: left;
+color: #eee;
+}
+.billingInformation .input-group{
+    display: flex;
+    flex-direction: column;
+    
+    text-align: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.billingInformation .input-group label{
+    margin-bottom: 3px;
+    color:#eee;
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */
+    
+}
+.billingInformation .input-group input{
+    border-radius:10px;
+    height: 35px;
+}
+.input-group-state input{
+    width:30%;
+}
+
+.input-group-zipcode input{
+    width:45%;
+}
+.billingInformation .subcardbtnone{
+    padding: 5px 10px;
+    background-color: black;
+    color: #fff;
+    border:none;
+    outline: none;
+    margin-left: 55%;
+}
+.submitcardbtn {
+    position: relative; /* Ensures the button is positioned in relation to its container */
+    padding: 10px 20px;
+    background-color: black;
+    color: #fff;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 999999; /* High z-index to ensure it's above other elements */
+}
+
+
+.input-group h3{
+    margin-bottom: 3px;
+    color:#eee;
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
+    font-style:normal; /* Condensed style */   
+}
+.input-group-select .select-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.input-group-select .select-container select{
+    border:none;
+    outline: none;
+    height: 35px;
+    padding: 0 5px;
+    border:2px solid #ccc;
+    border-radius:10px;
+    flex-basis:45%;
+}
+.checkboxCreditCard{
+    width:20px;
+    height: 20px;
+    margin-top:-5px;
+}
+.cardaimg{
+    width:380px;
+    top:0;
+    left:0;
+    margin-top:-30px;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 767px){
+   
+.membership-chackout-wrapper .mermbership-cards{
+    align-items: center;
+    gap:50px;
+} 
+
+.cardaimg{
+    width: 300px;
+}
+}

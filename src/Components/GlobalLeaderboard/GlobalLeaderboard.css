@@ -1,0 +1,11 @@
+.global-leaderboard .homeThird{
+    background-color: transparent;
+    margin-top:-90px;
+}
+
+@media (max-width: 767px){
+    .global-leaderboard .homeThird{
+        margin-top:-30px;
+    }
+      
+}

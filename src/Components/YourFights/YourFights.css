@@ -1,0 +1,241 @@
+.yourFightsWrapper .fightwalletWrap{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.totalPoints{
+    margin-left: 100px;
+}
+.totalPoints h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}  
+
+/* Popup styling */
+.popupUsersJoined {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .popupUsersJoined .popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .popupUsersJoined .popup-content h3 {
+    margin-bottom: 20px;
+  }
+  
+  /* Table styling */
+  .popupUsersJoined table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .popupUsersJoined table th,
+  .popupUsersJoined table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .popupUsersJoined  table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .popupUsersJoined table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .popupUsersJoined  table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .popupUsersJoined  button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .popupUsersJoined button:hover {
+    background-color: #0056b3;
+  }
+  .fixedShadowHead{
+    position: fixed;
+    top:190px;
+    z-index: 999;
+    width: auto !important;
+    padding:10px 30px !important;
+
+  }
+.fixedContainer{
+  padding-top: 260px;
+  position: relative;
+}
+
+.fixedContainer::before {
+  content: ""; /* Creates a pseudo-element */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 260px; /* Matches the padding at the top */
+  background:black; /* Transparent background for the fixed padding area */
+  pointer-events: none; /* Allows content to scroll without interfering */
+  z-index: 99;
+  width:100%;
+}
+
+@media (max-width: 767px){
+  
+.fixedContainer::before {
+display: none;}
+
+  .fixedContainer{
+    padding-top: 0;
+  }
+  .fixedContainer:nth-of-type(1){
+    padding-top: 160px;
+  }
+  .fixedShadowHead{
+    position: relative;
+    top:auto;
+    z-index: auto;
+    width: auto ;
+    padding:aut0 !important;
+  }
+
+    .yourFightsWrapper .fightwalletWrap{
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap:20px;
+       }
+    .totalPoints{
+        margin-left: 0;
+        flex-basis: 50%;
+    }
+    .totalPoints h1{
+        font-size: 16px;
+    }
+    .yourFightsWrapper .fightWallet h1{
+        font-size: 17px !important;
+    }
+    
+    .yourFightsWrapper .fightWallet h2{
+        font-size: 17px !important;
+    }
+     
+    .myspecialpromotion{
+        margin-top:-30px;
+    }
+
+    .fightItemOne .transformed-div h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+    font-size: 9px !important;
+    padding-right: 10px;
+   }
+   .yourFightsWrapper  .transformed-div {
+    height: 50px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+.yourFightsWrapper  .transformed-div-two {
+    height: 50px;
+    width: 170px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+.yourFightsWrapper  .fightItem .fightersImages {
+    top: 2px;
+    left: -7px;
+    gap: 2px;
+}
+
+
+
+
+
+
+
+
+
+  .popupUsersJoined .popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto;
+  }
+  
+  /* Table styling */
+  .popupUsersJoined table {
+    width: 100%;
+    border-collapse: collapse;
+  
+    margin-bottom: 20px;
+    
+  }
+  
+  .popupUsersJoined table th,
+  .popupUsersJoined table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .popupUsersJoined  table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .popupUsersJoined table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .popupUsersJoined  table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .popupUsersJoined  button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .popupUsersJoined button:hover {
+    background-color: #0056b3;
+  }
+  
+}
+
+
+
+
+
+
+

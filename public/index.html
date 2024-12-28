@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta Tags for Character Set, Viewport, and Theme Color -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Description & Keywords for SEO -->
+    <meta name="description" content="Fantasy Mmadness: Your hub for Boxing, MMA, Kickboxing, and Bare-knuckle fighting." />
+    <meta name="keywords" content="boxing, mma, kickboxing, bare-knuckle, fight sports, fantasy mma" />
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Fantasy Mmadness - Ultimate Fight Sports Platform" />
+    <meta property="og:description" content="Join Fantasy Mmadness for the latest in Boxing, MMA, Kickboxing, and Bare-knuckle action. Compete in fantasy leagues and enjoy exclusive content!" />
+    <meta property="og:image" content="https://www.fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png" />
+    <meta property="og:url" content="https://www.fantasymmadness.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Fantasy Mmadness" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fantasy Mmadness - Ultimate Fight Sports Platform" />
+    <meta name="twitter:description" content="Join Fantasy Mmadness for the latest in Boxing, MMA, Kickboxing, and Bare-knuckle action. Compete in fantasy leagues and enjoy exclusive content!" />
+    <meta name="twitter:image" content="https://www.fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png" />
+    
+    <!-- Favicon and Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- Title for the Page -->
+    <title>Fantasy Mmadness</title>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Additional Meta Tags for SEO and Accessibility -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Fantasy Mmadness Team" />
+    <meta name="generator" content="ReactJS" />
+    
+    <!-- Additional Structured Data (JSON-LD) for Rich Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Fantasy Mmadness",
+        "url": "https://www.fantasymmadness.com/",
+        "description": "Fantasy Mmadness: The ultimate platform for MMA, Boxing, Kickboxing, and Bare-knuckle sports.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Fantasy Mmadness"
+        }
+      }
+    </script>
+
+    <!-- Preloading Critical Resources -->
+    <link rel="preload" as="image" href="https://www.fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png" />
+    <link rel="preload" as="script" href="main.bundle.js" />
+
+    <!-- Preconnect for Faster Resource Loading -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://www.fantasymmadness.com" />
+
+    
+<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16787825610"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16787825610'); </script>
+
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <!-- Audio Event Listener Script -->
+    <script>
+      const playAudioOnClick = (event) => {
+        const targetClasses = ['anchorlinksAdmin', 'anchorlinks', 'sideLinksAdmin', 'sideLinks'];
+        if (targetClasses.some(cls => event.target.classList.contains(cls))) {
+          const audio = new Audio('soundone.mp3');
+          audio.currentTime = 0; // Reset the audio to start
+          audio.play().catch(error => console.error('Audio play failed:', error));
+        }
+      };
+      document.addEventListener('click', playAudioOnClick);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+.fightLeaderboard .fightDetails{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(../../Assets/banner.png);
+
+}
+.fightLeaderboard .fightwalletWrap{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.totalPoints{
+    margin-left: 100px;
+}
+.fightLeaderboard .totalPoints h1{
+    font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 25px;
+    
+}
+.fightLeaderboard .homeThird{
+    margin-top: 10px;
+}
+.fightLeaderboard .fightersImagesInFightDetails{
+    margin-top:10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:50px;
+}
+
+
+
+
+
+
+
+
+
+.videoWrapper{
+    width: 100%;
+    max-width: 800px;
+    
+    height: 430px;
+}
+.videoWrapper iframe{
+    width: 100%;
+    height: 100%;
+}
+
+
+.control-relative{
+    position: relative;
+    
+}
+
+.control-relative .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px; /* Set this to your desired container height */
+    width: 25px; /* Set this to your desired container width */
+    position: absolute;
+    top:50%;
+    right: -100px;
+    transform: translateY(-50%);
+  }
+  
+  .spin-circle {
+    width: 25px; /* Diameter of the spinner */
+    height: 25px;
+    border: 4px solid rgba(0, 0, 0, 0); /* Outer border with a light color */
+    border-top: 4px solid #3498db; /* Top border with the spinning color */
+    border-radius: 50%; /* Make it circular */
+    animation: spin 1s linear infinite; /* Continuous spinning animation */
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+@media (max-width: 767px){
+    .fightLeaderboard .fightwalletWrap{
+        flex-direction: column-reverse;
+        gap:20px;
+    }
+    
+    .totalPoints{
+        text-align: center !important;
+    }
+     .fightTypeInFightDetails{
+        font-size: 22px !important;
+        text-align: center !important;
+    }
+     .totalPoints h1{
+        font-size: 22px !important;
+        text-align: center !important;
+    }
+   
+.control-relative .spinner {
+    right: -20px;
+  }
+   
+
+}
