@@ -356,7 +356,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
           </div>
           <h1>VS</h1>
           <div className='imgWrapFights'>
-            <img src={match.fighterBImage} alt="Fighter B" />
+            <img src={match.fighterBImage} alt="Fighter B" onClick={()=> alert(match.fighterBImage)} />
           </div>
         </div>
 
@@ -374,12 +374,12 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
           <p style={{ color: "#38b90c" }}>{match.pot} </p>
         </div>
 
-        <div className='beiginningTimeFight'>
+  {/*       <div className='beiginningTimeFight'>
         <h1 style={{ fontSize: '21.5px' }}>{match.matchDate.split('T')[0]} - </h1>
         <p style={{ color: "#38b90c" }}>
   {new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
 </p>
- </div>
+ </div>  */}
 
         <div className='fightDetailsPot'>
           <h1 style={{ fontSize: '21.5px' }}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>

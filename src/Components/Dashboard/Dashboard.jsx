@@ -73,7 +73,7 @@ const navigate = useNavigate();
   
         // Filter matches based on matchType
         const filteredMatches = matches.map((match) => {
-          const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+          const matchDateTime = new Date(`${match?.matchDate?.split('T')[0]}T${match.matchTime}:00`);
   
           if (match.matchType === "LIVE") {
             // No blur for LIVE matches within the valid date and time range
@@ -81,10 +81,11 @@ const navigate = useNavigate();
               return { ...match, blurred: false };
             }
           } else if (match.matchType === "SHADOW") {
+          
             const affiliate = affiliates.find(a => a._id === match.affiliateId);
             if (affiliate) {
               const usersJoinedIds = affiliate.usersJoined.map(user => user.userId);
-  
+          
               // Filter users who meet token requirement
               const eligibleUsers = users.filter(user => usersJoinedIds.includes(user._id) && parseInt(user.tokens, 10) >= match.matchTokens);
               
@@ -92,22 +93,21 @@ const navigate = useNavigate();
               const predictionUsers = match.userPredictions
                 .filter(prediction => prediction.predictionStatus === "submitted")
                 .map(prediction => prediction.userId);
-  
+          
               // Include users who have submitted predictions
               const allEligibleUsers = [...new Set([...eligibleUsers.map(user => user._id), ...predictionUsers])];
               console.log(allEligibleUsers.length);
-  
+          
               // Calculate the required number of users
               const requiredUsers = match.pot / match.matchTokens;
-  
+          
               // If eligible users (including those who submitted predictions) are fewer than required, blur the match
               const isBlurred = allEligibleUsers.length < requiredUsers;
-  
-              if (matchDateTime >= today.setHours(0, 0, 0, 0) && currentTime < matchDateTime) {
-                return { ...match, blurred: isBlurred };
-              }
+          
+              return { ...match, blurred: isBlurred };
             }
           }
+          
           return null;
         }).filter(Boolean); // Filter out null values where no condition is met
   
@@ -202,7 +202,7 @@ const navigate = useNavigate();
 
   function getRemainingTime(matchDate, matchTime) {
     const [year, month, day] = matchDate.split('T')[0].split('-');
-    const [hours, minutes] = matchTime.split(':');
+    const [hours, minutes] = matchTime?.split(':');
   
     const matchDateTime = new Date(`${year}-${month}-${day}T${hours}:${minutes}`);
     
@@ -366,7 +366,7 @@ const navigate = useNavigate();
                       <div className='transformed-div-two-partTwo'>
                         {/* Convert match date to US timezone */}
                         <p>
-                        {match.matchDate.split('T')[0]}
+                        {match.matchDate?.split('T')[0]}
                         </p>
                         <h1>{match.matchType}</h1>
                       </div>
@@ -398,13 +398,19 @@ const navigate = useNavigate();
   <h1 className='fightsheadingtwo'>YOUR COMPLETED FIGHTS</h1>
 
   {completedMatches.length > 0 ? (
-    completedMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
-      completedMatches.map((match) => {
-        if (!removedMatches.includes(match._id)) { // Check if match._id is NOT in removedMatches
-          const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+  completedMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
+    completedMatches.map((match) => {
+      if (!removedMatches.includes(match._id)) { // Check if match._id is NOT in removedMatches
+        let diffHrs, diffMins, hasStarted;
 
-          return (
-            <div className="fightItem" key={match._id} onClick={() => handleCompletedMatchClick(match._id)} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
+        if (match.matchType === "LIVE") {
+          const remainingTime = getRemainingTime(match.matchDate, match.matchTime);
+          diffHrs = remainingTime.diffHrs;
+          diffMins = remainingTime.diffMins;
+          hasStarted = remainingTime.hasStarted;
+        }
+
+        return (           <div className="fightItem" key={match._id} onClick={() => handleCompletedMatchClick(match._id)} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
               {hoveredMatch === match._id && (
                 <button className="removeButton" onClick={(e) => {
                   e.stopPropagation(); // Prevent the parent div's onClick from firing
@@ -429,13 +435,24 @@ const navigate = useNavigate();
                   <div className='transformed-div-two-partOne'>
                     <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
                   </div>
-                  <div className='transformed-div-two-partTwo'>
-                    <p style={{marginLeft:'-15px'}}>
-                      {hasStarted
-                        ? "Fight has started"
-                        : `Begins in ${diffHrs} H ${diffMins} M`}
-                    </p>
-                  </div>
+                  {match.matchType === "LIVE" ? (
+  <div className='transformed-div-two-partTwo'>
+    <p style={{ marginLeft: '-15px' }}>
+      {hasStarted
+        ? "Fight has started"
+        : `Begins in ${diffHrs} H ${diffMins} M`}
+    </p>
+  </div>
+) : (
+  <div className='transformed-div-two-partTwo'>
+    <p style={{ marginLeft: '-15px' }}>
+      Shadow Fight
+    </p>
+  </div>
+
+)}
+
+
                 </div>
               </div>
               <div className='fightItemTwo'>
@@ -501,31 +518,38 @@ const navigate = useNavigate();
 
 <div className='pendingFights fightscontainer'>
   <h1 className='fightsheadingthree'>Your Pending Fights</h1>
-
   {upcomingMatches.length > 0 ? (
-    // Filter matches where user predictions are not submitted and not removed
-    upcomingMatches
-      .filter(match =>
-        match.userPredictions &&
-        !match.userPredictions.some(prediction =>
-          prediction.userId === user._id && prediction.predictionStatus === 'submitted'
-        ) &&
-        !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
-      )
-      .length > 0 ? (
-        // Map over filtered matches
-        upcomingMatches
-          .filter(match =>
-            match.userPredictions &&
-            !match.userPredictions.some(prediction =>
-              prediction.userId === user._id && prediction.predictionStatus === 'submitted'
-            ) &&
-            !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
-          )
-          .map((match) => {
-            const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+  // Filter matches where user predictions are not submitted and not removed
+  upcomingMatches
+    .filter(match =>
+      match.userPredictions &&
+      !match.userPredictions.some(prediction =>
+        prediction.userId === user._id && prediction.predictionStatus === 'submitted'
+      ) &&
+      !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
+    )
+    .length > 0 ? (
+      // Map over filtered matches
+      upcomingMatches
+        .filter(match =>
+          match.userPredictions &&
+          !match.userPredictions.some(prediction =>
+            prediction.userId === user._id && prediction.predictionStatus === 'submitted'
+          ) &&
+          !removedMatches.includes(match._id) // Check if match._id is NOT in removedMatches
+        )
+        .map((match) => {
+          let diffHrs, diffMins, hasStarted;
 
-            return (
+          if (match.matchType === "LIVE") {
+            const remainingTime = getRemainingTime(match.matchDate, match.matchTime);
+            diffHrs = remainingTime.diffHrs;
+            diffMins = remainingTime.diffMins;
+            hasStarted = remainingTime.hasStarted;
+          }
+
+          return (
+
               <div
                 className='fightItem'
                 key={match._id}
@@ -574,15 +598,23 @@ const navigate = useNavigate();
     )}
   </h1>
 </div>
+   {match.matchType === "LIVE" ? (
+  <div className='transformed-div-two-partTwo'>
+    <p style={{ marginLeft: '-15px' }}>
+      {hasStarted
+        ? "Fight has started"
+        : `Begins in ${diffHrs} H ${diffMins} M`}
+    </p>
+  </div>
+) : (
+  <div className='transformed-div-two-partTwo'>
+    <p style={{ marginLeft: '-15px' }}>
+      Shadow Fight
+    </p>
+  </div>
 
-                    <div className='transformed-div-two-partTwo'>
-                      <p style={{ marginLeft: '-15px' }}>
-                        {hasStarted
-                          ? "Fight has started"
-                          : `Begins in ${diffHrs} H ${diffMins} M`}
-                      </p>
-                    </div>
-                  </div>
+)}
+ </div>
                 </div>
                 <div className='fightItemTwo'>
                   <div className="transformed-three">

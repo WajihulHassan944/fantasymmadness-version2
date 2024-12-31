@@ -161,10 +161,9 @@ const DeleteFights = () => {
                     <div className="transformed-div-two">
                       <div className='transformed-div-two-partOne'>
                         <h1>{match.matchCategoryTwo || match.matchCategory}</h1>
-                        <h1>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                       </div>
                       <div className='transformed-div-two-partTwo'>
-                        <p>{match.matchDate.split('T')[0]}</p>
+                        <p>{match.matchDate?.split('T')[0]}</p>
                         <h1>{match.matchType}</h1>
                         <h1>pot ${match.pot}</h1>
                       </div>

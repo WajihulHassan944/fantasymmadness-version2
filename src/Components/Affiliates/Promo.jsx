@@ -175,11 +175,11 @@ const Promo = () => {
           <p style={{ color: "#38b90c" }}>{match.pot}</p>
         </div>
 
-        <div className='beiginningTimeFight'>
+      {/*   <div className='beiginningTimeFight'>
           <h1 style={{ fontSize: '21.5px' }}> {match.matchDate.split('T')[0]} - </h1>
           <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
         </div>
-       
+       */}
         {match.matchPromotionalVideoUrl && (
   <div className="videoContainer">
     <video className="responsiveVideo" controls>

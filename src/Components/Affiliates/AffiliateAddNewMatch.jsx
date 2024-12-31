@@ -82,6 +82,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
       }
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -113,8 +114,11 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     // Append image URLs directly if available
     data.append('fighterAImageUrl', matchDetails.fighterAImage);
     data.append('fighterBImageUrl', matchDetails.fighterBImage);
-    data.append('promotionBackground', matchDetails.promotionBackground);
-    data.append('promotionBackgroundDeleteUrl', matchDetails.promotionBackgroundDeleteUrl);
+    data.append('fighterAImageDeleteUrlFromReq', matchDetails.fighterAImageDeleteUrl);
+    data.append('fighterBImageDeleteUrlFromReq', matchDetails.fighterBImageDeleteUrl);
+   
+    data.append('promotionBackgroundUrl', matchDetails.promotionBackground);
+    data.append('promotionBackgroundDeleteUrlFromReq', matchDetails.promotionBackgroundDeleteUrl);
   
    
     // Append other match details
@@ -128,7 +132,6 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('matchVideoUrl', matchDetails.matchVideoUrl);
     data.append('matchType', 'SHADOW');
     data.append('maxRounds', matchDetails.maxRounds);
-  
     // Append BoxingMatch and MMAMatch stats
     data.append('BoxingMatch', JSON.stringify(matchDetails.BoxingMatch));
     data.append('MMAMatch', JSON.stringify(matchDetails.MMAMatch));
@@ -136,6 +139,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     setButtonText('Saving, please wait...');
   
     try {
+      console.log(data);
       const response = await fetch(url, {
         method: 'POST',
         body: data,
@@ -195,7 +199,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
             </div>
           </div>
 
-          <div className='input-wrap-one'>
+   {/*        <div className='input-wrap-one'>
             <div className='input-group'>
               <label>Match Date <span>*</span></label>
               <input type='date' name='matchDate' value={formData.matchDate} onChange={handleChange} />
@@ -205,7 +209,7 @@ const AffiliateAddNewMatch = ({ matchId }) => {
               <input type='time' name='matchTime' value={formData.matchTime} onChange={handleChange} />
             </div>
           </div>
-
+*/}
           <button type="submit" className='btn-grad' style={{ width: '50%' }} onClick={handleSubmit}>{buttonText}</button>
         </form>
       </div>

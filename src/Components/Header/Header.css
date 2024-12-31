@@ -615,3 +615,9 @@
     font-size: 13px;
   }
 }
+
+
+.mobileMenu .mobileAnchorLinks{
+  font-family: 'UFCSans';
+  margin:5px 0;
+}

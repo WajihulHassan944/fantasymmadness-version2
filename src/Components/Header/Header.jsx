@@ -353,14 +353,19 @@ const Header = () => {
           ) : (
             <>
             
-          <a href="/home/" className='anchorlinks'>Home</a>
-             <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
-              <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
-              <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
-              <NavLink to="/CreateAccount" className='anchorlinks' onClick={closeMenu}>Create account</NavLink>
-              <NavLink to="/past-fights" className='anchorlinks' onClick={closeMenu}>Past Fights</NavLink>
-              <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
-              <NavLink to="/login" className='anchorlinks' onClick={closeMenu}>
+          <a href="/home/" className='anchorlinks mobileAnchorLinks'>Home</a>
+             <NavLink to="/playforfree" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Play for free</NavLink>
+              <NavLink to="/community-forum" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Community</NavLink>
+              <NavLink to="/upcomingfights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Upcoming Fights</NavLink>
+              <NavLink to="/CreateAccount" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Create account</NavLink>
+              <NavLink to="/past-fights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Past Fights</NavLink>
+          <NavLink to="/our-fighters" className="anchorlinks mobileAnchorLinks">Our Fighters</NavLink>
+          <NavLink to="/past-fights-records" className="anchorlinks mobileAnchorLinks">Past Fights Videos</NavLink>
+          <NavLink to="/fights-rewards" className="anchorlinks mobileAnchorLinks">Fight Rewards</NavLink>
+          <NavLink to="/fights-news" className="anchorlinks mobileAnchorLinks">Fight News</NavLink>
+      
+              <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink mobileAnchorLinks' : 'mobileAnchorLinks anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
+              <NavLink to="/login" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>
                 <i className="fa fa-sign-in" aria-hidden="true"></i> Login
               </NavLink>
             </>
