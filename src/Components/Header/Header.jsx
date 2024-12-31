@@ -359,10 +359,10 @@ const Header = () => {
               <NavLink to="/upcomingfights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Upcoming Fights</NavLink>
               <NavLink to="/CreateAccount" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Create account</NavLink>
               <NavLink to="/past-fights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Past Fights</NavLink>
-          <NavLink to="/our-fighters" className="anchorlinks mobileAnchorLinks">Our Fighters</NavLink>
-          <NavLink to="/past-fights-records" className="anchorlinks mobileAnchorLinks">Past Fights Videos</NavLink>
-          <NavLink to="/fights-rewards" className="anchorlinks mobileAnchorLinks">Fight Rewards</NavLink>
-          <NavLink to="/fights-news" className="anchorlinks mobileAnchorLinks">Fight News</NavLink>
+          <NavLink to="/our-fighters" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Our Fighters</NavLink>
+          <NavLink to="/past-fights-records" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Past Fights Videos</NavLink>
+          <NavLink to="/fights-rewards" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight Rewards</NavLink>
+          <NavLink to="/fights-news" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight News</NavLink>
       
               <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink mobileAnchorLinks' : 'mobileAnchorLinks anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
               <NavLink to="/login" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>
