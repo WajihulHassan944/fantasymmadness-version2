@@ -130,9 +130,13 @@ const PromoTwo = ({matchId , affiliateId}) => {
           </div>
   
           <div className='beiginningTimeFight'>
-            <h1 style={{ fontSize: '21.5px' }}> {match.matchDate.split('T')[0]} - </h1>
-            <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
-          </div>
+            <h1 style={{ fontSize: '21.5px' }}> {match.matchDate?.split('T')[0]} - </h1>
+            {match.matchType === "LIVE" && (
+  <p style={{ color: "#38b90c" }}>
+    {new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+  </p>
+)}
+  </div>
   
           <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
             <button className='btn-grad promobtn' onClick={handleJoinLeague}>Join my league</button>

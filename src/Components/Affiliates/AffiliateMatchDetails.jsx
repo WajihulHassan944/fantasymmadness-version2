@@ -123,11 +123,11 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
                 ctx.fillText(`fantasymmadness.com`, canvas.width / 2, 40);
 
                 // Draw date and time
-                ctx.fillStyle = '#FF4500';
-                ctx.fillText(
-                    `${match.matchDate.split('T')[0]} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`,
-                    canvas.width / 2, 65
-                );
+       //         ctx.fillStyle = '#FF4500';
+       //        ctx.fillText(
+       //          `${match.matchDate.split('T')[0]} ${new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`,
+       //        canvas.width / 2, 65
+       //   );
 
                 // Draw fighters with shadow effect
                 const drawImageWithShadow = (image, x, y, name) => {
