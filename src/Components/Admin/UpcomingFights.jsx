@@ -273,7 +273,7 @@ const UpcomingFights = () => {
                     </div>
                     <div className='transformed-div-two-partTwo'>
                       {filter !== 'Shadow Templates' && (
-                        <p>{match.matchDate.split('T')[0]}</p>
+                        <p>{match.matchDate?.split('T')[0]}</p>
                       )}
                       <h1>{match.matchType}</h1>
                       {filter !== 'Shadow Templates' && (
