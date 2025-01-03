@@ -24,8 +24,7 @@ const Home = () => {
     <>
       <div className="homeFirst">
         <h1 data-aos="zoom-out">The thrill of combat</h1>
-        <h3 data-aos="zoom-out">Exploring the excitement of</h3>
-        <h2 >
+        <h2 data-aos="zoom-out">
           Boxing, MMA,
            Kickboxing<br /> & Bare knuckle
         </h2>
@@ -34,16 +33,13 @@ const Home = () => {
         <h3 style={{display:'none'}}>The thrill of combat Fantasy Mmadness llc</h3>
         <h4 style={{display:'none'}}>Boxing, MMA, Kickboxing<br /> & Bare knuckle Fantasy Mmadness llc</h4>
         <h5 style={{display:'none'}}>The thrill of combat Fantasy Mmadness llc</h5>
-        <h6 style={{display:'none'}}>Boxing, MMA, Fantasy Mmadness llc Kickboxing & Bare knuckle</h6>
+        <h6 style={{display:'none'}}>Boxing, MMA, Fantasy Mmadness llc Kickboxing<br /> & Bare knuckle</h6>
 
-        
-      </div>
-
-      <div className='homeSecondSection'>
-      <h1>Step into the <span>madness</span></h1>
-      <div className="video-embed-wrapper">
+        <div className="video-embed-wrapper">
           <div className="no-hover">
             <iframe
+              width="560"
+              height="315"
               src="https://www.youtube.com/embed/C5wHWEzPrrs?autoplay=1&loop=1&playlist=C5wHWEzPrrs&controls=0&modestbranding=1&rel=0&fs=0"
               title="YouTube video player"
               frameBorder="0"
@@ -52,24 +48,17 @@ const Home = () => {
             ></iframe>
           </div>
         </div>
-        </div>
+        
+      </div>
 
-<div className='homeThirdSection'>
-<div className='subHomeThird'>
-<h1 >Welcome, New Users! Claim Your $20 Tokens Free Today!</h1>
-  <p >Join the action now and kickstart your journey in Fantasy Mmadness with an exclusive bonus!</p>
-  <Link to="/CreateAccount"><button className='thirdHomePageButton'>Sign Up Now</button></Link>
-</div>
-</div>
-
-     {/*  <div className='thirdHomePageSection'>
+      <div className='thirdHomePageSection'>
       <img src={MoneyOne} className='moneyone' alt='money' />
       <img src={MoneyTwo} className='moneytwo' alt='money' />
   <h1 className='thirdHomePageHeading'>🎉 Welcome, NEW USERS! 🎉</h1>
   <h2 className='thirdHomePageSubheading'>Claim Your $20 Tokens Free Today!</h2>
   <p className='thirdHomePageDescription'>Join the action now and kickstart your journey in Fantasy MMA Madness with an exclusive bonus!</p>
   <Link to="/CreateAccount"><button className='thirdHomePageButton'>Sign Up Now 🚀</button></Link>
-</div> */}
+</div>
 
     </>
   );

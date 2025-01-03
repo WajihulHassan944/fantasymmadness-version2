@@ -217,7 +217,7 @@ const Header = () => {
 
           <div className='anchorLinksWrapper'>
           
-          <a href="/home/" className='anchorlinks'>Home</a>
+          <NavLink to="/home" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Home</NavLink>
            
             <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
             <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
@@ -261,8 +261,8 @@ const Header = () => {
 
           <div className='anchorLinksWrapper'>
           
-          <a href="/home/" className='anchorlinks'>Home</a>
-           
+          <NavLink to="/home" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Home</NavLink>
+            
             <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
             <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
             <NavLink 
@@ -340,7 +340,8 @@ const Header = () => {
             </>
           ) : authStatusSponsor ? (
             <>
-            <a href="/home/" className='anchorlinks'>Home</a>
+            <NavLink to="/home" className='anchorlinks' onClick={closeMenu}>Home</NavLink>
+           
              <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
               <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
               <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
@@ -353,7 +354,8 @@ const Header = () => {
           ) : (
             <>
             
-          <a href="/home/" className='anchorlinks mobileAnchorLinks'>Home</a>
+          <NavLink to="/home" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Home</NavLink>
+        
              <NavLink to="/playforfree" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Play for free</NavLink>
               <NavLink to="/community-forum" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Community</NavLink>
               <NavLink to="/upcomingfights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Upcoming Fights</NavLink>

@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+@font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: condensed;
+  }
+  
+
+
+  @font-face {
+    font-family: 'UfcSansRegular';
+    src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'UFCSans';
+    src: url('../../Fonts/UFCSans-RegularOblique.woff2') format('woff2');
+    font-weight: normal;
+    font-style: oblique;
+  }
+  
+@media (max-width: 767px){
+  
+.homeFirstAnother{
+  min-height: 100vh;
+  width:100%;
+  overflow: hidden;
+}
+.homeFirstAnother h1{
+  font-size: 30px;
+  line-height: 60px;
+  margin-top:85px;
+}
+.homeFirstAnother h2{
+  font-size: 35px;
+  line-height: 59px;
+  width: 300px;
+  }
+}
+
+
+
+
+
+
+
+
+.video-embed-wrapperAnother {
+  width: 100%;
+  max-width: 800px; /* Adjust as needed */
+  margin: 0 auto; /* Center the video on the page */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;
+}
+
+.video-embed-wrapperAnother iframe {
+  width: 100%;
+  height: 450px; /* Adjust the height as needed */
+ }
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+.homeFirstAnother{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../../Assets/Homepage/imgone.png");
+  background-size: cover;
+  background-position: center 50px;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  padding-top: 140px;
+  padding-bottom: 70px;
+ 
+}
+.homeFirstAnother h1{
+    text-transform: uppercase;
+    text-align: center;
+    margin-top:85px;
+    font-size: 6rem; /* Adjust size as needed */
+    font-weight: bold;
+    font-family: 'UFCSansCondensedBold';
+    background: linear-gradient(to right, yellow, orange, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.8); 
+  
+}
+.homeFirstAnother h3{
+  color: #fff;
+    font-size: 5.4rem;
+    text-align: center;
+    font-family: 'UFCSansCondensedBold';
+      text-transform: uppercase;
+    -webkit-text-shadow: 6px 5px 6px #201e1f;
+    -moz-text-shadow: 6px 5px 6px #201e1f;
+    -o-text-shadow: 6px 5px 6px #201e1f;
+    text-shadow: 6px 5px 6px #201e1f;
+
+}
+.homeFirstAnother h2{
+    color: #d30c23;
+    font-size: 3rem;
+    text-align: center;
+    font-family: 'Tahoma';
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+    text-transform: uppercase;
+    -webkit-text-shadow: 6px 5px 6px #201e1f;
+    -moz-text-shadow: 6px 5px 6px #201e1f;
+    -o-text-shadow: 6px 5px 6px #201e1f;
+    text-shadow: 6px 5px 6px #201e1f;
+    margin-bottom: 100px;
+}
+
+.homeSecondSectionAnother{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding:80px 0;
+  background-image: url(../../Assets/Homepage/imgtwo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.homeSecondSectionAnother h1{
+ color:#16B4CA;
+    font-size: 65px;
+    text-align: center;
+    font-family: 'UFCSans-condensedmed';
+      text-transform: uppercase;
+ margin-bottom: 40px;
+ letter-spacing: normal;
+}
+
+.homeSecondSectionAnother h1 span{
+  color: #16B4CA;
+}
+.video-embed-wrapperAnother {
+  width: 100%;
+  max-width: 800px; 
+  margin: 0 auto; 
+  text-align: center;
+}
+
+.video-embed-wrapperAnother iframe {
+  width: 100%;
+  height: 450px; 
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 767px){
+  
+  .homeFirstAnother{
+    
+    min-height: 100vh;
+    width:100%;
+    overflow: hidden;
+    padding-top:140px;
+  }
+  .homeFirstAnother h1{
+    font-size: 40px;
+    line-height: 60px;
+    margin-top:85px;
+  }
+  
+  .homeFirstAnother h3{
+    font-size: 30px;
+    line-height: 60px;
+  }
+  .homeFirstAnother h2{
+    font-size: 25px;
+    line-height: 59px;
+    width: 300px;
+    margin-bottom: 140px;
+    }
+  
+
+
+    
+.video-embed-wrapperAnother {
+  margin:0; /* Center the video on the page */
+  }
+
+.video-embed-wrapperAnother iframe {
+  width: 100%;
+  height: 200px; /* Adjust the height as needed */
+}
+
+  }  
+
+
+
+.homeThirdSectionAnother{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 90px;
+  margin-top: 30px;
+}
+.homeThirdSectionAnother .subHomeThird{
+  width: 80%;
+  background-color: #F80110;
+    border-radius: 25px;
+    color: #FFF;
+    padding: 4em 3em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+    text-align: center;
+}
+.homeThirdSectionAnother .subHomeThird h1{
+  color: #fff;
+    font-size: 45px;
+    text-align: center;
+    font-family: 'UFCSans-condensedmed';
+    text-transform: capitalize;
+    letter-spacing: normal;
+}
+
+.homeThirdSectionAnother .subHomeThird p{
+  color: #fff;
+  font-family: 'UfcSansRegular';
+  font-size: 20px;
+}
+.homeThirdSectionAnother button{
+  font-family: "UFCSansCondensedBold";
+  background: transparent;
+  border:2px solid #fff;
+  border-radius: 30px;
+  padding: 10px 20px;
+  color:#fff;
+  cursor: pointer;
+  font-size: 22px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  margin-top: 20px;
+}
+
+
+/* Mobile responsiveness for .homeThirdSectionAnother */
+@media (max-width: 768px) {
+  .homeThirdSectionAnother {
+    margin-bottom: 50px; /* Adjust margin for smaller screens */
+  }
+  .homeThirdSectionAnother .subHomeThird {
+    width: 90%; /* Expand width to fit smaller screens */
+    padding: 2em 1.5em; /* Reduce padding */
+    gap: 15px; /* Adjust gap for smaller layout */
+  }
+  .homeThirdSectionAnother .subHomeThird h1 {
+    font-size: 30px; /* Reduce font size for headings */
+  }
+  .homeThirdSectionAnother .subHomeThird p {
+    font-size: 16px; /* Reduce font size for paragraph */
+  }
+  .homeThirdSectionAnother button {
+    font-size: 18px; /* Adjust button font size */
+    padding: 8px 16px; /* Adjust padding for buttons */
+  }
+}
+
+/* Additional query for extra small devices */
+@media (max-width: 480px) {
+  .homeThirdSectionAnother .subHomeThird {
+    padding: 1.5em 1em; /* Further reduce padding */
+  }
+  .homeThirdSectionAnother .subHomeThird h1 {
+    font-size: 24px; /* Further reduce heading size */
+  }
+  .homeThirdSectionAnother .subHomeThird p {
+    font-size: 14px; /* Further reduce paragraph font size */
+  }
+  .homeThirdSectionAnother button {
+    font-size: 16px; /* Reduce button font size further */
+    padding: 6px 12px; /* Adjust button padding for extra small devices */
+  }
+}
+
+
+.homeFourthAnother{
+  background-image: url(../../Assets/Homepage/imgsix.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.text-fourth{
+  max-width: 500px;
+  margin-right: 12%;
+}
+.text-fourth h1{
+  text-align: center;
+  font-size: 4rem; /* Adjust size as needed */
+  font-weight: bold;
+  font-family: 'UFCSansCondensedBold';
+  background: linear-gradient(to right, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+ }
+ .text-fourth p{
+  color: #fff;
+  font-family: 'UfcSansRegular';
+  font-size: 20px;
+text-align: center;
+line-height: 1.5;
+ }
+
+ @media (max-width: 768px) {
+  .homeFourthAnother {
+    height: 60vh; /* Reduce height for smaller screens */
+    justify-content: center; /* Center-align content for mobile */
+    align-items: center; /* Adjust alignment */
+    padding: 20px; /* Add padding for spacing */
+  }
+
+  .text-fourth {
+    max-width: 90%; /* Adjust max-width to fit smaller screens */
+    margin-right: 5%; /* Reduce right margin */
+    margin-left: 5%; /* Add left margin for balance */
+  }
+
+}
+
+
+
+
+
+
+ 
+.homeFifthAnother{
+  background-image: url(../../Assets/Homepage/imagefive.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.text-fifth{
+  max-width: 500px;
+  margin-left: 12%;
+}
+.text-fifth h1{
+  text-align: center;
+  font-size: 4rem; /* Adjust size as needed */
+  font-weight: bold;
+  font-family: 'UFCSansCondensedBold';
+  background: linear-gradient(to right, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+ }
+ .text-fifth p{
+  color: #fff;
+  font-family: 'UfcSansRegular';
+  font-size: 20px;
+text-align: center;
+line-height: 1.5;
+ }
+
+ @media (max-width: 768px) {
+  .homeFifthAnother {
+    height: 60vh; /* Reduce height for smaller screens */
+    justify-content: center; /* Center-align content for better display on mobile */
+    align-items: flex-start; /* Adjust alignment */
+    padding: 20px; /* Add padding for better spacing */
+  }
+
+  .text-fifth {
+    max-width: 90%; /* Adjust max-width to fit smaller screens */
+    margin-left: 5%; /* Reduce left margin for smaller screens */
+    margin-right: 5%;
+  }
+}

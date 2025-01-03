@@ -90,6 +90,7 @@ import AdminSponsor from './Components/Admin/AdminSponsor';
 import SponsorDashboard from './Components/Home/SponsorDashboard';
 import HomeLeaderboard from './Components/GlobalLeaderboard/HomeLeaderboard';
 import Testimonials from './Components/Home/Testimonials';
+import HomeAnother from './Components/HomeAnother/HomeAnother';
 
 function AppContent() {
   const location = useLocation();
@@ -287,6 +288,8 @@ useEffect(() => {
      
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<HomeAnother />} />
+      
         <Route path="/HowToPlay" element={<HowToPlay />} />
         <Route path="/Sponsors" element={<Sponsors />} />
         <Route path="/CreateAccount" element={<Registration />} />
