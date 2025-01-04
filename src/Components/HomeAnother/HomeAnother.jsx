@@ -53,16 +53,18 @@ const HomeAnother = () => {
 <div className='homeFourthAnother'>
     <div className='text-fourth'>
       <h1 className='homeAnotherHeading'>Our Leagues</h1>
-      <p>Joining a fighter's league offers excitement and the chance for significant earnings and rewards. Research various leagues to find the right fit for your goals and skill level. Best of luck on your boxing journey!
+      <p style={{marginBottom:'30px'}}>Joining a fighter's league offers excitement and the chance for significant earnings and rewards. Research various leagues to find the right fit for your goals and skill level. Best of luck on your boxing journey!
       </p>
+      <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
 
 <div className='homeFifthAnother'>
     <div className='text-fifth'>
       <h1 className='homeAnotherHeading'>Leaderboard</h1>
-      <p>Hello fight enthusiast! Put your combat knowledge to the test and win prizes by joining our prediction game. Predict upcoming fight outcomes, earn points for each correct prediction, and climb the leaderboard for bigger rewards! 
+      <p style={{marginBottom:'30px'}}>Hello fight enthusiast! Put your combat knowledge to the test and win prizes by joining our prediction game. Predict upcoming fight outcomes, earn points for each correct prediction, and climb the leaderboard for bigger rewards! 
       </p>
+      <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
 
@@ -70,21 +72,21 @@ const HomeAnother = () => {
 <div className='homeFourthAnother homeFourthAnotherPatTwo'>
     <div className='text-fourth'>
       <h1 className='homeAnotherHeading'>The Ultimate Showcase: MMA</h1>
-      <p>
+      <p style={{marginBottom:'30px'}}>
       MMA, or mixed martial arts, is a dynamic and ever-evolving combat sport that brings together a variety of disciplines, including boxing, Brazilian Jiu-Jitsu, Muay Thai, and wrestling. It’s a true test of versatility, where fighters must adapt to different styles and techniques to secure victory.
 
        </p>
+       <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
  
 <div className='homeFifthAnother homeFifthAnotherPartTwo'>
     <div className='text-fifth'>
       <h1 className='homeAnotherHeading'>Play For Free</h1>
-      <p>
+      <p style={{marginBottom:'30px'}}>
       Welcome to Fantasy-MMadness, where you can dive into the thrill of fantasy MMA without any cost! Create your dream lineup, make fight predictions, and compete for bragging rights—all for free. Whether you're new or experienced, our free games let you learn the ropes and enjoy the excitement with no financial risk. Ready to get started? Sign up, make your predictions, and see how you rank on the leaderboard!
-
-
-      </p>
+     </p>
+     <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
     
