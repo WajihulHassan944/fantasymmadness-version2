@@ -35,25 +35,8 @@ const HomeAnother = () => {
 
         
       </div>
-
-<div className='homeFourthAnother'>
-    <div className='text-fourth'>
-      <h1>Our Leagues</h1>
-      <p>Joining a fighter's league offers excitement and the chance for significant earnings and rewards. Research various leagues to find the right fit for your goals and skill level. Best of luck on your boxing journey!
-      </p>
-    </div>
-</div>
-
-<div className='homeFifthAnother'>
-    <div className='text-fifth'>
-      <h1>Leaderboard</h1>
-      <p>Hello fight enthusiast! Put your combat knowledge to the test and win prizes by joining our prediction game. Predict upcoming fight outcomes, earn points for each correct prediction, and climb the leaderboard for bigger rewards! 
-      </p>
-    </div>
-</div>
-
       <div className='homeSecondSectionAnother'>
-      <h1>Step into the <span>madness</span></h1>
+      <h1 className='homeAnotherHeading'>Step into the <span>madness</span></h1>
       <div className="video-embed-wrapperAnother">
           <div className="no-hover">
             <iframe
@@ -67,13 +50,44 @@ const HomeAnother = () => {
         </div>
         </div>
 
-        <div className='homeThirdSectionAnother'>
-<div className='subHomeThird'>
-<h1 >Welcome, New Users! Claim Your $20 Tokens Free Today!</h1>
-  <p >Join the action now and kickstart your journey in Fantasy Mmadness with an exclusive bonus!</p>
-  <Link to="/CreateAccount"><button className='thirdHomePageButton'>Sign Up Now</button></Link>
+<div className='homeFourthAnother'>
+    <div className='text-fourth'>
+      <h1 className='homeAnotherHeading'>Our Leagues</h1>
+      <p>Joining a fighter's league offers excitement and the chance for significant earnings and rewards. Research various leagues to find the right fit for your goals and skill level. Best of luck on your boxing journey!
+      </p>
+    </div>
 </div>
+
+<div className='homeFifthAnother'>
+    <div className='text-fifth'>
+      <h1 className='homeAnotherHeading'>Leaderboard</h1>
+      <p>Hello fight enthusiast! Put your combat knowledge to the test and win prizes by joining our prediction game. Predict upcoming fight outcomes, earn points for each correct prediction, and climb the leaderboard for bigger rewards! 
+      </p>
+    </div>
 </div>
+
+
+<div className='homeFourthAnother homeFourthAnotherPatTwo'>
+    <div className='text-fourth'>
+      <h1 className='homeAnotherHeading'>The Ultimate Showcase: MMA</h1>
+      <p>
+      MMA, or mixed martial arts, is a dynamic and ever-evolving combat sport that brings together a variety of disciplines, including boxing, Brazilian Jiu-Jitsu, Muay Thai, and wrestling. It’s a true test of versatility, where fighters must adapt to different styles and techniques to secure victory.
+
+       </p>
+    </div>
+</div>
+ 
+<div className='homeFifthAnother homeFifthAnotherPartTwo'>
+    <div className='text-fifth'>
+      <h1 className='homeAnotherHeading'>Play For Free</h1>
+      <p>
+      Welcome to Fantasy-MMadness, where you can dive into the thrill of fantasy MMA without any cost! Create your dream lineup, make fight predictions, and compete for bragging rights—all for free. Whether you're new or experienced, our free games let you learn the ropes and enjoy the excitement with no financial risk. Ready to get started? Sign up, make your predictions, and see how you rank on the leaderboard!
+
+
+      </p>
+    </div>
+</div>
+    
     </>
   );
 };
