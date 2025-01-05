@@ -110,7 +110,7 @@
 .homeFirstAnother h1{
     text-transform: uppercase;
     text-align: center;
-    margin-top:85px;
+    margin-top:75px;
     font-size: 6rem; /* Adjust size as needed */
     font-weight: bold;
     font-family: 'UFCSansCondensedBold';
@@ -134,19 +134,16 @@
 
 }
 .homeFirstAnother h2{
-    color: #d30c23;
-    font-size: 3rem;
-    text-align: center;
-    font-family: 'Tahoma';
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    line-height: 1.5;
+  color:#F80110;
+  font-size: 4.5rem;
+  text-align: center;
+  font-family: 'UFCSansCondensedBold';
     text-transform: uppercase;
-    -webkit-text-shadow: 6px 5px 6px #201e1f;
-    -moz-text-shadow: 6px 5px 6px #201e1f;
-    -o-text-shadow: 6px 5px 6px #201e1f;
-    text-shadow: 6px 5px 6px #201e1f;
-    margin-bottom: 100px;
+  -webkit-text-shadow: 6px 5px 6px #201e1f;
+  -moz-text-shadow: 6px 5px 6px #201e1f;
+  -o-text-shadow: 6px 5px 6px #201e1f;
+  text-shadow: 6px 5px 6px #201e1f;
+  margin-top:9px;
 }
 
 .homeSecondSectionAnother{
@@ -454,4 +451,58 @@ line-height: 1.5;
 .homeFifthAnotherPartTwo{
   background-image: url(../../Assets/Homepage/imgseven.png);
   min-height: 100vh;
+}
+
+
+
+.contactWrapperHomeAnother{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+  width:100%;
+  justify-content: center;
+  align-items: center;
+}
+.contactWrapperHomeAnother h2{
+  text-align: center;
+  font-size: 4rem; /* Adjust size as needed */
+  font-weight: bold;
+  font-family: 'UFCSansCondensedBold';
+  background: linear-gradient(to right, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+.contactWrapperHomeAnother form{
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+  width:90%;
+  max-width: 500px;
+}
+.contactWrapperHomeAnother form textarea{
+  padding:10px;
+}
+.contactWrapperHomeAnother form button{
+  font-family: 'UFCSansCondensedBold';
+  background: linear-gradient(to right, rgba(255, 235, 59, 0.8), rgba(255, 152, 0, 0.8), rgba(244, 67, 54, 0.8));
+
+  color:#fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 21px;
+  transition: 0.5s ease;
+  border: none;
+  outline: none;
+  width:200px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.contactWrapperHomeAnother form button:hover{
+  background: linear-gradient(to right, rgba(244, 67, 54, 0.9), rgba(255, 152, 0, 0.9), rgba(255, 235, 59, 0.9));
+  color: #000; /* Change text color for contrast */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+ 
 }
