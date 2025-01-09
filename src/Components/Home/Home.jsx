@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet'; // Import react-helmet
 import { useDispatch } from 'react-redux';
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
 import './Home.css';
 import MoneyOne from "../../Assets/money1.png";
 import MoneyTwo from "../../Assets/money2.png";
 import { Link } from 'react-router-dom';
+
 const Home = () => {
   const dispatch = useDispatch();
   const howlerRef = useRef(null);
@@ -22,18 +24,25 @@ const Home = () => {
 
   return (
     <>
+      {/* SEO Metadata */}
+      <Helmet>
+        <title>Fantasy Mmadness - Home</title>
+        <meta name="description" content="Experience the thrill of combat sports like Boxing, MMA, Kickboxing, and Bare Knuckle. Join now and claim your $20 free tokens today!" />
+        <meta property="og:title" content="Fantasy MMA Madness - Thrill of Combat" />
+        <meta property="og:description" content="Experience the thrill of combat sports like Boxing, MMA, Kickboxing, and Bare Knuckle. Join now and claim your $20 free tokens today!" />
+        <meta property="og:image" content="/path-to-image.jpg" />
+        <meta property="og:url" content="https://fantasymmadness.com/" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta name="keywords" content="MMA, Fantasy Sports, Boxing, Kickboxing, Bare Knuckle, Combat Sports, Free Tokens" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Helmet>
+
       <div className="homeFirst">
         <h1 data-aos="zoom-out">The thrill of combat</h1>
         <h2 data-aos="zoom-out">
           Boxing, MMA,
            Kickboxing<br /> & Bare knuckle
         </h2>
-
-
-        <h3 style={{display:'none'}}>The thrill of combat Fantasy Mmadness llc</h3>
-        <h4 style={{display:'none'}}>Boxing, MMA, Kickboxing<br /> & Bare knuckle Fantasy Mmadness llc</h4>
-        <h5 style={{display:'none'}}>The thrill of combat Fantasy Mmadness llc</h5>
-        <h6 style={{display:'none'}}>Boxing, MMA, Fantasy Mmadness llc Kickboxing<br /> & Bare knuckle</h6>
 
         <div className="video-embed-wrapper">
           <div className="no-hover">
@@ -48,18 +57,16 @@ const Home = () => {
             ></iframe>
           </div>
         </div>
-        
       </div>
 
       <div className='thirdHomePageSection'>
-      <img src={MoneyOne} className='moneyone' alt='money' />
-      <img src={MoneyTwo} className='moneytwo' alt='money' />
-  <h1 className='thirdHomePageHeading'>🎉 Welcome, NEW USERS! 🎉</h1>
-  <h2 className='thirdHomePageSubheading'>Claim Your $20 Tokens Free Today!</h2>
-  <p className='thirdHomePageDescription'>Join the action now and kickstart your journey in Fantasy MMA Madness with an exclusive bonus!</p>
-  <Link to="/CreateAccount"><button className='thirdHomePageButton'>Sign Up Now 🚀</button></Link>
-</div>
-
+        <img src={MoneyOne} className='moneyone' alt='money' />
+        <img src={MoneyTwo} className='moneytwo' alt='money' />
+        <h1 className='thirdHomePageHeading'>🎉 Welcome, NEW USERS! 🎉</h1>
+        <h2 className='thirdHomePageSubheading'>Claim Your $20 Tokens Free Today!</h2>
+        <p className='thirdHomePageDescription'>Join the action now and kickstart your journey in Fantasy MMA Madness with an exclusive bonus!</p>
+        <Link to="/CreateAccount"><button className='thirdHomePageButton'>Sign Up Now 🚀</button></Link>
+      </div>
     </>
   );
 };
