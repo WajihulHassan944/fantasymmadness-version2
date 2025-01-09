@@ -30,12 +30,9 @@ const Home = () => {
         <meta name="description" content="Experience the thrill of combat sports like Boxing, MMA, Kickboxing, and Bare Knuckle. Join now and claim your $20 free tokens today!" />
         <meta property="og:title" content="Fantasy MMA Madness - Thrill of Combat" />
         <meta property="og:description" content="Experience the thrill of combat sports like Boxing, MMA, Kickboxing, and Bare Knuckle. Join now and claim your $20 free tokens today!" />
-        <meta property="og:image" content="/path-to-image.jpg" />
         <meta property="og:url" content="https://fantasymmadness.com/" />
-        <meta property="twitter:card" content="summary_large_image" />
         <meta name="keywords" content="MMA, Fantasy Sports, Boxing, Kickboxing, Bare Knuckle, Combat Sports, Free Tokens" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Helmet>
+        </Helmet>
 
       <div className="homeFirst">
         <h1 data-aos="zoom-out">The thrill of combat</h1>
