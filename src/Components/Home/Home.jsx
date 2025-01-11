@@ -31,7 +31,7 @@ const Home = () => {
         <meta property="og:title" content="Fantasy MMA Madness - Thrill of Combat" />
         <meta property="og:description" content="Experience the thrill of combat sports like Boxing, MMA, Kickboxing, and Bare Knuckle. Join now and claim your $20 free tokens today!" />
         <meta property="og:url" content="https://fantasymmadness.com/" />
-        <meta name="keywords" content="MMA, Fantasy Sports, Boxing, Kickboxing, Bare Knuckle, Combat Sports, Free Tokens" />
+        <meta name="keywords" content="MMA, Fantasy Sports, Boxing, Kickboxing, Bare Knuckle, Combat Sports, Free Tokens, Fantasy Mmadness" />
         </Helmet>
 
       <div className="homeFirst">

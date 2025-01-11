@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux store
 import Logoimage from "../../Assets/myimg.jpg";
 import "./FightCosting.css";
+import "./FightCostingUpdated.css";
+
 import MakePredictions from '../MakePredictions/MakePredictions'
 
 
@@ -101,7 +103,7 @@ const FightCosting = ({ matchId }) => {
   }
 
   return (
-    <div className='fightCosting'>
+    <div className='fightCostingUpdated'>
       <div className='member-header'>
         <div className='member-header-image'>
           <img src={user.profileUrl || Logoimage} alt="Logo" />
@@ -117,47 +119,40 @@ const FightCosting = ({ matchId }) => {
         </div>
       </div>
 
-      <div className='fightDetailsContainer'>
-        <div className='fightersImagesInFightDetails'>
-          <div className='imgWrapFights'>
+      <div className='fightDetailsContainerUpdated'>
+      <h1 className='fightHeading'>
+  {match.matchCategoryTwo ? `${match.matchCategoryTwo} Match` : `${match.matchCategory} Match`}
+</h1>
+
+          <h2 className='fightSubHeading'>Max: {match.maxRounds} rounds</h2>
+         <div className='fightersImagesInFightDetails'>
+          <div className='imgWrapFightsUpdated'>
             <img src={match.fighterAImage} alt={match.matchFighterA} />
+            <h1>{match.matchFighterA}</h1>
           </div>
           <h1>VS</h1>
-          <div className='imgWrapFights'>
+          <div className='imgWrapFightsUpdated'>
             <img src={match.fighterBImage} alt={match.matchFighterB} />
+            <h1>{match.matchFighterB}</h1>
           </div>
         </div>
-        <h1 className='fightTypeInFightDetails'>
-          <span>{match.matchFighterA}</span> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <span>{match.matchFighterB}</span>
-        </h1>
+      
 
-        <div className='beiginningTimeFight'>
-          <h1>Will Begin in - </h1>
-          <p style={{ color: "#38b90c" }}>
-            {timeRemaining.hasStarted
-              ? "Fight has started"
-              : `${timeRemaining.diffHrs}:${timeRemaining.diffMins}:${timeRemaining.diffSecs}`}
-          </p>
-        </div>
 
-        <h1 className='fightTypeInFightDetails'>
-          This Fight Costs <span style={{ color: 'violet' }}>{match.matchTokens} tokens</span> to play
-        </h1>
+        <h1 className="fightTypeInFightDetailsUpdated">
 
-        <h1 className='fightTypeInFightDetails'>
-          You have <span style={{ color: '#ffc000' }}>{user.tokens} tokens</span> in your wallet <i className="fa fa-circle" style={{ color: 'yellow', fontSize: '30px' }}></i>
-        </h1>
+  <div className="fight-text">
+    This Fight Costs {match.matchTokens} tokens to play <br />
+    You have {user.tokens} tokens in your wallet
+  </div>
+  
+</h1>
 
-        <div className='fightDetailsPot'>
-          <h1>MAX :</h1>
-          <p style={{ color: "#38b90c" }}>{match.maxRounds} Rounds</p>
-        </div>
 
-        <button className='btn-grad' onClick={() => handleMatchClick()}>Play?</button>
+
+        <button className='fightDetailsBtn' onClick={() => handleMatchClick()}>Play?</button>
       </div>
-      <p className='note'>
-        You must make predictions at least 10 minutes before the fight starts or they will not be used when the fight starts.
-      </p>
+   
     </div>
   );
 };
