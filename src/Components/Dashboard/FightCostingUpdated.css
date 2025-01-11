@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
 
 @font-face {
   font-family: 'UFCSans';
@@ -77,7 +79,7 @@
     justify-content: center;
     align-items: center;
     gap:10px;
-    margin-top: -30px;
+    margin-top: -70px;
     
 }
 
@@ -85,7 +87,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:50px;
+    gap:70px;
 }
 .fightersImagesInFightDetails h1{
     font-family: 'Saira Stencil One', sans-serif;
@@ -93,14 +95,18 @@
     color:#fff;
     margin: 0; 
 }
+
+.fightersImagesInFightDetails .vsImg{
+    width:75px;
+}
 .imgWrapFightsUpdated{
-    width:130px;
-    height:130px;
+    width:190px;
+    height:190px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border:3px solid #fff;
+    border:5px solid #fff;
     position: relative;
 }
 .imgWrapFightsUpdated img{
@@ -111,35 +117,61 @@
 }
 .imgWrapFightsUpdated h1{
     position: absolute;
-    bottom: -12px;
-    font-family: 'Inter Tight';
-    font-size: 14px;
+    bottom: -20px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
     font-weight: 700;
-    width:150px;
+    width: 165px;
     text-align: center;
     background-color: #c20700;
     padding: 10px 0;
     overflow: hidden;
     border-radius: 20px;
-    color:#f7bcb7;
-}.fightTypeInFightDetailsUpdated {
+    color:#ffffff;
+    text-transform: capitalize;
+}
+.fightTypeInFightDetailsUpdated {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
   
-    color: #f7bcb7;
+    color: #ffffff;
     font-family: 'Inter Tight', sans-serif;
     font-size: 18px;
     font-weight: 700;
     padding: 20px 80px;
     line-height: 1.6;
     margin-top: 60px;
-    position: relative; /* Allows positioning of child elements */
-    background-image: url(../../Assets/newFightDetails/img7.png);
-    background-size: cover;
-    background-position: center;
+    position: relative;
+  
+    background-color: #c20700;
+  }
+  
+  .fightTypeInFightDetailsUpdated::before,
+  .fightTypeInFightDetailsUpdated::after {
+    content: '';
+    background-image: url('https://media-public.canva.com/W1V7w/MADf5kW1V7w/3/s2-1.svg');
+    background-size: contain;
     background-repeat: no-repeat;
+    width: 60px; /* Adjust as needed */
+    height: 60px; /* Adjust as needed */
+    position: absolute;
+    top: 50%; /* Vertically center */
+    transform: translateY(-50%); /* Ensure perfect vertical centering */
+  
+  }
+  
+  .fightTypeInFightDetailsUpdated::before {
+    left: -20px; /* Position on the left */
+    transform: translateY(-50%); /* Ensure it's vertically centered */
+    top:60%;
+  }
+  
+  .fightTypeInFightDetailsUpdated::after {
+    right: -20px; /* Position on the right */
+    transform: translateY(-50%) rotate(180deg); /* Center vertically and rotate */
+    top:35%;
   }
   
   
@@ -147,24 +179,38 @@
     border:none;
     outline: none;
     background: transparent;
-    color: #c20700;
     font-family: 'Saira Stencil One', sans-serif;
     font-style: italic;
     font-size: 28px;
     cursor: pointer;
     padding:5px 20px;
-}
-.fightDetailsBtn:hover{
     background-color: #c20700;
     color: #fff;
-   
+   margin-top:20px;
+   box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     border-radius: 20px;
+}
+.fightDetailsBtn:hover{
+    color: #c20700;
+    background-color: transparent;
 }
 
 
 
 @media (max-width: 767px){
 
+    .fightTypeInFightDetailsUpdated::before {
+        left: -20px; /* Position on the left */
+        transform: translateY(-50%); /* Ensure it's vertically centered */
+        top:60%;
+      }
+      
+      .fightTypeInFightDetailsUpdated::after {
+        right: -20px; /* Position on the right */
+        transform: translateY(-50%) rotate(180deg); /* Center vertically and rotate */
+        top:35%;
+      }
+      
     .fightCostingUpdated{
         min-height: 100vh;
         display: flex;
@@ -237,14 +283,13 @@
         padding: 5px 0;
         overflow: hidden;
         border-radius: 20px;
-        color:#f7bcb7;
+      
     }.fightTypeInFightDetailsUpdated {
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
       
-        color: #f7bcb7;
         font-family: 'Inter Tight', sans-serif;
         font-size: 18px;
         font-weight: 700;
@@ -252,22 +297,8 @@
         line-height: 1.6;
         margin-top: 60px;
         position: relative; /* Allows positioning of child elements */
-        background-image: url(../../Assets/newFightDetails/img7.png);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        width:100%;
+        overflow-x: hidden;
       }
       
-      
-    .fightDetailsBtn{
-        border:none;
-        outline: none;
-        background: transparent;
-        color: #c20700;
-        font-family: 'Saira Stencil One', sans-serif;
-        font-style: italic;
-        font-size: 28px;
-        cursor: pointer;
-        padding:5px 20px;
-    }
 }

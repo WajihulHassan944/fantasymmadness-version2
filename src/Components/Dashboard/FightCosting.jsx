@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux store
 import Logoimage from "../../Assets/myimg.jpg";
+import Vs from "../../Assets/newFightDetails/yes.png";
 import "./FightCosting.css";
 import "./FightCostingUpdated.css";
 
@@ -130,7 +131,7 @@ const FightCosting = ({ matchId }) => {
             <img src={match.fighterAImage} alt={match.matchFighterA} />
             <h1>{match.matchFighterA}</h1>
           </div>
-          <h1>VS</h1>
+         <img src={Vs} alt="vs" className='vsImg' />
           <div className='imgWrapFightsUpdated'>
             <img src={match.fighterBImage} alt={match.matchFighterB} />
             <h1>{match.matchFighterB}</h1>
