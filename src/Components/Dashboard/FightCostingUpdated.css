@@ -83,20 +83,13 @@
     
 }
 
-.fightDetailsContainerUpdated .fightersImagesInFightDetails{
+.fightDetailsContainerUpdated .fightersImagesInFightDetailsUpdated{
     display: flex;
     justify-content: center;
     align-items: center;
     gap:70px;
 }
-.fightersImagesInFightDetails h1{
-    font-family: 'Saira Stencil One', sans-serif;
-    font-size: 56px;
-    color:#fff;
-    margin: 0; 
-}
-
-.fightersImagesInFightDetails .vsImg{
+.fightersImagesInFightDetailsUpdated .vsImg{
     width:75px;
 }
 .imgWrapFightsUpdated{
@@ -243,17 +236,11 @@
         
     }
     
-    .fightDetailsContainerUpdated .fightersImagesInFightDetails{
+    .fightDetailsContainerUpdated .fightersImagesInFightDetailsUpdated{
         display: flex;
         justify-content: center;
         align-items: center;
         gap:30px;
-    }
-    .fightersImagesInFightDetails h1{
-        font-family: 'Saira Stencil One', sans-serif;
-        font-size: 56px;
-        color:#fff;
-        margin: 0; 
     }
     .imgWrapFightsUpdated{
         width:100px;

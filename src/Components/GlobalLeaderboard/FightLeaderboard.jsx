@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FighterOne from "../../Assets/fighterOne.png";
 import "./FightLeaderboard.css";
+import "./FightLeaderboardUpdated.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
 import { fetchMatches } from '../../Redux/matchSlice';
@@ -226,19 +227,18 @@ const getYouTubeEmbedUrl = (url) => {
       : calculatePoints(score.predictions, match.MMAMatch.fighterOneStats, match.MMAMatch.fighterTwoStats, 'mma');
   
       return (
-        <div className='leaderboardItem' key={index} data-aos="zoom-in">
-          <div className='leaderboard-item-image'><img src={user.profileUrl || FighterOne} alt={user.firstName} /></div>
+        <div className='leaderboardItemUpdated' key={index}>
+          <div className='leaderboard-item-imageUpdated'><img src={user.profileUrl || FighterOne} alt={user.firstName} /></div>
           <h1>{user.firstName} <span className='toRemove'>{user.lastName}</span></h1>
-          <h1 className='toRemove'>#RW</h1> <h1 className='toRemove'>#KO</h1>
           <h1>Points {totalPoints}</h1>
-          <h1>#{index + 1}</h1>
+          <h1>#{index}</h1>
         </div>
       );
     });
   };
     
   return (
-    <div className='fightLeaderboard'>
+    <div className='fightLeaderboardUpdated'>
       <div className='fightDetails global-leaderboard'>
         <div className='member-header'>
           <div className='member-header-image'>
@@ -248,41 +248,15 @@ const getYouTubeEmbedUrl = (url) => {
           <h3 data-aos="zoom-in"><span className='toRemove'>Current</span> Plan: {user.currentPlan}</h3>
         </div>
 
-        <div className='fightwalletWrap'>
-          <div className='totalPoints'>
-            <h1 className='fightTypeInFightDetails' data-aos="zoom-in">
-              Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span> - 
-              <span style={{color:"#38b90c"}}>{match.matchType} </span> - 
-              <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
+          <div className='totalPointsUpdatedTwo'>
+            <h1>
+              {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} Fight 
             </h1>
-            <h1 data-aos="zoom-in" style={{textAlign:'left'}}>POT: <span style={{color:"#38b90c"}}>{match.pot}</span> &nbsp;Players: <span style={{color:"#38b90c"}}>{match.userPredictions.length}</span></h1>
+            <h2>{match.matchType} &nbsp; Pot: {match.pot} &nbsp;Players: {match.userPredictions.length}</h2>
           </div>
           
-          <div className='fightWallet' data-aos="zoom-in">
-            <h1><i className="fa fa-shopping-bag" aria-hidden="true"></i> Fight Wallet</h1>
-            <h2>Tokens Remaining: <span>{user.tokens}</span></h2>
-          </div>
-        </div>
-
-        <div className='homeThird'>
-          <div className='fightersImagesInFightDetails' data-aos="zoom-in">
-            <div className='flexColumn'>
-              <div className='imgWrapFights' style={{border:'none'}} >
-                <img src={match.fighterAImage} style={{border:'3px solid blue'}} alt={match.matchFighterA} />
-              </div>
-              <h1 className='fightTypeInFightDetails'>{match.matchFighterA}</h1>
-            </div>
-
-            <h1>VS</h1>
-
-            <div className='flexColumn'>
-              <div className='imgWrapFights' style={{border:'none'}}>
-                <img src={match.fighterBImage} style={{border:'3px solid red'}} alt={match.matchFighterB} />
-              </div>
-              <h1 className='fightTypeInFightDetails'>{match.matchFighterB}</h1>
-            </div>
-          </div>     
-          <div className="videoWrapper">
+         
+        <div className="videoWrapperUpdatedTwo">
       <iframe
         src={getYouTubeEmbedUrl(match.matchVideoUrl)}
         title="YouTube video player"
@@ -292,14 +266,32 @@ const getYouTubeEmbedUrl = (url) => {
         
       ></iframe>
     </div>
-          <div className='leaderboardHeading'><h3>Leaderboard</h3></div>
-          <div className='controls control-relative'><h5 className='active'>All time</h5><h5>Last week</h5> <h5>Last month</h5>
-         {refreshed && (
-          <div className='spinner'><div className='spin-circle'></div></div>
-        )};
-          </div>
+
+
+        <div className='fightLeaderboardUpdatedTwoParent'>
+         
+         
+            
+            
+              <div className='imgWrapFightsUpdatedTwo itemImgOne'>
+                <img src={match.fighterAImage} alt={match.matchFighterA} />
+                <h1>{match.matchFighterA}</h1>
+            
+              </div>
+
+              <div className='itemThree'>
+                <h1>VS</h1>
+            
+              </div>
+
+              <div className='imgWrapFightsUpdatedTwo itemImgTwo' >
+                <img src={match.fighterBImage}  alt={match.matchFighterB} />
+                <h1>{match.matchFighterB}</h1>
           
-          <div className='leaderboardItemsWrap'>
+              </div>
+          
+          
+          <div className='leaderboardItemsWrap leaderboardItemsWrapUpdatedTwo'>
             {renderLeaderboardItems()}
           </div>
         </div>

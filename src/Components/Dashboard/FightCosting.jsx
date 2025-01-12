@@ -126,7 +126,7 @@ const FightCosting = ({ matchId }) => {
 </h1>
 
           <h2 className='fightSubHeading'>Max: {match.maxRounds} rounds</h2>
-         <div className='fightersImagesInFightDetails'>
+         <div className='fightersImagesInFightDetailsUpdated'>
           <div className='imgWrapFightsUpdated'>
             <img src={match.fighterAImage} alt={match.matchFighterA} />
             <h1>{match.matchFighterA}</h1>
