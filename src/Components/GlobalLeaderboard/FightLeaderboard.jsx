@@ -292,9 +292,10 @@ const getYouTubeEmbedUrl = (url) => {
           
           
           <div className='leaderboardItemsWrap leaderboardItemsWrapUpdatedTwo'>
+
             {renderLeaderboardItems()}
-          </div>
-        </div>
+          
+          </div></div>
       </div>
     </div>
   );
