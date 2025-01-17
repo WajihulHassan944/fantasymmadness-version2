@@ -6,6 +6,7 @@ import './Home.css';
 import MoneyOne from "../../Assets/money1.png";
 import MoneyTwo from "../../Assets/money2.png";
 import { Link } from 'react-router-dom';
+import GoogleAd from './GoogleAd';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,11 @@ const Home = () => {
         <h2 className='thirdHomePageSubheading'>Claim Your $20 Tokens Free Today!</h2>
         <p className='thirdHomePageDescription'>Join the action now and kickstart your journey in Fantasy MMA Madness with an exclusive bonus!</p>
         <Link to="/CreateAccount"><button className='thirdHomePageButton'>Sign Up Now 🚀</button></Link>
+        <GoogleAd />
       </div>
+
+      <GoogleAd />
+     
     </>
   );
 };
