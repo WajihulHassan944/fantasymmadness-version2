@@ -125,7 +125,7 @@ const EditMatch = ({ matchId, isShadow }) => {
     const localDateTime = new Date(`${formData.matchDate}T${formData.matchTime}:00`);
   
     const matchTimeEST = localDateTime.toTimeString().substring(0, 5); // Time part in HH:MM format
-    const matchDate = formData.matchDate.split('T')[0];
+    const matchDate = formData.matchDate?.split('T')[0];
 
 
     const data = new FormData();

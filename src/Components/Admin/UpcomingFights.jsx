@@ -112,7 +112,7 @@ const UpcomingFights = () => {
       const filterProp = filter === 'Shadow Templates' || filter === 'shadowTemplate' ? 'shadowTemplate' : 'normal';
   
       if (filterProp === 'normal') {
-        const matchDateTime = new Date(`${selectedMatch.matchDate.split('T')[0]}T${selectedMatch.matchTime}:00`);
+        const matchDateTime = new Date(`${selectedMatch.matchDate?.split('T')[0]}T${selectedMatch.matchTime}:00`);
         if (currentTime) {
           return (
             <>

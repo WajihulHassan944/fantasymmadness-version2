@@ -68,7 +68,7 @@ const navigate = useNavigate();
   
         // Filter matches based on matchType
         const filteredMatches = matches.map((match) => {
-          const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+          const matchDateTime = new Date(`${match.matchDate?.split('T')[0]}T${match.matchTime}:00`);
   
           if (match.matchType === "LIVE") {
             // Only check date and time for LIVE matches
@@ -148,8 +148,8 @@ const navigate = useNavigate();
   
 
   const getRemainingTime = (matchDate, matchTime) => {
-    const [year, month, day] = matchDate.split('T')[0].split('-');
-    const [hours, minutes] = matchTime.split(':');
+    const [year, month, day] = matchDate?.split('T')[0].split('-');
+    const [hours, minutes] = matchTime?.split(':');
     const matchDateTime = new Date(`${year}-${month}-${day}T${hours}:${minutes}`);
     const now = new Date();
     const diffMs = matchDateTime - now;
@@ -252,7 +252,11 @@ const navigate = useNavigate();
     completedMatches.filter(match => !removedMatches.includes(match._id)).length > 0 ? (
       completedMatches.map((match) => {
         if (!removedMatches.includes(match._id)) { // Check if match._id is NOT in removedMatches
-          const { diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime);
+          let diffHrs, diffMins, hasStarted;
+
+if (match?.matchDate && match?.matchTime) {
+  ({ diffHrs, diffMins, hasStarted } = getRemainingTime(match.matchDate, match.matchTime));
+}
 
           return (
             <div className="fightItem" key={match._id} onClick={() => handleCompletedMatchClick(match._id)} onMouseEnter={() => setHoveredMatch(match._id)} onMouseLeave={() => setHoveredMatch(null)}>
@@ -278,15 +282,15 @@ const navigate = useNavigate();
                 </div>
                 <div className="transformed-div-two">
                   <div className='transformed-div-two-partOne'>
-                    <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
-                  </div>
-                  <div className='transformed-div-two-partTwo'>
+                {match.matchTime && (    <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} est</h1>
+              )}      </div>
+             {match.matchDate && (     <div className='transformed-div-two-partTwo'>
                     <p style={{marginLeft:'-15px'}}>
                       {hasStarted
                         ? "Fight has started"
                         : `Begins in ${diffHrs} H ${diffMins} M`}
                     </p>
-                  </div>
+                  </div>)}
                 </div>
               </div>
               <div className='fightItemTwo'>

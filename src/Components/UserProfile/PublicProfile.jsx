@@ -62,7 +62,7 @@ const PublicProfile = () => {
     const upcomingMatches = matches.filter((match) => new Date(match.matchDate) > today);
   
     const getRemainingTime = (matchDate, matchTime) => {
-      const [year, month, day] = matchDate.split('T')[0].split('-');
+      const [year, month, day] = matchDate?.split('T')[0].split('-');
       const [hours, minutes] = matchTime.split(':');
       const matchDateTime = new Date(`${year}-${month}-${day}T${hours}:${minutes}`);
       const now = new Date();

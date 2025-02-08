@@ -62,7 +62,7 @@ const Leagues = () => {
 
   const handleImageClick = (affiliateId) => {
     const upcoming = matches
-      .filter((match) => match.affiliateId === affiliateId && match.matchDate.split("T")[0] >= today)
+      .filter((match) => match.affiliateId === affiliateId && match.matchDate?.split("T")[0] >= today)
       .map((match) => match.matchName);
     setUpcomingMatches(upcoming);
     setShowPopup(true);
@@ -77,7 +77,7 @@ const Leagues = () => {
     const hasUpcomingMatch = matches.some(
       (match) => 
         match.affiliateId === affiliate._id && 
-        match.matchDate.split("T")[0] >= today
+        match.matchDate?.split("T")[0] >= today
     );
 
     return (

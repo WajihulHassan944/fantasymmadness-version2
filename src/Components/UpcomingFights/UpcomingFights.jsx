@@ -33,7 +33,7 @@ const UpcomingFights = () => {
   
         // Filter matches based on matchType
         const filteredMatches = matches.map((match) => {
-          const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+          const matchDateTime = new Date(`${match.matchDate?.split('T')[0]}T${match.matchTime}:00`);
   
           if (match.matchType === "LIVE") {
             // Only check date and time for LIVE matches
@@ -116,7 +116,7 @@ const UpcomingFights = () => {
                         <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                       </div>
                       <div className='transformed-div-two-partTwo'>
-                        <p>{match.matchDate.split('T')[0]}</p> {/* Use the formatted date here */}
+                        <p>{match.matchDate?.split('T')[0]}</p> {/* Use the formatted date here */}
                         <h1>{match.matchType}</h1>
                         <h1>pot ${match.pot}</h1>
                       </div>

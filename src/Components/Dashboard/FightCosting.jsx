@@ -26,7 +26,7 @@ const FightCosting = ({ matchId }) => {
     if (!match) return;
 
     const calculateTimeRemaining = () => {
-      const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}`);
+      const matchDateTime = new Date(`${match.matchDate?.split('T')[0]}T${match.matchTime}`);
       const now = new Date();
 
       const diffMs = matchDateTime - now;

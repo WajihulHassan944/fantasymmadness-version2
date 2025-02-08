@@ -213,29 +213,31 @@ const getYouTubeEmbedUrl = (url) => {
   const videoId = url.split('youtu.be/')[1]?.split('?')[0];
   return `https://www.youtube.com/embed/${videoId}`;
 };
-
-  const renderLeaderboardItems = () => {
-  
-    return scores.map((score, index) => {
+const renderLeaderboardItems = () => {
+  return scores
+    .map((score) => {
       const user = users.find(u => u._id === score.playerId);
       if (!user) return null;
 
-      
-  
-      const totalPoints = match.matchCategory === 'boxing'  
-      ? calculatePoints(score.predictions, match.BoxingMatch.fighterOneStats, match.BoxingMatch.fighterTwoStats, 'boxing')
-      : calculatePoints(score.predictions, match.MMAMatch.fighterOneStats, match.MMAMatch.fighterTwoStats, 'mma');
-  
-      return (
-        <div className='leaderboardItemUpdated' key={index}>
-          <div className='leaderboard-item-imageUpdated'><img src={user.profileUrl || FighterOne} alt={user.firstName} /></div>
-          <h1>{user.firstName} <span className='toRemove'>{user.lastName}</span></h1>
-          <h1>Points {totalPoints}</h1>
-          <h1>#{index}</h1>
+      const totalPoints = match.matchCategory === 'boxing'
+        ? calculatePoints(score.predictions, match.BoxingMatch.fighterOneStats, match.BoxingMatch.fighterTwoStats, 'boxing')
+        : calculatePoints(score.predictions, match.MMAMatch.fighterOneStats, match.MMAMatch.fighterTwoStats, 'mma');
+
+      return { user, totalPoints };
+    })
+    .filter(item => item !== null) // Remove null values
+    .sort((a, b) => b.totalPoints - a.totalPoints) // Sort by totalPoints (descending)
+    .map((item, index) => (
+      <div className='leaderboardItemUpdated' key={index}>
+        <div className='leaderboard-item-imageUpdated'>
+          <img src={item.user.profileUrl || FighterOne} alt={item.user.firstName} />
         </div>
-      );
-    });
-  };
+        <h1>{item.user.firstName} <span className='toRemove'>{item.user.lastName}</span></h1>
+        <h1>Points {item.totalPoints}</h1>
+        <h1>#{index + 1}</h1>
+      </div>
+    ));
+};
     
   return (
     <div className='fightLeaderboardUpdated'>

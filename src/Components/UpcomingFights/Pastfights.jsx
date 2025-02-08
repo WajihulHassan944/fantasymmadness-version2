@@ -32,7 +32,7 @@ const Pastfights = () => {
       
             // Filter matches based on matchType and past date
             const filteredMatches = matches.map((match) => {
-              const matchDateTime = new Date(`${match.matchDate.split('T')[0]}T${match.matchTime}:00`);
+              const matchDateTime = new Date(`${match.matchDate?.split('T')[0]}T${match.matchTime}:00`);
       
               if (match.matchType === "LIVE") {
                 // For LIVE matches, check if they occurred in the past
@@ -115,7 +115,7 @@ const Pastfights = () => {
                           <h1>{new Date(`1970-01-01T${match.matchTime}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h1>
                         </div>
                         <div className='transformed-div-two-partTwo'>
-                          <p>{match.matchDate.split('T')[0]}</p> {/* Use the formatted date here */}
+                          <p>{match.matchDate?.split('T')[0]}</p> {/* Use the formatted date here */}
                           <h1>{match.matchType}</h1>
                           <h1>pot ${match.pot}</h1>
                         </div>
