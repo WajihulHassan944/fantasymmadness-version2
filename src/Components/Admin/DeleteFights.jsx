@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-import EditMatch from './EditMatch'; // Import your EditMatch component
+import EditMatch from './EditMatch';
 import './deleteFights.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,8 @@ const DeleteFights = () => {
   const [selectedMatchId, setSelectedMatchId] = useState(null);
   const [selectedAffiliateId, setSelectedAffiliateId] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [popupStep, setPopupStep] = useState('default'); // 'default' or 'confirmReturnTokens'
+  const [returnTokens, setReturnTokens] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,7 +29,6 @@ const DeleteFights = () => {
   }, [matchStatus, dispatch]);
 
   useEffect(() => {
-    // Filter matches based on the search query
     if (searchQuery.trim() === '') {
       setFilteredMatches(matches);
     } else {
@@ -48,16 +49,22 @@ const DeleteFights = () => {
     setSelectedMatchId(id);
     setSelectedAffiliateId(affiliateId);
     setShowPopup(true);
+    setPopupStep('default');
     setPopupMessage('Delete or Edit this match?');
+  };
+
+  const modifyThisPopup = () => {
+    setPopupStep('confirmReturnTokens');
+    setPopupMessage('Return tokens to all users?');
   };
 
   const handleConfirmDelete = async () => {
     if (selectedMatchId) {
       const deleteMatchPromise = new Promise(async (resolve, reject) => {
         try {
-          let url = `https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}`;
+          let url = `https://fantasymmadness-game-server-three.vercel.app/api/matches/${selectedMatchId}?updateWallet=${returnTokens}`;
           if (selectedAffiliateId) {
-            url += `?affiliateId=${selectedAffiliateId}`;
+            url += `&affiliateId=${selectedAffiliateId}`;
           }
 
           const response = await fetch(url, { method: 'DELETE' });
@@ -95,15 +102,15 @@ const DeleteFights = () => {
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setShowPopup(false);
-  };
-
   const handleCancelDelete = () => {
     setShowPopup(false);
     setSelectedMatchId(null);
     setSelectedAffiliateId(null);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setShowPopup(false);
   };
 
   if (isEditing && selectedMatchId) {
@@ -121,84 +128,101 @@ const DeleteFights = () => {
   }
 
   return (
-    <div>
-      <div className='adminWrapper'>
-        <i
-          className="fa fa-arrow-circle-left"
-          aria-hidden="true"
-          onClick={() => navigate(-1)}
-          style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
-        ></i>
-        <div className='homeSecond' style={{ background: 'transparent' }}>
-          <h1 className='second-main-heading'>Delete / Update Fights</h1>
-          <input
-            type="text"
-            placeholder='Search here...'
-            className='searchbar-fights'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <div className="fightswrap">
-            {filteredMatches.length > 0 ? (
-              filteredMatches.map((match) => (
-                <div
-                  className="fightItem"
-                  key={match._id}
-                  onClick={() => handleMatchClick(match._id, match.affiliateId || null)}
-                >
-                  <div className='fightersImages'>
-                    <div className='fighterOne'>
-                      <img src={match.fighterAImage} alt={match.matchFighterA} />
-                    </div>
-                    <div className='fighterTwo'>
-                      <img src={match.fighterBImage} alt={match.matchFighterB} />
-                    </div>
-                  </div>
-                  <div className='fightItemOne'>
-                    <div className="transformed-div">
-                      <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-                    </div>
-                    <div className="transformed-div-two">
-                      <div className='transformed-div-two-partOne'>
-                        <h1>{match.matchCategoryTwo || match.matchCategory}</h1>
+    <>
+      <div>
+        <div className='adminWrapper'>
+          <i
+            className="fa fa-arrow-circle-left"
+            aria-hidden="true"
+            onClick={() => navigate(-1)}
+            style={{ position: 'absolute', top: '38px', left: '18%', cursor: 'pointer', fontSize: '24px', color: '#007bff', zIndex: '99999' }}
+          ></i>
+          <div className='homeSecond' style={{ background: 'transparent' }}>
+            <h1 className='second-main-heading'>Delete / Update Fights</h1>
+            <input
+              type="text"
+              placeholder='Search here...'
+              className='searchbar-fights'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="fightswrap">
+              {filteredMatches.length > 0 ? (
+                filteredMatches.map((match) => (
+                  <div
+                    className="fightItem"
+                    key={match._id}
+                    onClick={() => handleMatchClick(match._id, match.affiliateId || null)}
+                  >
+                    <div className='fightersImages'>
+                      <div className='fighterOne'>
+                        <img src={match.fighterAImage} alt={match.matchFighterA} />
                       </div>
-                      <div className='transformed-div-two-partTwo'>
-                        <p>{match.matchDate?.split('T')[0]}</p>
-                        <h1>{match.matchType}</h1>
-                        <h1>pot ${match.pot}</h1>
+                      <div className='fighterTwo'>
+                        <img src={match.fighterBImage} alt={match.matchFighterB} />
                       </div>
                     </div>
-                  </div>
-                  <div className='fightItemTwo'>
-                    <div className="transformed-div-three">
-                      <p>{match.matchDescription}</p>
+                    <div className='fightItemOne'>
+                      <div className="transformed-div">
+                        <h1>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
+                      </div>
+                      <div className="transformed-div-two">
+                        <div className='transformed-div-two-partOne'>
+                          <h1>{match.matchCategoryTwo || match.matchCategory}</h1>
+                        </div>
+                        <div className='transformed-div-two-partTwo'>
+                          <p>{match.matchDate?.split('T')[0]}</p>
+                          <h1>{match.matchType}</h1>
+                          <h1>pot ${match.pot}</h1>
+                        </div>
+                      </div>
                     </div>
-                    <div className="transformed-div-four">
-                      <h1>Status</h1>
-                      <p>{match.matchStatus}</p>
+                    <div className='fightItemTwo'>
+                      <div className="transformed-div-three">
+                        <p>{match.matchDescription}</p>
+                      </div>
+                      <div className="transformed-div-four">
+                        <h1>Status</h1>
+                        <p>{match.matchStatus}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p className='noMatch'>No matches found</p>
-            )}
-          </div>
-        </div>
-      </div>
-      {showPopup && (
-        <div className="popup">
-          <div className="popup-content">
-            <h2>{popupMessage}</h2>
-            <div className="popup-actions">
-              <button onClick={handleConfirmDelete}>Delete</button>
-              <button onClick={handleEditClick}>Edit</button>
-              <button onClick={handleCancelDelete}>Cancel</button>
+                ))
+              ) : (
+                <p className='noMatch'>No matches found</p>
+              )}
             </div>
           </div>
         </div>
-      )}
-    </div>
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <h2 style={{color:'#fff', fontFamily:'sans-serif', fontSize:'19px'}}>{popupMessage}</h2>
+              {popupStep === 'default' ? (
+                <div className="popup-actions">
+                  <button onClick={modifyThisPopup}>Delete</button>
+                  <button onClick={handleEditClick}>Edit</button>
+                  <button onClick={handleCancelDelete}>Cancel</button>
+                </div>
+              ) : (
+                <div>
+                  <label style={{marginRight:'20px'}}>
+                    <input type="radio" name="returnTokens" value="true" onChange={() => setReturnTokens(true)} /> Yes
+                  </label>
+                  <label>
+                    <input type="radio" name="returnTokens" value="false" onChange={() => setReturnTokens(false)} defaultChecked /> No
+                  </label>
+                  <div className="popup-actions">
+                    <button onClick={handleConfirmDelete}>Submit</button>
+                    <button onClick={handleCancelDelete}>Cancel</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
