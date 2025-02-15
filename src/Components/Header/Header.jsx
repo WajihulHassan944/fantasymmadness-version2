@@ -281,6 +281,7 @@ const Header = () => {
           <NavLink to="/fights-rewards" className="submenuLink">Fight Rewards</NavLink>
           <NavLink to="/fights-news" className="submenuLink">Fight News</NavLink>
           <NavLink to="/global-leaderboard" className="submenuLink">Fighters Leaderboard</NavLink>
+          <NavLink to="/spin-wheel" className="submenuLink">Spin the Wheel</NavLink>
           </div>
       </NavLink>
  
@@ -365,6 +366,7 @@ const Header = () => {
           <NavLink to="/past-fights-records" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Past Fights Videos</NavLink>
           <NavLink to="/fights-rewards" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight Rewards</NavLink>
           <NavLink to="/fights-news" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight News</NavLink>
+          <NavLink to="/spin-wheel" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Spin the Wheel</NavLink>
       
               <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink mobileAnchorLinks' : 'mobileAnchorLinks anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
               <NavLink to="/login" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>

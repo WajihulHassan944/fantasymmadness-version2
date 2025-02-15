@@ -91,6 +91,7 @@ import SponsorDashboard from './Components/Home/SponsorDashboard';
 import HomeLeaderboard from './Components/GlobalLeaderboard/HomeLeaderboard';
 import Testimonials from './Components/Home/Testimonials';
 import HomeAnother from './Components/HomeAnother/HomeAnother';
+import SpinWheel from './Components/Home/SpinWheel';
 
 function AppContent() {
   const location = useLocation();
@@ -135,7 +136,12 @@ useEffect(() => {
     }
     else if (location.pathname === '/fights-news') {
       header.style.backgroundColor = '#dc1606';
-    }else {
+    }
+    else if (location.pathname === '/spin-wheel') {
+      header.style.backgroundColor = '#000000';
+    }
+ 
+    else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
     }
@@ -171,6 +177,9 @@ useEffect(() => {
     }
     
     else if (location.pathname === '/testimonials') {
+      header.style.backgroundColor = '#000000';
+    }
+    else if (location.pathname === '/spin-wheel') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -333,6 +342,7 @@ useEffect(() => {
         <Route path="/transaction" element={<TransactionList />} />
         <Route path="/past-fights-records" element={<PastFightVideos />} />
         <Route path="/sponsor-dashboard" element={<SponsorDashboard />} />
+        <Route path="/spin-wheel" element={<SpinWheel />} />
 
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
