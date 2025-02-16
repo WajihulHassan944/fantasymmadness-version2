@@ -9,6 +9,12 @@ const data = [
   { option: "$10 Won", value: 10, style: { backgroundColor: "#9B30FF", textColor: "#FFF", boxShadow: "inset 0 0 10px #F333FF" } },
   { option: "$7 Won", value: 7, style: { backgroundColor: "#FFD700", textColor: "#000", boxShadow: "inset 0 0 10px #FFBD33" } },
   { option: "$200", value: 200, style: { backgroundColor: "#00CED1", textColor: "#000", boxShadow: "inset 0 0 10px #33FFF3" } },
+
+
+  { option: "$1 Won", value: 1, style: { backgroundColor: "#6c2123", textColor: "#fff", boxShadow: "inset 0 0 10px #FFBD33" } },
+  { option: "$2 Won", value: 2, style: { backgroundColor: "#391b39", textColor: "#fff", boxShadow: "inset 0 0 10px #FFBD33" } },
+  { option: "$4 Won", value: 4, style: { backgroundColor: "#c33f4d", textColor: "#fff", boxShadow: "inset 0 0 10px #FFBD33" } },
+
 ];
 
 const SpinWheel = () => {
@@ -128,7 +134,7 @@ const SpinWheel = () => {
               prizeNumber={prizeNumber}
               data={data}
               radiusLineColor={["#ccc"]}
-              radiusLineWidth={10}
+              radiusLineWidth={7}
               innerBorderColor={["#ccc"]}
               outerBorderColor="#ccc"
               innerBorderWidth={15}
