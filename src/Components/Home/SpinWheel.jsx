@@ -50,14 +50,20 @@ const SpinWheel = () => {
     const newPrizeNumber = Math.floor(Math.random() * data.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
-
-    // 📌 Send Device Info to Backend
-    await fetch("https://fantasymmadness-game-server-three.vercel.app/admin/add-device-spin-wheel", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ deviceId }),
-    });
   };
+
+  const sendDeviceInfoToBackend = async () => {
+    try {
+      await fetch("https://fantasymmadness-game-server-three.vercel.app/admin/add-device-spin-wheel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deviceId }),
+      });
+    } catch (error) {
+      console.error("Error sending device info:", error);
+    }
+  };
+
 
   // ✅ Handle Form Submit
   const handleSubmit = async (e) => {
@@ -134,10 +140,12 @@ const SpinWheel = () => {
                 setWinner(data[prizeNumber].option);
 
                 const prizeValue = parseInt(data[prizeNumber].option.replace(/\D/g, ""), 10) || 0;
-if (prizeValue > 0) {
-  setShowForm(true);
-}
-    
+
+                if (prizeValue > 0) {
+      setShowForm(true);
+    } else {
+      sendDeviceInfoToBackend();
+    }    
               }}
             />
           </div>
