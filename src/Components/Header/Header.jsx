@@ -51,6 +51,7 @@ const Header = () => {
   location.pathname.startsWith('/upcomingfights') ||
   location.pathname.startsWith('/past-fights') ||
   location.pathname.startsWith('/YourFights') ||
+  location.pathname.startsWith('/calendar-of-fights') ||
   location.pathname.startsWith('/our-fighters');
 
 
@@ -274,6 +275,8 @@ const Header = () => {
         <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosedclass'}`}  style={{
       pointerEvents: submenuOpen ? 'auto' : 'none' // Disable pointer events when closed
     }}>
+          <NavLink to="/calendar-of-fights" className="submenuLink">Fight Calendar</NavLink>
+        
           <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
           <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
           <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>

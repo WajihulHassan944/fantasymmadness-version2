@@ -92,6 +92,7 @@ import HomeLeaderboard from './Components/GlobalLeaderboard/HomeLeaderboard';
 import Testimonials from './Components/Home/Testimonials';
 import HomeAnother from './Components/HomeAnother/HomeAnother';
 import SpinWheel from './Components/Home/SpinWheel';
+import CalenderOfMatches from './Components/CalenderOfMatches/CalenderOfMatches';
 
 function AppContent() {
   const location = useLocation();
@@ -141,6 +142,9 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }
  
+    else if (location.pathname === '/calendar-of-fights') {
+      header.style.backgroundColor = '#000000';
+    }
     else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -180,6 +184,9 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }
     else if (location.pathname === '/spin-wheel') {
+      header.style.backgroundColor = '#000000';
+    }
+    else if (location.pathname === '/calendar-of-fights') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -325,7 +332,8 @@ useEffect(() => {
         <Route path="/guides" element={<PrivateRoute element={<Guide />} />} />
         <Route path="/affiliate-guides" element={<AffiliateGuide />} />
         <Route path="/fights-news" element={<NewsFeed />} />
-       
+        <Route path="/calendar-of-fights" element={<CalenderOfMatches />} />
+        
         
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />
         <Route path="/leaderboard" element={<GlobalLeaderboard />} />

@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500&display=swap');
+
+.calendar-of-matches-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(../../Assets/calender/two.jpg);
+    background-position: center 60px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  padding-top: 19.5%;
+}
+.calendar-of-matches-wrapper h1 {
+    font-size: 80px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #d1e5ff;
+    font-family: 'Bungee', sans-serif;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    background: linear-gradient(to right, #bfcde4 10%, #ffffff 50%, #bfcde4 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: skewX(-10deg);
+  }
+
+@media(max-width:768px){
+    .calendar-of-matches-wrapper h1 {
+        font-size: 40px;
+        text-align: center;
+       }
+}
+
+
+
+
+
+
+
+
+.custom-calendar-container {
+    margin-top: 22%;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    box-shadow: 0px 0px 25px rgba(255, 0, 0, 1), 
+                0px 0px 50px rgba(255, 0, 0, 0.5), 
+                0px 0px 75px rgba(255, 0, 0, 0.3);
+    display: inline-block;
+    backdrop-filter: blur(8px);
+    animation: pulseGlow 2s infinite alternate;
+    margin-bottom: 100px;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.8);
+    }
+    100% {
+        box-shadow: 0px 0px 35px rgba(255, 0, 0, 1);
+    }
+}
+
+.custom-calendar {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(10, 10, 10, 0.95);
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    box-shadow: inset 0px 0px 15px rgba(255, 0, 0, 0.5);
+   
+}
+.react-calendar__navigation button {
+color: #fff;
+}
+.custom-calendar .react-calendar__navigation {
+    background: linear-gradient(90deg, #d10000, #ff0000);
+    border-radius: 15px 15px 0 0;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px;
+    box-shadow: 0px 5px 10px rgba(255, 0, 0, 0.6);
+}
+
+.custom-calendar .react-calendar__tile {
+    background: black;
+    color: white;
+    border-radius: 8px;
+    padding: 5px;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.2rem;
+   
+}
+
+.custom-calendar .react-calendar__tile:hover {
+    background: red;
+    color: white;
+    transform: scale(1.2);
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.8);
+}
+
+.custom-calendar .react-calendar__tile--active {
+    background: linear-gradient(90deg, #ff0000, #ff4d4d);
+    color: white;
+    font-weight: bold;
+    border: 3px solid white;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
