@@ -93,6 +93,7 @@ import Testimonials from './Components/Home/Testimonials';
 import HomeAnother from './Components/HomeAnother/HomeAnother';
 import SpinWheel from './Components/Home/SpinWheel';
 import CalenderOfMatches from './Components/CalenderOfMatches/CalenderOfMatches';
+import PastFightsNew from './Components/PastFightsNew/PastFightsNew';
 
 function AppContent() {
   const location = useLocation();
@@ -145,6 +146,10 @@ useEffect(() => {
     else if (location.pathname === '/calendar-of-fights') {
       header.style.backgroundColor = '#000000';
     }
+    else if (location.pathname === '/new-past-fights') {
+      header.style.backgroundColor = '#000000';
+    }
+    
     else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -187,6 +192,9 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }
     else if (location.pathname === '/calendar-of-fights') {
+      header.style.backgroundColor = '#000000';
+    }
+    else if (location.pathname === '/new-past-fights') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -351,6 +359,7 @@ useEffect(() => {
         <Route path="/past-fights-records" element={<PastFightVideos />} />
         <Route path="/sponsor-dashboard" element={<SponsorDashboard />} />
         <Route path="/spin-wheel" element={<SpinWheel />} />
+        <Route path="/new-past-fights" element={<PastFightsNew />} />
 
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
