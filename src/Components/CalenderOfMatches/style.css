@@ -106,7 +106,7 @@
 
 
 /* Active Date */
-.react-calendar__tile--active {
+.react-calendar__tile--active , .highlighted-circle{
     background: #47484b;
     color: white;
     border: 3px solid white;
@@ -145,4 +145,24 @@ abbr[title] {
 .calendar-arrow:hover {
     background: #1d252c;
     transform: scale(1.1);
+}
+
+
+
+@media(max-width:768px){
+ 
+.calendar-of-matches-wrapper {
+  padding:20px;
+    padding-top: 70%;
+}   
+
+
+
+/* Calendar Tiles */
+.react-calendar__tile {
+    font-size: 1rem;
+    height: 55px;
+   
+}
+
 }

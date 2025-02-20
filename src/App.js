@@ -146,7 +146,7 @@ useEffect(() => {
     else if (location.pathname === '/calendar-of-fights') {
       header.style.backgroundColor = '#000000';
     }
-    else if (location.pathname === '/new-past-fights') {
+    else if (location.pathname === '/past-fights') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -194,7 +194,7 @@ useEffect(() => {
     else if (location.pathname === '/calendar-of-fights') {
       header.style.backgroundColor = '#000000';
     }
-    else if (location.pathname === '/new-past-fights') {
+    else if (location.pathname === '/past-fights') {
       header.style.backgroundColor = '#000000';
     }
     
@@ -322,7 +322,6 @@ useEffect(() => {
         <Route path="/community-forum" element={<ThreadList />} />
         <Route path="/threads/:threadId" element={<ThreadDetails />} />
         <Route path="/create-thread" element={<CreateThread />} />
-        <Route path="/past-fights" element={<Pastfights />} />
         <Route path="/our-fighters" element={<Fighters />} />
         <Route path="/faqs" element={<FrequentAskedQuestions />} />
         <Route path="/forum-rules" element={<CommunityRules />} />
@@ -359,7 +358,7 @@ useEffect(() => {
         <Route path="/past-fights-records" element={<PastFightVideos />} />
         <Route path="/sponsor-dashboard" element={<SponsorDashboard />} />
         <Route path="/spin-wheel" element={<SpinWheel />} />
-        <Route path="/new-past-fights" element={<PastFightsNew />} />
+        <Route path="/past-fights" element={<PastFightsNew />} />
 
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
