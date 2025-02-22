@@ -103,7 +103,8 @@ const AddNewMatch = () => {
     data.append('pot', formData.pot);
     data.append('notify', formData.notify);
     data.append('promotionBackground', formData.promotionBackground);
-  
+    data.append('addToShadow', formData.addToShadowTemplates);
+
     setButtonText('Saving, please wait...'); // Update button text
   
     try {

@@ -70,7 +70,6 @@ import SuspendedAccounts from './Components/Admin/SuspendedAccounts';
 import AffiliatePodcasts from './Components/Admin/AffiliatePodcasts';
 import Sponsors from './Components/Home/Sponsors';
 import Guide from './Components/Dashboard/Guide';
-import Pastfights from './Components/UpcomingFights/Pastfights';
 import Fighters from './Components/Home/Fighters';
 import AffiliateGuide from './Components/Affiliates/AffiliateGuide';
 import PlayImg from "./Assets/play.png";
@@ -94,6 +93,7 @@ import HomeAnother from './Components/HomeAnother/HomeAnother';
 import SpinWheel from './Components/Home/SpinWheel';
 import CalenderOfMatches from './Components/CalenderOfMatches/CalenderOfMatches';
 import PastFightsNew from './Components/PastFightsNew/PastFightsNew';
+import PastFightDetails from './Components/PastFightsNew/PastFightDetails';
 
 function AppContent() {
   const location = useLocation();
@@ -359,7 +359,7 @@ useEffect(() => {
         <Route path="/sponsor-dashboard" element={<SponsorDashboard />} />
         <Route path="/spin-wheel" element={<SpinWheel />} />
         <Route path="/past-fights" element={<PastFightsNew />} />
-
+        <Route path="/past-fight/:matchId" element={<PastFightDetails />} />
         <Route path="/AffiliateDashboard" element={<AffiliateDashboard />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
         <Route path="/AffiliateProfile" element={<AffiliateProfile />} />

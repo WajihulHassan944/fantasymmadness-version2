@@ -20,6 +20,7 @@ const EditMatch = ({ matchId, isShadow }) => {
     matchTime: '',
     matchTokens: '',
     pot: '',
+    addToShadowTemplates:false,
     fighterAImage: null,
     fighterBImage: null,
     promotionBackground: null,
@@ -52,6 +53,8 @@ const EditMatch = ({ matchId, isShadow }) => {
               promotionBackground:specificMatch.promotionBackground || null ,
               maxRounds: specificMatch.maxRounds || '',
               matchCategoryTwo: specificMatch.matchCategoryTwo || '',
+              addToShadowTemplates: match.shadowTemplatesAdditionStatus || false,
+    
             });
           }
         } catch (error) {
@@ -78,6 +81,7 @@ const EditMatch = ({ matchId, isShadow }) => {
         fighterBImage: match.fighterBImage || null,
         maxRounds: match.maxRounds || '',
         matchCategoryTwo: match.matchCategoryTwo || '',
+        addToShadowTemplates: match.shadowTemplatesAdditionStatus || false,
       });
       setDisplayCategory(match.matchCategory || 'boxing');
     }
@@ -113,7 +117,6 @@ const EditMatch = ({ matchId, isShadow }) => {
   };
   
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -140,6 +143,8 @@ const EditMatch = ({ matchId, isShadow }) => {
     data.append('fighterBImage', formData.fighterBImage ? formData.fighterBImage : match?.fighterBImage);
     data.append('maxRounds', formData.maxRounds);
     data.append('promotionBackground', formData.promotionBackground);
+    data.append('addToShadow', formData.addToShadowTemplates);
+
   
     if (!isShadow) {
       data.append('matchDate', matchDate);  // Use adjusted date
@@ -160,6 +165,48 @@ const EditMatch = ({ matchId, isShadow }) => {
         const result = await response.json();
         console.log('Response received:', result);
         alert('Match updated successfully!');
+
+        if (formData.addToShadowTemplates && match.shadowTemplatesAdditionStatus === false) {
+          const shadowData = new FormData();
+          shadowData.append('matchCategory', formData.matchCategory);
+          shadowData.append('matchCategoryTwo', formData.matchCategoryTwo);
+          shadowData.append('matchName', formData.matchName);
+          shadowData.append('matchFighterA', formData.matchFighterA);
+          shadowData.append('matchFighterB', formData.matchFighterB);
+          shadowData.append('matchDescription', formData.matchDescription);
+          shadowData.append('matchVideoUrl', formData.matchVideoUrl);
+          shadowData.append('maxRounds', formData.maxRounds);
+          shadowData.append('matchType', "SHADOW");
+  
+          shadowData.append('fighterAImageUrl', formData.fighterAImage ? formData.fighterAImage : match?.fighterAImage);
+          shadowData.append('fighterBImageUrl', formData.fighterBImage ? formData.fighterBImage : match?.fighterBImage);
+          shadowData.append('fighterAImageDeleteUrlFromReq', match.fighterAImageDeleteUrl);
+          shadowData.append('fighterBImageDeleteUrlFromReq', match.fighterBImageDeleteUrl);
+          shadowData.append('promotionBackgroundUrl', match.promotionBackground);
+          shadowData.append('promotionBackgroundDeleteUrlFromReq', formData.promotionBackground ? formData.promotionBackground : match.promotionBackgroundDeleteUrl);
+          shadowData.append('BoxingMatch', JSON.stringify(match.BoxingMatch));
+          shadowData.append('MMAMatch', JSON.stringify(match.MMAMatch));
+          shadowData.append('notify', true);
+     
+          const shadowResponse = await fetch(
+            'https://fantasymmadness-game-server-three.vercel.app/addShadow',
+            {
+              method: 'POST',
+              body: shadowData,
+            }
+          );
+  
+          if (shadowResponse.ok) {
+            alert('Fight added to shadow templates successfully.');
+          } else {
+            console.warn('Failed to add fight to shadow templates.');
+          }
+        }
+
+
+
+
+
         window.location.reload();
       } else {
         alert('Failed to update match.');
@@ -172,7 +219,6 @@ const EditMatch = ({ matchId, isShadow }) => {
     }
   };
     
-
   return (
     <div className='addNewMatch'>
       <div className='registerCard'>
@@ -312,6 +358,31 @@ const EditMatch = ({ matchId, isShadow }) => {
             <input type='number' name='maxRounds' value={formData.maxRounds} onChange={handleChange} />
           </div>
         </div>
+        
+        
+  <div className="input-wrap-one">
+    <div className="input-group" style={{flexDirection:'row',gap:'20px', marginTop:'10px'}}>
+      <label   style={{
+        color: formData.addToShadowTemplates ? 'rgb(0, 213, 75)' : 'white', // Dynamic color
+        transition: 'color 0.3s ease', // Add animation
+      }}>In Shadow Templates ? </label>
+      <div className="toggle-switch">
+      <input
+        type="checkbox"
+        id="addToShadowTemplates"
+        checked={formData.addToShadowTemplates}
+        onChange={() => setFormData((prevData) => ({
+      ...prevData,
+      addToShadowTemplates: !prevData.addToShadowTemplates,
+    }))}
+    />
+        <label htmlFor="addToShadowTemplates" className="switch"></label>
+      </div>
+    </div>
+  </div>
+
+        
+        
           <button type='submit' className='btn-grad' style={{ width: '50%' }}>
             {buttonText}
           </button>

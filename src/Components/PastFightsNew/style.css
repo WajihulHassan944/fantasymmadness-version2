@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 .past-fights-container{
     display: flex;
     flex-direction: column;
@@ -14,6 +17,9 @@
   padding-top: 13%;
   position: relative;
 
+}
+.details-of-past-fight{
+    background-image: url(../../Assets/calender/back-two.jpg);  
 }
 .one-in-past{
     position: absolute;
@@ -68,8 +74,12 @@
     align-items: center;
     gap: 15px;
     max-width: 370px;
+    cursor: pointer;
+  
 }
-
+.fight-card:hover{
+    box-shadow: 0 10px 20px rgb(0,0,0,0.4);
+}
 .fight-date {
     background-color: #ff0000;
     color: white;
@@ -206,4 +216,159 @@
         font-size: 23px;
   }
     
+}
+
+.past-fights-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+   
+}
+
+.fighter-images-in-past-details {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Increased spacing for better separation */
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-between;
+    padding: 15px;
+  }
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Space between image and name */
+}
+
+.fighter-images-in-past-details img {
+    width: 180px;
+    max-height: 180px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 8px; /* Slightly rounded corners */
+    transition: transform 0.3s ease-in-out;
+}
+
+.fighter-images-in-past-details img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+
+.fighter-images-in-past-details .fighter-name{
+    font-size: 17px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    box-shadow: 0 10px 20px rgb(0,0,0,0.4);
+    text-align: center;
+    border-radius: 8px;
+   
+}
+
+
+
+
+
+.details-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.details-content h2 {
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+}
+
+.details-content h1{
+	color:#fff;
+	font-family: 'Anton', sans-serif;
+	font-style:italic;
+	font-size:95px;
+	transform:rotate(-1deg);
+	text-transform:uppercase;
+	font-weight:300;
+	text-align:center;
+	line-height:1.1;
+	margin:20px 0;
+}
+
+.details-content h3 {
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+	font-size:30px;
+}
+.details-content .line{
+	width:400px;
+	height:3px;
+	background:#fff;
+	margin:10px 0;
+    margin-top: 20px;
+}
+
+.details-content h4{
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+	font-size:20px;
+	font-weight:100;
+	margin:20px 0;
+    margin-top: 10px;
+}
+
+
+.details-content h5{
+	color:#fff;
+	font-family: 'Anton', sans-serif;
+	font-size:35px;
+	text-transform:uppercase;
+	font-weight:300;
+}
+
+
+
+
+
+
+
+
+
+@media(max-width:768px){
+
+    .fighter-images-in-past-details {
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  .details-content{
+    padding: 0 20px;
+    max-width: 340px;
+    text-align: center;
+}
+
+.details-content h1{
+	font-size:50px;
+	font-weight:500;
+    font-family: 'UFCSans', sans-serif;
+ 
+    letter-spacing: 2px;
+}
+
+.details-content h3 {
+   font-size:17px;
+	}
+.details-content .line{
+	width:310px;
+	}
+
+    .details-of-past-fight{
+    min-height: 180vh;
+    }
 }
