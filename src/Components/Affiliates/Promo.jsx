@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
+import "./promo.css";
+import background from "../../Assets/calender/two-back.jpg";
 
 const Promo = () => {
 
@@ -142,45 +144,36 @@ const Promo = () => {
   }
    
   return (
-    <div className='fightDetails' style={{paddingBottom:'50px'}}>
-      <div className='member-header' style={{ marginBottom: '30px' }}>
-        <div className='member-header-image'>
-          <img src={affiliate.profileUrl} alt="Affiliate" />
-        </div>
-        <h3>Affiliate<span className="toRemove"> Name</span> - {affiliate.firstName} <span className="toRemove">{affiliate.lastName}</span></h3>
-        <h3>Users Joined <span className="toRemove"> League</span>: {affiliate.usersJoined.length}</h3>
-      </div>
-
-      <div className='fightDetailsContainer'>
-        <h1 className='fightDetailsContainerFirstHeading'>Fight: <span>{match.matchName}</span></h1>
-
-        <div className='fightersImagesInFightDetails'>
-          <div className='imgWrapFights'><img src={match.fighterAImage} alt={match.matchFighterA} /></div>
-          <h1>VS</h1>
-          <div className='imgWrapFights'><img src={match.fighterBImage} alt={match.matchFighterB} /></div>
-        </div>
-
-        <div className='fightDetailsPot'>
-          <h1 style={{ background: '#e90000', padding: '5px 10px', fontSize: '22px' }}>This fight is approved.</h1>
-        </div>
-
-        <h1 className='fightTypeInFightDetails' style={{ fontSize: '21.5px' }}>
-          Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span>
-          - <span style={{ color: '#3fd50b' }}>{match.matchType} </span>
-          - <span>{match.matchFighterA} </span> VS <span>{match.matchFighterB} </span>
-        </h1>
-
-        <div className='fightDetailsPot'>
-          <h1>POT :</h1>
-          <p style={{ color: "#38b90c" }}>{match.pot}</p>
-        </div>
-
-      {/*   <div className='beiginningTimeFight'>
-          <h1 style={{ fontSize: '21.5px' }}> {match.matchDate.split('T')[0]} - </h1>
-          <p style={{ color: "#38b90c" }}>{new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
-        </div>
-       */}
-        {match.matchPromotionalVideoUrl && (
+   <> <div className='promotional-container-new'>
+      
+      <div class="promotional-max-width">
+	<div class="top-row">
+		<h2>Fantasy Mmadness</h2>
+		<h3>{new Date().toLocaleString('en-US', { month: 'short' }).toUpperCase()}</h3>
+	</div>
+	<div class="fighter-images">
+	<img src={match.fighterAImage} alt={match.matchFighterA} />
+	<img src={match.fighterBImage} alt={match.matchFighterB} />
+	</div>
+	
+	<div class="last-row">
+	<h3>Classic Fight</h3>
+	<h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
+	<h3>Tournament</h3>
+	<div class="justify-space-between">
+	<h6>{match.matchFighterA.split(" ")[0]}</h6>
+<h5>VS</h5>
+<h6>{match.matchFighterB.split(" ")[0]}</h6>
+</div>
+	<h4>${match.matchTokens} Ticket - Free Signup</h4>
+	<p>POT: {match.pot}, Max Rounds: {match.maxRounds} <br />Affiliate: {affiliate.firstName}</p>
+  </div>
+  <button className='join-league-button'  onClick={handleJoinLeague}>Join {affiliate.firstName}'s league</button>
+  </div> 
+  <img src={background} className='background-in-promo' alt="promo" />
+    </div>
+ 
+    {match.matchPromotionalVideoUrl && (
   <div className="videoContainer">
     <video className="responsiveVideo" controls>
       <source src={match.matchPromotionalVideoUrl} type="video/mp4" />
@@ -189,14 +182,7 @@ const Promo = () => {
   </div>
 )}
 
-
-
-        <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
-          <button className='btn-grad promobtn'  onClick={handleJoinLeague}>Join my league</button>
-        </div>
-      </div>
-    </div>
-  );
+    </> );
 };
 
 export default Promo;

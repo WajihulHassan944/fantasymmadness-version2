@@ -1,0 +1,190 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400&display=swap');
+
+.promotional-container-new {
+    width: 100%;
+    height: 132vh;
+	position:relative;
+	display:flex;
+	justify-content:center;
+	align-items:flex-start;
+	background-color:black;
+    padding-bottom: 100px;
+    padding-top: 150px;
+}
+.background-in-promo{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    z-index: 1;
+    width: 80%;
+    max-width: 1150px;
+}
+.promotional-max-width{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	color:#fff;
+	text-align:center;
+	max-width:430px;
+	width:100%;
+	padding-top:30px;
+    z-index: 3;
+}
+.promotional-max-width .top-row, .promotional-max-width .fighter-images, .justify-space-between{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	width:93%;
+}
+.promotional-max-width .top-row h2{
+    font-family: 'UFCSans';
+    font-weight: 100;
+    margin-left: 20px;
+    margin-top:7px;
+ 
+}
+
+.promotional-max-width .top-row h3 {
+    margin-top: 10px;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 900;
+    font-size: 1.2em; /* Adjust size as needed */
+    margin-right: 5px;
+}
+
+.promotional-max-width .fighter-images{
+	width:85%;
+	margin-top:50px;
+	margin-bottom:45px;
+}
+.promotional-max-width .fighter-images img{
+	border-radius:50%;
+	width:150px;
+	height:150px;
+	object-fit:cover;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+	 object-position: top; 
+}
+
+.justify-space-between{
+	padding:0 20px;
+	margin-left:15px;
+    
+}
+.last-row h4{
+	margin-bottom:10px;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 900;
+    font-size: 25px; /* Adjust size as needed */
+    margin-top: -10px;
+}
+
+
+.last-row h1 {
+    font-size: 130px;
+    margin-top: -20px;
+    font-family: 'UFCSans';
+    font-style: normal;
+    font-stretch: condensed;
+  
+    text-transform: uppercase;
+    display: inline-block; /* Ensures background applies */
+    font-weight:100;
+    background: linear-gradient(to bottom, 
+        red 0%,   /* Deep Blue */
+        #3e7083 20%,  /* White Highlight */
+        #6faec9 40%,  /* Light Blue */
+        #42585a 60%,  /* Steel Gray */
+        #0c1b1f 80%,  /* Dark Gray */
+        #000301 90% , /* Almost Black */
+      #000301 100%  /* Almost Black */
+    );
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+	
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4)); 
+}
+.last-row h3{
+    font-family: 'UfcSans';
+   letter-spacing: 3px;
+   font-size: 24px;
+}
+.last-row h6{
+    font-family: "Bebas Neue", sans-serif;
+   font-size: 25px;
+   letter-spacing: 5px;
+   font-weight: 100;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+.last-row h5 , .last-row p{
+    font-family: 'UfcSans';
+    
+    font-size: 50px;
+    background: linear-gradient(to bottom, #a69655, #a69655, #c2ab76, #896c27);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* Ensures the gradient applies properly */
+    font-stretch: condensed;  filter: 
+    drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7)) /* Bottom-right shadow */
+    drop-shadow(-2px -2px 4px rgba(0, 0, 0, 0.7)); /* Top-left shadow */
+}
+.last-row p{
+font-size: 21px;
+letter-spacing: 1px;
+}
+.last-row h3:last-of-type{
+    margin-top: -40px;
+    letter-spacing: 7px;
+}
+
+.join-league-button{
+    border:none;
+    outline: none;
+    color: #fff;
+    background-color: #93191E;
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 18px;
+    font-family: 'Abhaya Libre', serif;
+    letter-spacing: 1px;
+}
+
+
+@media(max-width:768px){
+    .promotional-container-new {
+    overflow-x: hidden;
+    }
+.promotional-max-width .fighter-images{
+	width:90%;
+    margin-bottom:60px;
+}
+.promotional-max-width .fighter-images img{
+	width:130px;
+	height:130px;
+}
+
+.background-in-promo{
+    position: absolute;
+    top:47%;
+    left:50%;
+    z-index: 1;
+   width: 1250px;
+}
+
+.promotional-max-width .top-row h2{
+    margin-left: 1px;
+}
+
+.promotional-max-width .top-row h3 {
+    margin-right: -10px;
+}
+
+}
