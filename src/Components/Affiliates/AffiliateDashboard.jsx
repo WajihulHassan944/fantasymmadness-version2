@@ -1,214 +1,190 @@
 import React, { useEffect, useState } from 'react';
-import {  useSelector } from 'react-redux';
-import "../YourFights/YourFights.css";
+import { useDispatch, useSelector } from 'react-redux';
+import "./AffiliatedashboardNew.css";
 import AffiliateAddNewMatch from './AffiliateAddNewMatch';
 import AffiliateMatchDetails from './AffiliateMatchDetails';
+import AffiliateHeadingBackground from "../../Assets/affiliateDashboard/ten.png";
+import Fighter from "../../Assets/affiliateDashboard/elevenu.png";
+import { fetchMatches } from '../../Redux/matchSlice';
+
+const MAX_CARDS = 5; // Max number of fight cards to display at a time
 
 const AffiliateDashboard = () => {
   const [shadowMatchId, setShadowMatchId] = useState(null);
   const [promoMatchDetails, setPromoMatchDetails] = useState({ matchId: null, affiliateId: null });
- const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
+  const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const [promoMatches, setPromoMatches] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   
-  const togglePopup = () => {
-    setShowPopup(!showPopup);
-  };
+  const matches = useSelector((state) => state.matches.data);
+  const matchStatus = useSelector((state) => state.matches.status);
+  const dispatch = useDispatch();
+
+  const [promoStartIndex, setPromoStartIndex] = useState(0);
+  const [promotedStartIndex, setPromotedStartIndex] = useState(0);
+
   useEffect(() => {
-    document.body.setAttribute('data-url', window.location.pathname);
-  }, []);
-  
+    if (matchStatus === 'idle') {
+      dispatch(fetchMatches());
+    }
+  }, [matchStatus, dispatch]);
+
   useEffect(() => {
     if (showPopup) {
-      // Fetch users from the API
       fetch("https://fantasymmadness-game-server-three.vercel.app/users")
         .then((response) => response.json())
         .then((data) => {
           const matchedUsers = affiliate.usersJoined.map((affiliateUser) => {
-            const matchedUser = data.find(
-              (user) => user._id === affiliateUser.userId
-            );
-            return {
-              ...matchedUser,
-              joinedAt: affiliateUser.joinedAt,
-            };
+            const matchedUser = data.find((user) => user._id === affiliateUser.userId);
+            return { ...matchedUser, joinedAt: affiliateUser.joinedAt };
           });
           setUserDetails(matchedUsers);
         })
         .catch((error) => console.error("Error fetching users:", error));
     }
   }, [showPopup]);
-  
+
   useEffect(() => {
     const fetchPromoMatches = async () => {
       try {
         const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/shadow');
-        if (!response.ok) {
-          throw new Error('Failed to fetch promo matches');
-        }
+        if (!response.ok) throw new Error('Failed to fetch promo matches');
         const data = await response.json();
         setPromoMatches(data);
       } catch (err) {
         console.log(err);
       }
     };
-
     fetchPromoMatches();
   }, []);
 
-
-  const promoMatchIds = promoMatches.map((promoMatch) => promoMatch._id);
-
-  if (!affiliate) {
-    return <div>Loading...</div>;
-  }
+  if (!affiliate) return <div>Loading...</div>;
 
   const handleShadowMatchClick = (matchId) => {
-    setShadowMatchId(matchId); // Set the selected match ID
+    setShadowMatchId(matchId);
   };
+
   if (shadowMatchId) {
     return (
       <>
-        <i
-          className="fa fa-arrow-circle-left dashboard-arrow-circle"
-          aria-hidden="true"
-          onClick={() => setShadowMatchId(null)} // Go back to the previous component
-        ></i>
+        <i className="fa fa-arrow-circle-left dashboard-arrow-circle" aria-hidden="true" onClick={() => setShadowMatchId(null)}></i>
         <AffiliateAddNewMatch matchId={shadowMatchId} />
       </>
     );
   }
-  
-  const handlePromoMatchClick = (matchId, affiliateId, isBlurred) => {
-    setPromoMatchDetails({ matchId, affiliateId }); // Set the selected match ID, affiliate ID, and isBlurred status
+
+  const handlePromoMatchClick = (matchId, affiliateId) => {
+    setPromoMatchDetails({ matchId, affiliateId });
   };
-  
+
   if (promoMatchDetails.matchId) {
     return (
       <>
-        <i
-          className="fa fa-arrow-circle-left dashboard-arrow-circle"
-          aria-hidden="true"
-          onClick={() => setPromoMatchDetails({})} // Go back to the previous component
-        ></i>
-        <AffiliateMatchDetails
-          matchId={promoMatchDetails.matchId}
-          affiliateId={promoMatchDetails.affiliateId}
-        />
+        <i className="fa fa-arrow-circle-left dashboard-arrow-circle" aria-hidden="true" onClick={() => setPromoMatchDetails({})}></i>
+        <AffiliateMatchDetails matchId={promoMatchDetails.matchId} affiliateId={promoMatchDetails.affiliateId} />
       </>
     );
   }
+
+  // Filtering fights
+  const promotionFights = promoMatches.filter(match => 
+    !match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
+  );
   
+  const promotedFights = promoMatches.filter(match => 
+    match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
+  );
+
+  // Pagination functions
+  const handlePromoNext = () => {
+    if (promoStartIndex + MAX_CARDS < promotionFights.length) {
+      setPromoStartIndex(promoStartIndex + MAX_CARDS);
+    }
+  };
+
+  const handlePromoPrev = () => {
+    if (promoStartIndex > 0) {
+      setPromoStartIndex(promoStartIndex - MAX_CARDS);
+    }
+  };
+
+  const handlePromotedNext = () => {
+    if (promotedStartIndex + MAX_CARDS < promotedFights.length) {
+      setPromotedStartIndex(promotedStartIndex + MAX_CARDS);
+    }
+  };
+
+  const handlePromotedPrev = () => {
+    if (promotedStartIndex > 0) {
+      setPromotedStartIndex(promotedStartIndex - MAX_CARDS);
+    }
+  };
 
   return (
-    <div className='userdashboard yourFightsWrapper'>
-      <div className='member-header' style={{ position:'fixed', zIndex:'99999' }}>
-        <div className='member-header-image'>
-          <img src={affiliate.profileUrl} alt="Logo" />
-        </div>
-        <h3><span className='toRemove'>Affiliate Name:</span>{affiliate.firstName} {affiliate.lastName}</h3>
-        <h3 style={{ cursor: 'pointer' }} onClick={togglePopup}>
-  Users <span className="toRemove">in my League</span> : {affiliate.usersJoined.length}
-</h3>
-{showPopup && (
-  <div className="popupUsersJoined">
-    <div className="popup-content">
-      <h3>Users in your League</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Joined At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userDetails.map((user, index) => (
-            <tr key={index}>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{new Date(user.joinedAt).toLocaleDateString()}</td> {/* Format the joinedAt date */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={togglePopup}>Close</button>
-    </div>
-  </div>
-)}
-  </div>
+    <div style={{ minHeight: '100vh' }}>
+      <div className="promotional-container-affiliate-dashboard">
+        <section className="affiliate-stats-section">
+          <div className="stats-cards-wrap">
+            <div className="stat-card"><h1>Your Balance</h1><h2>${affiliate.tokens}</h2></div>
+            <div className="stat-card"><h1>Promotion Views</h1><h2>{affiliate.totalViews}</h2></div>
+            <div className="stat-card"><h1>League Members</h1><h2>{affiliate.usersJoined.length}</h2></div>
+            <div className="stat-card"><h1>Total Promotions</h1><h2>{matches.filter(m => m.affiliateId === affiliate?._id).length}</h2></div>
+          </div>
+        </section>
+        
+        <section className="affiliate-dashboard-fights">
+          <img src={Fighter} alt="fighter" className='section-fighter' />
+          <div className="fights-div-promotion">
+            <div className='fights-grid-affiliate'>
 
-      <div className='fightsWrap myspecialpromotion'>
-        <div className='completedFights fightscontainer fixedContainer'>
-          <h1 className='fightsheadingtwo fixedShadowHead'>ALL SHADOW FIGHTS</h1>
-          {promoMatches && promoMatches
-            .filter(match => 
-              !match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
-            )
-            .map((match, index) => (
-              <div className="fightItem" key={index} onClick={() => handleShadowMatchClick(match._id)}>
-                <div className={`fightersImages`}>
-                  <div className='fighterOne'>
-                    <img src={match.fighterAImage} alt={match.matchFighterA} />
-                  </div>
-                  <div className='fighterTwo'>
-                    <img src={match.fighterBImage} alt={match.matchFighterB} />
-                  </div>
+              {/* Promotion Fights */}
+              <div className="column one">
+                <div className="promotion-container">
+                  <img src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
+                  <h1 className="promotion-heading">Promotion Fights</h1>
                 </div>
-                <div className='fightItemOne'>
-                  <div className={`transformed-div`}>
-                    <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-                  </div>
-                  <div className="transformed-div-two">
-                    <div className='transformed-div-two-partOne'>
-                      <h1>Max Rounds {match.maxRounds}</h1>
-                    </div>
-                    <div className='transformed-div-two-partTwo'>
-                      <p>{match.matchType} &nbsp;
-                        {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}
-                      </p>
+
+                {promotionFights.slice(promoStartIndex, promoStartIndex + MAX_CARDS).map((match, index) => (
+                  <div className='fight-card' key={index} onClick={() => handleShadowMatchClick(match._id)}>
+                    <div className='fight-date'><span className='date'>{promoStartIndex + index + 1}</span></div>
+                    <div className='fight-info'><h2>{match.matchFighterA.split(' ')[0]} Vs {match.matchFighterB.split(' ')[0]}</h2>
+                    <p>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} | Max Rounds: {match.maxRounds}</p>
                     </div>
                   </div>
+                ))}
+
+                <div className='dashboard-backward-forward-buttons'>
+                  {promoStartIndex > 0 && <i className="fa fa-chevron-left left-icon" onClick={handlePromoPrev}></i>}
+                  {promoStartIndex + MAX_CARDS < promotionFights.length && <i className="fa fa-chevron-right right-icon" onClick={handlePromoNext}></i>}
                 </div>
               </div>
-            ))}
-        </div>
 
-        <div className='pendingFights fightscontainer fixedContainer'>
-          <h1 className='fightsheadingthree fixedShadowHead'>Your Promotion Fights</h1>
-          {promoMatches && promoMatches
-            .filter(match => 
-              match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
-            )
-            .map((match, index) => (
-              <div className="fightItem" key={index} onClick={() => handlePromoMatchClick(match._id, affiliate._id)}>
-                <div className={`fightersImages ${match.blurred ? 'blurred' : ''}`}>
-                  <div className='fighterOne'>
-                    <img src={match.fighterAImage} alt={match.matchFighterA} />
-                  </div>
-                  <div className='fighterTwo'>
-                    <img src={match.fighterBImage} alt={match.matchFighterB} />
-                  </div>
+              {/* Promoted Fights */}
+              <div className="column two">
+                <div className="promotion-container">
+                  <img src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
+                  <h1 className="promotion-heading">Promoted Fights</h1>
                 </div>
-                <div className='fightItemOne'>
-                  <div className={`transformed-div ${match.blurred ? 'blurred' : ''}`}>
-                    <h1 className='transformedFighterNames'>{match.matchFighterA} -VS- {match.matchFighterB}</h1>
-                  </div>
-                  <div className="transformed-div-two">
-                    <div className='transformed-div-two-partOne'>
-                      <h1>Max Rounds {match.maxRounds}</h1>
-                    </div>
-                    <div className='transformed-div-two-partTwo'>
-                      <p>{match.matchType} &nbsp;
-                        {match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}
-                      </p>
+
+                {promotedFights.slice(promotedStartIndex, promotedStartIndex + MAX_CARDS).map((match, index) => (
+                  <div className='fight-card' key={index} onClick={() => handlePromoMatchClick(match._id, affiliate._id)}>
+                    <div className='fight-date'><span className='date'>{promotedStartIndex + index + 1}</span></div>
+                    <div className='fight-info'><h2>{match.matchFighterA.split(' ')[0]} Vs {match.matchFighterB.split(' ')[0]}</h2>
+                      <p>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory} | Max Rounds: {match.maxRounds}</p>
                     </div>
                   </div>
+                ))}
+
+                <div className='dashboard-backward-forward-buttons'>
+                  {promotedStartIndex > 0 && <i className="fa fa-chevron-left left-icon" onClick={handlePromotedPrev}></i>}
+                  {promotedStartIndex + MAX_CARDS < promotedFights.length && <i className="fa fa-chevron-right right-icon" onClick={handlePromotedNext}></i>}
                 </div>
               </div>
-            ))}
-        </div>
+
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

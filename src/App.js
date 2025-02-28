@@ -146,6 +146,10 @@ useEffect(() => {
     else if (location.pathname === '/calendar-of-fights') {
       header.style.backgroundColor = '#000000';
     }
+    else if (location.pathname === '/AffiliateDashboard') {
+      header.style.backgroundColor = '#000000';
+    }
+   
     else if (location.pathname === '/past-fights') {
       header.style.backgroundColor = '#000000';
     }
@@ -181,6 +185,10 @@ useEffect(() => {
     else if (location.pathname === '/sponsor-dashboard') {
       header.style.backgroundColor = '#000000';
     }
+    else if (location.pathname === '/AffiliateDashboard') {
+      header.style.backgroundColor = '#000000';
+    }
+   
     else if (location.pathname === '/global-leaderboard') {
       header.style.backgroundColor = '#000000';
     }
