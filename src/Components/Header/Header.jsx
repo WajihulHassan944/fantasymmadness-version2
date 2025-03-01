@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import WinImg from "../../Assets/promotional-banner-home-removebg-preview.png";
 const Header = () => {
-  
+  const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
+    
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { isAuthenticatedAffiliate } = useSelector((state) => state.affiliateAuth);
   const submenuRef = useRef(null);
@@ -152,14 +153,17 @@ const Header = () => {
             <NavLink to="/AffiliateProfile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
             <NavLink to="/AffiliatePromotion" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Insights</NavLink>
             <NavLink to="/affiliate-guides" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Guides</NavLink>
-        
+            <NavLink onClick={handleLogoutAffiliate} className={({ isActive }) => (isActive ? 'anchorlinks' : 'anchorlinks')}>Logout</NavLink>
+           
             </div>
 
-          <div className='sideLinkswrap'>
+          <div className='affiliateAccountShow'>
           
-            <button onClick={handleLogoutAffiliate} className='sideLinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
-              <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
-            </button>
+          <div className='affiliate-image'>
+          <img src={affiliate.profileUrl} alt="Logo" />
+        </div>
+        <h3>{affiliate.firstName}</h3>
+     
           </div>
 
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
@@ -328,6 +332,15 @@ const Header = () => {
               <button onClick={() => { handleLogoutAffiliate(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </button>
+              <div className='affiliateAccountShow affiliateAccountShowMob'>
+          
+          <div className='affiliate-image'>
+          <img src={affiliate.profileUrl} alt="Logo" />
+        </div>
+        <h3>{affiliate.firstName}</h3>
+     
+          </div>
+
             </>
           ) : isAuthenticated ? (
             <>

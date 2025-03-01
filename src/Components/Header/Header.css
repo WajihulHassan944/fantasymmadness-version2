@@ -8,7 +8,7 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 .header {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -586,6 +586,35 @@
   animation-fill-mode: both; /* Ensures the animation stays at the final state */
 }
 
+
+.affiliateAccountShow{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+.affiliate-image{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border:2px solid #ccc;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.affiliate-image img{
+  width: 90%;
+  object-position: top;
+  object-fit: cover;
+}
+
+.affiliateAccountShow h3{
+  color: #ccc;
+  font-family: 'Bungee', sans-serif;
+  font-weight: 100;
+}
 @media (max-width: 767px) {
   .container-promotion-absolute-center {
     width: 95%;
@@ -629,12 +658,20 @@
     margin-top: 15px;
     font-size: 13px;
   }
-  .logoimg{
-    margin:20px;
+  .affiliateAccountShow{
+    display: none;
   }
+.header{
+  background: black;
+}  
+.affiliateAccountShowMob{
+  display: flex;
+}
 }
 
-
+.mobileMenu{
+  padding-top: 20px;
+}
 .mobileMenu .mobileAnchorLinks{
   font-family: 'UFCSans';
   margin:5px 0;

@@ -57,7 +57,7 @@ position: relative;
     justify-content: flex-start;
     align-items: flex-start;
     padding-left: 8%;
-    overflow: hidden; /* Ensures no overflow issues */
+    overflow: hidden; 
 	border-top:2px solid gray;
  background-image: url(../../Assets/affiliateDashboard/thirt.jpg);
     background-size: cover;
