@@ -598,7 +598,7 @@
   height: 60px;
   border-radius: 50%;
   border:2px solid #ccc;
-  padding: 5px;
+  padding: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -608,6 +608,8 @@
   width: 90%;
   object-position: top;
   object-fit: cover;
+  border-radius: 50%;
+  
 }
 
 .affiliateAccountShow h3{
