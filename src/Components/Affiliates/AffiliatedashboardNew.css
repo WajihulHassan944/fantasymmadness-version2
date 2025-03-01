@@ -20,8 +20,10 @@
 	align-items:flex-end;
 	padding-bottom:3%;
 	box-shadow:0 10px 20px rgba(0,0,0,0.6);
-
+position: relative;
 }
+
+
 .stats-cards-wrap{
 	display:flex;
 	justify-content:center;
@@ -29,14 +31,19 @@
 	gap:70px;
 	text-align:center;
 	font-style:italic;
+}.stats-cards-wrap h1 {
+    color: red;
+    font-family: 'UFCSans';
+    font-weight: 900;
+    font-stretch: condensed;
+ font-size: 26px;
 }
-.stats-cards-wrap h1{
-	color:red;
-}
+
+
 
 .stats-cards-wrap h2{
 	color:#ccc;
-	margin-top:15px;
+	margin-top:12px;
 }
 
 .section-fighter{
@@ -56,7 +63,6 @@
     background-size: cover;
     background-position: center 0;
     background-repeat: no-repeat;
-   
 }
 
 
@@ -95,8 +101,9 @@
 .promotion-heading {
     position: relative;
     text-align: center;
-    font-family: 'Anton', sans-serif;
-    font-size: 25px;
+    font-family: 'UFCSans';
+    font-stretch: condensed;
+   font-size: 25px;
     color: #fff;
     font-weight: 700;
     padding: 20px;

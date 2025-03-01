@@ -6,7 +6,6 @@ import AffiliateMatchDetails from './AffiliateMatchDetails';
 import AffiliateHeadingBackground from "../../Assets/affiliateDashboard/ten.png";
 import Fighter from "../../Assets/affiliateDashboard/elevenu.png";
 import { fetchMatches } from '../../Redux/matchSlice';
-
 const MAX_CARDS = 5; // Max number of fight cards to display at a time
 
 const AffiliateDashboard = () => {
@@ -131,6 +130,7 @@ const AffiliateDashboard = () => {
             <div className="stat-card"><h1>League Members</h1><h2>{affiliate.usersJoined.length}</h2></div>
             <div className="stat-card"><h1>Total Promotions</h1><h2>{matches.filter(m => m.affiliateId === affiliate?._id).length}</h2></div>
           </div>
+       
         </section>
         
         <section className="affiliate-dashboard-fights">
@@ -142,7 +142,7 @@ const AffiliateDashboard = () => {
               <div className="column one">
                 <div className="promotion-container">
                   <img src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
-                  <h1 className="promotion-heading">Promotion Fights</h1>
+                  <h1 className="promotion-heading">Shadow Templates</h1>
                 </div>
 
                 {promotionFights.slice(promoStartIndex, promoStartIndex + MAX_CARDS).map((match, index) => (

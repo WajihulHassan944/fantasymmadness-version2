@@ -308,12 +308,13 @@ const Header = () => {
         <div className='closeMenuIcon' onClick={toggleMenu}>
           <i className="fa fa-times"></i>
         </div>
-
         <div className='logoimg'>
-          <NavLink to="/" onClick={closeMenu}>
-            <img src={Logo} alt="Logo" />
+         <NavLink to="/" onClick={closeMenu}>
+         <center>       <img src={Logo} alt="Logo" /></center>
           </NavLink>
         </div>
+
+        <div className="menuContent">
 
         <div className='anchorLinksWrapper'>
           {isAuthenticatedAffiliate ? (
@@ -379,7 +380,7 @@ const Header = () => {
             </>
           )}
         </div>
-      </div>
+      </div> </div>
     </>
   );
 }
