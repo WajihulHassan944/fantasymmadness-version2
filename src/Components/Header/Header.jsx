@@ -160,9 +160,9 @@ const Header = () => {
           <div className='affiliateAccountShow'>
           
           <div className='affiliate-image'>
-          <img src={affiliate.profileUrl} alt="Logo" />
+         {affiliate && affiliate.profileUrl && ( <img src={affiliate.profileUrl} alt="Logo" /> )}
         </div>
-        <h3>{affiliate.firstName}</h3>
+      {affiliate && affiliate.firstName && (  <h3>{affiliate.firstName}</h3> )}
      
           </div>
 
@@ -335,9 +335,9 @@ const Header = () => {
               <div className='affiliateAccountShow affiliateAccountShowMob'>
           
           <div className='affiliate-image'>
-          <img src={affiliate.profileUrl} alt="Logo" />
+         {affiliate && affiliate.profileUrl && ( <img src={affiliate.profileUrl} alt="Logo" /> )}
         </div>
-        <h3>{affiliate.firstName}</h3>
+      {affiliate && affiliate.firstName && (  <h3>{affiliate.firstName}</h3> )}
      
           </div>
 
