@@ -53,6 +53,70 @@
     padding-bottom: 50px;
     
 }
+.howtoplay-updated{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(../../Assets/affiliateDashboard/one.png);
+  background-position: center 0;
+  position:relative;
+	overflow: hidden;
+}
+
+.howtoplay-updated .three{
+	position:absolute;
+	left:-540px;
+	top:1%;
+	z-index:1;
+	width:50%;
+}
+
+.howtoplay-updated .four{
+	position:absolute;
+	top:30%;
+	transform:rotate(10deg);
+	left:-120px;
+	width:100%;
+	max-width:200px;
+	z-index:1;
+	}
+
+
+  .howtoplay-updated .five{
+	position:absolute;
+	top:-10px;
+	right:-100px;
+	width:100%;
+	max-width:200px;
+	transform:rotate(180deg);
+	z-index:1;
+	}
+
+
+  .howtoplay-updated .six{
+	position:absolute;
+	width:100%;
+	bottom:-170px;
+	left:-100px;
+	max-width:450px;
+	z-index:2;
+	}
+	
+  .howtoplay-updated .seven{
+	position:absolute;
+	width:100%;
+	max-width:900px;
+	bottom:-830px;
+	right:-20%;
+	}
+
+
+
+
+
+
+
+
+
+
+
 .howtoplay-wrapper h1 {
     font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
     font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */

@@ -1,3 +1,193 @@
+
+@font-face {
+  font-family: 'Edosz';
+  src: url('../../Assets/affiliateDashboard/edosz.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.promotional-details-container-new {
+  width: 100%;
+  min-height: 100vh;
+background-color:black;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+align-items:center;
+   background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      url(../../Assets/affiliateDashboard/four.png);
+  background-size: cover; 
+  background-position: top; 
+  background-repeat: no-repeat; 
+background-attachment:fixed;
+position:relative;
+border-bottom:3px solid black;
+padding-top:120px;
+padding-bottom: 60px;
+
+}     .ufc-title {
+          font-family: 'Bebas Neue', sans-serif;
+       
+  font-style: italic;
+  font-size: 100px; /* Adjust as needed */
+  color: #4d0000; /* Dark red text */
+  text-shadow: 2px 1px 0px #bbb, 
+               -1px -1px 0px #bbb, 
+               2px -1px 0px #bbb, 
+               -1px 1px 0px #bbb; /* Softer white outline */
+       font-weight:999;
+       letter-spacing:6px;
+        }
+.fight-night-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 70px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #bbb;
+        text-shadow: 3px 3px 0px black,5px 5px 10px rgba(0, 0, 0, 0.5);
+    margin-top:-15px;
+  
+}
+.promotional-details-images{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:20%;
+margin-top:10px;
+}
+.promotional-details-image-cont{
+width:260px;
+height:210px;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.7);
+overflow:hidden;
+}
+.promotional-details-image-cont img{
+width:100%;
+height:100%;
+object-fit:cover;
+object-position:top;
+}
+
+.promotional-details-rows{
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+width:100%;
+max-width:750px;
+box-shadow:0 10px 20px rgba(0,0,0,0.9);
+margin-top:40px;
+margin-bottom:50px;
+}.promotional-details-rows {
+  width: 100%;
+  text-align: center;
+ font-family: 'Archivo Black', sans-serif;
+  background: #000; /* Brown background for fighter names */
+padding:40px 0;
+padding-bottom:50px;
+color:#fff;
+
+box-shadow:0 10px 20px rgba(0,0,0,0.9);
+
+}
+
+.promotional-details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 10%; /* Adjusted padding for better alignment */
+
+}
+
+.promotional-details-row-two {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative; /* Ensures absolute positioning of h4 is relative to this div */
+margin-bottom:8px;
+}
+
+.promotional-details-row-two img {
+  position: absolute; /* Corrected from "absolu" */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Centers "VS" perfectly */
+  width: 60px;
+  display: flex; /* Ensures text is centered */
+  align-items: center;
+  justify-content: center;
+ }
+.promotional-details-rows h3 {
+          background: linear-gradient(to right, #bbb, #fff, #bbb);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
+.promotional-details-row-three {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.promotional-details-row-one {
+  justify-content: center;
+ }
+
+.promotional-details-row-four {
+  justify-content: center;
+  font-size: 15px;
+  text-transform: uppercase;
+font-family: 'Edosz', sans-serif;
+margin-top:10px;
+}
+
+
+
+@media (max-width:768px){
+.ufc-title {
+  font-size: 70px; /* Adjust as needed */
+         letter-spacing:6px;
+        }
+.fight-night-title {
+  font-size: 40px;
+   margin-top:-10px;
+ text-align:center; 
+}	
+.promotional-details-images{
+gap:10%;
+}
+.promotional-details-image-cont{
+width:160px;
+height:150px;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Overlay that dims the background */
 .modal-overlay-instructions {
   position: fixed;
@@ -170,4 +360,31 @@
 
 .saveButton:hover {
   background-color: #31b0d5; /* Darker blue on hover */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dollar {
+  background: linear-gradient(90deg, #ffd700, #ff8c00, #ffd700); /* Gold to Orange */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 25px; /* Adjust as needed */
 }

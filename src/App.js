@@ -154,6 +154,9 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }
     
+    else if (location.pathname === '/HowItWorks') {
+      header.style.backgroundColor = '#000000';
+    }
     else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -190,6 +193,9 @@ useEffect(() => {
     }
    
     else if (location.pathname === '/global-leaderboard') {
+      header.style.backgroundColor = '#000000';
+    }
+    else if (location.pathname === '/HowItWorks') {
       header.style.backgroundColor = '#000000';
     }
     

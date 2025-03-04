@@ -10,7 +10,8 @@ import s3 from "../Config/s3Config"; // Importing the configured S3 instance
 import { toast } from 'react-toastify';
 import "../Dashboard/FightDetails.css"
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
-
+import VS from "../../Assets/affiliateDashboard/vs.png";
+import { Signer } from 'aws-sdk';
 
 
 
@@ -339,56 +340,34 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   
 
   return (
-    <div className='fightDetails' style={{ paddingBottom: '50px' }}>
-      <div className='member-header' style={{ marginBottom: '30px' }}>
-        <div className='member-header-image'>
-          <img src={affiliate.profileUrl} alt="Logo" />
-        </div>
-        <h3>Affiliate <span className="toRemove">Name </span>- {affiliate.firstName} {affiliate.lastName}</h3>
-        <h3>Users <span className="toRemove"> in my League</span> : {affiliate.usersJoined.length}</h3>
-      </div>
+    
+  <div class="promotional-details-container-new">
+  <div class="ufc-title">{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</div>
+ <div class="fight-night-title">{match.matchName}</div>
+<div class="promotional-details-images">
+ <div class="promotional-details-image-cont">
+   <img src={match.fighterAImage} alt="Fighter A" />
+ </div>
+ 
+ <div class="promotional-details-image-cont">
+   <img src={match.fighterBImage} alt="Fighter B" />
+ </div>
+ </div>
+ <div class="promotional-details-rows">
+   <div class="promotional-details-row promotional-details-row-two">
+   <h3 class="makelower">{match.matchFighterA}</h3><img src={VS} alt="vs" /><h3 class="makeupper">{match.matchFighterB}</h3>
+   </div>
+   <div class="promotional-details-row promotional-details-row-three">
+   <h3 style={{fontSize:'17px'}}>Type: {match.matchType}</h3><h3>Pot: <span className='dollar'>${match.pot}</span></h3>
+   </div>
+   <div class="promotional-details-row promotional-details-row-one">
+   <h3>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer' }}>Click to copy</span></h3></div>
 
-      <div className='fightDetailsContainer'>
-        <h1 className='fightDetailsContainerFirstHeading'>Fight: <span>{match.matchName}</span></h1>
-        <div className='fightersImagesInFightDetails'>
-          <div className='imgWrapFights'>
-            <img src={match.fighterAImage} alt="Fighter A" />
-          </div>
-          <h1>VS</h1>
-          <div className='imgWrapFights'>
-            <img src={match.fighterBImage} alt="Fighter B" onClick={()=> alert(match.fighterBImage)} />
-          </div>
-        </div>
+   <div class="promotional-details-row promotional-details-row-four">
+   <h3>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h3></div>
+ </div>
 
-        <div className='fightDetailsPot'>
-          <h1 style={{ background: '#e90000', padding: '5px 10px', fontSize: '22px' }}>This fight is approved.</h1>
-        </div>
-
-        <h1 className='fightTypeInFightDetails' style={{ fontSize: '21.5px' }}>
-          Fight type: <span>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</span>
-          - <span style={{ color: '#3fd50b' }}>{match.matchType} </span> - <span>{match.matchFighterA} </span> VS <span> {match.matchFighterB} </span>
-        </h1>
-
-        <div className='fightDetailsPot'>
-          <h1>POT :</h1>
-          <p style={{ color: "#38b90c" }}>{match.pot} </p>
-        </div>
-
-  {/*       <div className='beiginningTimeFight'>
-        <h1 style={{ fontSize: '21.5px' }}>{match.matchDate.split('T')[0]} - </h1>
-        <p style={{ color: "#38b90c" }}>
-  {new Date(`1970-01-01T${match.matchTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-</p>
- </div>  */}
-
-        <div className='fightDetailsPot'>
-          <h1 style={{ fontSize: '21.5px' }}>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer', color: 'blue' }}>Click to copy</span></h1>
-        </div>
-        <div className='fightDetailsPot'>
-          <h1 style={{ color: '#8abafe', fontSize: '21.5px' }} className='specialtextmine'>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h1>
-        </div>
-
-        <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+ <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
           <button className='btn-grad promobtn' onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
           <button className='btn-grad promobtn' onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>
         </div>
@@ -405,6 +384,7 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     height: 'auto' // Maintain aspect ratio
   }}
 ></canvas>
+
 
 <div style={{display:'flex',gap:'10px'}}>
         <button onClick={downloadImage} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#FF4500', color: '#FFF', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Download Image</button>
@@ -511,9 +491,9 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
 )}
 
 
-         </div>
-    </div>
-  );
+
+</div>
+      );
 };
 
 export default AffiliateMatchDetails;
