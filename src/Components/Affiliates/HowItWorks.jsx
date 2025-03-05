@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Two from "../../Assets/affiliateDashboard/two.png";
 import Three from "../../Assets/affiliateDashboard/three.png";
 import Four from "../../Assets/affiliateDashboard/fourone.png";
 import FourTwo from "../../Assets/affiliateDashboard/fourone.png";

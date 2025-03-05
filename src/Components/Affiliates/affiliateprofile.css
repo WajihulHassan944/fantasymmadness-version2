@@ -284,3 +284,60 @@
     font-size: 15px;
   }
   }
+
+
+
+  .myprofileupdated{
+    background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url('../../Assets/affiliateDashboard/profileu.png');
+   background-attachment: fixed;
+   background-position: center 0; 
+  }
+  .profile-wrapper-updated{
+    max-width: 800px;
+    width: 100%;
+    padding-bottom: 70px;
+  }
+  .updatedBtnFile{
+    padding:10px 30px;
+    border:none;
+    outline: none;
+    background-image: url(../../Assets/affiliateDashboard/bar.png);
+    cursor: pointer;
+    color: #fff;
+    background-position: center -2px;
+    border-radius: 5px;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 15px;
+  
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .55);
+  }
+  .updated-profile-title{
+    color: red !important;
+    font-family: 'Anton' !important;
+    font-size: 35px !important;
+    text-shadow: 3px 3px 0px black,5px 5px 10px rgba(0, 0, 0, 0.8) !important;
+  
+  }
+  .save-updated-btn{
+    padding:10px 30px;
+    border:none;
+    outline: none;
+    background-image: url(../../Assets/affiliateDashboard/bar.png);
+    cursor: pointer;
+    color: #fff;
+    background-position: center -2px;
+    border-radius: 5px;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 15px;
+  }
+  @media(max-width:768px){
+    
+  .updatedBtnFile{
+    width: 50%;
+  }
+  .profile-wrapper-updated .registerCard {
+    margin-top: 100px;
+    }
+  }

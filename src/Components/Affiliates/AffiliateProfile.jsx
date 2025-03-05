@@ -243,26 +243,14 @@ const AffiliateProfile = () => {
 
 
   return (
-    <div className='myprofile'>
-     <i
-        className="fa fa-arrow-circle-left dashboard-arrow-circle"
-        aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
-      ></i>
+    <div className='myprofile myprofileupdated'>
    
-      <div className='member-header'>
-        <div className='member-header-image'>
-          <img src={affiliate.profileUrl} alt="Profile" />
-        </div>
-        <h3><span className='toRemove'>Affiliate Name - </span>{affiliate.firstName} {affiliate.lastName}</h3>
-        <h3>Balance: ${affiliate.tokens}</h3>
-      </div>
-
-      <div className='createAccount' style={{ background: 'transparent', marginTop: '-100px' }}>
+      
+      <div className='profile-wrapper-updated' style={{ background: 'transparent' }}>
         <form className='registerCard' onSubmit={handleSubmit}>
-          <h1>Edit your profile</h1>
+          <h1 className='updated-profile-title'>Edit your profile</h1>
 
-          <div className='input-wrap-one'>
+          <div className='input-wrap-one' style={{flexBasis:'100%'}}>
   <div className='input-group'>
     {profileUrl instanceof File
       ? <center><img src={URL.createObjectURL(profileUrl)} alt="Fighter A" style={{ width: '100px', objectFit: 'cover', borderRadius: '50%', height: '100px' }} /></center>
@@ -281,7 +269,7 @@ const AffiliateProfile = () => {
       }} 
     style={{ display: 'none' }} // Hide the default input
   />
-  <center><label htmlFor="profileUrl" className="custom-file-label" style={{marginTop:"17px", width:'50%'}}>
+  <center><label htmlFor="profileUrl" className="custom-file-label updatedBtnFile" style={{marginTop:"17px"}}>
     Choose File
   </label></center>
 
@@ -292,18 +280,18 @@ const AffiliateProfile = () => {
 
           <div className='input-wrap-one'>
             <div className='input-group'>
-              <label>First Name <span>*</span></label>
+              <label>First Name</label>
               <input type='text' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
             </div>
             <div className='input-group'>
-              <label>Last Name <span>*</span></label>
+              <label>Last Name</label>
               <input type='text' value={lastName} onChange={(e) => setLastName(e.target.value)} />
             </div>
           </div>
 
           <div className='input-wrap-two'>
             <div className='input-group'>
-              <label>User Name? <span>*</span></label>
+              <label>User Name?</label>
               <input type='text' value={playerName} onChange={(e) => setPlayerName(e.target.value)} />
             </div>
             <i className="fa fa-refresh" aria-hidden="true"></i>
@@ -311,11 +299,11 @@ const AffiliateProfile = () => {
 
           <div className='input-wrap-one'>
             <div className='input-group'>
-              <label>Your Phone <span className='toRemove'>(Mobile)</span> <span>*</span></label>
+              <label>Your Phone <span className='toRemove'>(Mobile)</span> </label>
               <input type='text' value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
             <div className='input-group'>
-              <label>Zip Code <span>*</span></label>
+              <label>Zip Code </label>
               <input type='text' value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
             </div>
           </div>
@@ -323,13 +311,13 @@ const AffiliateProfile = () => {
           <div className='termsConditions'>
             <h2>Your Short Bio</h2>
             <textarea
-              style={{ width: '100%', border: 'none', minHeight: '10vh' }}
+              style={{ width: '100%', border: 'none' }}
               value={shortBio}
               onChange={(e) => setShortBio(e.target.value)}
             ></textarea>
           </div>
 
-          <button type="submit" className='btn-grad'>
+          <button type="submit" className='save-updated-btn'>
             {loadingTwo ? 'Saving!' : 'Save Settings'}
           </button>
         </form>
@@ -424,7 +412,7 @@ const AffiliateProfile = () => {
 
   {/* Submit Button */}
   <button type="submit" className='btn-grad' style={{ width: '40%' }} onClick={handleSubmittingDetails}>
-    {loading ? 'Saving!' : 'Save Settings'}
+    {loading ? 'Saving!' : 'Save Payment Settings'}
   </button>
   <button
   type="button"
