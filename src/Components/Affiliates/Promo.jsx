@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchMatches } from '../../Redux/matchSlice';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import "./promo.css";
-import background from "../../Assets/calender/two-back.jpg";
+import title from "../../Assets/promotional/title.png";
 
 const Promo = () => {
-
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const dispatch = useDispatch();
   const { matchName, fullName } = useParams();
   const navigate = useNavigate();
@@ -30,6 +30,12 @@ const Promo = () => {
     }
   }, [matchStatus, dispatch]);
 
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // Fetch affiliate data based on fullName from URL
   useEffect(() => {
     const fetchAffiliateData = async () => {
@@ -144,34 +150,31 @@ const Promo = () => {
   }
    
   return (
-   <> <div className='promotional-container-new'>
-      
-      <div class="promotional-max-width">
-	<div class="top-row">
-		<h2>Fantasy Mmadness</h2>
-		<h3>{new Date().toLocaleString('en-US', { month: 'short' }).toUpperCase()}</h3>
-	</div>
-	<div class="fighter-images">
-	<img src={match.fighterAImage} alt={match.matchFighterA} />
-	<img src={match.fighterBImage} alt={match.matchFighterB} />
-	</div>
+   <> 
+<div className="promotional-updated-design">
+		<div className="fighter-images-promotional">
+			<div className="img-container"><img src={match.fighterAImage} alt={match.matchFighterA} /></div>
+			<div className="img-container"><img src={match.fighterBImage} alt={match.matchFighterB} /></div>
+		</div>
+		
+    <div className="fighters-names">
+      <h1>{isMobile ? match.matchFighterA.split(" ")[0] : match.matchFighterA}</h1>
+      <h2>VS</h2>
+      <h1>{isMobile ? match.matchFighterB.split(" ")[0] : match.matchFighterB}</h1>
+    </div><h1 className="category">{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
+		<h1 className="type">{affiliate.firstName}</h1>
+
+<h2 className="round-show">${match.matchTokens} Ticket Hurry Up</h2>	
 	
-	<div class="last-row">
-	<h3>Classic Fight</h3>
-	<h1>{match.matchCategoryTwo ? match.matchCategoryTwo : match.matchCategory}</h1>
-	<h3>Tournament</h3>
-	<div class="justify-space-between">
-	<h6>{match.matchFighterA.split(" ")[0]}</h6>
-<h5>VS</h5>
-<h6>{match.matchFighterB.split(" ")[0]}</h6>
-</div>
-	<h4>${match.matchTokens} Ticket - Free Signup</h4>
-	<p>POT: {match.pot}, Max Rounds: {match.maxRounds} <br />Affiliate: {affiliate.firstName}</p>
-  </div>
-  <button className='join-league-button'  onClick={handleJoinLeague}>Join {affiliate.firstName}'s league</button>
-  </div> 
-  <img src={background} className='background-in-promo' alt="promo" />
-    </div>
+		<div className="title-wrap">
+		<img src={title} className="fancy-title-img" />
+		<h1 className="fancy-title">POT: ${match.pot}, Max Rounds: {match.maxRounds}</h1>
+		</div>
+		
+		<h3 className="second-last" onClick={handleJoinLeague}>Join {affiliate.firstName}'s league</h3>
+		<p className="lastp">Affiliate: {affiliate.firstName} - Free Signup</p>
+   </div>
+
  
     {match.matchPromotionalVideoUrl && (
   <div className="videoContainer">
