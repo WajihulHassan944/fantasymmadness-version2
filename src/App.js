@@ -94,6 +94,7 @@ import SpinWheel from './Components/Home/SpinWheel';
 import CalenderOfMatches from './Components/CalenderOfMatches/CalenderOfMatches';
 import PastFightsNew from './Components/PastFightsNew/PastFightsNew';
 import PastFightDetails from './Components/PastFightsNew/PastFightDetails';
+import AffiliateLeague from './Components/Affiliates/AffiliateLeague/AffiliateLeague';
 
 function AppContent() {
   const location = useLocation();
@@ -157,6 +158,10 @@ useEffect(() => {
     else if (location.pathname === '/HowItWorks') {
       header.style.backgroundColor = '#000000';
     }
+    
+    else if (location.pathname === '/affiliate-league') {
+      header.style.backgroundColor = '#000000';
+    }
     else {
         header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
       }
@@ -212,6 +217,9 @@ useEffect(() => {
       header.style.backgroundColor = '#000000';
     }
     
+    else if (location.pathname === '/affiliate-league') {
+      header.style.backgroundColor = '#000000';
+    }
      else {
       header.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     }
@@ -354,6 +362,7 @@ useEffect(() => {
         <Route path="/affiliate-guides" element={<AffiliateGuide />} />
         <Route path="/fights-news" element={<NewsFeed />} />
         <Route path="/calendar-of-fights" element={<CalenderOfMatches />} />
+        <Route path="/affiliate-league" element={<AffiliateLeague />} />
         
         
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />
