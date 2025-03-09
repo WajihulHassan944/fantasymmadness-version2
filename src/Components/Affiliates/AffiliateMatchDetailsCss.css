@@ -81,6 +81,7 @@ max-width:750px;
 box-shadow:0 10px 20px rgba(0,0,0,0.9);
 margin-top:40px;
 margin-bottom:50px;
+border-radius: 5px;
 }.promotional-details-rows {
   width: 100%;
   text-align: center;
@@ -104,7 +105,7 @@ box-shadow:0 10px 20px rgba(0,0,0,0.9);
 }
 
 .promotional-details-row-two {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
   position: relative; /* Ensures absolute positioning of h4 is relative to this div */
@@ -112,15 +113,8 @@ margin-bottom:8px;
 }
 
 .promotional-details-row-two img {
-  position: absolute; /* Corrected from "absolu" */
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); /* Centers "VS" perfectly */
   width: 60px;
-  display: flex; /* Ensures text is centered */
-  align-items: center;
-  justify-content: center;
- }
+  }
 .promotional-details-rows h3 {
           background: linear-gradient(to right, #bbb, #fff, #bbb);
           -webkit-background-clip: text;
@@ -129,6 +123,7 @@ margin-bottom:8px;
 .promotional-details-row-three {
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .promotional-details-row-one {
@@ -143,7 +138,18 @@ font-family: 'Edosz', sans-serif;
 margin-top:10px;
 }
 
-
+.criteria-details{
+  font-size: 21px;
+  padding: 20px 30px;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  font-family: 'Baloo Tamma 2', sans-serif;
+	color:#fff;
+	font-weight:600; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 
+ 
+  -3px -3px 6px rgba(0, 0, 0, 0.9);
+}
 
 @media (max-width:768px){
 .ufc-title {
@@ -162,8 +168,28 @@ gap:10%;
 width:160px;
 height:150px;
 }
+
+.promotional-details-row-two {
+  font-size: 16px;
 }
 
+.promotional-details-row-three {
+  font-size: 14px;
+}
+.promobtn{
+  width: 40% !important;
+  font-size: 21px;
+}
+
+.promotional-details-container-new {
+  background-image: 
+      url(../../Assets/affiliateDashboard/mobile_background_affiliate_details.png);
+    }
+}
+
+.promobtn{
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
 
 
 

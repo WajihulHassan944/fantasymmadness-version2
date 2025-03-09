@@ -26,12 +26,30 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
  const [isOpenPodcast, setOpenPodcast] = useState(false);
  const [isRecording, setIsRecording] = useState(false);
- 
+ const [requiredUsers, setRequiredUsers] = useState(null);
   const imageData = {
     logoImage: "https://www.fantasymmadness.com/static/media/logo.c2aa609dbe0ed6c1af42.png"
   };
   const [backgroundImgVar, setBackgroundImgVar] = useState("https://i.ibb.co/sWZ5QFh/imgone.png");
   
+  useEffect(() => {
+    if (match?.matchTokens > 0) {
+      setRequiredUsers(match.pot / match.matchTokens);
+    } else {
+      setRequiredUsers(0);
+    }
+  }, [match]);
+
+  // Users currently in the league
+  const currentUsers = affiliate?.usersJoined?.length || 0;
+
+  // Profit Calculation: Extra users beyond the required number
+  const extraUsers = Math.max(0, currentUsers - Math.ceil(requiredUsers)); // Ensure no negative values
+  const extraProfit = extraUsers * match?.matchTokens || 0;
+  const profit = extraProfit / 2; // Split into half
+
+
+
   useEffect(() => {
     // Update background image state based on match data
     if (match && match.promotionBackground) {
@@ -337,6 +355,29 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
       })
       .catch((error) => console.error('Error saving video URL:', error));
   };
+ 
+  const handleActiveFight = async (id) => {
+    try {
+      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/activate-match/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        toast.success(`Fight activated successfully!`);
+        dispatch(fetchMatches());
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error activating match:", error);
+      alert("Failed to activate match. Please try again.");
+    }
+  };
   
 
   return (
@@ -358,15 +399,36 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
    <h3 class="makelower">{match.matchFighterA}</h3><img src={VS} alt="vs" /><h3 class="makeupper">{match.matchFighterB}</h3>
    </div>
    <div class="promotional-details-row promotional-details-row-three">
-   <h3 style={{fontSize:'17px'}}>Type: {match.matchType}</h3><h3>Pot: <span className='dollar'>${match.pot}</span></h3>
+   <h3 style={{fontSize:'17px'}}>Type: {match.matchType}</h3>
+   <h3>Token Price: <span className='dollar'>${match.matchTokens}</span></h3>
+   <h3>Pot: <span className='dollar'>${match.pot}</span></h3>
    </div>
    <div class="promotional-details-row promotional-details-row-one">
    <h3>Fight promotion url below <span onClick={copyToClipboard} style={{ cursor: 'pointer' }}>Click to copy</span></h3></div>
 
    <div class="promotional-details-row promotional-details-row-four">
    <h3>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h3></div>
- </div>
 
+   <button 
+  className='save-updated-btn startFight' 
+  onClick={match.matchShadowStatus === "inactive" ? () => handleActiveFight(match._id) : null}
+  disabled={match.matchShadowStatus === "active"}
+>
+  {match.matchShadowStatus === "inactive" ? "Start this Fight" : "Fight Started"}
+</button>
+ </div>
+ <h6 className="criteria-details">
+  {requiredUsers > 0 ? (
+    <>
+      {`At least ${Math.ceil(requiredUsers)} users in your league are required, you have ${currentUsers} users in your league. You will make up to $${profit.toFixed(2)} profit - `}
+      {match.userPredictions.length > 0 
+        ? `${match.userPredictions.length} user(s) have played your promoted fight yet` 
+        : "None of the users have played your promoted fight yet"}
+    </>
+  ) : (
+    " "
+  )}
+</h6>
  <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
           <button className='btn-grad promobtn' onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
           <button className='btn-grad promobtn' onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>

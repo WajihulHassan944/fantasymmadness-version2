@@ -56,21 +56,12 @@ const navigate = useNavigate();
   }, [matchStatus, dispatch]);
   
 
-
   useEffect(() => {
     const today = new Date();
     const currentTime = new Date();
   
     const fetchUpcomingMatches = async () => {
       try {
-        // Fetch all affiliates
-        const affiliateResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/affiliates");
-        const affiliates = await affiliateResponse.json();
-  
-        // Fetch all users
-        const usersResponse = await fetch("https://fantasymmadness-game-server-three.vercel.app/users");
-        const users = await usersResponse.json();
-  
         // Filter matches based on matchType
         const filteredMatches = matches.map((match) => {
           const matchDateTime = new Date(`${match?.matchDate?.split('T')[0]}T${match.matchTime}:00`);
@@ -81,33 +72,13 @@ const navigate = useNavigate();
               return { ...match, blurred: false };
             }
           } else if (match.matchType === "SHADOW") {
-          
-            const affiliate = affiliates.find(a => a._id === match.affiliateId);
-            if (affiliate) {
-              const usersJoinedIds = affiliate.usersJoined.map(user => user.userId);
-          
-              // Filter users who meet token requirement
-              const eligibleUsers = users.filter(user => usersJoinedIds.includes(user._id) && parseInt(user.tokens, 10) >= match.matchTokens);
-              
-              // Check if any user has submitted predictions for this match
-              const predictionUsers = match.userPredictions
-                .filter(prediction => prediction.predictionStatus === "submitted")
-                .map(prediction => prediction.userId);
-          
-              // Include users who have submitted predictions
-              const allEligibleUsers = [...new Set([...eligibleUsers.map(user => user._id), ...predictionUsers])];
-              console.log(allEligibleUsers.length);
-          
-              // Calculate the required number of users
-              const requiredUsers = match.pot / match.matchTokens;
-          
-              // If eligible users (including those who submitted predictions) are fewer than required, blur the match
-              const isBlurred = allEligibleUsers.length < requiredUsers;
-          
-              return { ...match, blurred: isBlurred };
+            // Check if affiliateId and shadowFightId exist
+            if (match.affiliateId && match.shadowFightId) {
+              if (match.matchShadowStatus === "active") {
+                return { ...match, blurred: false };
+              }
             }
           }
-          
           return null;
         }).filter(Boolean); // Filter out null values where no condition is met
   
@@ -115,12 +86,13 @@ const navigate = useNavigate();
         setUpcomingMatches(filteredMatches);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } 
+      }
     };
   
     fetchUpcomingMatches();
   }, [matches]);
   
+  console.log(upcomingMatches);
     
   // Check if the user data is available before rendering
   if (!user || !user.firstName) {

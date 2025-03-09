@@ -132,6 +132,8 @@ const AffiliateAddNewMatch = ({ matchId }) => {
     data.append('matchVideoUrl', matchDetails.matchVideoUrl);
     data.append('matchType', 'SHADOW');
     data.append('maxRounds', matchDetails.maxRounds);
+    data.append('notify', false);
+ 
     // Append BoxingMatch and MMAMatch stats
     data.append('BoxingMatch', JSON.stringify(matchDetails.BoxingMatch));
     data.append('MMAMatch', JSON.stringify(matchDetails.MMAMatch));

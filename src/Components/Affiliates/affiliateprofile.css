@@ -332,6 +332,9 @@
     font-weight: 600;
     font-size: 15px;
   }
+  .startFight{
+    margin-top: 15px;
+  }
   @media(max-width:768px){
     
   .updatedBtnFile{
