@@ -16,6 +16,7 @@ import { Signer } from 'aws-sdk';
 
 
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
+  const [hoveredRow, setHoveredRow] = useState(null);
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
@@ -48,6 +49,11 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   const extraProfit = extraUsers * match?.matchTokens || 0;
   const profit = extraProfit / 2; // Split into half
 
+// Get the actual number of users who played
+const actualUsers = match?.userPredictions?.length || 0;
+const extraActualUsers = Math.max(0, actualUsers - Math.ceil(requiredUsers));
+const extraActualProfit = extraActualUsers * (match?.matchTokens ?? 0);
+const actualProfit = extraActualProfit / 2;
 
 
   useEffect(() => {
@@ -417,18 +423,69 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
   {match.matchShadowStatus === "inactive" ? "Start this Fight" : "Fight Started"}
 </button>
  </div>
- <h6 className="criteria-details">
-  {requiredUsers > 0 ? (
-    <>
-      {`At least ${Math.ceil(requiredUsers)} users in your league are required, you have ${currentUsers} users in your league. You will make up to $${profit.toFixed(2)} profit - `}
-      {match.userPredictions.length > 0 
-        ? `${match.userPredictions.length} user(s) have played your promoted fight yet` 
-        : "None of the users have played your promoted fight yet"}
-    </>
-  ) : (
-    " "
-  )}
-</h6>
+ 
+ 
+
+  <div className="criteria-details-another">
+    <h5>Profit Stats</h5>
+
+    <div
+      className="justify-space-between row-hover"
+      onMouseEnter={() => setHoveredRow("earnedProfit")}
+      onMouseLeave={() => setHoveredRow(null)}
+    >
+      <h2>Earned Profit:</h2> <h3>${actualProfit.toFixed(2)}</h3>
+      {hoveredRow === "earnedProfit" && (
+        <div className="hover-info-box">Actual profit earned from extra users.</div>
+      )}
+    </div>
+
+    <div
+      className="justify-space-between row-hover"
+      onMouseEnter={() => setHoveredRow("expectedProfit")}
+      onMouseLeave={() => setHoveredRow(null)}
+    >
+      <h2>Expected Profit:</h2> <h3>${profit.toFixed(2)}</h3>
+      {hoveredRow === "expectedProfit" && (
+        <div className="hover-info-box">Estimated profit based on required users.</div>
+      )}
+    </div>
+
+    <div
+      className="justify-space-between row-hover"
+      onMouseEnter={() => setHoveredRow("leagueMembers")}
+      onMouseLeave={() => setHoveredRow(null)}
+    >
+      <h2>League Members:</h2> <h3>{currentUsers}</h3>
+      {hoveredRow === "leagueMembers" && (
+        <div className="hover-info-box">Total users currently in the league.</div>
+      )}
+    </div>
+
+    <div
+      className="justify-space-between row-hover"
+      onMouseEnter={() => setHoveredRow("minUsers")}
+      onMouseLeave={() => setHoveredRow(null)}
+    >
+      <h2>Min Reqd Users:</h2> <h3>{Math.ceil(requiredUsers)}</h3>
+      {hoveredRow === "minUsers" && (
+        <div className="hover-info-box">Minimum users required to complete the pot.</div>
+      )}
+    </div>
+
+    <div
+      className="justify-space-between row-hover"
+      onMouseEnter={() => setHoveredRow("usersPlayed")}
+      onMouseLeave={() => setHoveredRow(null)}
+    >
+      <h2>Users Played:</h2>
+      <h3>{match.userPredictions.length > 0 ? match.userPredictions.length : "None"}</h3>
+      {hoveredRow === "usersPlayed" && (
+        <div className="hover-info-box">Number of users who submitted predictions.</div>
+      )}
+    </div>
+  </div>
+
  <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
           <button className='btn-grad promobtn' onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
           <button className='btn-grad promobtn' onClick={() => handleDashboardOpening(match._id)}>Dashboard</button>
@@ -551,7 +608,6 @@ const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
     </video>
   </div>
 )}
-
 
 
 </div>

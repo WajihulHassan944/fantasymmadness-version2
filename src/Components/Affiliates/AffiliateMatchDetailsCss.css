@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gidugu&display=swap');
 
 @font-face {
   font-family: 'Edosz';
@@ -137,20 +139,6 @@ margin-bottom:8px;
 font-family: 'Edosz', sans-serif;
 margin-top:10px;
 }
-
-.criteria-details{
-  font-size: 21px;
-  padding: 20px 30px;
-  width: 100%;
-  max-width: 800px;
-  text-align: center;
-  font-family: 'Baloo Tamma 2', sans-serif;
-	color:#fff;
-	font-weight:600; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 
- 
-  -3px -3px 6px rgba(0, 0, 0, 0.9);
-}
-
 @media (max-width:768px){
 .ufc-title {
   font-size: 70px; /* Adjust as needed */
@@ -413,4 +401,106 @@ height:150px;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
   font-size: 25px; /* Adjust as needed */
+}
+
+
+
+
+
+
+
+
+
+
+.criteria-details-another{
+  font-size: 21px;
+  padding: 20px 30px;
+  padding-top:0;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  font-family: 'Baloo Tamma 2', sans-serif;
+	color:#000;
+	font-weight:600; 
+  background-image: url(../../Assets/affiliateDashboard/criteria.png);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  margin-top:40px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  height: 41vh;
+}
+.criteria-details-another h5{
+  color:#fff;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: italic;
+  background-color: #4d0000;
+  font-size: 23px;
+  padding:8px 20px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.justify-space-between{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.criteria-details-another h2{
+  font-size: 24px;
+  color: #4d0000;
+
+}
+
+.criteria-details-another h3{
+  font-size: 25px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: italic;
+}
+
+
+.row-hover {
+  position: relative;
+}
+
+.row-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.hover-info-box {
+  position: absolute;
+  top: 50%;
+  right: -235px; /* Adjust as needed */
+  transform: translateY(-50%);
+  background: black;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+  width: 200px;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 14px;
+  color: white;
+  text-align: left;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Triangle Pointer */
+.hover-info-box::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px; /* Position triangle on the left */
+  transform: translateY(-50%) rotate(180deg); /* Rotate 180 degrees */
+  width: 0;
+  height: 0;
+  border-left: 10px solid black; /* Triangle pointing to the row */
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
 }
