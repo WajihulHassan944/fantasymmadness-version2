@@ -504,3 +504,23 @@ height:150px;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
 }
+@media(max-width:768px){
+  
+.criteria-details-another{
+  font-size: 18px;
+  padding: 20px;
+  padding-top:0;
+  width: 90%;
+}
+.criteria-details-another h5{
+  font-size: 21px;
+  margin-bottom: 15px;
+}
+.criteria-details-another h2{
+  font-size: 22px;
+}
+.criteria-details-another h3{
+  font-size: 23px;
+}
+
+}
