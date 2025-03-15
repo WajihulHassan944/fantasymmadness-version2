@@ -151,6 +151,7 @@ const Header = () => {
             <NavLink to="/AffiliateDashboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Fights</NavLink>
             <NavLink to="/HowItWorks" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How it works</NavLink>
             <NavLink to="/affiliate-league" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>My League</NavLink>
+            <NavLink to="/past-promotions" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Past Promotions</NavLink>
             <NavLink to="/AffiliateProfile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
             <NavLink to="/AffiliatePromotion" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Insights</NavLink>
             <NavLink to="/affiliate-guides" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Guides</NavLink>
@@ -326,6 +327,7 @@ const Header = () => {
             <>
               <NavLink to="/AffiliateDashboard" className='anchorlinks' onClick={closeMenu}>Fights</NavLink>
               <NavLink to="/affiliate-league" className='anchorlinks' onClick={closeMenu}>My League</NavLink>
+              <NavLink to="/past-promotions" className='anchorlinks' onClick={closeMenu}>Past Promotions</NavLink>
               <NavLink to="/HowItWorks" className='anchorlinks' onClick={closeMenu}>How it works</NavLink>
               <NavLink to="/AffiliateProfile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
               <NavLink to="/AffiliatePromotion" className='anchorlinks' onClick={closeMenu}>Insights</NavLink>

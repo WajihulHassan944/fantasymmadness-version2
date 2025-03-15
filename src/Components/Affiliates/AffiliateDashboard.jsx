@@ -86,16 +86,17 @@ const AffiliateDashboard = () => {
     );
   }
 
-  // Filtering fights
   const promotionFights = promoMatches.filter(match => 
+    match.matchType === "SHADOW" && 
     !match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
   );
   
   const promotedFights = promoMatches.filter(match => 
-    match.AffiliateIds.some(affiliateObj => affiliateObj.AffiliateId === affiliate._id.toString())
+    match.AffiliateIds.some(affiliateObj => 
+      affiliateObj.AffiliateId === affiliate._id.toString() && 
+      matches.some(m => m._id === affiliateObj.matchId && m.matchShadowOpenStatus === "open")
+    )
   );
-
-  // Pagination functions
   const handlePromoNext = () => {
     if (promoStartIndex + MAX_CARDS < promotionFights.length) {
       setPromoStartIndex(promoStartIndex + MAX_CARDS);

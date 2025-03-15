@@ -95,6 +95,7 @@ import CalenderOfMatches from './Components/CalenderOfMatches/CalenderOfMatches'
 import PastFightsNew from './Components/PastFightsNew/PastFightsNew';
 import PastFightDetails from './Components/PastFightsNew/PastFightDetails';
 import AffiliateLeague from './Components/Affiliates/AffiliateLeague/AffiliateLeague';
+import PastPromotions from './Components/Affiliates/PastPromotions/PastPromotions';
 
 function AppContent() {
   const location = useLocation();
@@ -363,6 +364,7 @@ useEffect(() => {
         <Route path="/fights-news" element={<NewsFeed />} />
         <Route path="/calendar-of-fights" element={<CalenderOfMatches />} />
         <Route path="/affiliate-league" element={<AffiliateLeague />} />
+        <Route path="/past-promotions" element={<PastPromotions />} />
         
         
         <Route path="/myLeagueRecords" element={<PrivateRoute element={<Leagues />} />} />

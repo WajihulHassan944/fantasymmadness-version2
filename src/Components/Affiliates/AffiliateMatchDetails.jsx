@@ -12,10 +12,12 @@ import "../Dashboard/FightDetails.css"
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
 import VS from "../../Assets/affiliateDashboard/vs.png";
 import { Signer } from 'aws-sdk';
+import UsersPlayed from './UsersPlayed/UsersPlayed';
 
 
 
 const AffiliateMatchDetails = ({ matchId, affiliateId }) => {
+  const [showUsersPlayed, setShowUsersPlayed] = useState(false);
   const [hoveredRow, setHoveredRow] = useState(null);
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
@@ -384,7 +386,49 @@ const actualProfit = extraActualProfit / 2;
       alert("Failed to activate match. Please try again.");
     }
   };
+  const handleToggleFightStatus = async (matchId, currentStatus) => {
+    const newStatus = currentStatus === "inactive" ? "active" : "inactive";
+    toast.loading("Updating match status...");
   
+    try {
+      const response = await fetch(`https://fantasymmadness-game-server-three.vercel.app/update-match-status-shadow/${matchId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        toast.dismiss();
+        toast.success(data.message);
+        dispatch(fetchMatches());
+      } else {
+        toast.dismiss();
+        toast.error("Error updating match status: " + data.message);
+        console.error("Error updating match status:", data.message);
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error("Failed to update match status");
+      console.error("Failed to update match status:", error);
+    }
+  };
+
+
+  if (showUsersPlayed) {
+    return (
+       <>
+    <i
+      className="fa fa-arrow-circle-left dashboard-arrow-circle"
+      aria-hidden="true"
+      onClick={() => setShowUsersPlayed(false)} // Go back to the previous component
+    ></i>
+    <UsersPlayed userPredictions={match.userPredictions} />
+   
+  </> );
+  }
 
   return (
     
@@ -415,6 +459,7 @@ const actualProfit = extraActualProfit / 2;
    <div class="promotional-details-row promotional-details-row-four">
    <h3>fantasymmadness.com/shadow/{match.matchName}/{affiliate.firstName} {affiliate.lastName}</h3></div>
 
+<div className='flexed-div'>
    <button 
   className='save-updated-btn startFight' 
   onClick={match.matchShadowStatus === "inactive" ? () => handleActiveFight(match._id) : null}
@@ -422,6 +467,14 @@ const actualProfit = extraActualProfit / 2;
 >
   {match.matchShadowStatus === "inactive" ? "Start this Fight" : "Fight Started"}
 </button>
+  <button 
+    className='save-updated-btn startFight' 
+    onClick={() => handleToggleFightStatus(match._id, match.matchShadowStatus)}
+  >
+    {match.matchShadowStatus === "inactive" ? "Activate Fight" : "Deactivate Fight"}
+  </button>
+</div>
+
  </div>
  
  
@@ -477,6 +530,8 @@ const actualProfit = extraActualProfit / 2;
       className="justify-space-between row-hover"
       onMouseEnter={() => setHoveredRow("usersPlayed")}
       onMouseLeave={() => setHoveredRow(null)}
+      onClick={() => setShowUsersPlayed(true)}
+      
     >
       <h2>Users Played:</h2>
       <h3>{match.userPredictions.length > 0 ? match.userPredictions.length : "None"}</h3>
@@ -485,6 +540,7 @@ const actualProfit = extraActualProfit / 2;
       )}
     </div>
   </div>
+
 
  <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
           <button className='btn-grad promobtn' onClick={() => handleDeleteFight(match._id)}>Delete Fight</button>
@@ -608,6 +664,14 @@ const actualProfit = extraActualProfit / 2;
     </video>
   </div>
 )}
+
+
+<div className='fight-timeline-wrapper'>
+  <h1>Promotion Created</h1><div className='break'></div>
+  <h1>Fight Rendered on User Dashboard</h1>
+ </div>
+
+
 
 
 </div>

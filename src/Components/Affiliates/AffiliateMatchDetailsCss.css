@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gidugu&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 @font-face {
   font-family: 'Edosz';
   src: url('../../Assets/affiliateDashboard/edosz.ttf') format('truetype');
@@ -467,6 +467,10 @@ height:150px;
 
 .row-hover {
   position: relative;
+  
+}
+.row-hover:last-of-type{
+  cursor: pointer;
 }
 
 .row-hover:hover {
@@ -523,4 +527,64 @@ height:150px;
   font-size: 23px;
 }
 
+}
+
+.flexed-div{
+  display:flex;
+  gap:20px;
+}
+
+.fight-timeline-wrapper{
+  margin-top:70px;
+  padding:2% 2.5%;
+  display: flex;
+  width: 70%;
+  background-image: url(../../Assets/affiliateDashboard/criteria.png);
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  gap:20px;
+  font-family: 'Caveat Brush', cursive;
+  color: #4d0000;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border:4px solid gray;
+  border-radius: 5px;
+}
+.fight-timeline-wrapper h1 {
+  font-weight: bold;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  font-size: 27px;
+  
+}
+
+.fight-timeline-wrapper .break{
+  width:90px;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: relative;
+  border-radius: 30px;
+}
+@media (max-width: 768px) {
+  .flexed-div {
+    flex-direction: column; /* Stack items vertically */
+    gap: 15px; /* Reduce gap for better spacing */
+  }
+
+  .fight-timeline-wrapper {
+    width: 90%; /* Make it more responsive */
+    padding: 4%; /* Adjust padding for smaller screens */
+    flex-direction: column; /* Stack elements for better mobile layout */
+    gap: 15px; /* Reduce gap for a tighter look */
+    border-radius: 8px; /* Slightly smoother corners */
+  }
+
+  .fight-timeline-wrapper h1 {
+    font-size: 22px; /* Reduce font size for readability */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .fight-timeline-wrapper .break {
+    width: 70px; /* Make the divider slightly smaller */
+  }
 }
