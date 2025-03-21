@@ -581,7 +581,7 @@ const navigate = useNavigate();
 ) : (
   <div className='transformed-div-two-partTwo'>
     <p style={{ marginLeft: '-15px' }}>
-      Shadow Fight
+      {match.matchType} <span className='pots' style={{color:"blue"}}>POT: ${match.pot}</span>
     </p>
   </div>
 
