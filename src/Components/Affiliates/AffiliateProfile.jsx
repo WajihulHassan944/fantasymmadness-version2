@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import cashapp from "../../Assets/cashapp.png";
-import venmo from "../../Assets/venmo.png";
-import paypal from "../../Assets/paypal.png";
+import "../CreateAccount/CreateAccount.css";
+import "../UserProfile/Profile.css";
 import "./affiliateprofile.css";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const AffiliateProfile = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
-  const navigate = useNavigate();
   const [profileUrl, setProfileUrl] = useState(affiliate?.profileUrl || null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [payoutAmount, setPayoutAmount] = useState();
@@ -19,6 +17,8 @@ const AffiliateProfile = () => {
   const [phone, setPhone] = useState(affiliate?.phone || '');
   const [zipCode, setZipCode] = useState(affiliate?.zipCode || '');
   const [shortBio, setShortBio] = useState(affiliate?.shortBio || '');
+  const router = useRouter();
+  
   const [venmoId, setVenmoId] = useState(
     affiliate?.preferredPaymentMethod === 'Venmo' ? affiliate.preferredPaymentMethodValue : ''
   );
@@ -351,7 +351,7 @@ const AffiliateProfile = () => {
       />
       <span className='slider round'></span>
     </label>
-    <img src={venmo} alt='Venmo' />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743008104/affiliateGuide/dlncedhoow0psafar6sp.png" alt='Venmo' />
   </div>
 
   {/* Cash App */}
@@ -379,7 +379,7 @@ const AffiliateProfile = () => {
       />
       <span className='slider round'></span>
     </label>
-    <img src={cashapp} alt='Cash App' />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743008182/affiliateGuide/kxgccvamkih3l4pupenh.png" alt='Cash App' />
   </div>
 
   {/* PayPal */}
@@ -407,7 +407,7 @@ const AffiliateProfile = () => {
       />
       <span className='slider round'></span>
     </label>
-    <img src={paypal} alt='PayPal' />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743008237/affiliateGuide/fg8ozrnkepmtv3r7wqli.png" alt='PayPal' />
   </div>
 
   {/* Submit Button */}

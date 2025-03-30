@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import "./AffiliatedashboardNew.css";
+import "./AffiliatedashboardNew.module.css";
 import AffiliateAddNewMatch from './AffiliateAddNewMatch';
 import AffiliateMatchDetails from './AffiliateMatchDetails';
 import AffiliateHeadingBackground from "../../Assets/affiliateDashboard/ten.png";
 import Fighter from "../../Assets/affiliateDashboard/elevenu.png";
 import { fetchMatches } from '../../Redux/matchSlice';
+import Image from 'next/image';
 const MAX_CARDS = 5; // Max number of fight cards to display at a time
 
 const AffiliateDashboard = () => {
@@ -135,14 +136,14 @@ const AffiliateDashboard = () => {
         </section>
         
         <section className="affiliate-dashboard-fights">
-          <img src={Fighter} alt="fighter" className='section-fighter' />
+          <Image src={Fighter} alt="fighter" className='section-fighter' />
           <div className="fights-div-promotion">
             <div className='fights-grid-affiliate'>
 
               {/* Promotion Fights */}
               <div className="column one">
                 <div className="promotion-container">
-                  <img src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
+                  <Image src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
                   <h1 className="promotion-heading">Shadow Templates</h1>
                 </div>
 
@@ -164,7 +165,7 @@ const AffiliateDashboard = () => {
               {/* Promoted Fights */}
               <div className="column two">
                 <div className="promotion-container">
-                  <img src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
+                  <Image src={AffiliateHeadingBackground} alt="Background" className="promotion-bg" />
                   <h1 className="promotion-heading">Promoted Fights</h1>
                 </div>
 

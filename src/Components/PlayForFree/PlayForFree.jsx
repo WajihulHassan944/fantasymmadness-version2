@@ -1,11 +1,11 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import "../HowToPlay/HowToPlay.css";
 const PlayForFree = () => {
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const router = useRouter();
 
   const handlePlayNowClick = () => {
-    navigate('/login'); 
+    router.push('/login'); 
   };
 
   return (
@@ -14,7 +14,7 @@ const PlayForFree = () => {
       <i
         className="fa fa-arrow-circle-left home-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
         
       ></i>
    
@@ -51,13 +51,10 @@ const PlayForFree = () => {
           Click the button below to start playing for free!
         </p>
 
-        <button className='btn-grad' onClick={handlePlayNowClick}>
+        <button className='playForFreeBtns' onClick={handlePlayNowClick} style={{cursor:'pointer'}}>
           Play now for free
         </button>
-        <button className='btn-grad' onClick={()=> navigate('/HowToPlay')}>
-          How to play
-        </button>
-      </div>
+        </div>
     </div>
   );
 };

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux store
-import Logoimage from "../../Assets/myimg.jpg";
-import Vs from "../../Assets/newFightDetails/yes.png";
 import "./FightCosting.css";
 import "./FightCostingUpdated.css";
-
 import MakePredictions from '../MakePredictions/MakePredictions'
 
 
@@ -107,7 +104,7 @@ const FightCosting = ({ matchId }) => {
     <div className='fightCostingUpdated'>
       <div className='member-header'>
         <div className='member-header-image'>
-          <img src={user.profileUrl || Logoimage} alt="Logo" />
+          <img src={user.profileUrl || "https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743079917/home/rtr4tmlkw82rmk1kywuc.webp"} alt="Logo" />
         </div>
         <h3><span className='toRemove'>Member Name: </span>{user.firstName} {user.lastName}</h3>
         <h3><span className='toRemove'>Current</span> Plan: {user.currentPlan} </h3>
@@ -126,13 +123,12 @@ const FightCosting = ({ matchId }) => {
 </h1>
 
           <h2 className='fightSubHeading'>Max: {match.maxRounds} rounds</h2>
-          <h2 className='fightSubHeading potInDetails'>POT: ${match.pot}</h2>
          <div className='fightersImagesInFightDetailsUpdated'>
           <div className='imgWrapFightsUpdated'>
             <img src={match.fighterAImage} alt={match.matchFighterA} />
             <h1>{match.matchFighterA}</h1>
           </div>
-         <img src={Vs} alt="vs" className='vsImg' />
+         <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743257824/home/kthrayi8bcbkvxcm7ilg.png" alt="vs" className='vsImg' />
           <div className='imgWrapFightsUpdated'>
             <img src={match.fighterBImage} alt={match.matchFighterB} />
             <h1>{match.matchFighterB}</h1>

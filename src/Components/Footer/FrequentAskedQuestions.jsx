@@ -1,28 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Faqs.css";
 
-const FrequentAskedQuestions = () => {
-  const [faqs, setFaqs] = useState([]); // State to store FAQs
+const FrequentAskedQuestions = ({ faqs }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
-  // Fetch FAQ data from the server
-  useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/faqs'); // Replace with your API endpoint
-        if (!response.ok) {
-          throw new Error("Failed to fetch FAQs");
-        }
-        const data = await response.json();
-        setFaqs(data.data); // Set the fetched data to state
-      } catch (error) {
-        console.error("Error fetching FAQs:", error);
-      }
-    };
-
-    fetchFaqs();
-  }, []);
-
+  
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index); // Toggle open/close
   };

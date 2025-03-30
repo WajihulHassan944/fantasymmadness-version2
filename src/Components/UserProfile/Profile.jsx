@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import "./Profile.css";
-import { useNavigate } from 'react-router-dom';
+import "../CreateAccount/Membership.css";
+import "../CreateAccount/CreateAccount.css";
+import "../Affiliates/affiliateprofile.css";
 import AddTokensToWallet from './AddTokensToWallet';
-import cashapp from "../../Assets/cashapp.png";
-import venmo from "../../Assets/venmo.png";
-import paypal from "../../Assets/paypal.png";
 import { toast } from 'react-toastify';
 import MembershipCheckout from '../CreateAccount/MembershipCheckout';
+import { useRouter } from 'next/router';
 
 
 const Profile = () => {
-    const user = useSelector((state) => state.user); // Access user details from Redux store
-const navigate = useNavigate();
-    // Local state to manage form inputs
+  const router = useRouter();
+   
+  const user = useSelector((state) => state.user); // Access user details from Redux store
     const [firstName, setFirstName] = useState(user.firstName || '');
     const [profileUrl, setProfileUrl] = useState(user.profileUrl || null);
    
@@ -213,7 +213,7 @@ const [membershipGo, setMembershipGo] = useState(null);
 
   
   const handleleaguesClick = () => {
-    navigate('/myLeagueRecords');
+    router.push('/myLeagueRecords');
   };
 
 
@@ -256,7 +256,7 @@ const [membershipGo, setMembershipGo] = useState(null);
         <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
       ></i>
             <div className='member-header'>
                 <div className='member-header-image'>
@@ -418,7 +418,7 @@ const [membershipGo, setMembershipGo] = useState(null);
                 
                 <div className='divTwoProfile' >
                       <button type="submit" className='btn-grad profile-btn' onClick={() => handleleaguesClick()} style={{width:'40%', background:'#0d8c17'}}>My Leagues</button>
-                      <button type="submit" className='btn-grad profile-btn' onClick={() => navigate('/trashed-fights')} style={{width:'40%', background:'crimson'}}>My Trashed Fights</button>
+                      <button type="submit" className='btn-grad profile-btn' onClick={() => router.push('/trashed-fights')} style={{width:'40%', background:'crimson'}}>My Trashed Fights</button>
                    
                   <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handlepaymentDetailsClick()}>My Payment Details</button>
                    <button type="submit" className='btn-grad profile-btn' style={{width:'40%'}} onClick={() => handleAddTokenClick()}>Add tokens to Wallet</button>
@@ -455,7 +455,7 @@ const [membershipGo, setMembershipGo] = useState(null);
       />
       <span className='slider round'></span>
     </label>
-    <img src={venmo} alt='Venmo' />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743008104/affiliateGuide/dlncedhoow0psafar6sp.png" alt='Venmo' />
   </div>
 
   {/* Cash App */}
@@ -483,7 +483,7 @@ const [membershipGo, setMembershipGo] = useState(null);
       />
       <span className='slider round'></span>
     </label>
-    <img src={cashapp} alt='Cash App' />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743008182/affiliateGuide/kxgccvamkih3l4pupenh.png" alt='Cash App' />
   </div>
 
   {/* PayPal */}
@@ -511,7 +511,7 @@ const [membershipGo, setMembershipGo] = useState(null);
       />
       <span className='slider round'></span>
     </label>
-    <img src={paypal} alt='PayPal' />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743008237/affiliateGuide/fg8ozrnkepmtv3r7wqli.png" alt='PayPal' />
   </div>
 
   {/* Submit Button */}

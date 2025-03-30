@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import './UpcomingFightsUser.css';
-import { useNavigate } from 'react-router-dom';
-
+import { useRouter } from 'next/router';
+import "../HomeAnother/Home.css";
+import "../Home/Home.css";
 const UpcomingFights = () => {
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
   const [upcomingMatches, setUpcomingMatches] = useState([]);
-  
-  const navigate = useNavigate();
-//https://codepen.io/mark_sottek/pen/YzMdNzg
+  const router = useRouter();
 
   const handleFightClick = () => {
-    navigate('/login');
+    router.push('/login');
   };
 
   useEffect(() => {

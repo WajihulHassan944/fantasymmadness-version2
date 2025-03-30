@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './homeLeaderboard.css';
 import FighterOne from '../../Assets/fighterOne.png';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from "next/link";
 import { fetchMatches } from '../../Redux/matchSlice';
 
 const HomeLeaderboard = () => {
@@ -70,8 +70,8 @@ const dispatch = useDispatch();
           <h1 className='home-leaderboard-points'>#{index + 1}</h1>
   
           <div className='home-leaderboard-buttons'>
-            <Link to="/login" ><button>Login</button></Link>
-            <Link to="/CreateAccount" ><button>Sign Up Now!</button></Link>
+            <Link href="/login" ><button>Login</button></Link>
+            <Link href="/CreateAccount" ><button>Sign Up Now!</button></Link>
             
           </div>
         </div>

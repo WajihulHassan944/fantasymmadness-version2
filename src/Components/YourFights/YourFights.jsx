@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "./YourFights.css";
+import "../CreateAccount/Membership.css";
+import "../Dashboard/Dashboard.css";
+import "../Home/Home.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import FightCosting from '../Dashboard/FightCosting';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData'; // Import your custom hook
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const YourFights = () => {
   const dispatch = useDispatch();
@@ -16,8 +19,8 @@ const YourFights = () => {
   const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [removedMatches, setRemovedMatches] = useState([]);
-const navigate = useNavigate();
   const user = useSelector((state) => state.user); // Access user details from Redux store
+  const router = useRouter();
 
   // Use your custom hook to get leaderboard data
   const { leaderboard } = useLeaderboardData(matches);
@@ -210,7 +213,7 @@ const navigate = useNavigate();
     <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
       ></i>
       <div className='member-header'>
         <div className='member-header-image'>

@@ -1,7 +1,5 @@
 import React from 'react'
-import SponsorOne from "../../Assets/Sponsor-1.jpg";
-import SponsorTwo from "../../Assets/sponsortwo.png";
-
+import "../Home/Sponsors.css";
 const About = () => {
     return (
         <div className='sponsors-wrap'>

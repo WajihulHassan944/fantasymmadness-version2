@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 const HomeAnother = () => {
   const dispatch = useDispatch();
   const howlerRef = useRef(null);
@@ -94,7 +94,7 @@ const [buttonText, setButtonText] = useState('Send Message');
       <h1 className='homeAnotherHeading'>Our Leagues</h1>
       <p style={{marginBottom:'30px'}}>Joining a fighter's league offers excitement and the chance for significant earnings and rewards. Research various leagues to find the right fit for your goals and skill level. Best of luck on your boxing journey!
       </p>
-      <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
+      <center><Link href="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
 
@@ -103,7 +103,7 @@ const [buttonText, setButtonText] = useState('Send Message');
       <h1 className='homeAnotherHeading'>Leaderboard</h1>
       <p style={{marginBottom:'30px'}}>Hello fight enthusiast! Put your combat knowledge to the test and win prizes by joining our prediction game. Predict upcoming fight outcomes, earn points for each correct prediction, and climb the leaderboard for bigger rewards! 
       </p>
-      <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
+      <center><Link href="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
 
@@ -115,7 +115,7 @@ const [buttonText, setButtonText] = useState('Send Message');
       MMA, or mixed martial arts, is a dynamic and ever-evolving combat sport that brings together a variety of disciplines, including boxing, Brazilian Jiu-Jitsu, Muay Thai, and wrestling. It’s a true test of versatility, where fighters must adapt to different styles and techniques to secure victory.
 
        </p>
-       <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
+       <center><Link href="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
  
@@ -125,7 +125,7 @@ const [buttonText, setButtonText] = useState('Send Message');
       <p style={{marginBottom:'30px'}}>
       Welcome to Fantasy-MMadness, where you can dive into the thrill of fantasy MMA without any cost! Create your dream lineup, make fight predictions, and compete for bragging rights—all for free. Whether you're new or experienced, our free games let you learn the ropes and enjoy the excitement with no financial risk. Ready to get started? Sign up, make your predictions, and see how you rank on the leaderboard!
      </p>
-     <center><Link to="/login" className='playNowLink'>Play Now!</Link></center>
+     <center><Link href="/login" className='playNowLink'>Play Now!</Link></center>
     </div>
 </div>
 

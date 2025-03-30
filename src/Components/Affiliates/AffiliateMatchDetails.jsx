@@ -1,16 +1,22 @@
+"use client";
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useRef }  from 'react';
 import AffiliateFightLeaderboard from './AffiliateFightLeaderboard';
 import { fetchMatches } from '../../Redux/matchSlice';
 import QRCode from 'qrcode'; 
-import "./AffiliateMatchDetailsCss.css";
-import { ReactMediaRecorder } from 'react-media-recorder';
+import dynamic from "next/dynamic";
+import "./affiliateprofile.css";
+import "../CreateAccount/CreateAccount.css"
+const ReactMediaRecorder = dynamic(
+  () => import("react-media-recorder").then((mod) => mod.ReactMediaRecorder),
+  { ssr: false }
+);
+
 import s3 from "../Config/s3Config"; // Importing the configured S3 instance
 import { toast } from 'react-toastify';
 import "../Dashboard/FightDetails.css"
 import { stopMusic, playMusic } from '../../Redux/musicSlice';
-import VS from "../../Assets/affiliateDashboard/vs.png";
 import { Signer } from 'aws-sdk';
 import UsersPlayed from './UsersPlayed/UsersPlayed';
 
@@ -446,7 +452,7 @@ const actualProfit = extraActualProfit / 2;
  </div>
  <div class="promotional-details-rows">
    <div class="promotional-details-row promotional-details-row-two">
-   <h3 class="makelower">{match.matchFighterA}</h3><img src={VS} alt="vs" /><h3 class="makeupper">{match.matchFighterB}</h3>
+   <h3 class="makelower">{match.matchFighterA}</h3><img src="https://res.cloudinary.com/daflot6fo/image/upload/v1742999736/jecyacmfqqmq2tmnek3q.png" alt="vs" /><h3 class="makeupper">{match.matchFighterB}</h3>
    </div>
    <div class="promotional-details-row promotional-details-row-three">
    <h3 style={{fontSize:'17px'}}>Type: {match.matchType}</h3>

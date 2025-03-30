@@ -135,7 +135,7 @@ if (showPredictions) {
           </div>
 
           
-          <button className='btn-grad' onClick={() => handleMatchClick()}>
+          <button className='btn-grad' onClick={() => handleMatchClick()} style={{width:'250px'}}>
           <i className="fa fa-circle" style={{color:'yellow'}}></i> Purchase</button>
 </div>
 <p className='note'>You must make predictions atleast 10 minutes before the  fight starts or they will not be used when the fight starts</p>
