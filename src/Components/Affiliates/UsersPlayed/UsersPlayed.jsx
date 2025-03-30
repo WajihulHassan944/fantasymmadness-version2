@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./style.css";
-import userhand from "../../../Assets/affiliateDashboard/handtwo.png";
 import { useSelector } from "react-redux";
 
 const UsersPlayed = ({ userPredictions }) => {
@@ -38,7 +37,7 @@ const UsersPlayed = ({ userPredictions }) => {
 
   return (
     <div className="users-played-wrapper">
-      <img src={userhand} alt="hand" className="userhand" />
+      <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743086279/home/rla2m3mkyptmg9hxqeoa.png" alt="hand" className="userhand" />
       <h2 className="played-users-head">Played By</h2>
 
       <div className="user-played-cards-wrap">

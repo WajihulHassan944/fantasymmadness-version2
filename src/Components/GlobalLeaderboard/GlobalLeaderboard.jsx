@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './GlobalLeaderboard.css';
+import "../CreateAccount/Membership.css";
+import "../Dashboard/FightDetails.css";
+import "../Home/Home.css";
 import FighterOne from '../../Assets/fighterOne.png';
 import useLeaderboardData from '../../CustomFunctions/useLeaderboardData';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const GlobalLeaderboard = () => {
   const [refreshed, setRefreshed] = useState(false);
   const matches = useSelector((state) => state.matches.data);
   const { leaderboard, playerCount } = useLeaderboardData(matches);
-  console.log(leaderboard);
-  const navigate = useNavigate();
   const userLoggedIn = useSelector((state) => state.user); // Access user details from Redux store
+const router = useRouter();
 
   useEffect(() => {
     
@@ -53,7 +55,7 @@ const GlobalLeaderboard = () => {
       <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
       ></i>
 
       <div className='member-header'>

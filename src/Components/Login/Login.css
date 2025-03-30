@@ -108,6 +108,10 @@
  font-size: 23px;
  color:#fff;
  text-decoration: none;
+ background: transparent;
+ border: none;
+ outline: none;
+ cursor: pointer;
 }
 
 .toFlexDiv {

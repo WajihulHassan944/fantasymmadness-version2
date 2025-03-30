@@ -480,8 +480,11 @@ line-height: 1.5;
   width:90%;
   max-width: 500px;
 }
-.contactWrapperHomeAnother form textarea{
+.contactWrapperHomeAnother form textarea, 
+.contactWrapperHomeAnother form input{
   padding:10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 .contactWrapperHomeAnother form button{
   font-family: 'UFCSansCondensedBold';

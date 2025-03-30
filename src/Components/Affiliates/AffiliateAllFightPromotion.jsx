@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
+import "../UserProfile/Profile.css";
 import "./affiliateprofile.css";
-import { useNavigate } from 'react-router-dom';
-
+import "../CreateAccount/Membership.css";
 import { useDispatch } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
+import { useRouter } from 'next/router';
 
 const AffiliateAllFightPromotion = () => {
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
  const dispatch = useDispatch();
+const router = useRouter();
 
-  const navigate = useNavigate();
- 
   useEffect(() => {
     if (matchStatus === 'idle') {
       console.log("Fetching matches...");
@@ -54,7 +54,7 @@ const AffiliateAllFightPromotion = () => {
      <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
       ></i>
    
       <div className='member-header'>

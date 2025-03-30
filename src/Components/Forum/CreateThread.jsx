@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import "./CreateThread.css";
+import { useRouter } from 'next/router';
 const CreateThread = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const user = useSelector((state) => state.user); // Access user details from Redux store
-  const navigate = useNavigate(); // Use navigate for redirection after login
-
+  const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -29,7 +28,7 @@ const CreateThread = () => {
         setTitle('');
         setBody('');
         alert('Thread created!');
-        navigate('/community-forum');
+        router.push('/community-forum');
         
       })
       .catch(err => console.error(err));

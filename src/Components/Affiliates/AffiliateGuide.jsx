@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Resetpassword from "../../Assets/resetpassword.png";
-import EditPhoto from "../../Assets/editphoto.png";
-import Balance from "../../Assets/balance.png";
-import BackArrow from "../../Assets/backarrow.png";
-import MemberName from "../../Assets/membername.png";
-import AffiliateCriteria from "../../Assets/promotionaffiliatecriteria.png";
-import FightDetailsPage from "../../Assets/fightdetailsaffiliate.png";
-import PreferredPaymentMethod from "../../Assets/prefferedpayment.png";
-import ProfileContent from "../../Assets/profilecontent.png";
-import PromotionalImage from "../../Assets/promotional-image (4).png";
-import RequestPayout from "../../Assets/requestpayout.png";
-import RecordPodcast from "../../Assets/recordpodcast.png";
+import "../Dashboard/guide.css";
 const AffiliateGuide = () => {
     const [showArrowUp, setShowArrowUp] = useState(false);
    
@@ -115,7 +104,7 @@ const AffiliateGuide = () => {
            
            <h2>Reset Password</h2>
            <div className='guide-flex-row-left-div'>
-            <img src={Resetpassword} alt="img" />
+            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743005950/affiliateGuide/fz9gmf9as4czba4cpxjo.png" alt="img" />
             <p>To reset your password, please navigate to the login page and select "Forgot your password." Enter the email address associated with your account and submit the request. You will receive an email containing a secure link where you can enter and confirm a new password. Once completed, your account will be updated with the new password.</p>
 
              </div>
@@ -129,7 +118,7 @@ const AffiliateGuide = () => {
            <p>
         To update your account's profile photo, go to the "Profile" tab, where your current profile photo is displayed at the top. Click on the "Choose File" button to select your new photo, then scroll to the bottom and click "Save Settings." Your profile picture will be updated successfully.
     </p>
-            <img src={EditPhoto} alt="img" />
+            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006291/affiliateGuide/c9t16zhip5b7qwxatcm6.png" alt="img" />
           
             </div>
         </div>
@@ -140,7 +129,7 @@ const AffiliateGuide = () => {
            
            <h2>Account Balance</h2>
            <div className='guide-flex-row-left-div'>
-            <img src={Balance} alt="img" />
+            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006470/affiliateGuide/xstfqn58s42c7rxeezxs.png" alt="img" />
             <p>
         Your account balance reflects the profit earned from your promoted fights. You can request a payout at any time to withdraw your balance. To view your balance, navigate to the "Profile" tab, where it will be displayed at the top of the header.
     </p>
@@ -157,7 +146,7 @@ const AffiliateGuide = () => {
    <p>
         Clicking on any promoted fight element under the dashboard's "Your Promotion Fights" section will direct you to the Fight Details component. This page displays all the relevant fight details, including options to delete the promotion, view the fight's dashboard, download the promotional banner for social media, access the promotional link, and record a podcast.
     </p>
-       <img src={FightDetailsPage} alt="Fight Details Page Guide" />
+       <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007124/affiliateGuide/bps4lnozasipuud4vh5x.png" alt="Fight Details Page Guide" />
    </div>
            </div>
 
@@ -165,7 +154,7 @@ const AffiliateGuide = () => {
            <div className='guide-flex-row-left' id="AffiliateCriteria">
            <h2>Affiliate Criteria for Shadow Fights</h2>
 <div className='guide-flex-row-left-div'>
-    <img src={AffiliateCriteria} alt="Affiliate Criteria for Shadow Fights Guide" />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006922/affiliateGuide/krraodc33l1xipcg8dru.png" alt="Affiliate Criteria for Shadow Fights Guide" />
     <p>
         The affiliate criteria for shadow fights require a minimum number of players to meet the promotion's budget. For example, if you set the pot winner/award amount to 200 tokens and the player buy-in tokens to 10, you will need 20 players to start the fight. If the budget is not met by the fight's start time, the fight will not proceed. 
 
@@ -185,7 +174,7 @@ const AffiliateGuide = () => {
     <p>
         After logging in, your dashboard header displays your username across all components, indicating the logged-in user.
     </p>
-    <img src={MemberName} alt="Member Name on Header Guide" />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006743/affiliateGuide/rnzjx9ukuxv5egivo5fb.png" alt="Member Name on Header Guide" />
    
 </div>
  </div>
@@ -197,7 +186,7 @@ const AffiliateGuide = () => {
            
            <h2>Back Arrow across components</h2>
            <div className='guide-flex-row-left-div'>
-            <img src={BackArrow} alt="img" />
+            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006607/affiliateGuide/xrltc98m0tcdto2yvusf.png" alt="img" />
             <p>
         A back arrow is available across all dashboard components, located in the top left corner. This allows you to easily navigate back to previous screens for a smoother user experience.
     </p>
@@ -213,7 +202,7 @@ const AffiliateGuide = () => {
     <p>
         You can set your preferred payment method, which will be visible to the admin. This is helpful if you wish to withdraw your account balance to a monetary amount.
     </p>
-    <img src={PreferredPaymentMethod} alt="Preferred Payment Method Guide" />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007265/affiliateGuide/vxfumohrkyrs3c2qgh4g.png" alt="Preferred Payment Method Guide" />
 </div>
   </div>
    
@@ -223,7 +212,7 @@ const AffiliateGuide = () => {
               
               <h2>Update Profile Info</h2>
    <div className='guide-flex-row-left-div'>
-       <img src={ProfileContent} alt="Update Profile Info Guide" />
+       <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007372/affiliateGuide/ftt1hfajed5witjrvwnx.png" alt="Update Profile Info Guide" />
        <p>
            You can update your account information by navigating to the Profile tab. On the left, you’ll see input fields with your current information. Click on any field to update the respective record, then scroll to the bottom and click "Save Settings." Please note that your email cannot be changed.
        </p>
@@ -240,7 +229,7 @@ const AffiliateGuide = () => {
     <p>
         To download the promotional image, click on any promoted fight to open its Fight Details page. Scroll down to find the promotional banner image and click the "Download" button. You can share this image on your social media platforms. The image includes a QR code that users can scan to view your promotion and join your league.
     </p>
-    <img src={PromotionalImage} alt="Promotional Image Guide" />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007478/affiliateGuide/fezvj7cksuhltoymodkl.png" alt="Promotional Image Guide" />
 </div>
 
   </div>
@@ -251,7 +240,7 @@ const AffiliateGuide = () => {
               
               <h2>Request A Payout</h2>
    <div className='guide-flex-row-left-div'>
-       <img src={RequestPayout} alt="Request A Payout" />
+       <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007558/affiliateGuide/py8ppb2e64sj1jnvibkh.png" alt="Request A Payout" />
        <p>
         To request a payout based on your account balance, navigate to the "Profile" tab. Scroll down slightly, and on the right column, you will see the option "Request a Payout." Click on it, and a popup will appear, allowing you to enter the amount you wish to request. Once your request is successfully submitted, you will receive an email notification, and the Fantasy MMAdness team will process your request promptly.
     </p>
@@ -266,7 +255,7 @@ const AffiliateGuide = () => {
         To record a podcast, click on any promoted fight from your dashboard. Scroll down to locate the "Record a Podcast" option. Once recorded, the podcast will be displayed to your league members on the promotion page when they access your fight. 
         To start recording, click the "Start Recording" button. When you're done, click "Stop Recording" to complete the process. Be sure to click the "Save" button afterward to ensure your recording is saved to the database.
     </p>
-    <img src={RecordPodcast} alt="RecordPodcast" />
+    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007630/affiliateGuide/fbfehjupgf421bd9sdjg.png" alt="RecordPodcast" />
 </div>
 
   </div>

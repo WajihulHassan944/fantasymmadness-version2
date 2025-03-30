@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import "./leagues.css";
 import { fetchMatches } from '../../Redux/matchSlice';
+import { useRouter } from 'next/router';
+import "../CreateAccount/Membership.css";
+import "../Dashboard/Dashboard.css";
+import "../YourFights/YourFights.css";
 
 const Leagues = () => {
   const user = useSelector((state) => state.user);
   const [affiliates, setAffiliates] = useState([]);
   const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
+const router = useRouter();
 
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -115,7 +118,7 @@ const Leagues = () => {
       <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
       ></i>
 
       <div className='member-header'>

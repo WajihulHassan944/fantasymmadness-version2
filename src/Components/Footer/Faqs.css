@@ -1,27 +1,4 @@
 
-@font-face {
-    font-family: 'UFCSansMedium';
-    src: url('../../Fonts/UFCSans-CondensedMedium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: condensed;
-  }
-  @font-face {
-    font-family: 'UFCSansCondensedBold';
-    src: url('../../Fonts/UFCSans-CondensedBold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: condensed;
-  }
-      
-
-  @font-face {
-    font-family: 'UfcSansRegular';
-    src: url('../../Fonts/UFCSans-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-
 .faqwrapper{
     display: flex;
     flex-direction: column;
@@ -110,8 +87,11 @@
     background: #fff;
     padding: 0 16px;
     font-family: Roboto;
-    color: #000;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.9);
     font-size: 15px;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;

@@ -1,26 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./Sponsors.css";
-const Sponsors = () => {
-  const [sponsors, setSponsors] = useState([]);
-    
-      // Fetch sponsors from the backend
-      const fetchSponsors = async () => {
-        try {
-          const response = await fetch('https://fantasymmadness-game-server-three.vercel.app/sponsors');
-          const data = await response.json();
-          if (data.success) {
-            setSponsors(data.data);
-          } else {
-            setSponsors([]);
-          }
-        } catch (error) {
-          console.error('Error fetching sponsors:', error);
-        }
-      };
-    
-      useEffect(() => {
-        fetchSponsors();
-      }, []);
+const Sponsors = ({sponsors}) => {
     
   return (
     <div className='sponsors-wrap'>

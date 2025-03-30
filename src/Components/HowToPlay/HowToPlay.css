@@ -60,13 +60,6 @@
 	overflow: hidden;
 }
 
-.howtoplay-updated .three{
-	position:absolute;
-	left:-540px;
-	top:1%;
-	z-index:1;
-	width:50%;
-}
 
 .howtoplay-updated .four{
 	position:absolute;
@@ -76,6 +69,8 @@
 	width:100%;
 	max-width:200px;
 	z-index:1;
+  
+  height: 30%;
 	}
 
 
@@ -85,6 +80,8 @@
 	right:-100px;
 	width:100%;
 	max-width:200px;
+  
+  height: 30%;
 	transform:rotate(180deg);
 	z-index:1;
 	}
@@ -97,14 +94,18 @@
 	left:-100px;
 	max-width:450px;
 	z-index:2;
+  
+  height: 75%;
 	}
 	
   .howtoplay-updated .seven{
 	position:absolute;
-	width:100%;
+	width:80%;
 	max-width:900px;
 	bottom:-830px;
 	right:-20%;
+  
+  height: 160%;
 	}
 
 
@@ -189,4 +190,20 @@ font-size: 45px;
   width:100%;
   margin:15px 0;
 }
+}
+
+
+.playForFreeBtns{
+  padding: 8px 30px;
+  color: #fff;
+  background-color: red;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 15px;
+  width: 180px;
+  border-radius: 5px;
+}
+
+.playForFreeBtns:nth-of-type(1){
+  margin-top: 20px;
 }

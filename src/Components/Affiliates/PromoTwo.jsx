@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-
+import "../../Components/Dashboard/FightDetails.css";
+import "../CreateAccount/CreateAccount.css";
 const PromoTwo = ({matchId , affiliateId}) => {
     const dispatch = useDispatch();
       const [affiliate, setAffiliate] = useState(null);
@@ -139,7 +140,7 @@ const PromoTwo = ({matchId , affiliateId}) => {
   </div>
   
           <div style={{ width: '100%', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
-            <button className='btn-grad promobtn' onClick={handleJoinLeague}>Join my league</button>
+            <button className='btn-grad promobtn' onClick={handleJoinLeague} style={{width:'200px'}}>Join my league</button>
           </div>
         </div>
       </div>

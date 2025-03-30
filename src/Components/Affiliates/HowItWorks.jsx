@@ -1,28 +1,28 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Three from "../../Assets/affiliateDashboard/three.png";
 import Four from "../../Assets/affiliateDashboard/fourone.png";
 import FourTwo from "../../Assets/affiliateDashboard/fourone.png";
 import Five from "../../Assets/affiliateDashboard/five.png";
 import Six from "../../Assets/affiliateDashboard/six.png";
+import { useRouter } from 'next/router';
+import "../HowToPlay/HowToPlay.css";
+import Image from 'next/image';
 const HowItWorks = () => {
+    const router = useRouter();
    
-const navigate = useNavigate();
     return (
         <div>
          <i
         className="fa fa-arrow-circle-left"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
-        style={{ position: 'fixed', top: '100px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff'}}
+        onClick={() => router.push(-1)} 
+                style={{ position: 'fixed', top: '100px', left: '70px', cursor: 'pointer', fontSize: '24px', color: '#007bff'}}
       ></i>
    
             <div className='howtoplay-wrapper howtoplay-updated'>
-           <img src={Three} alt="img" className='three' />
-           <img src={Four} alt="img" className='four' />
-           <img src={FourTwo} alt="img" className='five' />
-           <img src={Five} alt="img" className='six' />
-           <img src={Six} alt="img" className='seven' />
+           <Image src={Four} alt="img" className='four' />
+           <Image src={FourTwo} alt="img" className='five' />
+           <Image src={Five} alt="img" className='six' />
+           <Image src={Six} alt="img" className='seven' />
            
            
            

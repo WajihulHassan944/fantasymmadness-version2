@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './MakePredictions.css';
+import "../CreateAccount/CreateAccount.css";
 import { useSelector } from 'react-redux';
-import PunchHand from '../../Assets/hand-removebg-preview.png';
 
 const MakePredictions = ({ matchId }) => {
   const user = useSelector((state) => state.user);
@@ -255,7 +255,7 @@ const MakePredictions = ({ matchId }) => {
                   <div className='roundinput-image'>
                     <h2>{label1}</h2>
                     <div className='roundInputImgWrap'>
-                      <img src={PunchHand} alt={`${label1} Icon`} />
+                      <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743258002/home/cozzru3dapikvamnd44q.png" alt={`${label1} Icon`} />
                     </div>
                   </div>
                   <div className='roundInputDivOne'>
@@ -282,7 +282,7 @@ const MakePredictions = ({ matchId }) => {
                   <div className='roundinput-image'>
                     <h2>{label2}</h2>
                     <div className='roundInputImgWrap'>
-                      <img src={PunchHand} alt={`${label2} Icon`} />
+                      <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743258002/home/cozzru3dapikvamnd44q.png" alt={`${label2} Icon`} />
                     </div>
                   </div>
                   <div className='roundInputDivOne'>
@@ -309,7 +309,7 @@ const MakePredictions = ({ matchId }) => {
   <div className='roundinput-image'>
     <h2>{label3}</h2>
     <div className='roundInputImgWrap'>
-      <img src={PunchHand} alt={`${label3} Icon`} />
+      <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743258002/home/cozzru3dapikvamnd44q.png" alt={`${label3} Icon`} />
     </div>
   </div>
   <div className='roundInputDivOne'>
@@ -339,7 +339,7 @@ const MakePredictions = ({ matchId }) => {
                     <div className='roundinput-image'>
                       <h2>{label4}</h2>
                       <div className='roundInputImgWrap'>
-                        <img src={PunchHand} alt={`${label4} Icon`} />
+                        <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743258002/home/cozzru3dapikvamnd44q.png" alt={`${label4} Icon`} />
                       </div>
                     </div>
                     <div className='roundInputDivOne'>
@@ -428,7 +428,7 @@ const MakePredictions = ({ matchId }) => {
           ))}
         </div>
 
-        <button className='btn-grad' onClick={handleFinish}>
+        <button className='btn-grad' style={{width:'250px'}} onClick={handleFinish}>
           {buttonText}
         </button>
       </div>

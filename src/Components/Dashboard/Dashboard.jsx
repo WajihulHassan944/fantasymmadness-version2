@@ -2,15 +2,18 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Dashboard.css';
+import "../Home/Home.css";
 import { fetchMatches } from '../../Redux/matchSlice';
+import "../CreateAccount/Membership.css";
 import FightCosting from './FightCosting'
 import FightLeaderboard from '../GlobalLeaderboard/FightLeaderboard';
 import PurchaseTokensIntimation from './PurchaseTokensIntimation';
 import FinishedFightUserBoard from '../FinishedFightUserBoard/FinishedFightUserBoard';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const Dashboard = () => {
+  const router = useRouter();
 
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +25,6 @@ const Dashboard = () => {
   const [completedMatchId, setCompletedMatchId] = useState(null); // State to store the selected match ID
   const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [upcomingMatches, setUpcomingMatches] = useState([]);
-const navigate = useNavigate();
   const [removedMatches, setRemovedMatches] = useState([]);
 
   const user = useSelector((state) => state.user); // Access user details from Redux store
@@ -283,7 +285,7 @@ const navigate = useNavigate();
      <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
       ></i>
    
       <div className='member-header'>
@@ -581,7 +583,7 @@ const navigate = useNavigate();
 ) : (
   <div className='transformed-div-two-partTwo'>
     <p style={{ marginLeft: '-15px' }}>
-      {match.matchType} <span className='pots' style={{color:"blue"}}>POT: ${match.pot}</span>
+      Shadow Fight
     </p>
   </div>
 

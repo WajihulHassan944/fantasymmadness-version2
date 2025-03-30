@@ -4,11 +4,11 @@ import backgroundImg from "../../Assets/new-bg.png";
 import Thankyou from './Thankyou';  // Import Thankyou component
 import UploadAvatar from './UploadAvatar';  // Import UploadAvatar component
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const CreateAccount = () => {
-    const navigate = useNavigate();
-  
+    const router = useRouter();  
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -145,7 +145,7 @@ const CreateAccount = () => {
         return <UploadAvatar email={formData.email} />;  // Pass email as prop to UploadAvatar
     }
     if (affiliate) {
-        navigate('/AffiliateCreateAccount');  // Pass email as prop to UploadAvatar
+        router.push('/AffiliateCreateAccount');  // Pass email as prop to UploadAvatar
     }
 
     if (isRegistered || pollingTimedOut) {
@@ -157,7 +157,7 @@ const CreateAccount = () => {
          <i
         className="fa fa-arrow-circle-left homecreateacc-arrow-circle"
         aria-hidden="true"
-        onClick={() => navigate(-1)} // Go back to the previous page
+        onClick={() => router.push(-1)} // Go back to the previous page
        ></i>
    
         <p className='affiliateLinkppp'  >Fighters Only!</p>
@@ -470,7 +470,7 @@ iubenda hosts this content and only collects the Personal Data strictly necessar
             </div>
 
             <div className='backgrounfImg'>
-                <img src={backgroundImg} alt="Background" />
+                <Image className='gloveInCreateAccnt' src={backgroundImg} alt="Background" />
             </div>
         </div>
     );
