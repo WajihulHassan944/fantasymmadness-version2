@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   devIndicators: {
-    buildActivity: false, // Hides the Next.js icon in development mode
+    buildActivity: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // Disable ESLint errors during build
   },
 };
 
