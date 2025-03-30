@@ -1,5 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import "./guide.css";
+import Resetpassword from "../../Assets/resetpassword.png";
+import joinleague from "../../Assets/joinleague.png";
+import FightPromotedByAffiliate from "../../Assets/fightpromotedbyaffiliate.png";
+import RemoveFightFromDashboard from "../../Assets/removedashboard.png";
+import TrashedFight from "../../Assets/trashedfight.png";
+import EditPhoto from "../../Assets/editphoto.png";
+import TokensRemaining from "../../Assets/tokensremaining.png";
+import PostAQuestion from "../../Assets/postQuestionInCommunityForum.png";
+import ReplyToThread from "../../Assets/replyToThread.png";
+import RepliesOfThread from "../../Assets/repliesOfThread.png";
+import PurchaseTokens from "../../Assets/purchasetokens.png";
+import BackArrow from "../../Assets/backarrow.png";
+import MemberPlan from "../../Assets/memberplan.png";
+import MemberName from "../../Assets/membername.png";
+import AffiliateCriteria from "../../Assets/affiliatecriteria.png";
+import CompletedFightVideo from "../../Assets/completedfightvideo.png";
+import CompletedFightGrandTotal from "../../Assets/completedfightgrandtotal.png";
+import CompletedFightWinner from "../../Assets/completedfightwinner.png";
+import CompletedFightPage from "../../Assets/completedfightpage.png";
+import DashboardCompleted from "../../Assets/dashboardcompleted.png";
+import SubmitPredictions from "../../Assets/submitpredictions.png";
+import PredictionsPgae from "../../Assets/predictionspage.png";
+import FightDetailsPage from "../../Assets/fightdetailspage.png";
+import DashboardPending from "../../Assets/dashboardpending.png";
+import DashboardUpcoming from "../../Assets/dashboardupcoming.png";
+import CommunityStandards from "../../Assets/communitystandards.png";
+import ProfileContent from "../../Assets/profilecontent.png";
+import PublicPlayerProfilePage from "../../Assets/publicplayerprofilepage.png";
+import PublicPlayerProfileLink from "../../Assets/publicplayerprofilellink.png";
+import PreferredPaymentMethod from "../../Assets/prefferedpayment.png";
+import GlobalLeaderboard from "../../Assets/globalleaderboard.png";
+import AddTokenToWallet from "../../Assets/addtokenstowallet.png";
 
 const Guide = () => {
     const [showArrowUp, setShowArrowUp] = useState(false);
@@ -189,7 +221,7 @@ const Guide = () => {
            
            <h2>Reset Password</h2>
            <div className='guide-flex-row-left-div'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743005950/affiliateGuide/fz9gmf9as4czba4cpxjo.png" alt="img" />
+            <img src={Resetpassword} alt="img" />
             <p>To reset your password, please navigate to the login page and select "Forgot your password." Enter the email address associated with your account and submit the request. You will receive an email containing a secure link where you can enter and confirm a new password. Once completed, your account will be updated with the new password.</p>
 
              </div>
@@ -204,7 +236,7 @@ const Guide = () => {
            <p>
         To join the Affiliate's League, sign in to your account and navigate to the "Leagues" tab. Here, you’ll find a list of available leagues you can join. Once you select a league and confirm your choice, you’ll receive an email notification with further details.
     </p>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743172728/userguide/d3otjleurwsv3pnahiyi.png" alt="img" />
+            <img src={joinleague} alt="img" />
           
             </div>
         </div>
@@ -216,7 +248,7 @@ const Guide = () => {
            
            <h2>Clicking Affiliate Profile</h2>
            <div className='guide-flex-row-left-div'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743172795/userguide/rghif4y1vnowe34onjab.png" alt="img" />
+            <img src={FightPromotedByAffiliate} alt="img" />
             <p>
         After signing in and navigating to the "Leagues" section, you will see affiliate profile photos outlined with a gradient border. This border indicates an upcoming fight being promoted by that affiliate. Clicking on the profile will reveal the name of the fight being promoted.
     </p>
@@ -233,7 +265,7 @@ const Guide = () => {
            <p>
         To remove a fight from your dashboard or the "Your Fights" tab, simply hover over the fight element. A "Remove from dashboard" button will appear. Clicking this button will move the fight to the "Trashed Fights" section, where you can retrieve it later if needed.
     </p>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743172896/userguide/bamunfkij66klu0wscdv.png" alt="img" />
+            <img src={RemoveFightFromDashboard} alt="img" />
           
             </div>
         </div>
@@ -244,7 +276,7 @@ const Guide = () => {
            
            <h2>Retrieve Trashed Fights</h2>
            <div className='guide-flex-row-left-div'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743172964/userguide/srhv6xjzelfrt1cfa4ka.png" alt="img" />
+            <img src={TrashedFight} alt="img" />
             <p>
         To retrieve trashed fights and restore them to your dashboard, go to the "Profile" tab and click on the "My Trashed Fights" button. You will be redirected to the Trashed Fights page. Hovering over any fight element will display an option to remove it from the trash. Clicking on this option will restore the fight to your dashboard, allowing you to make predictions and take other necessary actions.
     </p>
@@ -260,7 +292,7 @@ const Guide = () => {
            <p>
         To update your account's profile photo, go to the "Profile" tab, where your current profile photo is displayed at the top. Click on the "Choose File" button to select your new photo, then scroll to the bottom and click "Save Settings." Your profile picture will be updated successfully.
     </p>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006291/affiliateGuide/c9t16zhip5b7qwxatcm6.png" alt="img" />
+            <img src={EditPhoto} alt="img" />
           
             </div>
         </div>
@@ -272,7 +304,7 @@ const Guide = () => {
            
            <h2>Account Wallet</h2>
            <div className='guide-flex-row-left-div'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173044/userguide/rrexv6m3lvnsh5fpzvr2.png" alt="img" />
+            <img src={TokensRemaining} alt="img" />
             <p>
         Your Account Wallet displays the tokens available for making predictions on fights that require tokens. Keep an eye on your balance to ensure you have enough tokens to participate in upcoming events.
     </p>
@@ -290,7 +322,7 @@ const Guide = () => {
            <p>
         If you encounter any issues, navigate to the "Community" tab. At the top, you'll see the "Have a Question" option. Click on it, enter the title and description of your query, and submit it. The community will respond, helping you find a solution to your problem.
     </p>
-           <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173133/userguide/ivjvzxv6ty6kqau7ilqb.png" alt="img" />
+           <img src={PostAQuestion} alt="img" />
           
             </div>
         </div>
@@ -303,7 +335,7 @@ const Guide = () => {
            
            <h2>Reply To Threads</h2>
            <div className='guide-flex-row-left-div'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173211/userguide/pug9z0r870mjjxtpotpv.png" alt="img" />
+            <img src={ReplyToThread} alt="img" />
             <p>
         To reply to a thread or question in the Community Forum, navigate to the "Community" tab, where you’ll see all posted questions. Click the "Reply" button on the thread you wish to respond to. This will open a window with the thread details. Scroll to the bottom, type your reply, and submit it.
     </p>
@@ -320,7 +352,7 @@ const Guide = () => {
            <p>
         To view all answers posted by other users in a thread, navigate to the "Community" tab, where you’ll see a list of questions and threads. Simply click on the thread you wish to view, and you will be directed to the thread’s details page, which displays all replies and answers.
     </p>
-           <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173300/userguide/iphluwj283h2wp8qzpqx.png" alt="img" />
+           <img src={RepliesOfThread} alt="img" />
           
             </div>
         </div>
@@ -332,7 +364,7 @@ const Guide = () => {
         <div className='guide-flex-row-left' id="DashboardUpcoming">
            <h2>Dashboard Section: Upcoming Fights</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178670/userguide/xq5oj6aroix9sscie9c1.png" alt="Upcoming Fights Section Guide" />
+    <img src={DashboardUpcoming} alt="Upcoming Fights Section Guide" />
     <p>
         Upon logging in, you’ll see a dashboard with three main sections, one of which is "Upcoming Fights." This section displays all upcoming fights, including details such as fighter names, images, fight type (e.g., boxing, MMA, kickboxing, or bare-knuckle), fight date, fight name, and the number of users who have successfully submitted predictions.
     </p>
@@ -348,7 +380,7 @@ const Guide = () => {
     <p>
         "Pending Fights" is another section of your dashboard that displays all available fights for making predictions. Each pending fight entry includes details such as fighter names, images, fight type (boxing, MMA, kickboxing, or bare-knuckle), fight time, a countdown timer, and the number of users who have successfully submitted predictions. Once the countdown ends, actual fighter scores will be submitted, and predictors will be awarded points.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178611/userguide/uwksrsm3hl3ie2ftiyk7.png" alt="Pending Fights Section Guide" />
+    <img src={DashboardPending} alt="Pending Fights Section Guide" />
 </div>
  </div>
 
@@ -358,7 +390,7 @@ const Guide = () => {
            
         <h2>Dashboard Section: Completed Fights</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178254/userguide/x112lpoyajvmpitdgi0h.png" alt="Completed Fights Section Guide" />
+    <img src={DashboardCompleted} alt="Completed Fights Section Guide" />
     <p>
         "Completed Fights" is another section on your dashboard that displays all the fights for which you have finished submitting predictions. Each completed fight entry includes details such as fighter names, images, fight type (boxing, MMA, kickboxing, or bare-knuckle), fight time, and the number of users who have successfully submitted predictions. Once the fight is completed, actual fighter scores are submitted, and predictors are awarded points accordingly.
     </p>
@@ -374,7 +406,7 @@ const Guide = () => {
     <p>
         When you click on any pending fight element, you will be directed to the fight details component, where all the respective fight details are displayed. If the fight is a shadow fight and the affiliate criteria are not met, you will remain on the same screen.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178530/userguide/rcsurlqkmphru8jfi6yc.png" alt="Fight Details Page Guide" />
+    <img src={FightDetailsPage} alt="Fight Details Page Guide" />
 </div>
         </div>
 
@@ -383,7 +415,7 @@ const Guide = () => {
         <div className='guide-flex-row-left' id="PredictionsPgae">
         <h2>Predictions</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178446/userguide/muqiht3ap8zsbk7lzran.png" alt="Predictions Page Guide" />
+    <img src={PredictionsPgae} alt="Predictions Page Guide" />
     <p>
         On the fight details page, if your wallet tokens are greater than or equal to the required fight tokens, clicking the "Purchase" button will take you to the predictions page. Here, you can make your predictions based on the fight type. Your tokens will be automatically deducted from your account wallet.
     </p>
@@ -399,7 +431,7 @@ const Guide = () => {
     <p>
         Clicking on a pending fight element will take you to the respective fight details page. If the fight is a shadow fight and the affiliate criteria are not met, you will remain on the same screen. On the fight details page, if your tokens are less than the required amount for the fight, a "Purchase Tokens" button will appear. Clicking this button will allow you to purchase the necessary tokens.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173385/userguide/g34aznnuidmfksymcen9.png" alt="Purchase Tokens Guide" />
+    <img src={PurchaseTokens} alt="Purchase Tokens Guide" />
 </div>
         </div>
 
@@ -408,7 +440,7 @@ const Guide = () => {
         <div className='guide-flex-row-left' id="SubmitPredictions">
         <h2>Submit Predictions</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178331/userguide/wtbay1gqwwmcxv5bwpmj.png" alt="Submit Predictions Guide" />
+    <img src={SubmitPredictions} alt="Submit Predictions Guide" />
     <p>
         On the predictions page, once you’ve made predictions for all the rounds, scroll to the bottom and click the "Submit Predictions" button. Your predictions will be successfully submitted, and you will be redirected to the dashboard page.
     </p>
@@ -423,7 +455,7 @@ const Guide = () => {
     <p>
         This page can be accessed by clicking on any completed fight element under the "Completed Fights" section of the dashboard.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178163/userguide/blneututrnp3wy0uxc3n.png" alt="Completed Fight Details Guide" />
+    <img src={CompletedFightPage} alt="Completed Fight Details Guide" />
 </div>
         </div>
 
@@ -432,7 +464,7 @@ const Guide = () => {
         <div className='guide-flex-row-left' id="CompletedFightWinner">
         <h2>Completed Fight Winner</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178087/userguide/fytk2trik9k8dfnyvoas.png" alt="Completed Fight Winner Guide" />
+    <img src={CompletedFightWinner} alt="Completed Fight Winner Guide" />
     <p>
         On the respective completed fight details page, scroll to the bottom to view the winner of that fight. This will be the user who participated in the predictions and successfully predicted the outcome.
     </p>
@@ -447,7 +479,7 @@ const Guide = () => {
     <p>
         On the respective completed fight details page, scroll to the bottom to view your grand total points, which represent the combined points from all rounds.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743177997/userguide/umjcqo4l8wip2y4xv6de.png" alt="Completed Fight Points Grand Total Guide" />
+    <img src={CompletedFightGrandTotal} alt="Completed Fight Points Grand Total Guide" />
 </div>
         </div>
 
@@ -457,7 +489,7 @@ const Guide = () => {
            
         <h2>Completed Fight Video</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173688/userguide/xhkjryb1drxqat6lxhcb.png" alt="Completed Fight Video Guide" />
+    <img src={CompletedFightVideo} alt="Completed Fight Video Guide" />
     <p>
         When you access the completed fight details page by clicking on any fight item in the "Completed Fights" section of your dashboard, you will find the posted match video of that fight at the top of the page.
     </p>
@@ -472,7 +504,7 @@ const Guide = () => {
     <p>
         If the affiliate criteria for a shadow fight have not been met, you will remain on the same screen until the criteria are fulfilled. You will not be able to make predictions for that fight until the affiliate criteria are met.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173615/userguide/n78zkb1uc484lvo6on8t.png" alt="Affiliate Criteria for Shadow Fights Guide" />
+    <img src={AffiliateCriteria} alt="Affiliate Criteria for Shadow Fights Guide" />
 </div>
         </div>
 
@@ -482,7 +514,7 @@ const Guide = () => {
            
         <h2>Member Name on Header</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006743/affiliateGuide/rnzjx9ukuxv5egivo5fb.png" alt="Member Name on Header Guide" />
+    <img src={MemberName} alt="Member Name on Header Guide" />
     <p>
         After logging in, your dashboard header displays your username across all components, indicating the logged-in user.
     </p>
@@ -498,7 +530,7 @@ const Guide = () => {
     <p>
         Your current membership plan is displayed on the dashboard header for quick reference.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743173484/userguide/qyilpqv5pj1glwvyolyk.png" alt="Member Plan on Header Guide" />
+    <img src={MemberPlan} alt="Member Plan on Header Guide" />
 </div>
 </div>
 
@@ -508,7 +540,7 @@ const Guide = () => {
            
            <h2>Back Arrow across components</h2>
            <div className='guide-flex-row-left-div'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743006607/affiliateGuide/xrltc98m0tcdto2yvusf.png" alt="img" />
+            <img src={BackArrow} alt="img" />
             <p>
         A back arrow is available across all dashboard components, located in the top left corner. This allows you to easily navigate back to previous screens for a smoother user experience.
     </p>
@@ -529,7 +561,7 @@ const Guide = () => {
     <p>
         Adherence to the rules and regulations of the Fantasy MMAdness community forum is mandatory. Violations may result in the suspension of your account.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178770/userguide/jeeiith4404ehdalevee.png" alt="Community Rules and Regulations Guide" />
+    <img src={CommunityStandards} alt="Community Rules and Regulations Guide" />
 </div>
  </div>
    
@@ -539,7 +571,7 @@ const Guide = () => {
               
            <h2>Update Profile Info</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007372/affiliateGuide/ftt1hfajed5witjrvwnx.png" alt="Update Profile Info Guide" />
+    <img src={ProfileContent} alt="Update Profile Info Guide" />
     <p>
         You can update your account information by navigating to the Profile tab. On the left, you’ll see input fields with your current information. Click on any field to update the respective record, then scroll to the bottom and click "Save Settings." Please note that your email cannot be changed.
     </p>
@@ -552,7 +584,7 @@ const Guide = () => {
     <p>
         Your public player profile page displays your completed fights, pending fights available for prediction, total scores, name in the header, and profile picture. This page serves as a showcase of your skills to your social network.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178849/userguide/sxoudepwxkg0qhrkqsvt.png" alt="Public Player Profile Page Guide" />
+    <img src={PublicPlayerProfilePage} alt="Public Player Profile Page Guide" />
 </div>
   </div>
    
@@ -562,7 +594,7 @@ const Guide = () => {
               
            <h2>Public Player Profile Link</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743178935/userguide/w59usuq2rra2czyefgs8.png" alt="Public Player Profile Link Guide" />
+    <img src={PublicPlayerProfileLink} alt="Public Player Profile Link Guide" />
     <p>
         You can use this link to showcase your prediction skills to others, as it opens your public profile page. To access it, navigate to the Profile tab, and scroll slightly in the right column to find the link.
     </p>
@@ -577,7 +609,7 @@ const Guide = () => {
     <p>
         You can set your preferred payment method, which will be visible to the admin. This is helpful if you wish to convert your account tokens to a monetary amount, as each token is equivalent to $1.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743007265/affiliateGuide/vxfumohrkyrs3c2qgh4g.png" alt="Preferred Payment Method Guide" />
+    <img src={PreferredPaymentMethod} alt="Preferred Payment Method Guide" />
 </div>
   </div>
    
@@ -587,7 +619,7 @@ const Guide = () => {
               
            <h2>Global Leaderboard</h2>
 <div className='guide-flex-row-left-div'>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743179049/userguide/fjdwhfphusxmhdca5cvg.png" alt="Global Leaderboard Guide" />
+    <img src={GlobalLeaderboard} alt="Global Leaderboard Guide" />
     <p>
         The Global Leaderboard displays the top players ranked by their total points, showcasing global winners across all fights. The leaderboard also shows the total number of players being ranked, reflecting those who have won fights across the platform.
     </p>
@@ -604,7 +636,7 @@ const Guide = () => {
         Set up your payment details and credit card information. The initial payment will be $10, and the system will save your details for future transactions. 
         Once your payment details are set up, click on the "Add Tokens To Wallet" option in the Profile tab. You can then purchase 10 tokens, 100 tokens, or a custom amount as needed.
     </p>
-    <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743179121/userguide/sgkdyag2qeyaoxdhfhyh.png" alt="Preferred Payment Method Guide" />
+    <img src={AddTokenToWallet} alt="Preferred Payment Method Guide" />
 </div>
   </div>
  

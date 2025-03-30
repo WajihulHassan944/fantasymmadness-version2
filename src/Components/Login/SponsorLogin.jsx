@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReCAPTCHA from "react-google-recaptcha";
+import logoimage from "../../Assets/logo.png";
 import AffiliateLogin from '../Affiliates/AffiliateLogin';
 import Login from './Login';
-import { useRouter } from 'next/router';
 
 const SponsorLogin = () => {
    const [email, setEmail] = useState('');
    const [recaptchaToken, setRecaptchaToken] = useState('');
+   const navigate = useNavigate(); // Use navigate for redirection after login
    const [affiliatesLogin, setAffiliatesLogin] = useState(false);
      const [usersLogin, setUsersLogin] = useState(false);
-     const router = useRouter();
+   
  
    const handleRecaptchaChange = (token) => {
      setRecaptchaToken(token);
@@ -46,7 +48,7 @@ const SponsorLogin = () => {
         localStorage.setItem('sponsorData', JSON.stringify(data)); // Store the data as a JSON string
   
         resolve(data);
-        router.push("/sponsor-dashboard");
+        navigate("/sponsor-dashboard");
       } catch (error) {
         reject(error);
       }
@@ -103,11 +105,11 @@ if(usersLogin){
          <i
             className="fa fa-arrow-circle-left homeup-arrow-circle loginbackarrow"
             aria-hidden="true"
-            onClick={() => router.push(-1)} // Go back to the previous page
+            onClick={() => navigate(-1)} // Go back to the previous page
           ></i>
        
           <div className='loginCard' data-aos="zoom-in">
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743079917/home/rtr4tmlkw82rmk1kywuc.webp" alt="Logo" />
+            <img src={logoimage} alt="Logo" />
             <h1 style={{marginBottom:'50px'}}>Please Login Below</h1>
     
           {/*  {error && <p className="error">{error}</p>}  */}
@@ -144,15 +146,9 @@ if(usersLogin){
                     <h2>- OR -</h2>
     
            
-                    <div className="login-form-footer">
-  <button onClick={handleAffiliateLogin} className="loginNavLink">
-    Affiliate?
-  </button>
-  <button onClick={handleUserLogin} className="loginNavLink">
-    Public User?
-  </button>
-</div>
-
+           <div className='login-form-footer'> <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affiliate?</NavLink>
+            <NavLink  className="loginNavLink" onClick={handleUserLogin}>Public User?</NavLink>
+            </div>
           </div>
         </div>
       );

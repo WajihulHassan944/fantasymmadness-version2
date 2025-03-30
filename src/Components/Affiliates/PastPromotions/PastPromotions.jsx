@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-
-import "../UsersPlayed/style.css";
 import "./style.css";
+import fighters from "../../../Assets/affiliateDashboard/promo_two-Photoroom.png";
 import { fetchMatches } from '../../../Redux/matchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 const PastPromotions = () => {
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth <= 768 : false
-  );
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [promoMatches, setPromoMatches] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const fightsPerPage = 5;
@@ -64,7 +60,7 @@ const PastPromotions = () => {
       <h1 className='past-fights-wrapper-title'>Past</h1>
       <h2 className='past-fights-wrapper-subtitle'>Promoted</h2>
       <h3 className='past-fights-wrapper-sub-sub'>Fights</h3>
-      <img src="https://res.cloudinary.com/daflot6fo/image/upload/v1743000731/ua8aa9arayeq0vdw5dpq.png" alt="fighters" className='past-fighters' />
+      <img src={fighters} alt="fighters" className='past-fighters' />
 
       <div className='past-fights-affiliate-wrapp'>
         {visibleFights.length > 0 ? (

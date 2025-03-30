@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import "./MembershipCheckout.css";
+import { Link } from 'react-router-dom';
+import Cards from "../../Assets/visa-mastercard-amex_0.png";
 import { useSelector } from 'react-redux';
 import ThankyouPurchaseTokens from '../Dashboard/ThankyouPurchaseTokens';
-import Link from 'next/link';
 
 const MembershipCheckout = (userId) => {
   const reduxUser = useSelector((state) => state.user); // Access user details from Redux store
@@ -258,7 +259,7 @@ const MembershipCheckout = (userId) => {
           </div>
 
           <div className='input-group'>
-            <h3>Please read <Link href="/" style={{color:'#ccc' }}>Terms and Conditions</Link></h3>
+            <h3>Please read <Link to="/" style={{color:'#ccc' }}>Terms and Conditions</Link></h3>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               <h3>I have read terms and conditions </h3>
               <input type="checkbox" className='checkboxCreditCard' checked={billingInfo.termsAccepted} onChange={handleCheckboxChange} />
@@ -266,7 +267,7 @@ const MembershipCheckout = (userId) => {
           </div>
 
           <button className='submitcardbtn' onClick={handleSubmit} style={{cursor:'pointer'}}>Submit</button>
-          <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743303997/home/i9ytqz99fkgmked7tkud.png" className='cardaimg' alt="Accepted cards" />
+          <img src={Cards} className='cardaimg' alt="Accepted cards" />
        
        
         

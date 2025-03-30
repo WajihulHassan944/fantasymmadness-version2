@@ -26,7 +26,7 @@ export const loginAdmin = createAsyncThunk('adminAuth/loginAdmin', async ({ emai
   }
 });
 const initialState = {
-  isAdminAuthenticated: typeof window !== "undefined" && !!localStorage.getItem("adminAuthToken"),
+  isAdminAuthenticated: !!localStorage.getItem('adminAuthToken'), // Initialize based on localStorage
   loading: false,
   error: null,
 };

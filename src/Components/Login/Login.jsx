@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import "../CreateAccount/CreateAccount.css";
+
 import { GoogleLogin } from '@react-oauth/google';
 import { loginUser, fetchUser } from '../../Redux/authSlice';
 import Membership from '../CreateAccount/Membership';
 import "./Login.css";
+import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";
 import AffiliateLogin from '../Affiliates/AffiliateLogin';
 import SponsorLogin from './SponsorLogin';
-import { useRouter } from 'next/router';
 
 const Login = ({ redirectTo }) => {
   const dispatch = useDispatch();
@@ -20,9 +21,10 @@ const Login = ({ redirectTo }) => {
   const [affiliatesLogin, setAffiliatesLogin] = useState(false);
   const [sponsorLogin, setSponsorLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // Use navigate for redirection after login
   const [forgotPassword, setForgotPassword] = useState(false);  // New state for forgot password
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
-  const router = useRouter(); 
+  
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token && !isAuthenticated) {
@@ -70,12 +72,13 @@ const Login = ({ redirectTo }) => {
       }
     });
 
+    // After successful login, navigate based on the previous action
     loginPromise.then(() => {
       if (redirectTo) {
         if (redirectTo.type === 'view-thread') {
-          router.push(`/threads/${redirectTo.threadId}`);
+          navigate(`/threads/${redirectTo.threadId}`);
         } else if (redirectTo.type === 'create-thread') {
-          router.push('/create-thread');
+          navigate('/create-thread');
         }
       }
     });
@@ -135,12 +138,13 @@ const Login = ({ redirectTo }) => {
     }
   });
 
+  // After successful login, navigate based on the previous action
   googleLoginPromise.then(() => {
     if (redirectTo) {
       if (redirectTo.type === 'view-thread') {
-        router.push(`/threads/${redirectTo.threadId}`);
+        navigate(`/threads/${redirectTo.threadId}`);
       } else if (redirectTo.type === 'create-thread') {
-        router.push('/create-thread');
+        navigate('/create-thread');
       }
     }
   });
@@ -155,7 +159,7 @@ const Login = ({ redirectTo }) => {
     if (user.currentPlan === 'None') {
       return <Membership email={user.email} />;
     } else if (isAuthenticated) {
-     router.push("/UserDashboard");
+      return <Navigate to="/UserDashboard" />;
     }
   }
 
@@ -229,7 +233,7 @@ const Login = ({ redirectTo }) => {
     return (
       <div className='login-wrapper'>
         <div className='loginCard'>
-          <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743079917/home/rtr4tmlkw82rmk1kywuc.webp" alt="Logo" />
+          <img src={logoimage} alt="Logo" />
           <h1>Forgot Password</h1>
           <form onSubmit={handleForgotPasswordSubmit}>
             <input
@@ -243,9 +247,9 @@ const Login = ({ redirectTo }) => {
               Send Reset Link
             </button>
           </form>
-          <button onClick={() => setForgotPassword(false)} className="loginNavLink">
-  Back to Login
-</button>
+          <NavLink onClick={() => setForgotPassword(false)} className="loginNavLink">
+            Back to Login
+          </NavLink>
         </div>
       </div>
     );
@@ -258,11 +262,11 @@ const Login = ({ redirectTo }) => {
      <i
         className="fa fa-arrow-circle-left homeup-arrow-circle loginbackarrow"
         aria-hidden="true"
-        onClick={() => router.push(-1)} // Go back to the previous page
+        onClick={() => navigate(-1)} // Go back to the previous page
       ></i>
    
       <div className='loginCard' data-aos="zoom-in">
-        <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743079917/home/rtr4tmlkw82rmk1kywuc.webp" alt="Logo" />
+        <img src={logoimage} alt="Logo" />
         <h1>Please Login Below</h1>
 
       {/*  {error && <p className="error">{error}</p>}  */}
@@ -328,15 +332,9 @@ const Login = ({ redirectTo }) => {
                 <h2>- OR -</h2>
 
        
-                <div className="login-form-footer">
-  <button onClick={handleAffiliateLogin} className="loginNavLink">
-    Affiliate?
-  </button>
-  <button onClick={handleSponsorLogin} className="loginNavLink">
-    Sponsor?
-  </button>
-</div>
-
+       <div className='login-form-footer'> <NavLink onClick={handleAffiliateLogin} className="loginNavLink">Affiliate?</NavLink>
+        <NavLink onClick={handleSponsorLogin} className="loginNavLink">Sponsor?</NavLink>
+        </div>
       </div>
     </div>
   );

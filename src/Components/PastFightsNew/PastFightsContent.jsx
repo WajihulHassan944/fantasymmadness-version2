@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
-const PastFightsContent = ({matches}) => {
-    const router = useRouter();
+const PastFightsContent = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const matches = useSelector((state) => state.matches.data);
     const matchStatus = useSelector((state) => state.matches.status);
     const [pastMatches, setPastMatches] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -54,7 +55,7 @@ const PastFightsContent = ({matches}) => {
             <div className='fights-grid'>
                 <div className='column one'>
                     {paginatedMatches.slice(0, 4).map((fight, index) => (
-                        <div key={index} className='fight-card' onClick={() => router.push(`/past-fight/${fight._id}`)}>
+                        <div key={index} className='fight-card' onClick={() => navigate(`/past-fight/${fight._id}`)}>
                             <div className='fight-date'>
                                 <span className='date'>{fight.matchDate?.split('-')[2]}</span>
                                 <span className='month'>{new Date(fight.matchDate).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</span>
@@ -69,7 +70,7 @@ const PastFightsContent = ({matches}) => {
 
                 <div className='column two'>
                     {paginatedMatches.slice(4, 8).map((fight, index) => (
-                        <div key={index} className='fight-card' onClick={() => router.push(`/past-fight/${fight._id}`)}>
+                        <div key={index} className='fight-card' onClick={() => navigate(`/past-fight/${fight._id}`)}>
                             <div className='fight-date'>
                                 <span className='date'>{fight.matchDate?.split('-')[2]}</span>
                                 <span className='month'>{new Date(fight.matchDate).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</span>

@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
 import React from 'react';
+import {  useNavigate } from 'react-router-dom'; // Import useLocation to check the route
 
 const CommunityRules = () => {
-  const router = useRouter();
-  return (
+    const navigate = useNavigate();
+    return (
       <div className="thread-list-container-updated">
        <i
           className="fa fa-arrow-circle-left home-arrow-circle home-arrow-circle-forum"
           aria-hidden="true"
-          onClick={() =>  router.push(-1)} // Go back to the previous page
+          onClick={() => navigate(-1)} // Go back to the previous page
           
         ></i>
         <div className='toFlexHeading'>

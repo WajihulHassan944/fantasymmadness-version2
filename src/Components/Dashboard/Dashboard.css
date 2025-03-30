@@ -46,7 +46,6 @@
 
     background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url('../../Assets/RING3.png');
     background-size: cover;
-    background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;

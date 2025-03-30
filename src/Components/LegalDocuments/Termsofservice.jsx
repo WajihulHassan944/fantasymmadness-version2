@@ -1,5 +1,5 @@
 import React from 'react'
-import "../HowToPlay/HowToPlay.css";
+
 const Termsofservice = () => {
     return (
         <div className='howtoplay-wrapper' style={{background:'transparent', backgroundColor:'rgb(15,16,22)' , background:'linear-gradient(180deg, rgba(15,16,22,1) 0%, rgba(98,63,41,1) 100%)'}}>

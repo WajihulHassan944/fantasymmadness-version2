@@ -1,4 +1,3 @@
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setAffiliateUser } from '../Redux/affiliateSlice'; 
 
@@ -74,7 +73,7 @@ export const fetchAffiliate = createAsyncThunk('authAffiliate/fetchAffiliate', a
 });
 
 const initialState = {
-  isAuthenticatedAffiliate: typeof window !== "undefined" && !!localStorage.getItem('affiliateAuthToken'), // Initialize based on localStorage
+  isAuthenticatedAffiliate: !!localStorage.getItem('affiliateAuthToken'), // Initialize based on localStorage
   loading: false,
   userAffiliate: null,
   error: null,

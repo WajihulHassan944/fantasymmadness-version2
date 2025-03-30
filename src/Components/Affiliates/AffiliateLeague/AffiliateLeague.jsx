@@ -3,9 +3,7 @@ import './style.css';
 import { useSelector } from 'react-redux';
 
 const AffiliateLeague = () => {
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth <= 768 : false
-  );
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
   const [userDetails, setUserDetails] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);

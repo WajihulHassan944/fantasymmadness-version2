@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, NavLink } from 'react-router-dom';
 import { loginAffiliate, fetchAffiliate } from '../../Redux/affiliateAuthSlice';
+import logoimage from "../../Assets/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
 import { toast } from 'react-toastify';
 import Login from '../Login/Login';
 import { GoogleLogin } from '@react-oauth/google';
-import { useRouter } from 'next/router';
 
 const AffiliateLogin = () => {
-  const router = useRouter();
     const dispatch = useDispatch();
     const { isAuthenticatedAffiliate, loading,  userAffiliate } = useSelector((state) => state.affiliateAuth);
     
@@ -171,7 +171,7 @@ const AffiliateLogin = () => {
     if (!userAffiliate.verified) {
       console.log("Please wait for your affiliate status approval from admin");
     } else if (isAuthenticatedAffiliate) {
-       router.push("/AffiliateDashboard"); // Redirect to UserDashboard
+      return <Navigate to="/AffiliateDashboard" />; // Redirect to UserDashboard
     }
   }
 
@@ -214,7 +214,7 @@ const AffiliateLogin = () => {
       return (
         <div className='login-wrapper'>
           <div className='loginCard'>
-            <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743079917/home/rtr4tmlkw82rmk1kywuc.webp" alt="Logo" />
+            <img src={logoimage} alt="Logo" />
             <h1>Forgot Password</h1>
             <form onSubmit={handleForgotPasswordSubmit}>
               <input
@@ -228,10 +228,9 @@ const AffiliateLogin = () => {
                 Send Reset Link
               </button>
             </form>
-            <button onClick={() => setForgotPassword(false)} className="loginNavLink">
-  Back to Login
-</button>
-
+            <NavLink onClick={() => setForgotPassword(false)} className="loginNavLink">
+              Back to Login
+            </NavLink>
           </div>
         </div>
       );
@@ -247,7 +246,7 @@ const AffiliateLogin = () => {
     return (
       <div className='login-wrapper'>
         <div className='loginCard'>
-          <img src="https://res.cloudinary.com/dqi6vk2vn/image/upload/v1743079917/home/rtr4tmlkw82rmk1kywuc.webp" alt="Logo" />
+          <img src={logoimage} alt="Logo" />
           <h1>Please Login Below</h1>
   
   
@@ -311,10 +310,7 @@ const AffiliateLogin = () => {
   />
 </div>
            <h2>- OR -</h2>
-           <button onClick={handleUserLogin} className="loginNavLink">
-  Public User? Click here
-</button>
-
+          <NavLink onClick={handleUserLogin} className="loginNavLink">Public User? Click here</NavLink>
         </div>
       </div>
     );

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import "./contact.css";
-import "../HomeAnother/Home.css";
-import "../Home/Home.css";
+
 const Contact = () => {
     const [buttonText, setButtonText] = useState('Send Message');
     const [isSubmitting, setIsSubmitting] = useState(false);

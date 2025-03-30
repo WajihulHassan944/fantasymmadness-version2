@@ -1,42 +1,31 @@
-
 import React, { useEffect, useRef, useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/authSlice';
 import {logoutAffiliate} from "../../Redux/affiliateAuthSlice";
 import Logo from "../../Assets/logo.png";
 import "./Header.css";
-import Link from "next/link"; 
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Image from "next/image";
 import WinImg from "../../Assets/promotional-banner-home-removebg-preview.png";
-import { useRouter } from 'next/router';
 const Header = () => {
-
   const affiliate = useSelector((state) => state.affiliateAuth.userAffiliate);
-  const router = useRouter();
+    
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { isAuthenticatedAffiliate } = useSelector((state) => state.affiliateAuth);
   const submenuRef = useRef(null);
-  const { pathname } = useRouter() || {}; // Ensure it never crashes
+  const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
+  const authStatusSponsor = localStorage.getItem('isSponsorAuthenticated') === 'true';
   const [isVisible, setIsVisible] = useState(true);
   const [showPromotion, setShowPromotion] = useState(false);
 
   const handleClose = () => {
     setIsVisible(false);
   };
-
-  const [authStatusSponsor, setAuthStatusSponsor] = useState(null);
-  const [hydrated, setHydrated] = useState(false);
-  
-  useEffect(() => {
-    setAuthStatusSponsor(localStorage.getItem("isSponsorAuthenticated") === "true");
-    setHydrated(true);
-  }, []);
-  
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -60,11 +49,13 @@ const Header = () => {
   }, [submenuOpen]);
 
   const isFightsActive =
-  pathname?.startsWith('/upcomingfights') ||
-  pathname?.startsWith('/past-fights') ||
-  pathname?.startsWith('/YourFights') ||
-  pathname?.startsWith('/calendar-of-fights') ||
-  pathname?.startsWith('/our-fighters');
+  location.pathname.startsWith('/upcomingfights') ||
+  location.pathname.startsWith('/past-fights') ||
+  location.pathname.startsWith('/YourFights') ||
+  location.pathname.startsWith('/calendar-of-fights') ||
+  location.pathname.startsWith('/our-fighters');
+
+
   const toggleSubmenu = () => {
     setSubmenuOpen((prev) => !prev);
   };
@@ -73,7 +64,6 @@ const Header = () => {
     if (submenuRef.current && !submenuRef.current.contains(event.target)) {
       setSubmenuOpen(false);
     }
-    
   };
     const handleLogout = () => {
     // Dispatch logout action
@@ -82,13 +72,13 @@ const Header = () => {
     // Show a success toast notification
     toast.success("Successfully logged out 👋");
   
-    // igate to the home page
-    router.push('/');
+    // Navigate to the home page
+    navigate('/');
   };
     const handleLogoutAffiliate = () => {
     dispatch(logoutAffiliate());
     toast.success("Successfully logged out 👋");
-    router.push('/');
+    navigate('/');
   };
 
   const toggleMenu = () => {
@@ -102,22 +92,20 @@ const Header = () => {
 
   const handleLogoutSponsor = () => {
     // Clear authentication status and sponsor data from localStorage
-    typeof window !== "undefined" && localStorage.removeItem('isSponsorAuthenticated');
-    typeof window !== "undefined" &&  localStorage.removeItem('sponsorData');
+    localStorage.removeItem('isSponsorAuthenticated');
+    localStorage.removeItem('sponsorData');
   
   };
   const shouldRenderScrollingText =
-  !isAuthenticated && !isAuthenticatedAffiliate && !pathname?.includes('/administration') && !authStatusSponsor &&
-  !pathname?.toLowerCase().includes('affiliate') && !pathname?.toLowerCase().includes('shadow');
-
+  !isAuthenticated && !isAuthenticatedAffiliate && !location.pathname.includes('/administration') && !authStatusSponsor;
+ 
   const headerStyles = shouldRenderScrollingText
   ? {  top: '52px' }
   : { top: '0' };
-  return hydrated ? (
+  return (
     <>
-    
  { shouldRenderScrollingText && (
-  <Link href="/CreateAccount" style={{ textDecoration: 'none' }}>
+  <Link to="/CreateAccount" style={{ textDecoration: 'none' }}>
       <div className="scrolling-text-container">
         <div className="scrolling-text-inner" style={{ '--marquee-speed': '20s', '--direction': 'scroll-left' }} role="marquee">
           <div className="scrolling-text">
@@ -139,10 +127,10 @@ const Header = () => {
  {showPromotion && isVisible && shouldRenderScrollingText && (
   <div className="container-promotion-absolute-center">
     <div className="close-button" onClick={handleClose}>✖</div>
-  <div className='imgpromotionContainer'> <Image src={WinImg} alt="winimg" className="promotion-image-in-header" /></div>
-    <Link href="/CreateAccount" onClick={handleClose}>
+  <div className='imgpromotionContainer'> <img src={WinImg} alt="winimg" /></div>
+    <NavLink to="/CreateAccount" onClick={handleClose}>
       <button className="signup-button">Sign up Now</button>
-    </Link>
+    </NavLink>
     <p>
       Don’t miss your shot at the ultimate prize – a massive <strong>$10,000</strong> is up for grabs! Join the action now and claim your chance to win big!
     </p>
@@ -154,20 +142,20 @@ const Header = () => {
       {isAuthenticatedAffiliate ? (
         <div className='header user-header' style={headerStyles} >
           <div className='logoimg'>
-            <Link href="/">
-              <Image src={Logo} alt="Logo" className='logoimageactual' />
-            </Link>
+            <NavLink to="/">
+              <img src={Logo} alt="Logo" />
+            </NavLink>
           </div>
 
           <div className='anchorLinksWrapper'>
-            <Link href="/AffiliateDashboard" className={`anchorlinks ${pathname === "/AffiliateDashboard" ? "activeLink" : ""}`}>Fights</Link>
-            <Link href="/HowItWorks" className={`anchorlinks ${pathname === "/HowItWorks" ? "activeLink" : ""}`}>How it works</Link>
-            <Link href="/affiliate-league" className={`anchorlinks ${pathname === "/affiliate-league" ? "activeLink" : ""}`}>My League</Link>
-            <Link href="/past-promotions" className={`anchorlinks ${pathname === "/past-promotions" ? "activeLink" : ""}`}>Past Promotions</Link>
-            <Link href="/AffiliateProfile" className={`anchorlinks ${pathname === "/AffiliateProfile" ? "activeLink" : ""}`}>Profile</Link>
-            <Link href="/AffiliatePromotion" className={`anchorlinks ${pathname === "/AffiliatePromotion" ? "activeLink" : ""}`}>Insights</Link>
-            <Link href="/affiliate-guides" className={`anchorlinks ${pathname === "/affiliate-guides" ? "activeLink" : ""}`}>Guides</Link>
-            <Link href="/" onClick={handleLogoutAffiliate} className={`anchorlinks`}>Logout</Link>
+            <NavLink to="/AffiliateDashboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Fights</NavLink>
+            <NavLink to="/HowItWorks" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>How it works</NavLink>
+            <NavLink to="/affiliate-league" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>My League</NavLink>
+            <NavLink to="/past-promotions" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Past Promotions</NavLink>
+            <NavLink to="/AffiliateProfile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
+            <NavLink to="/AffiliatePromotion" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Insights</NavLink>
+            <NavLink to="/affiliate-guides" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Guides</NavLink>
+            <NavLink onClick={handleLogoutAffiliate} className={({ isActive }) => (isActive ? 'anchorlinks' : 'anchorlinks')}>Logout</NavLink>
            
             </div>
 
@@ -185,14 +173,13 @@ const Header = () => {
       ) : isAuthenticated ? (
         <div className='header user-header'>
           <div className='logoimg'>
-            <Link href="/">
-              <Image src={Logo} alt="Logo" className='logoimageactual' />
-            </Link>
+            <NavLink to="/">
+              <img src={Logo} alt="Logo" />
+            </NavLink>
           </div>
 
           <div className='anchorLinksWrapper'>
-          <Link 
-          href="#"
+          <NavLink 
         className={`anchorlinks fightsubmenu ${isFightsActive ? 'activeLink' : ''}`}
         onClick={toggleSubmenu}
         ref={submenuRef}
@@ -201,25 +188,24 @@ const Header = () => {
         <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosedclass'}`}  style={{
       pointerEvents: submenuOpen ? 'auto' : 'none' // Disable pointer events when closed
     }}>
-          <Link href="/upcomingfights" className="submenuLink">Upcoming Fights</Link>
-          <Link href="/past-fights" className="submenuLink">Past Fights</Link>
-          <Link href="/YourFights" className="submenuLink">Your Fights</Link>
-          <Link href="/our-fighters" className="submenuLink">Our Fighters</Link>
+          <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
+          <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
+          <NavLink to="/YourFights" className="submenuLink">Your Fights</NavLink>
+          <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>
         </div>
-      </Link>
+      </NavLink>
  
-            <Link href="/leaderboard" className={`anchorlinks ${pathname === "/leaderboard" ? "activeLink" : ""}`}>Leaderboard</Link>
-            <Link href="/myLeagueRecords" className={`anchorlinks ${pathname === "/myLeagueRecords" ? "activeLink" : ""}`}>Leagues</Link>
-            <Link href="/profile" className={`anchorlinks ${pathname === "/profile" ? "activeLink" : ""}`}>Profile</Link>
-            <Link href="/community-forum" className={`anchorlinks ${pathname === "/community-forum" ? "activeLink" : ""}`}>Community</Link>
-            <Link href="/guides" className={`anchorlinks ${pathname === "/guides" ? "activeLink" : ""}`}>Guides</Link>
+            <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Leaderboard</NavLink>
+            <NavLink to="/myLeagueRecords" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Leagues</NavLink>
+            <NavLink to="/profile" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Profile</NavLink>
+            <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
+            <NavLink to="/guides" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Guides</NavLink>
           </div>
 
           <div className='sideLinkswrap'>
-            <Link href="/UserDashboard" 
-            className={`sideLinks ${pathname === "/UserDashboard" ? "activeLink" : ""}`}>
+            <NavLink to="/UserDashboard" className={({ isActive }) => (isActive ? 'sideLinks activeLink' : 'sideLinks')}>
               Dashboard
-            </Link>
+            </NavLink>
 
             <button onClick={handleLogout} className='sideLinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
               <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
@@ -231,45 +217,43 @@ const Header = () => {
       ) : authStatusSponsor ? (
         <div className='header public-header' style={headerStyles}>
           <div className='logoimg'>
-            <Link href="/">
-              <Image src={Logo} alt="Logo" className='logoimageactual' />
-            </Link>
+            <NavLink to="/">
+              <img src={Logo} alt="Logo" />
+            </NavLink>
           </div>
 
           <div className='anchorLinksWrapper'>
           
-          <Link href="/home" className={`anchorlinks ${pathname === "/home" ? "activeLink" : ""}`}>
-        Home
-      </Link>   
-            <Link href="/playforfree" className={`anchorlinks ${pathname === "/playforfree" ? "activeLink" : ""}`}>Play for free</Link>
-            <Link href="/community-forum" className={`anchorlinks ${pathname === "/community-forum" ? "activeLink" : ""}`}>Community</Link>
-            <Link 
+          <NavLink to="/home" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Home</NavLink>
+           
+            <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
+            <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
+            <NavLink 
         className={`anchorlinks fightsubmenu ${isFightsActive ? 'activeLink' : ''}`}
         onClick={toggleSubmenu}
         ref={submenuRef}
-        href="#"
       >
         Fights
         <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosedclass'}`}  style={{
       pointerEvents: submenuOpen ? 'auto' : 'none' // Disable pointer events when closed
     }}>
-          <Link href="/upcomingfights" className="submenuLink">Upcoming Fights</Link>
-          <Link href="/past-fights" className="submenuLink">Past Fights</Link>
-          <Link href="/our-fighters" className="submenuLink">Our Fighters</Link>
-          <Link href="/past-fights-records" className="submenuLink">Past Fights Videos</Link>
-          <Link href="/fights-rewards" className="submenuLink">Fight Rewards</Link>
-          <Link href="/fights-news" className="submenuLink">Fight News</Link>
+          <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
+          <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
+          <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>
+          <NavLink to="/past-fights-records" className="submenuLink">Past Fights Videos</NavLink>
+          <NavLink to="/fights-rewards" className="submenuLink">Fight Rewards</NavLink>
+          <NavLink to="/fights-news" className="submenuLink">Fight News</NavLink>
         </div>
-      </Link>
+      </NavLink>
  
            
-            <Link href="/Sponsors" className={`anchorlinks ${pathname === "/Sponsors" ? "activeLink" : ""}`}>Sponsors</Link>
-            <Link href="/faqs" className={`anchorlinks ${pathname === "/faqs" ? "activeLink" : ""}`}>Faqs</Link>
+            <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Sponsors</NavLink>
+            <NavLink to="/faqs" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Faqs</NavLink>
            
           </div>
 
           <div className='sideLinkswrap'>
-            <Link  className='joinNowBtn' href="/login" onClick={handleLogoutSponsor}>Logout</Link>
+            <NavLink  className='joinNowBtn' to="/login" onClick={handleLogoutSponsor}>Logout</NavLink>
           </div>
 
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
@@ -277,51 +261,48 @@ const Header = () => {
       ) : (
         <div className='header public-header' style={headerStyles}>
           <div className='logoimg'>
-            <Link href="/">
-              <Image src={Logo} alt="Logo" className='logoimageactual' />
-            </Link>
+            <NavLink to="/">
+              <img src={Logo} alt="Logo" />
+            </NavLink>
           </div>
 
           <div className='anchorLinksWrapper'>
           
-          <Link href="/home" className={`anchorlinks ${pathname === "/home" ? "activeLink" : ""}`}>
-        Home
-      </Link>   
-             
-            <Link href="/playforfree" className={`anchorlinks ${pathname === "/playforfree" ? "activeLink" : ""}`}>Play for free</Link>
-            <Link href="/community-forum" className={`anchorlinks ${pathname === "/community-forum" ? "activeLink" : ""}`}>Community</Link>
-            <Link 
+          <NavLink to="/home" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Home</NavLink>
+            
+            <NavLink to="/playforfree" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Play for free</NavLink>
+            <NavLink to="/community-forum" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Community</NavLink>
+            <NavLink 
         className={`anchorlinks fightsubmenu ${isFightsActive ? 'activeLink' : ''}`}
         onClick={toggleSubmenu}
         ref={submenuRef}
-        href="#"
       >
         Fights
         <div className={`submenu ${submenuOpen ? 'submenuOpen' : 'submenuClosedclass'}`}  style={{
       pointerEvents: submenuOpen ? 'auto' : 'none' // Disable pointer events when closed
     }}>
-          <Link href="/calendar-of-fights" className="submenuLink">Fight Calendar</Link>
+          <NavLink to="/calendar-of-fights" className="submenuLink">Fight Calendar</NavLink>
         
-          <Link href="/upcomingfights" className="submenuLink">Upcoming Fights</Link>
-          <Link href="/past-fights" className="submenuLink">Past Fights</Link>
-          <Link href="/our-fighters" className="submenuLink">Our Fighters</Link>
-          <Link href="/past-fights-records" className="submenuLink">Past Fights Videos</Link>
-          <Link href="/fights-rewards" className="submenuLink">Fight Rewards</Link>
-          <Link href="/fights-news" className="submenuLink">Fight News</Link>
-          <Link href="/global-leaderboard" className="submenuLink">Fighters Leaderboard</Link>
-          <Link href="/spin-wheel" className="submenuLink">Spin the Wheel</Link>
+          <NavLink to="/upcomingfights" className="submenuLink">Upcoming Fights</NavLink>
+          <NavLink to="/past-fights" className="submenuLink">Past Fights</NavLink>
+          <NavLink to="/our-fighters" className="submenuLink">Our Fighters</NavLink>
+          <NavLink to="/past-fights-records" className="submenuLink">Past Fights Videos</NavLink>
+          <NavLink to="/fights-rewards" className="submenuLink">Fight Rewards</NavLink>
+          <NavLink to="/fights-news" className="submenuLink">Fight News</NavLink>
+          <NavLink to="/global-leaderboard" className="submenuLink">Fighters Leaderboard</NavLink>
+          <NavLink to="/spin-wheel" className="submenuLink">Spin the Wheel</NavLink>
           </div>
-      </Link>
+      </NavLink>
  
            
-            <Link href="/Sponsors" className={`anchorlinks ${pathname === "/Sponsors" ? "activeLink" : ""}`}>Sponsors</Link>
-            <Link href="/faqs" className={`anchorlinks ${pathname === "/faqs" ? "activeLink" : ""}`}>Faqs</Link>
-            <Link href="/login" className={`anchorlinks ${pathname === "/login" ? "activeLink" : ""}`}>Login</Link>
+            <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Sponsors</NavLink>
+            <NavLink to="/faqs" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Faqs</NavLink>
+            <NavLink to="/login" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Login</NavLink>
           
           </div>
 
           <div className='sideLinkswrap'>
-            <Link href="/CreateAccount" className='joinNowBtn'>Sign Up Now</Link>
+            <NavLink to="/CreateAccount" className='joinNowBtn'>Sign Up Now</NavLink>
           </div>
 
           <div className='menuIconFont' onClick={toggleMenu}><i className="fa fa-bars"></i></div>
@@ -334,9 +315,9 @@ const Header = () => {
           <i className="fa fa-times"></i>
         </div>
         <div className='logoimg'>
-         <Link href="/" onClick={closeMenu}>
-         <center>       <Image src={Logo} alt="Logo" className='logoimageactual' /></center>
-          </Link>
+         <NavLink to="/" onClick={closeMenu}>
+         <center>       <img src={Logo} alt="Logo" /></center>
+          </NavLink>
         </div>
 
         <div className="menuContent">
@@ -344,13 +325,13 @@ const Header = () => {
         <div className='anchorLinksWrapper'>
           {isAuthenticatedAffiliate ? (
             <>
-              <Link href="/AffiliateDashboard" className='anchorlinks' onClick={closeMenu}>Fights</Link>
-              <Link href="/affiliate-league" className='anchorlinks' onClick={closeMenu}>My League</Link>
-              <Link href="/past-promotions" className='anchorlinks' onClick={closeMenu}>Past Promotions</Link>
-              <Link href="/HowItWorks" className='anchorlinks' onClick={closeMenu}>How it works</Link>
-              <Link href="/AffiliateProfile" className='anchorlinks' onClick={closeMenu}>Profile</Link>
-              <Link href="/AffiliatePromotion" className='anchorlinks' onClick={closeMenu}>Insights</Link>
-              <Link href="/affiliate-guides" className='anchorlinks' onClick={closeMenu}>Guides</Link>
+              <NavLink to="/AffiliateDashboard" className='anchorlinks' onClick={closeMenu}>Fights</NavLink>
+              <NavLink to="/affiliate-league" className='anchorlinks' onClick={closeMenu}>My League</NavLink>
+              <NavLink to="/past-promotions" className='anchorlinks' onClick={closeMenu}>Past Promotions</NavLink>
+              <NavLink to="/HowItWorks" className='anchorlinks' onClick={closeMenu}>How it works</NavLink>
+              <NavLink to="/AffiliateProfile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
+              <NavLink to="/AffiliatePromotion" className='anchorlinks' onClick={closeMenu}>Insights</NavLink>
+              <NavLink to="/affiliate-guides" className='anchorlinks' onClick={closeMenu}>Guides</NavLink>
         
               <button onClick={() => { handleLogoutAffiliate(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
@@ -368,57 +349,57 @@ const Header = () => {
           ) : isAuthenticated ? (
             <>
            
-              <Link href="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</Link>
-              <Link href="/leaderboard" className='anchorlinks' onClick={closeMenu}>Leaderboard</Link>
-              <Link href="/myLeagueRecords" className='anchorlinks' onClick={closeMenu}>Leagues</Link>
-              <Link href="/profile" className='anchorlinks' onClick={closeMenu}>Profile</Link>
-              <Link href="/guides" className='anchorlinks mobileAnchorLinks'>Guides</Link>
-              <Link href="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</Link>
-                 <Link href="/UserDashboard" className='anchorlinks' onClick={closeMenu}>Dashboard</Link>
+              <NavLink to="/YourFights" className='anchorlinks' onClick={closeMenu}>Your Fights</NavLink>
+              <NavLink to="/leaderboard" className='anchorlinks' onClick={closeMenu}>Leaderboard</NavLink>
+              <NavLink to="/myLeagueRecords" className='anchorlinks' onClick={closeMenu}>Leagues</NavLink>
+              <NavLink to="/profile" className='anchorlinks' onClick={closeMenu}>Profile</NavLink>
+              <NavLink to="/guides" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')}>Guides</NavLink>
+              <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
+                 <NavLink to="/UserDashboard" className='anchorlinks' onClick={closeMenu}>Dashboard</NavLink>
               <button onClick={() => { handleLogout(); closeMenu(); }} className='anchorlinks logoutButton' style={{ background: 'transparent', border: 'none', outline: 'none' }}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </button>
             </>
           ) : authStatusSponsor ? (
             <>
-            <Link href="/home" className='anchorlinks' onClick={closeMenu}>Home</Link>
+            <NavLink to="/home" className='anchorlinks' onClick={closeMenu}>Home</NavLink>
            
-             <Link href="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</Link>
-              <Link href="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</Link>
-              <Link href="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</Link>
-              <Link href="/past-fights" className='anchorlinks' onClick={closeMenu}>Past Fights</Link>
-              <Link href="/Sponsors" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Sponsors</Link>
-              <Link href="/login" className='anchorlinks' onClick={handleLogoutSponsor}>
+             <NavLink to="/playforfree" className='anchorlinks' onClick={closeMenu}>Play for free</NavLink>
+              <NavLink to="/community-forum" className='anchorlinks' onClick={closeMenu}>Community</NavLink>
+              <NavLink to="/upcomingfights" className='anchorlinks' onClick={closeMenu}>Upcoming Fights</NavLink>
+              <NavLink to="/past-fights" className='anchorlinks' onClick={closeMenu}>Past Fights</NavLink>
+              <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink' : 'anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
+              <NavLink to="/login" className='anchorlinks' onClick={handleLogoutSponsor}>
                 <i className="fa fa-sign-in" aria-hidden="true"></i> Logout
-              </Link>
+              </NavLink>
             </>
           ) : (
             <>
             
-          <Link href="/home" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Home</Link>
+          <NavLink to="/home" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Home</NavLink>
         
-             <Link href="/playforfree" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Play for free</Link>
-              <Link href="/community-forum" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Community</Link>
-              <Link href="/upcomingfights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Upcoming Fights</Link>
-              <Link href="/CreateAccount" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Create account</Link>
-              <Link href="/past-fights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Past Fights</Link>
-          <Link href="/our-fighters" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Our Fighters</Link>
-          <Link href="/past-fights-records" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Past Fights Videos</Link>
-          <Link href="/fights-rewards" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight Rewards</Link>
-          <Link href="/fights-news" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight News</Link>
-          <Link href="/spin-wheel" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Spin the Wheel</Link>
-          <Link href="/calendar-of-fights" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight Calendar</Link>
+             <NavLink to="/playforfree" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Play for free</NavLink>
+              <NavLink to="/community-forum" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Community</NavLink>
+              <NavLink to="/upcomingfights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Upcoming Fights</NavLink>
+              <NavLink to="/CreateAccount" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Create account</NavLink>
+              <NavLink to="/past-fights" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>Past Fights</NavLink>
+          <NavLink to="/our-fighters" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Our Fighters</NavLink>
+          <NavLink to="/past-fights-records" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Past Fights Videos</NavLink>
+          <NavLink to="/fights-rewards" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight Rewards</NavLink>
+          <NavLink to="/fights-news" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight News</NavLink>
+          <NavLink to="/spin-wheel" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Spin the Wheel</NavLink>
+          <NavLink to="/calendar-of-fights" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Fight Calendar</NavLink>
           
-              <Link href="/Sponsors" className="anchorlinks mobileAnchorLinks" onClick={closeMenu}>Sponsors</Link>
-              <Link href="/login" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>
+              <NavLink to="/Sponsors" className={({ isActive }) => (isActive ? 'anchorlinks activeLink mobileAnchorLinks' : 'mobileAnchorLinks anchorlinks')} onClick={closeMenu}>Sponsors</NavLink>
+              <NavLink to="/login" className='anchorlinks mobileAnchorLinks' onClick={closeMenu}>
                 <i className="fa fa-sign-in" aria-hidden="true"></i> Login
-              </Link>
+              </NavLink>
             </>
           )}
         </div>
       </div> </div>
     </>
-  ) : null;
+  );
 }
 
 export default Header;

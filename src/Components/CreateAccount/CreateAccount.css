@@ -234,9 +234,6 @@ flex-basis: 90%;
   font-family: 'UFCSans', "Arial Narrow", Arial, sans-serif;
   font-weight: 500; /* Weight corresponding to UFCSans-CondensedMedium */
   font-stretch: condensed; /* Condensed style */
-  outline: none;
-  border: 1px solid #ccc;
-  text-align: center;
    
 }
 
@@ -332,8 +329,4 @@ margin-bottom: 100px;
     }
     
 
- }
-
- .gloveInCreateAccnt{
-  height: 70%;
  }

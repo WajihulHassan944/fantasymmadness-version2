@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import "./YourFights.css";
-import "../CreateAccount/Membership.css";
-import "../Dashboard/Dashboard.css";
-import "../Dashboard/FightCosting.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMatches } from '../../Redux/matchSlice';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 const TrashedFights = () => {
-  const router = useRouter();
-  
     const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches.data);
   const matchStatus = useSelector((state) => state.matches.status);
-  const [hoveredMatch, setHoveredMatch] = useState(null); 
+  const [hoveredMatch, setHoveredMatch] = useState(null); // Track hovered match ID
   const [removedMatches, setRemovedMatches] = useState([]);
-  const user = useSelector((state) => state.user); 
-console.log(user);
+const navigate = useNavigate();
+  const user = useSelector((state) => state.user); // Access user details from Redux store
+
 
   useEffect(() => {
     if (matchStatus === 'idle') {
@@ -45,7 +41,7 @@ console.log(user);
     };
 
     fetchRemovedMatches();
-  }, [user?._id]); // Run the effect when user._id changes
+  }, [user._id]); // Run the effect when user._id changes
 
 
 
@@ -103,7 +99,7 @@ console.log(user);
     <i
         className="fa fa-arrow-circle-left dashboard-arrow-circle"
         aria-hidden="true"
-        onClick={() => router.push(-1)} // Go back to the previous page
+        onClick={() => navigate(-1)} // Go back to the previous page
       ></i>
       <div className='member-header'>
         <div className='member-header-image'>

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'; // Import useLocation to check the route
 import CreateThread from './CreateThread';
 import Login from '../Login/Login';
 import "./threads.css";
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 const ThreadList = () => {
   const [threads, setThreads] = useState([]);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); // Check the correct authentication state
   const [createThreadVar, setCreateThreadVar] = useState(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false); // Track if login is needed
   const [prevAction, setPrevAction] = useState(null); // Track previous action (view thread or create post)
-  const router = useRouter();
+  const navigate = useNavigate(); // Use useNavigate to handle navigation
+
 
   useEffect(() => {
     fetch('https://fantasymmadness-game-server-three.vercel.app/threads')
@@ -25,7 +25,7 @@ const ThreadList = () => {
       setPrevAction({ type: 'view-thread', threadId });
       setRedirectToLogin(true);
     } else {
-      router.push(`/threads/${threadId}`);
+      navigate(`/threads/${threadId}`);
     }
   };
 
@@ -70,13 +70,13 @@ const ThreadList = () => {
      <i
         className="fa fa-arrow-circle-left home-arrow-circle home-arrow-circle-forum"
         aria-hidden="true"
-        onClick={() => router.push(-1)} // Go back to the previous page
+        onClick={() => navigate(-1)} // Go back to the previous page
         
       ></i>
       <div className='toFlexHeading'>
      <h1 className="forum-heading-updated">Discussion Forum</h1>
       <button className="create-thread-btn-updated" onClick={createThread}>Have a question?</button>
-      <div className='communityRulesIcon'><Link href="/forum-rules"><i className="fa fa-question-circle-o"></i></Link></div>
+      <div className='communityRulesIcon'><Link to="/forum-rules"><i className="fa fa-question-circle-o"></i></Link></div>
       </div>
         {threads.length === 0 ? (
         <p className="no-posts-message-updated">No posts yet.</p>

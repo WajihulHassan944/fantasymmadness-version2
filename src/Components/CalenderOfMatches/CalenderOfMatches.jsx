@@ -4,7 +4,7 @@ import { fetchMatches } from "../../Redux/matchSlice";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./style.css";
-import { useRouter } from "next/router";
+import { useNavigate } from "react-router-dom";
 
 const CalenderOfMatches = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,8 @@ const CalenderOfMatches = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentMatch, setCurrentMatch] = useState(null);
   const [dateModalVisible, setDateModalVisible] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (matchStatus === "idle") {
       dispatch(fetchMatches());
