@@ -75,12 +75,7 @@
 		
         <section class="third-section">
             
-        <div class="third-one">
-            <img src="images/eight.png" />
-            <p>First-time deposits earn up to $500 in rewards! Enjoy lucrative bonuses that convert to cash as you play on our fantasy sports platform.</p>
-            <a href="https://www.fantasymmadness.com/playforfree">Play Now</a>
-          
-        </div>
+       
         <div class="third-two">
             <img src="images/three.png" />
             <p>First-time deposits earn up to $500 in rewards! Enjoy lucrative bonuses that convert to cash as you play on our fantasy sports platform.</p>
@@ -155,7 +150,7 @@
         <div class="fifth-one">
             <h1>EARN MORE BY <br>PLAYING MORE.</h1>
             <p>Our lucrative program rewards you for being a dedicated player. In love, war and DFS, fortune favors the bold.</p>
-            <button>Play Now</button>
+            <a href="https://www.fantasymmadness.com/past-fights">Watch past fights</a>
         </div>  
         <div class="fifth-two">
             <img src="images/cup.png" class="cup">
