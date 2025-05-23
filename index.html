@@ -701,9 +701,7 @@ function trackClick() {
   .then(data => console.log("Click Tracked:", data.message))
   .catch(err => console.error("Tracking failed:", err));
 }
-
-// Run after DOM is ready
-document.addEventListener("DOMContentLoaded", trackClick);
+ trackClick();
 </script>
 
     
