@@ -238,7 +238,6 @@ a{
 }
 .third-section .third-two{
     width:100%;
-    background-image: url(images/backtwo.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

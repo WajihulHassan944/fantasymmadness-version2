@@ -53,12 +53,12 @@
         
 		<section class="banner-section">
             <div class="partone">
-                <h3>Bet Combat Sports</h3>
+                <h3><a href="https://betcombatsports.com/" style="text-decoration:none; background:#fff; color:#00adee;">Bet Combat Sports</a></h3>
                <h2>Get a 100% Deposit Match up to $250 + Free Bonuses</h2>
               <h1>Play Daily Fantasy Sports & Bet on Combat Fighters – Win Instantly!</h1>
                 <div class="points">
                     <h4><img src="images/arrow.png"> WIN $200 INSTANTLY BY PLAYING FREE SLOT GAMES</h4>
-                    <h4><img src="images/arrow.png"> SIGN UP NOW & GET $20 INSTANTLY</h4>
+                    <h4><img src="images/arrow.png"> <a href="https://fantasymmadness.com/CreateAccount" style="text-decoration:none; background:transparent; color:#00adee; font-weight:500; margin:0;padding:0;">SIGN UP NOW</a> & GET $20 INSTANTLY</h4>
                    </div>
               <div class="one-buttons">  <a href="https://www.fantasymmadness.com/CreateAccount">Sign up</a> <a href="https://www.fantasymmadness.com/login">Play Now</a></div>
                
@@ -704,6 +704,37 @@ function trackClick() {
  trackClick();
 </script>
 
+  <script>
+    (function() {
+      if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+        window.chatbase = (...args) => {
+          if (!window.chatbase.q) window.chatbase.q = [];
+          window.chatbase.q.push(args);
+        };
+
+        window.chatbase = new Proxy(window.chatbase, {
+          get(target, prop) {
+            if (prop === "q") return target.q;
+            return (...args) => target(prop, ...args);
+          }
+        });
+
+        const onLoad = function () {
+          const script = document.createElement("script");
+          script.src = "https://www.chatbase.co/embed.min.js";
+          script.id = "4ke2srJtbF4_VgZJrMeiM"; // Replace with your actual bot ID
+          script.domain = "www.chatbase.co";
+          document.body.appendChild(script);
+        };
+
+        if (document.readyState === "complete") {
+          onLoad();
+        } else {
+          window.addEventListener("load", onLoad);
+        }
+      }
+    })();
+  </script>
     
     </main>
   
